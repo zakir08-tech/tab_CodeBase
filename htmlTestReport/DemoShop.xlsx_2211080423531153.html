@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Bolt-TestRunReport</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+   </head>
+   <body>
+      <div class="container-lg mt-3" style="width: 100%;">
+         <h1><b>Bolt</b></h1>
+         <h6 style="color: red">Test Automation Builder</h6>
+      </div>
+      <div class="container-lg mt-3 border" style="width: 100%; height:330px">
+         <div style="float: left">
+            <p>Test Run Date: <font style="color: #483d8b"><b>08-Nov-2022 </b></font><font style="color: #cb4154 "><b>16:22:20</b></font></p>
+            <p>Total Run: <font style="color: blue"><b>3</b></font></p>
+            <p>Passed: <font style="color: green"><b>2</b></font></p>
+            <p>Failed: <font style="color: red"><b>1</b></font></p>
+            <p>Warning: <font style="color: #ff7f50"><b>0</b></font></p>
+            <p>No Run: <font style="color: #a52a2a"><b>0</b></font></p>
+            <p>Run Time: <font style="color: #ff6347"><b>$totalMins</b></font> mins <font style="color: #6495ed"><b>$totalSec</b></font> sec</p>
+            <p>Test Suite: <font style="color: #e5aa70"><b>DemoShop.xlsx</b></font></p>
+         </div>
+         <canvas id="myChart" style="max-width:600px; float: right;"></canvas>
+      </div>
+            <div class="container mt-3">
+         <div id="accordion">
+                        <div class="card">
+               <div class="card-header" style="background-color: #8fbc8f">
+                  <a class="collapsed btn" data-bs-toggle="collapse" href="#TestCase-100" style="width:100%">
+                  <h6 align="left">[Test ID: 100] add a gift card</h6>
+                  </a>
+               </div>
+               <div id="TestCase-100" class="collapse" data-bs-parent="#accordion">
+                  <div class="card-body">
+                     <div class="container mt-3">
+                        <table class="table">
+                           <thead>
+                              <tr class="table-dark">
+                                 <th style="width:8%">Step No.</th>
+                                 <th>Test Step</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+							  							  <tr class="table-success">
+								 <td>1</td>
+								 <td>Launch URL "https://demowebshop.tricentis.com/"</td>
+							  </tr>
+							  <tr class="table-success">
+								 <td>2</td>
+								 <td>Assert that "Home_GiftCards" is visible</td>
+							  </tr>
+							  <tr class="table-success">
+                                 <td>3</td>
+                                 <td>Take screen-shot<img src="C:/Users/zakir/eclipse-workspace/bolt/screenShots/screenShot_2211080422561156.png" width="100%" height="auto"></td>
+                              </tr>
+							  <tr class="table-success">
+								 <td>4</td>
+								 <td>Click "Home_GiftCards"</td>
+							  </tr>
+							  <tr class="table-success">
+								 <td>5</td>
+								 <td>Assert that "Register_RegisterLink" is visible</td>
+							  </tr>
+							  <tr class="table-success">
+                                 <td>6</td>
+                                 <td>Take screen-shot<img src="C:/Users/zakir/eclipse-workspace/bolt/screenShots/screenShot_221108042300110.png" width="100%" height="auto"></td>
+                              </tr>
+							  <tr class="table-secondary">
+								 <td>7</td>
+								 <td>Click "Register_RegisterLink"</td>
+							  </tr>
+							  <tr class="table-secondary">
+								 <td>8</td>
+								 <td>Set value "Senthil" to "Register_Fname"</td>
+							  </tr>
+							  <tr class="table-secondary">
+								 <td>9</td>
+								 <td>Set value "Kumar" to "Register_Lname"</td>
+							  </tr>
+							  <tr class="table-secondary">
+								 <td>10</td>
+								 <td>[PIT] is not a recognized keyword</td>
+							  </tr>
+							  <tr class="table-secondary">
+								 <td>11</td>
+								 <td>Click "PIT"</td>
+							  </tr>
+							  <tr class="table-secondary">
+								 <td>12</td>
+								 <td>Set value "senthil5.kumar@gmail.com" to "Register_Email"</td>
+							  </tr>
+							  <tr class="table-secondary">
+								 <td>13</td>
+								 <td>Set value "password123" to "Register_Password"</td>
+							  </tr>
+							  <tr class="table-success">
+                                 <td>14</td>
+                                 <td>User define steps START<img src="C:/Users/zakir/eclipse-workspace/bolt/screenShots/screenShot_221108042300110.png" width="100%" height="auto"></td>
+                              </tr>
+							  <tr class="table-success">
+								 <td>15</td>
+								 <td>Get object(s) with tagName "div" with the matching attribute name and value "class=item-box"</td>
+							  </tr>
+							  <tr class="table-success">
+								 <td>16</td>
+								 <td>Get object(s) with tagName "div{1}" with the matching attribute name and value "class=details"</td>
+							  </tr>
+							  <tr class="table-success">
+								 <td>17</td>
+								 <td>If object(s) with tagName "a{1}" with the matching attribute name and value "attachedtext=$100 Physical Gift Card" do the following action "take_screenshot"</td>
+							  </tr>
+							  <tr class="table-success">
+								 <td>18</td>
+								 <td>Then object(s) with tagName "input{2}" with the matching attribute name and value "value=Add to cart" do the following action "take_screenshot"</td>
+							  </tr>
+							  <tr class="table-success">
+								 <td>19</td>
+								 <td>Then object(s) with tagName "input{2}" with the matching attribute name and value "value=Add to cart" do the following action "click"</td>
+							  </tr>
+							  <tr class="table-success">
+								 <td>20</td>
+								 <td>Assert that "GiftCards_RecipientName" is visible</td>
+							  </tr>
+							  <tr class="table-success">
+                                 <td>21</td>
+                                 <td>User define steps STOP<img src="C:/Users/zakir/eclipse-workspace/bolt/screenShots/screenShot_221108042307117.png" width="100%" height="auto"></td>
+                              </tr>
+							  <tr class="table-secondary">
+								 <td>22</td>
+								 <td>Take screen-shot</td>
+							  </tr>
+							  <tr class="table-secondary">
+								 <td>23</td>
+								 <td>Set value ":runtime" to "Register_ConfirmPwd"</td>
+							  </tr>
+							  <tr class="table-secondary">
+								 <td>24</td>
+								 <td>Take screen-shot</td>
+							  </tr>
+							  <tr class="table-secondary">
+								 <td>25</td>
+								 <td>Click "Register_RegisterButton"</td>
+							  </tr>
+							  <tr class="table-secondary">
+								 <td>26</td>
+								 <td>Assert that "Register_CompletedMsg" is visible</td>
+							  </tr>
+							  <tr class="table-secondary">
+								 <td>27</td>
+								 <td>Take screen-shot</td>
+							  </tr>
+							  <tr class="table-secondary">
+								 <td>28</td>
+								 <td>Assert that "Register_CompletedMsg" text is equals to "Your registration completed"</td>
+							  </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="card">
+               <div class="card-header" style="background-color: #8fbc8f">
+                  <a class="collapsed btn" data-bs-toggle="collapse" href="#TestCase-102" style="width:100%">
+                  <h6 align="left">[Test ID: 102] user login to demo web shop</h6>
+                  </a>
+               </div>
+               <div id="TestCase-102" class="collapse" data-bs-parent="#accordion">
+                  <div class="card-body">
+                     <div class="container mt-3">
+                        <table class="table">
+                           <thead>
+                              <tr class="table-dark">
+                                 <th style="width:8%">Step No.</th>
+                                 <th>Test Step</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+							  							  <tr class="table-success">
+								 <td>1</td>
+								 <td>Launch URL "https://demowebshop.tricentis.com/"</td>
+							  </tr>
+							  <tr class="table-success">
+								 <td>2</td>
+								 <td>Assert that "Login_LogInLink" is visible</td>
+							  </tr>
+							  <tr class="table-success">
+                                 <td>3</td>
+                                 <td>Take screen-shot<img src="C:/Users/zakir/eclipse-workspace/bolt/screenShots/screenShot_2211080423271127.png" width="100%" height="auto"></td>
+                              </tr>
+							  <tr class="table-success">
+								 <td>4</td>
+								 <td>Click "Login_LogInLink"</td>
+							  </tr>
+							  <tr class="table-success">
+								 <td>5</td>
+								 <td>Set value "senthil1.kumar@gmail.com" to "Login_Email"</td>
+							  </tr>
+							  <tr class="table-success">
+								 <td>6</td>
+								 <td>Set value "password123" to "Login_Password"</td>
+							  </tr>
+							  <tr class="table-success">
+                                 <td>7</td>
+                                 <td>Take screen-shot<img src="C:/Users/zakir/eclipse-workspace/bolt/screenShots/screenShot_2211080423291129.png" width="100%" height="auto"></td>
+                              </tr>
+							  <tr class="table-success">
+								 <td>8</td>
+								 <td>Click "Login_LoginButton"</td>
+							  </tr>
+							  <tr class="table-success">
+								 <td>9</td>
+								 <td>Assert that "Login_UsernameLink" is visible</td>
+							  </tr>
+							  <tr class="table-success">
+                                 <td>10</td>
+                                 <td>Take screen-shot<img src="C:/Users/zakir/eclipse-workspace/bolt/screenShots/screenShot_2211080423321132.png" width="100%" height="auto"></td>
+                              </tr>
+							  <tr class="table-success">
+								 <td>11</td>
+								 <td>Assert that "Login_UsernameLink" text is equals to "senthil1.kumar@gmail.com"</td>
+							  </tr>
+							  <tr class="table-success">
+								 <td>12</td>
+								 <td>Click "Logout_LogoutLink"</td>
+							  </tr>
+							  <tr class="table-success">
+								 <td>13</td>
+								 <td>Assert that "Login_LogInLink" is visible</td>
+							  </tr>
+							  <tr class="table-success">
+                                 <td>14</td>
+                                 <td>Take screen-shot<img src="C:/Users/zakir/eclipse-workspace/bolt/screenShots/screenShot_2211080423351135.png" width="100%" height="auto"></td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="card">
+               <div class="card-header" style="background-color: pink">
+                  <a class="collapsed btn" data-bs-toggle="collapse" href="#TestCase-103" style="width:100%">
+                  <h6 align="left">[Test ID: 103] search the country and select</h6>
+                  </a>
+               </div>
+               <div id="TestCase-103" class="collapse" data-bs-parent="#accordion">
+                  <div class="card-body">
+                     <div class="container mt-3">
+                        <table class="table">
+                           <thead>
+                              <tr class="table-dark">
+                                 <th style="width:8%">Step No.</th>
+                                 <th>Test Step</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+							  							  <tr class="table-success">
+								 <td>1</td>
+								 <td>Launch URL "https://cosmocode.io/automation-practice-webtable/"</td>
+							  </tr>
+							  <tr class="table-success">
+								 <td>2</td>
+								 <td>Assert that "Countries_WebTable" is visible</td>
+							  </tr>
+							  <tr class="table-success">
+                                 <td>3</td>
+                                 <td>Take screen-shot<img src="C:/Users/zakir/eclipse-workspace/bolt/screenShots/screenShot_2211080423431143.png" width="100%" height="auto"></td>
+                              </tr>
+							  <tr class="table-success">
+                                 <td>4</td>
+                                 <td>User define steps START<img src="C:/Users/zakir/eclipse-workspace/bolt/screenShots/screenShot_2211080423431143.png" width="100%" height="auto"></td>
+                              </tr>
+							  <tr class="table-success">
+								 <td>5</td>
+								 <td>Get object(s) with tagName "tr" with the matching attribute name and value ""</td>
+							  </tr>
+                              <tr class="table-danger">
+                                 <td>6</td>
+                                 <td>If object(s) with tagName "td{1}" with the matching attribute name and value "attachedtext=India" do the following action "assert_text=India1"<br><font style="color:blue">Required expected text "India1" not equals to actual text "India"</font>
+								 <img src="C:/Users/zakir/eclipse-workspace/bolt/screenShots/screenShot_2211080423511151.png" width="100%" height="auto">
+								 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script>
+         var xValues = ["Pass", "Fail", "Warning", "No Run"];
+         var yValues = [2, 1, 0, 0];
+         var barColors = [
+           "#1e7145",
+           "#b91d47",
+           "#e8c3b9",
+           "#2b5797"
+         ];
+         
+         new Chart("myChart", {
+           type: "doughnut",
+           data: {
+             labels: xValues,
+             datasets: [{
+               backgroundColor: barColors,
+               data: yValues
+             }]
+           },
+           options: {
+             title: {
+               display: true,
+               text: "Test Run Graph Summary"
+             }
+           }
+         });
+      </script>
+   </body>
+</html>
