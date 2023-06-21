@@ -101,6 +101,7 @@ public class boltExecutor extends Thread {
         trTestSteps =new LinkedHashMap<Integer, String>();
         trTestCase =new LinkedHashMap<Integer, String>();
         trTestCards =new LinkedHashMap<Integer, String>();
+        boltRunner.testResult =new LinkedHashMap<Integer, String>();
             
         bttnStartTestRun.setEnabled(true);
         bttnRefreshTestRun.setEnabled(true);

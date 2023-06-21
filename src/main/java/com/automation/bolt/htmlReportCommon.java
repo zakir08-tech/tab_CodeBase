@@ -275,9 +275,19 @@ public class htmlReportCommon {
     }   
     
     public static int getTheStatusCount(String testRunstatus){
-        int rowCount =importDataFromExcelModel.getRowCount();
+    	int countPass =0;
+    	
+    	for (Integer testId: boltRunner.testResult.keySet()) {
+    	    String key = String.valueOf(testId);
+    	    String value = boltRunner.testResult.get(testId).toString();
+    	    if(value.contentEquals(testRunstatus)){
+    			countPass++;
+    		}
+    	}
+    	
+    	/*int rowCount =importDataFromExcelModel.getRowCount();
         int colCount =importDataFromExcelModel.getColumnCount();
-        int countPass =0;
+        
         
         for(int i=0; i<rowCount; i++){
             boolean run = (boolean) importDataFromExcelModel.getValueAt(i, 0);
@@ -286,7 +296,7 @@ public class htmlReportCommon {
                     countPass++;
                 }
             }
-        }
+        }*/
          return countPass;
     }
     

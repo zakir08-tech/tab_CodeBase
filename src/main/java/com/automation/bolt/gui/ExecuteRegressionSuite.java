@@ -1263,15 +1263,14 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
             killProcess("chromedriver.exe");
             killProcess("msedgedriver.exe");
             
-            glueCode.implicitWaitTime = Integer.valueOf(txtImplicitWait.getText());
-            glueCode.pageLoadTimeOut = Integer.valueOf(txtPageLoadTimeout.getText());
+            glueCode.implicitWaitTime = txtImplicitWait.getText();
+            glueCode.pageLoadTimeOut = txtPageLoadTimeout.getText();
         
             runThread = new boltExecutor();
             runThread.start();
         }
     }//GEN-LAST:event_bttnStartTestRunMouseReleased
 
-    @SuppressWarnings("CallToThreadStopSuspendOrResumeManager")
     private void bttnStopTestRunMouseReleased(MouseEvent evt) {//GEN-FIRST:event_bttnStopTestRunMouseReleased
         if(bttnStopTestRun.isEnabled() ==true){
             //bttnStartTestRun.setEnabled(true);

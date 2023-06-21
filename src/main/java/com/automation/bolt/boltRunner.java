@@ -73,7 +73,7 @@ public class boltRunner{
     public static LinkedHashMap<Integer, String> trTestCards= new LinkedHashMap<Integer, String>();
     public static LinkedHashMap<Integer, String> userDefineSteps = new LinkedHashMap<Integer, String>();
     
-    //public static String cardTestCase;
+    public static LinkedHashMap<Integer, String> testResult = new LinkedHashMap<Integer, String>();
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void boltTestRunner() throws InterruptedException, IOException {
@@ -107,16 +107,19 @@ public class boltRunner{
                     break;
                 }
             }
-                
-            ExecuteRegressionSuite.tableExecuteRegSuite.setRowSelectionInterval(getCurrRunId, getCurrRunId);            
-            ExecuteRegressionSuite.tableExecuteRegSuite.scrollRectToVisible(ExecuteRegressionSuite.tableExecuteRegSuite.getCellRect(ExecuteRegressionSuite.tableExecuteRegSuite.getSelectedRow(), 0, true));
-            ExecuteRegressionSuite.tableExecuteRegSuite.requestFocus();
             
-            ExecuteRegressionSuite.importDataFromExcelModel.setValueAt("Running...", getCurrRunId, 3);
-            glueCode.getWebDriver(ExecuteRegressionSuite.testRunBrowser);
-            
-            getTestFlowSteps =common.mapTestFlows.get(testRunId);
-            
+            try {
+            	 ExecuteRegressionSuite.tableExecuteRegSuite.setRowSelectionInterval(getCurrRunId, getCurrRunId);            
+                 ExecuteRegressionSuite.tableExecuteRegSuite.scrollRectToVisible(ExecuteRegressionSuite.tableExecuteRegSuite.getCellRect(ExecuteRegressionSuite.tableExecuteRegSuite.getSelectedRow(), 0, true));
+                 ExecuteRegressionSuite.tableExecuteRegSuite.requestFocus();
+                 
+                 ExecuteRegressionSuite.importDataFromExcelModel.setValueAt("Running...", getCurrRunId, 3);
+                 glueCode.getWebDriver(ExecuteRegressionSuite.testRunBrowser);
+            }catch(IllegalArgumentException exp) {
+            	glueCode.getWebDriver(constants.testRunBrowser);
+            }
+      
+            getTestFlowSteps =common.mapTestFlows.get(testRunId);      
             common.createTestResult();
 
             getTestStep = new LinkedHashMap<Integer, String>();
@@ -436,8 +439,13 @@ public class boltRunner{
             String trGetSteps =concatenateHashMapDataWithNewLine(trTestSteps);
             String cardTestCase =htmlReportCommon.trTemplateEditCard(htmlReportCommon.trTemplateCard, testRunStatus, getTestId,"[Test ID: "+getTestId+"] "+getTestDesc); 
             cardTestCase =cardTestCase.replace("$stepRows", trGetSteps);
-             
-            ExecuteRegressionSuite.importDataFromExcelModel.setValueAt(testRunStatus, getCurrRunId, 3);
+            
+            testResult.put(testRunId, testRunStatus);
+            
+            try {
+            	ExecuteRegressionSuite.importDataFromExcelModel.setValueAt(testRunStatus, getCurrRunId, 3);
+            }catch(ArrayIndexOutOfBoundsException exp) {}
+            
             getTestFlow.put(runTestFlow.getKey(), getTestStep);
             resTestFlow.put(runTestFlow.getKey(), resTestStep);
             failTestFlow.put(runTestFlow.getKey(), failTestStep);

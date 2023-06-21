@@ -571,8 +571,10 @@ public class common extends userDefineTest{
         }
     }
 	
-    public static void readTestRunner_TestSteps() {
-        String fileExtensionName =null;
+    @SuppressWarnings("rawtypes")
+	public static boolean readTestRunner_TestSteps() {
+
+    	String fileExtensionName =null;
         testRunnerWorkbook =null;
         testRunnerInputStream =null;
         objectRespository =null;
@@ -585,8 +587,8 @@ public class common extends userDefineTest{
             testRunnerInputStream = new FileInputStream(testSuiteFilePath);
             fileExtensionName = testSuiteFilePath.substring(testSuiteFilePath.lastIndexOf("."));
         } catch (FileNotFoundException exp) {
-            boltExecutor.log.error("required ["+testRunnerFile.toString()+"] test runner file not found!\nexiting the run......");
-            boltExecutor.log.error(exp);
+            boltExecutor.log.error("required ["+testSuiteFilePath.toString()+"] test runner file not found!\nexiting the run......");
+            return false;
         }
 
         if(fileExtensionName.equals(".xlsx")){
@@ -654,7 +656,10 @@ public class common extends userDefineTest{
 
         if(mapTestFlows.isEmpty()) {
             boltExecutor.log.error("no test flow found for execution at run-time!\nexiting the run......");
+            return false;
         }
+        
+        return true;
     }
 	
     @SuppressWarnings("unused")

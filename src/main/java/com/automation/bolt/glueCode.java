@@ -3,11 +3,13 @@ package com.automation.bolt;
 import static com.automation.bolt.common.keywordEvent;
 import static com.automation.bolt.common.runTimmerFromCurrentTime;
 
-import java.io.BufferedReader;
+import java.awt.AWTException;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -15,14 +17,20 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.imageio.ImageIO;
+
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
-import org.openqa.selenium.*;
 import org.openqa.selenium.InvalidArgumentException;
+import org.openqa.selenium.InvalidSelectorException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
@@ -30,6 +38,7 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -37,29 +46,21 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import java.nio.charset.StandardCharsets;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import java.awt.AWTException;
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.util.List;
-import javax.imageio.ImageIO;
-import org.openqa.selenium.support.ui.Select;
 
 public class glueCode {
     public static WebDriver boltDriver;
-    public static int waitTimeInSeconds;
+    public static String waitTimeInSeconds;
     public static WebDriverWait wait;
     public static Boolean stepSuccess =null;
     public static Actions action;
     public static String screenshotPath;
     public static boolean runHeadless;
-    public static int implicitWaitTime;
-    public static int pageLoadTimeOut;
+    public static String implicitWaitTime;
+    public static String pageLoadTimeOut;
     public static int parentTagIndex;
     public static Robot robotClassObject;
     public static Alert alert;
@@ -74,9 +75,12 @@ public class glueCode {
             ChromeOptions co = new ChromeOptions();
             co.addArguments("--remote-allow-origins=*");
             co.addArguments("--start-maximized");
-            if(runHeadless ==true)
-                co.addArguments("--headless");
             
+            if(runHeadless ==true) {
+            	co.addArguments("window-size=1980,960");
+            	co.addArguments("--headless");
+            }
+                
             boltDriver = new ChromeDriver(co);
         }else if(browserType.contentEquals("edge")){
             WebDriverManager.edgedriver().setup();
@@ -84,15 +88,18 @@ public class glueCode {
             EdgeOptions edgeOptions = new EdgeOptions();
             edgeOptions.addArguments("--remote-allow-origins=*");
             edgeOptions.addArguments("--start-maximized");
-            if(runHeadless ==true)
-                edgeOptions.addArguments("--headless");
-
+            
+            if(runHeadless ==true) {
+            	edgeOptions.addArguments("window-size=1980,960");
+            	edgeOptions.addArguments("--headless");
+            }
+                
             boltDriver =new EdgeDriver(edgeOptions);
         }
      
-        boltDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(implicitWaitTime));
-        boltDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(pageLoadTimeOut));
-        wait = new WebDriverWait(boltDriver, Duration.ofSeconds(implicitWaitTime));
+        boltDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Integer.valueOf(implicitWaitTime)));
+        boltDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(Integer.valueOf(pageLoadTimeOut)));
+        wait = new WebDriverWait(boltDriver, Duration.ofSeconds(Integer.valueOf(implicitWaitTime)));
     }
 	
     public static void keyURL(String url) {
