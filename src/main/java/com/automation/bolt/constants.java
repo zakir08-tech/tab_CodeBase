@@ -9,11 +9,13 @@ public class constants {
 	public static String testRunList;
 	public static String testRunBrowser;
 	public static String runnerFileName;
+	public static boolean externalRun =false;
 	public static String driverPathJSONfile =userDir +"/config/driverPath.json";
         
     public static void loadder() {
     	PropertyConfigurator.configure(boltExecutor.class.getResourceAsStream("log4j.properties"));
     	common.readConfigProperties();
+    	externalRun =true;
     	
     	runnerFileName =common.prop.getProperty("test.suite.file.path");
 		if(runnerFileName ==null) {
