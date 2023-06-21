@@ -7,6 +7,7 @@ package com.automation.bolt;
 
 import static com.automation.bolt.gui.ExecuteRegressionSuite.excelFile;
 import static com.automation.bolt.gui.ExecuteRegressionSuite.importDataFromExcelModel;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.arrTestId;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -285,7 +286,7 @@ public class htmlReportCommon {
     		}
     	}
     	
-    	/*int rowCount =importDataFromExcelModel.getRowCount();
+    /*	int rowCount =importDataFromExcelModel.getRowCount();
         int colCount =importDataFromExcelModel.getColumnCount();
         
         
@@ -296,14 +297,19 @@ public class htmlReportCommon {
                     countPass++;
                 }
             }
-        }*/
+        }	*/
          return countPass;
     }
     
     public static int getTotalRunCount(){
-        int rowCount =importDataFromExcelModel.getRowCount();
-        int countRun =0;
-        
+    	int countRun =0;
+    	
+    	if(constants.externalRun ==true) {
+        	countRun =arrTestId.size();
+        	return countRun;
+        }
+        	
+    	int rowCount =importDataFromExcelModel.getRowCount();
         for(int i=0; i<rowCount; i++){
             boolean run = (boolean) importDataFromExcelModel.getValueAt(i, 0);
             if(run ==true)
