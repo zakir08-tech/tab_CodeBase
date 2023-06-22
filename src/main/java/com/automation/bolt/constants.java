@@ -9,6 +9,7 @@ public class constants {
 	public static String testRunList;
 	public static String testRunBrowser;
 	public static String runnerFileName;
+	public static String runMode;
 	public static boolean externalRun =false;
 	public static String driverPathJSONfile =userDir +"/config/driverPath.json";
         
@@ -37,5 +38,10 @@ public class constants {
 		if(testRunBrowser ==null || (!testRunBrowser.toLowerCase().contentEquals("chrome") && 
 				!testRunBrowser.toLowerCase().contentEquals("edge")))
 			testRunBrowser ="chrome";
+		
+		runMode =common.prop.getProperty("test.run.driver.headless");
+		if(runMode ==null || (!runMode.toLowerCase().contentEquals("true") && 
+				!runMode.toLowerCase().contentEquals("false")))
+			runMode ="false";
     }
 }
