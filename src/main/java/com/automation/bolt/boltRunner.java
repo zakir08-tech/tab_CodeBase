@@ -116,6 +116,7 @@ public class boltRunner{
                  ExecuteRegressionSuite.importDataFromExcelModel.setValueAt("Running...", getCurrRunId, 3);
                  glueCode.getWebDriver(ExecuteRegressionSuite.testRunBrowser);
             }catch(IllegalArgumentException exp) {
+            	glueCode.runHeadless =Boolean.valueOf(constants.runMode);
             	glueCode.getWebDriver(constants.testRunBrowser);
             }
       
