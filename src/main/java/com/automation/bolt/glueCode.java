@@ -64,7 +64,7 @@ public class glueCode {
     public static int parentTagIndex;
     public static Robot robotClassObject;
     public static Alert alert;
-	private static ClassLoader classLoader;
+    private static ClassLoader classLoader;
     
     public static void getWebDriver(String browserType) {
         waitTimeInSeconds = constants.waitTimeInSec;
@@ -75,6 +75,7 @@ public class glueCode {
             ChromeOptions co = new ChromeOptions();
             co.addArguments("--remote-allow-origins=*");
             co.addArguments("--start-maximized");
+            co.addArguments("--ignore-certificate-errors");
             
             if(runHeadless ==true) {
             	co.addArguments("window-size=1980,960");
@@ -88,6 +89,7 @@ public class glueCode {
             EdgeOptions edgeOptions = new EdgeOptions();
             edgeOptions.addArguments("--remote-allow-origins=*");
             edgeOptions.addArguments("--start-maximized");
+            edgeOptions.addArguments("--ignore-certificate-errors");
             
             if(runHeadless ==true) {
             	edgeOptions.addArguments("window-size=1980,960");

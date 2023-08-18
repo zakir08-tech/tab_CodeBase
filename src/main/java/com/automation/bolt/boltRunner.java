@@ -1,5 +1,6 @@
 package com.automation.bolt;
 
+import static com.automation.bolt.common.createUniqueID;
 import static com.automation.bolt.common.executeTestStep;
 import static com.automation.bolt.common.executeUserDefineTestStep;
 import static com.automation.bolt.common.writeTestStep;
@@ -355,6 +356,9 @@ public class boltRunner{
                     if(testData.toLowerCase().contentEquals(":runtime")){
                         if(checkTestDataForRunTime() ==false)
                             executeStep =false;
+                    }else if(testData.toLowerCase().contentEquals(":u-value")){
+                        common.runTimmerFromCurrentTime(1);
+                        createRunTimeTestData();
                     }
                 
                     if(!testRunStep.contentEquals("GET")){
@@ -465,6 +469,24 @@ public class boltRunner{
             }catch(NullPointerException exp){
                 boltExecutor.log.error("web driver error: " +exp.getMessage());
             }
+        }
+    }
+    
+    public static void createRunTimeTestData(){
+         String getTestStep ="";
+         String getRunTimeTestData =createUniqueID();
+         
+        try{
+            getTestStep =String.valueOf(testDescription.trim().charAt(0));
+            if(getTestStep.contentEquals(":")){
+                testData =testDescription.substring(1).trim() +"_"+ getRunTimeTestData;
+            }else
+                testData =getRunTimeTestData;
+                
+        }catch(ArrayIndexOutOfBoundsException exp){
+            testData =getRunTimeTestData;
+        }catch(IndexOutOfBoundsException exp){
+            testData =getRunTimeTestData;
         }
     }
     

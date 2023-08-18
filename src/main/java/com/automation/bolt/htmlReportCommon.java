@@ -132,8 +132,8 @@ public class htmlReportCommon {
     "   </head>\n" +
     "   <body>\n" +
     "      <div class=\"container-lg mt-3\" style=\"width: 100%;\">\n" +
-    //"         <h4><b>Bo<i class=\"fa fa-bolt\" style=\"font-size:18px;animation-name:example; position:relative; animation-duration:2s; animation-iteration-count:infinite\"></i>t</b></h1>\n" +
-    "         <h6 style=\"color: red; font-size: 12px\">Test Automation Builder</h4>\n" +
+    "         <h4><b>Bo<i class=\"fa fa-bolt\" style=\"font-size:18px;animation-name:example; position:relative; animation-duration:2s; animation-iteration-count:infinite\"></i>t</b></h1>\n" +
+    "         <h6 style=\"color: red\">Test Automation Accelerator</h6>\n" +
     "      </div>\n" +
     "      <div class=\"container-lg mt-3 border\" style=\"width: 100%; height:330px; background-color: #ebebeb\">\n" +
     "         <div style=\"float: left\">\n" +
@@ -177,66 +177,7 @@ public class htmlReportCommon {
     "   </body>\n" +
     "</html>";
     
-    public static String htmlTestReportHardStop ="<!DOCTYPE html>\n" +
-    "<html lang=\"en\">\n" +
-    "   <head>\n" +
-    "      <title>Bolt-TestRunReport</title>\n" +
-    "      <meta charset=\"utf-8\">\n" +
-    "      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
-    "      <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css\" rel=\"stylesheet\">\n" +
-    "      <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js\"></script>\n" +
-    "      <script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js\"></script>\n" +
-    "		<script type=\"text/javascript\">\n" +
-    "			window.alert(\"This test run was stopped/Interrupted by the user!\")\n" +
-    "		</script>\n"+        
-    "   </head>\n" +
-    "   <body>\n" +
-    "      <div class=\"container-lg mt-3\" style=\"width: 100%;\">\n" +
-    "         <h1><b>Bolt</b></h1>\n" +
-    "         <h6 style=\"color: red\">Test Automation Builder</h6>\n" +
-    "      </div>\n" +
-    "      <div class=\"container-lg mt-3 border\" style=\"width: 100%; height:330px; background-color: #ebebeb\">\n" +
-    "         <div style=\"float: left\">\n" +
-    "            <p><br>Test Run Date: <font style=\"color: #483d8b\"><b>$runDate </b></font><font style=\"color: #cb4154 \"><b>$runTime</b></font></p>\n" +
-    "            <p>Total Run: <font style=\"color: blue\"><b>$totalRun</b></font></p>\n" +
-    "            <p>Passed: <font style=\"color: green\"><b>$totalPassed</b></font></p>\n" +
-    "            <p>Failed: <font style=\"color: red\"><b>$totalFailed</b></font></p>\n" +
-    "            <p>Warning: <font style=\"color: #ff7f50\"><b>$totalWarings</b></font></p>\n" +
-    "            <p>Run Time: <font style=\"color: #8b0000\"><b>$totalHrs</b></font> hrs <font style=\"color: #ff6347\"><b>$totalMins</b></font> mins <font style=\"color: #6495ed\"><b>$totalSec</b></font> sec</p>\n" +
-    "            <p>Test Suite: <font style=\"color: #e5aa70\"><b>$testSuiteName</b></font></p>\n" +
-    "         </div>\n" +
-    "         <canvas id=\"myChart\" style=\"max-width:600px; float: right;\"></canvas>\n" +
-    "      </div>\n" +
-    "      $testCaseSteps\n" +
-    "      <script>\n" +
-    "         var xValues = [\"Pass\", \"Fail\", \"Warning\"];\n" +
-    "         var yValues = [$totalPassed, $totalFailed, $totalWarings];\n" +
-    "         var barColors = [\n" +
-    "           \"#8fbc8f\",\n" +
-    "           \"#ffc0cb\",\n" +
-    "           \"#fffacd\",\n" +
-    "         ];\n" +
-    "         \n" +
-    "         new Chart(\"myChart\", {\n" +
-    "           type: \"doughnut\",\n" +
-    "           data: {\n" +
-    "             labels: xValues,\n" +
-    "             datasets: [{\n" +
-    "               backgroundColor: barColors,\n" +
-    "               data: yValues\n" +
-    "             }]\n" +
-    "           },\n" +
-    "           options: {\n" +
-    "             title: {\n" +
-    "               display: true,\n" +
-    "               text: \"Test Run Graph Summary\"\n" +
-    "             }\n" +
-    "           }\n" +
-    "         });\n" +
-    "      </script>\n" +
-    "   </body>\n" +
-    "</html>";
-    
+    public static String htmlTestReportHardStop="";     
     public static String htmlTestReportPath =constants.userDir+"/htmlTestReport";
     public static String tesCaseResultPath =constants.userDir+"/testResults";
     public static SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
@@ -275,6 +216,82 @@ public class htmlReportCommon {
         return editedTemplate;
     }   
     
+    public static String updateErrorMessageForHardStopAndWebDriverException(String errorMsg){
+        htmlTestReportHardStop ="<!DOCTYPE html>\n" +
+        "<html lang=\"en\">\n" +
+        "   <head>\n" +
+        "      <title>Bolt-TestRunReport</title>\n" +
+        "      <meta charset=\"utf-8\">\n" +
+        "      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
+        "      <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css\" rel=\"stylesheet\">\n" +
+        "      <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js\"></script>\n" +
+        "      <script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js\"></script>\n" +
+        "      <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>\n" +
+        "		<script type=\"text/javascript\">\n" +
+        "			window.alert(\""+ errorMsg +"\")\n" +
+        "		</script>\n"+  
+        "   <style>\n" +
+        "		@keyframes example {\n" +
+        "		0% {color: red;}\n" +
+        "		100% {color: white;}\n" +
+        "		}\n" +
+        "		table \r\n" + 
+        "         {\r\n" + 
+        "         table-layout:fixed;\r\n" + 
+        "         width:100%;\r\n" + 
+        "         }"+
+        "	</style>	"+
+        "   </head>\n" +
+        "   <body>\n" +
+        "      <div class=\"container-lg mt-3\" style=\"width: 100%;\">\n" +
+        "         <h4><b>Bo<i class=\"fa fa-bolt\" style=\"font-size:18px;animation-name:example; position:relative; animation-duration:2s; animation-iteration-count:infinite\"></i>t</b></h1>\n" +
+        "         <h6 style=\"color: red\">Test Automation Accelerator</h6>\n" +
+        "      </div>\n" +
+        "      <div class=\"container-lg mt-3 border\" style=\"width: 100%; height:330px; background-color: #ebebeb\">\n" +
+        "         <div style=\"float: left\">\n" +
+        "            <p><br>Test Run Date: <font style=\"color: #483d8b\"><b>$runDate </b></font><font style=\"color: #cb4154 \"><b>$runTime</b></font></p>\n" +
+        "            <p>Total Run: <font style=\"color: blue\"><b>$totalRun</b></font></p>\n" +
+        "            <p>Passed: <font style=\"color: green\"><b>$totalPassed</b></font></p>\n" +
+        "            <p>Failed: <font style=\"color: red\"><b>$totalFailed</b></font></p>\n" +
+        "            <p>Warning: <font style=\"color: #ff7f50\"><b>$totalWarings</b></font></p>\n" +
+        "            <p>Run Time: <font style=\"color: #8b0000\"><b>$totalHrs</b></font> hrs <font style=\"color: #ff6347\"><b>$totalMins</b></font> mins <font style=\"color: #6495ed\"><b>$totalSec</b></font> sec</p>\n" +
+        "            <p>Test Suite: <font style=\"color: #e5aa70\"><b>$testSuiteName</b></font></p>\n" +
+        "         </div>\n" +
+        "         <canvas id=\"myChart\" style=\"max-width:600px; float: right;\"></canvas>\n" +
+        "      </div>\n" +
+        "      $testCaseSteps\n" +
+        "      <script>\n" +
+        "         var xValues = [\"Pass\", \"Fail\", \"Warning\"];\n" +
+        "         var yValues = [$totalPassed, $totalFailed, $totalWarings];\n" +
+        "         var barColors = [\n" +
+        "           \"#8fbc8f\",\n" +
+        "           \"#ffc0cb\",\n" +
+        "           \"#fffacd\",\n" +
+        "         ];\n" +
+        "         \n" +
+        "         new Chart(\"myChart\", {\n" +
+        "           type: \"doughnut\",\n" +
+        "           data: {\n" +
+        "             labels: xValues,\n" +
+        "             datasets: [{\n" +
+        "               backgroundColor: barColors,\n" +
+        "               data: yValues\n" +
+        "             }]\n" +
+        "           },\n" +
+        "           options: {\n" +
+        "             title: {\n" +
+        "               display: true,\n" +
+        "               text: \"Test Run Graph Summary\"\n" +
+        "             }\n" +
+        "           }\n" +
+        "         });\n" +
+        "      </script>\n" +
+        "   </body>\n" +
+        "</html>";
+        
+        return htmlTestReportHardStop;
+    }
+            
     public static int getTheStatusCount(String testRunstatus){
     	int countPass =0;
     	
