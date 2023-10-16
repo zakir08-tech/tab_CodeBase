@@ -942,7 +942,7 @@ public class common extends userDefineTest{
                     evt.consume();
         }
     }
-    
+     
     public static void testElmNameTxtTxtKeyTyped(KeyEvent evt, JTextField textField) {
         boolean result = false;
         char keyText = evt.getKeyChar();
