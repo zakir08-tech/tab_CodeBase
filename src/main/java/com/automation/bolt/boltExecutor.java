@@ -6,6 +6,7 @@ import static com.automation.bolt.boltRunner.trTestSteps;
 import static com.automation.bolt.boltRunner.trTestCase;
 import static com.automation.bolt.common.breakTheExceptionMsg;
 import static com.automation.bolt.common.getCurrentDateAndTime;
+import static com.automation.bolt.common.killProcess;
 import com.automation.bolt.gui.ExecuteRegressionSuite;
 import static com.automation.bolt.gui.ExecuteRegressionSuite.*;
 import static com.automation.bolt.htmlReportCommon.concatenateHashMapDataWithNewLine;
@@ -37,6 +38,7 @@ public class boltExecutor extends Thread {
     public static Date startRunDateTime;
     public static Date endRunDateTime;
     public static boolean getStatus;
+    public static String getErrorMessage;
    
     @Override
     public void run() {
@@ -46,7 +48,7 @@ public class boltExecutor extends Thread {
         bRunner = new boltRunner();
         
         try {
-            Thread.sleep(1000);
+            //Thread.sleep(1000);
             try {
                 testRunStartDateAndTime =getCurrentDateAndTime();
                 startRunDateTime =dateFormatter.parse(testRunStartDateAndTime);
@@ -68,6 +70,8 @@ public class boltExecutor extends Thread {
         }catch(WebDriverException exp){
             log.error("seems to be driver issue:\n"+breakTheExceptionMsg(exp.getMessage()+"\n\nstopping the test run NOW!"));
             ExecuteRegressionSuite.importDataFromExcelModel.setValueAt("Interrupted!", getCurrRunId, 3);
+            stopExecution =true;
+            getErrorMessage =exp.getMessage().replace("\n", ". ");
         }
         
         try{
@@ -87,7 +91,7 @@ public class boltExecutor extends Thread {
         String htmlReport ="";
         
         if(stopExecution ==true){
-            htmlReport =htmlReportCommon.trTemplateEditTestRunInfo(htmlReportCommon.htmlTestReportHardStop, 
+            htmlReport =htmlReportCommon.trTemplateEditTestRunInfo(htmlReportCommon.updateErrorMessageForHardStopAndWebDriverException(getErrorMessage), 
                 testRunStartDateAndTime, totalRunTime, getRunStartEndTime.split(":")[0], getRunStartEndTime.split(":")[1], getRunStartEndTime.split(":")[2]);
         }else if(stopExecution !=true){
             htmlReport =htmlReportCommon.trTemplateEditTestRunInfo(htmlReportCommon.htmlTestReport, 
@@ -118,5 +122,8 @@ public class boltExecutor extends Thread {
         lblChrome.setEnabled(true);
         lblEdge.setEnabled(true);
         testRunInProgress =false;
+        
+        killProcess("chromedriver.exe");
+        killProcess("msedgedriver.exe");
     }
 }

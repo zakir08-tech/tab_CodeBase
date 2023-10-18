@@ -62,11 +62,11 @@ public class externalTabRun extends constants{
         
         boltExecutor.testRunEndDateAndTime =getCurrentDateAndTime();
         try {
-			boltExecutor.endRunDateTime =boltExecutor.dateFormatter.parse(boltExecutor.testRunEndDateAndTime);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            boltExecutor.endRunDateTime =boltExecutor.dateFormatter.parse(boltExecutor.testRunEndDateAndTime);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         
         String trGetCards =concatenateHashMapDataWithNewLine(trTestCards);
         String trCardsContainer =htmlReportCommon.trTestContainer.replace("$testCards", trGetCards);
@@ -75,7 +75,7 @@ public class externalTabRun extends constants{
         String htmlReport ="";
         
         htmlReport =htmlReportCommon.trTemplateEditTestRunInfo(htmlReportCommon.htmlTestReport, 
-        		boltExecutor.testRunStartDateAndTime, boltExecutor.totalRunTime, getRunStartEndTime.split(":")[0], getRunStartEndTime.split(":")[1], getRunStartEndTime.split(":")[2]);
+            boltExecutor.testRunStartDateAndTime, boltExecutor.totalRunTime, getRunStartEndTime.split(":")[0], getRunStartEndTime.split(":")[1], getRunStartEndTime.split(":")[2]);
         
         String testHtmlReport =htmlReport.replace("$testCaseSteps", trCardsContainer);
         if(getStatus ==true)

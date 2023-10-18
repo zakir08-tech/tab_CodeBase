@@ -32,10 +32,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -114,6 +116,19 @@ public class common extends userDefineTest{
             boltRunner.logError = exp.getMessage();
             boltExecutor.log.error(exp);
         }
+    }
+    
+    public static String  createUniqueID(){
+        DateFormat dateFormat = new SimpleDateFormat("yyddmm");
+        Date date = new Date();
+        
+        String dt=String.valueOf(dateFormat.format(date));
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat time = new SimpleDateFormat("HHss");
+        String tm= String.valueOf(time.format(new Date()));//time in 24 hour format
+        String id= dt+tm;
+        
+        return id;   
     }
 	
     public static void writeTestStepWithResult(XWPFDocument docx, String testStepWithResult, String testResult, String stepKeyword) {

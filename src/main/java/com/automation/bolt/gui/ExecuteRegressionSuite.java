@@ -7,6 +7,7 @@ package com.automation.bolt.gui;
 
 //import static com.automation.bolt.gui.ObjectRepoFrame.ObjectRepoTable;
 import com.automation.bolt.boltExecutor;
+import static com.automation.bolt.boltExecutor.getErrorMessage;
 import static com.automation.bolt.boltExecutor.testRunInProgress;
 import static com.automation.bolt.boltRunner.getCurrRunId;
 import static com.automation.bolt.common.killProcess;
@@ -20,6 +21,7 @@ import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,6 +47,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -70,6 +73,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import java.awt.Font;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 
 //import org.apache.poi.ss.usermodel.CellStyle;
 //import org.apache.poi.ss.usermodel.CellType;
@@ -82,6 +92,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 
 /**
@@ -128,6 +139,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
     public static HashMap<String, Boolean> getRunId = new HashMap<String, Boolean>();
     public static boolean duplicateRunId;
     public static boolean stopExecution;
+    public static JTextField textTestType;
     
     /**
      * Creates new form NewJFrame
@@ -159,10 +171,9 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
         bttnStartTestRun = new JButton();
         pnlTimeOuts = new JPanel();
         lblImplicitWait = new JLabel();
-        lblPageLoadTimeout = new JLabel();
         txtImplicitWait = new JTextField();
+        lblPageLoadTimeout = new JLabel();
         txtPageLoadTimeout = new JTextField();
-        rdBttnTimeouts = new JRadioButton();
         bttnStopTestRun = new JButton();
         rdButtonChrome = new JRadioButton();
         lblEdge = new JLabel();
@@ -170,6 +181,9 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
         lblChrome = new JLabel();
         lblRunwith = new JLabel();
         bttnRefreshTestRun = new JButton();
+        rdBttnTimeouts = new JRadioButton();
+        lblTestType = new JLabel();
+        jTextTestType = new JTextField();
         jDesktopPane2 = new JDesktopPane();
         pnlHeader = new JPanel();
         chkBoxSelectDeselectAllRun = new JCheckBox();
@@ -202,12 +216,12 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
 
         scrollExecuteRegSuite.setBackground(new java.awt.Color(51, 51, 51));
         scrollExecuteRegSuite.setAutoscrolls(true);
-        scrollExecuteRegSuite.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
+        scrollExecuteRegSuite.setFont(new Font("Calibri", 0, 12)); // NOI18N
         scrollExecuteRegSuite.setMinimumSize(new Dimension(452, 402));
 
         tableExecuteRegSuite.setBackground(new java.awt.Color(51, 51, 51));
         tableExecuteRegSuite.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        tableExecuteRegSuite.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        tableExecuteRegSuite.setFont(new Font("Consolas", 0, 14)); // NOI18N
         tableExecuteRegSuite.setForeground(new java.awt.Color(255, 255, 255));
         tableExecuteRegSuite.setModel(new DefaultTableModel(
             new Object [][] {
@@ -274,7 +288,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
         pnlRunMenuBar.setOpaque(false);
 
         chkBoxAssociateObjOR.setBackground(new java.awt.Color(0, 153, 153));
-        chkBoxAssociateObjOR.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
+        chkBoxAssociateObjOR.setFont(new Font("Consolas", 1, 12)); // NOI18N
         chkBoxAssociateObjOR.setForeground(new java.awt.Color(255, 255, 255));
         chkBoxAssociateObjOR.setText("Associate Global OR");
         chkBoxAssociateObjOR.setToolTipText("select to use global repository for execution");
@@ -295,7 +309,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
         });
 
         bttnLoadRegSuite.setBackground(new java.awt.Color(0, 0, 0));
-        bttnLoadRegSuite.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        bttnLoadRegSuite.setFont(new Font("Consolas", 1, 14)); // NOI18N
         bttnLoadRegSuite.setForeground(new java.awt.Color(255, 255, 255));
         bttnLoadRegSuite.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addUploadTestSuite.png"));
             bttnLoadRegSuite.setText("Upload Test Suite ");
@@ -326,7 +340,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
             });
 
             chkBoxRunHeadless.setBackground(new java.awt.Color(0, 153, 153));
-            chkBoxRunHeadless.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
+            chkBoxRunHeadless.setFont(new Font("Consolas", 1, 12)); // NOI18N
             chkBoxRunHeadless.setForeground(new java.awt.Color(255, 255, 255));
             chkBoxRunHeadless.setText("Run Headless");
             chkBoxRunHeadless.setToolTipText("select to execute headless");
@@ -347,7 +361,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
             });
 
             bttnStartTestRun.setBackground(new java.awt.Color(0, 0, 0));
-            bttnStartTestRun.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+            bttnStartTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
             bttnStartTestRun.setForeground(new java.awt.Color(255, 255, 255));
             bttnStartTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/startTestRun.png"));
                 bttnStartTestRun.setText("Start Test Run");
@@ -374,20 +388,12 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                         bttnStartTestRunMouseReleased(evt);
                     }
                 });
-                bttnStartTestRun.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        bttnStartTestRunActionPerformed(evt);
-                    }
-                });
 
                 pnlTimeOuts.setBackground(new java.awt.Color(0, 153, 153));
                 pnlTimeOuts.setOpaque(false);
 
                 lblImplicitWait.setForeground(new java.awt.Color(204, 204, 204));
                 lblImplicitWait.setText("Implicit Wait");
-
-                lblPageLoadTimeout.setForeground(new java.awt.Color(204, 204, 204));
-                lblPageLoadTimeout.setText("Page Load Timeout");
 
                 txtImplicitWait.setBackground(new java.awt.Color(0, 0, 0));
                 txtImplicitWait.setForeground(new java.awt.Color(255, 255, 0));
@@ -410,6 +416,9 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                         txtImplicitWaitKeyTyped(evt);
                     }
                 });
+
+                lblPageLoadTimeout.setForeground(new java.awt.Color(204, 204, 204));
+                lblPageLoadTimeout.setText("Page Load Timeout");
 
                 txtPageLoadTimeout.setBackground(new java.awt.Color(0, 0, 0));
                 txtPageLoadTimeout.setForeground(new java.awt.Color(255, 255, 0));
@@ -437,47 +446,32 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                 pnlTimeOuts.setLayout(pnlTimeOutsLayout);
                 pnlTimeOutsLayout.setHorizontalGroup(pnlTimeOutsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTimeOutsLayout.createSequentialGroup()
-                        .addGroup(pnlTimeOutsLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblPageLoadTimeout, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblImplicitWait, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(2, 2, 2)
-                        .addGroup(pnlTimeOutsLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtPageLoadTimeout, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtImplicitWait, GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)))
+                        .addGroup(pnlTimeOutsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlTimeOutsLayout.createSequentialGroup()
+                                .addComponent(lblImplicitWait, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtImplicitWait, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlTimeOutsLayout.createSequentialGroup()
+                                .addComponent(lblPageLoadTimeout)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtPageLoadTimeout, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 12, Short.MAX_VALUE))
                 );
                 pnlTimeOutsLayout.setVerticalGroup(pnlTimeOutsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTimeOutsLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
                         .addGroup(pnlTimeOutsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtImplicitWait, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblImplicitWait))
+                            .addComponent(lblImplicitWait)
+                            .addComponent(txtImplicitWait, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                         .addGap(1, 1, 1)
                         .addGroup(pnlTimeOutsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(lblPageLoadTimeout)
                             .addComponent(txtPageLoadTimeout, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
                 );
 
-                rdBttnTimeouts.setBackground(new java.awt.Color(0, 153, 153));
-                rdBttnTimeouts.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-                rdBttnTimeouts.setForeground(new java.awt.Color(255, 255, 255));
-                rdBttnTimeouts.setText("Timeouts (in seconds):");
-                rdBttnTimeouts.setToolTipText("set wait");
-                rdBttnTimeouts.addMouseListener(new MouseAdapter() {
-                    public void mouseEntered(MouseEvent evt) {
-                        rdBttnTimeoutsMouseEntered(evt);
-                    }
-                    public void mouseExited(MouseEvent evt) {
-                        rdBttnTimeoutsMouseExited(evt);
-                    }
-                });
-                rdBttnTimeouts.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        rdBttnTimeoutsActionPerformed(evt);
-                    }
-                });
-
                 bttnStopTestRun.setBackground(new java.awt.Color(0, 0, 0));
-                bttnStopTestRun.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+                bttnStopTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
                 bttnStopTestRun.setForeground(new java.awt.Color(255, 255, 255));
                 bttnStopTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/stopTestRun.png"));
                     bttnStopTestRun.setText("Stop Test Run");
@@ -494,9 +488,6 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                     bttnStopTestRun.setOpaque(true);
                     bttnStopTestRun.setPreferredSize(new Dimension(121, 33));
                     bttnStopTestRun.addMouseListener(new MouseAdapter() {
-                        public void mouseClicked(MouseEvent evt) {
-                            bttnStopTestRunMouseClicked(evt);
-                        }
                         public void mouseEntered(MouseEvent evt) {
                             bttnStopTestRunMouseEntered(evt);
                         }
@@ -508,11 +499,6 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                         }
                         public void mouseReleased(MouseEvent evt) {
                             bttnStopTestRunMouseReleased(evt);
-                        }
-                    });
-                    bttnStopTestRun.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent evt) {
-                            bttnStopTestRunActionPerformed(evt);
                         }
                     });
 
@@ -583,12 +569,12 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                 }
                             });
 
-                            lblRunwith.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
+                            lblRunwith.setFont(new Font("Consolas", 1, 12)); // NOI18N
                             lblRunwith.setForeground(new java.awt.Color(255, 255, 255));
                             lblRunwith.setText("Run With:");
 
                             bttnRefreshTestRun.setBackground(new java.awt.Color(0, 0, 0));
-                            bttnRefreshTestRun.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+                            bttnRefreshTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
                             bttnRefreshTestRun.setForeground(new java.awt.Color(255, 255, 255));
                             bttnRefreshTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/refreshTestRun.png"));
                                 bttnRefreshTestRun.setText("Refresh Test run");
@@ -618,39 +604,85 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                     }
                                 });
 
+                                rdBttnTimeouts.setBackground(new java.awt.Color(0, 153, 153));
+                                rdBttnTimeouts.setFont(new Font("Consolas", 1, 12)); // NOI18N
+                                rdBttnTimeouts.setForeground(new java.awt.Color(255, 255, 255));
+                                rdBttnTimeouts.setText("Timeouts (in seconds):");
+                                rdBttnTimeouts.setToolTipText("set wait");
+                                rdBttnTimeouts.addMouseListener(new MouseAdapter() {
+                                    public void mouseEntered(MouseEvent evt) {
+                                        rdBttnTimeoutsMouseEntered(evt);
+                                    }
+                                    public void mouseExited(MouseEvent evt) {
+                                        rdBttnTimeoutsMouseExited(evt);
+                                    }
+                                });
+                                rdBttnTimeouts.addActionListener(new ActionListener() {
+                                    public void actionPerformed(ActionEvent evt) {
+                                        rdBttnTimeoutsActionPerformed(evt);
+                                    }
+                                });
+
+                                lblTestType.setFont(new Font("Consolas", 1, 12)); // NOI18N
+                                lblTestType.setForeground(new java.awt.Color(255, 255, 255));
+                                lblTestType.setText("Test Type: @Tag");
+                                lblTestType.addMouseListener(new MouseAdapter() {
+                                    public void mouseEntered(MouseEvent evt) {
+                                        lblTestTypeMouseEntered(evt);
+                                    }
+                                    public void mouseExited(MouseEvent evt) {
+                                        lblTestTypeMouseExited(evt);
+                                    }
+                                });
+
+                                jTextTestType.setBackground(new java.awt.Color(0, 0, 0));
+                                jTextTestType.setFont(new Font("Arial", 0, 14)); // NOI18N
+                                jTextTestType.setForeground(java.awt.Color.pink);
+                                jTextTestType.setHorizontalAlignment(JTextField.LEFT);
+                                jTextTestType.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+                                jTextTestType.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+                                jTextTestType.setName("SetTestType"); // NOI18N
+                                jTextTestType.addFocusListener(new FocusAdapter() {
+                                    public void focusLost(FocusEvent evt) {
+                                        jTextTestTypeFocusLost(evt);
+                                    }
+                                });
+
                                 GroupLayout pnlRunMenuBarLayout = new GroupLayout(pnlRunMenuBar);
                                 pnlRunMenuBar.setLayout(pnlRunMenuBarLayout);
                                 pnlRunMenuBarLayout.setHorizontalGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnlRunMenuBarLayout.createSequentialGroup()
-                                        .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                            .addComponent(bttnRefreshTestRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addGroup(pnlRunMenuBarLayout.createSequentialGroup()
-                                                .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                                    .addComponent(bttnLoadRegSuite, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE)
-                                                    .addGroup(pnlRunMenuBarLayout.createSequentialGroup()
-                                                        .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                                            .addComponent(rdButtonEdge, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                            .addComponent(rdButtonChrome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                                            .addComponent(lblEdge, GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                                                            .addComponent(lblChrome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                                .addGap(0, 0, Short.MAX_VALUE)))
-                                        .addGap(1, 1, 1))
                                     .addComponent(bttnStartTestRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(bttnStopTestRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(pnlRunMenuBarLayout.createSequentialGroup()
+                                        .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                            .addComponent(pnlTimeOuts, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(rdBttnTimeouts, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(pnlRunMenuBarLayout.createSequentialGroup()
                                         .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addGroup(pnlRunMenuBarLayout.createSequentialGroup()
-                                                .addGap(18, 18, 18)
-                                                .addComponent(pnlTimeOuts, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(pnlRunMenuBarLayout.createSequentialGroup()
-                                                .addContainerGap()
-                                                .addComponent(lblRunwith, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(rdBttnTimeouts, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(chkBoxRunHeadless, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(chkBoxAssociateObjOR, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))
+                                                .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                    .addComponent(chkBoxRunHeadless, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                                        .addComponent(bttnRefreshTestRun, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(bttnLoadRegSuite, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                                                        .addGroup(GroupLayout.Alignment.LEADING, pnlRunMenuBarLayout.createSequentialGroup()
+                                                            .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                                .addComponent(rdButtonEdge, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(rdButtonChrome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                            .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                                .addComponent(lblEdge, GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                                                                .addComponent(lblChrome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                                    .addComponent(chkBoxAssociateObjOR, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(pnlRunMenuBarLayout.createSequentialGroup()
+                                                        .addContainerGap()
+                                                        .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                            .addComponent(lblRunwith, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(lblTestType, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE))))
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                            .addComponent(jTextTestType))
+                                        .addContainerGap())
                                 );
                                 pnlRunMenuBarLayout.setVerticalGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlRunMenuBarLayout.createSequentialGroup()
@@ -668,19 +700,23 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                         .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addComponent(lblEdge, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
                                             .addComponent(rdButtonEdge))
-                                        .addGap(27, 27, 27)
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lblTestType)
+                                        .addGap(0, 0, 0)
+                                        .addComponent(jTextTestType, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(chkBoxAssociateObjOR, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(chkBoxRunHeadless, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
-                                        .addGap(10, 10, 10)
+                                        .addGap(18, 18, 18)
                                         .addComponent(bttnStartTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(12, 12, 12)
                                         .addComponent(bttnStopTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addGap(4, 4, 4)
+                                        .addGap(12, 12, 12)
                                         .addComponent(rdBttnTimeouts)
                                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(pnlTimeOuts, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(38, Short.MAX_VALUE))
+                                        .addContainerGap(25, Short.MAX_VALUE))
                                 );
 
                                 pnlRunMenuBarLayout.linkSize(SwingConstants.VERTICAL, new Component[] {lblChrome, rdButtonChrome});
@@ -710,7 +746,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                 pnlHeader.setMinimumSize(new Dimension(206, 40));
                                 pnlHeader.setOpaque(false);
 
-                                chkBoxSelectDeselectAllRun.setFont(new java.awt.Font("Calibri", 1, 10)); // NOI18N
+                                chkBoxSelectDeselectAllRun.setFont(new Font("Calibri", 1, 10)); // NOI18N
                                 chkBoxSelectDeselectAllRun.setForeground(new java.awt.Color(255, 255, 255));
                                 chkBoxSelectDeselectAllRun.setText("Select ALL Run");
                                 chkBoxSelectDeselectAllRun.setToolTipText("will select all test(s) for run");
@@ -732,7 +768,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                     }
                                 });
 
-                                chkBoxFilterFailTest.setFont(new java.awt.Font("Calibri", 1, 10)); // NOI18N
+                                chkBoxFilterFailTest.setFont(new Font("Calibri", 1, 10)); // NOI18N
                                 chkBoxFilterFailTest.setForeground(new java.awt.Color(255, 255, 255));
                                 chkBoxFilterFailTest.setText("Filter FAIL test(s)");
                                 chkBoxFilterFailTest.setToolTipText("will select only failed test(s) for re-run");
@@ -756,7 +792,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                     }
                                 });
 
-                                lblTestResultView.setFont(new java.awt.Font("Calibri", 1, 10)); // NOI18N
+                                lblTestResultView.setFont(new Font("Calibri", 1, 10)); // NOI18N
                                 lblTestResultView.setForeground(new java.awt.Color(0, 51, 51));
                                 lblTestResultView.setHorizontalAlignment(SwingConstants.RIGHT);
                                 lblTestResultView.setText(" * Double click Test Status to view test result");
@@ -828,13 +864,13 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jDesktopPane2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(1, 1, 1)
-                                                .addComponent(scrollExecuteRegSuite, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)))
+                                                .addComponent(scrollExecuteRegSuite, GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)))
                                         .addGap(1, 1, 1))
                                 );
 
                                 getAccessibleContext().setAccessibleParent(this);
 
-                                setSize(new Dimension(914, 509));
+                                setSize(new Dimension(914, 555));
                                 setLocationRelativeTo(null);
                             }// </editor-fold>//GEN-END:initComponents
     
@@ -859,27 +895,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
         }
         return objectRepoExcel;
     }
-            
-    private void bttnStartTestRunActionPerformed(ActionEvent evt) {//GEN-FIRST:event_bttnStartTestRunActionPerformed
-          if(tableExecuteRegSuite.getRowCount() >0){
-            if(checkRunIsAvailable() ==false){
-                JOptionPane.showMessageDialog(null, "No test is selected to execute!", "Alert", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            arrTestId = new ArrayList<>();
-            for(int i=0; i<importDataFromExcelModel.getRowCount(); i++){
-                boolean run = (boolean) importDataFromExcelModel.getValueAt(i, 0);
-                if(run ==true){
-                   arrTestId.add(importDataFromExcelModel.getValueAt(i, 1).toString());
-                   importDataFromExcelModel.setValueAt("Not Started", i, 3);
-                }
-            }
-        }else{
-            JOptionPane.showMessageDialog(null, "No test suite is available to execute!", "Alert", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_bttnStartTestRunActionPerformed
-    
+                
     private void formWindowActivated(WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
        tableExecuteRegSuite.requestFocus();
        setTableColWidthForExeRegSuiteTable();
@@ -930,6 +946,11 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
         Image titleIcon = Toolkit.getDefaultToolkit().getImage(constants.userDir+"\\icons\\bolt.jpg");
         this.setIconImage(titleIcon);
         tableExecuteRegSuite.setDefaultRenderer(Object.class, RunCell_renderer);
+        
+        //textTestType = ((JTextField) cBoxTestType.getEditor().getEditorComponent());
+        //textTestType.setForeground(new java.awt.Color(255,102,102));
+        //textTestType.setFont(new Font("Comic Sans MS",0,12));
+        jTextTestType.setEnabled(false);
     }//GEN-LAST:event_formWindowOpened
 
     private void bttnStartTestRunMouseEntered(MouseEvent evt) {//GEN-FIRST:event_bttnStartTestRunMouseEntered
@@ -1063,6 +1084,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                     objRepo.openObjectRepository(excelSheetObjectRepository);
                 }
                 this.setTitle("Execute Test Suite: "+excelFileImport.getName(excelFile));
+                jTextTestType.setEnabled(true);
             } catch (FileNotFoundException exp) {
                     if(exp.getMessage().contains("The system cannot find the file specified")){
                         JOptionPane.showMessageDialog(scrollExecuteRegSuite,"No test suite "+"\""+excelFileImport.getName(excelFile)+"\""+" found to upload!","Alert",JOptionPane.WARNING_MESSAGE);
@@ -1231,10 +1253,39 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowGainedFocus
 
     private void bttnStartTestRunMouseReleased(MouseEvent evt) {//GEN-FIRST:event_bttnStartTestRunMouseReleased
-       if(tableExecuteRegSuite.getRowCount() >0 && bttnStartTestRun.isEnabled() ==true){
+        if(jTextTestType.getText().trim().contentEquals("@") || !jTextTestType.getText().trim().startsWith("@") && 
+                !jTextTestType.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(scrollExecuteRegSuite,"Tag name is not properly defined ["+jTextTestType.getText()+"]");
+            return;
+        }
+        
+        if(!jTextTestType.getText().trim().isEmpty()){
+            if(selectTestAsPerTestType() ==false){return;}
+        }
+        
+        if(tableExecuteRegSuite.getRowCount() >0){
+          if(checkRunIsAvailable() ==false){
+              JOptionPane.showMessageDialog(null, "No test is selected to execute!", "Alert", JOptionPane.WARNING_MESSAGE);
+              return;
+          }
+
+          arrTestId = new ArrayList<>();
+          for(int i=0; i<importDataFromExcelModel.getRowCount(); i++){
+              boolean run = (boolean) importDataFromExcelModel.getValueAt(i, 0);
+              if(run ==true){
+                 arrTestId.add(importDataFromExcelModel.getValueAt(i, 1).toString());
+                 importDataFromExcelModel.setValueAt("Not Started", i, 3);
+              }
+          }
+        }else{
+          JOptionPane.showMessageDialog(null, "No test suite is available to execute!", "Alert", JOptionPane.WARNING_MESSAGE);
+          return;
+        }
+        
+        if(tableExecuteRegSuite.getRowCount() >0 && bttnStartTestRun.isEnabled() ==true){
            if(checkRunIsAvailable() ==false)
                return;
-           
+
            if(rdButtonChrome.isSelected() ==true){
                testRunBrowser ="chrome";
                rdButtonEdge.setEnabled(false);
@@ -1245,7 +1296,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                rdButtonChrome.setEnabled(false);
                lblChrome.setEnabled(false);
            }
-                
+
             stopExecution =false;    
             bttnStartTestRun.setEnabled(false);
             chkBoxFilterFailTest.setEnabled(false);
@@ -1256,16 +1307,16 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
             bttnRefreshTestRun.setEnabled(false);
             chkBoxAssociateObjOR.setEnabled(false);
             chkBoxRunHeadless.setEnabled(false);
-            
+
             if(runThread.isAlive())
                 runThread.interrupt();
-            
-            killProcess("chromedriver.exe");
-            killProcess("msedgedriver.exe");
-            
+
+            //killProcess("chromedriver.exe");
+            //killProcess("msedgedriver.exe");
+
             glueCode.implicitWaitTime = txtImplicitWait.getText();
             glueCode.pageLoadTimeOut = txtPageLoadTimeout.getText();
-        
+
             runThread = new boltExecutor();
             runThread.start();
         }
@@ -1283,15 +1334,14 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
             lblEdge.setEnabled(true);
             
             stopExecution =true;
-            
+            getErrorMessage ="This test run was stopped/Interrupted by the user!";
             try {
-                //ExecuteRegressionSuite.importDataFromExcelModel.setValueAt("Stopping...", getCurrRunId, 3);
                 bttnStopTestRun.setEnabled(false);
-                runThread.interrupt();
-                //runThread.stop();
                 try{
+                    glueCode.boltDriver.close();
                     glueCode.boltDriver.quit();
                 }catch(NullPointerException | WebDriverException exp){}
+                runThread.interrupt();
             }catch (Exception exp) {
                 System.out.println("Caught:" + exp.getMessage());
             }
@@ -1344,7 +1394,32 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
         else
             chkBoxSelectDeselectAllRun.setSelected(true);
     }//GEN-LAST:event_chkBoxFilterFailTestMouseReleased
-
+    
+    public static boolean selectTestAsPerTestType(){
+        int getRowCnt =tableExecuteRegSuite.getRowCount();
+        boolean tagFound =false;
+        
+        for(int x=0; x<getRowCnt; x++){
+            String getTestStatus =tableExecuteRegSuite.getValueAt(x, 2).toString(); 
+            if(getTestStatus.toLowerCase().contains(jTextTestType.getText().toLowerCase())){
+                importDataFromExcelModel.setValueAt(true, x, 0);
+                tagFound =true;
+            }else
+                importDataFromExcelModel.setValueAt(false, x, 0);
+        } 
+            
+        if(checkAnyRunNotAvailable() ==false)
+                chkBoxSelectDeselectAllRun.setSelected(false);
+        else
+            chkBoxSelectDeselectAllRun.setSelected(true);
+        
+        if(tagFound ==false){
+            JOptionPane.showMessageDialog(scrollExecuteRegSuite,"No test is marked with the given tag ["+jTextTestType.getText()+"]");
+        }
+        
+        return tagFound;
+    }
+    
     private void lblEdgeMouseReleased(MouseEvent evt) {//GEN-FIRST:event_lblEdgeMouseReleased
         if(!bttnStartTestRun.isEnabled())
             return;
@@ -1354,10 +1429,6 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
             rdButtonChrome.setSelected(false);
         }
     }//GEN-LAST:event_lblEdgeMouseReleased
-
-    private void bttnStopTestRunActionPerformed(ActionEvent evt) {//GEN-FIRST:event_bttnStopTestRunActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bttnStopTestRunActionPerformed
 
     private void bttnRefreshTestRunMouseEntered(MouseEvent evt) {//GEN-FIRST:event_bttnRefreshTestRunMouseEntered
         bttnRefreshTestRun.setBackground(new java.awt.Color(250, 128, 114));
@@ -1370,7 +1441,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
     }//GEN-LAST:event_bttnRefreshTestRunMouseExited
 
     private void bttnRefreshTestRunActionPerformed(ActionEvent evt) {//GEN-FIRST:event_bttnRefreshTestRunActionPerformed
-        try {
+         try {
             excelImportWorkBook = new XSSFWorkbook();
             importDataFromExcelModel.setRowCount(0);
                 
@@ -1596,16 +1667,26 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tableExecuteRegSuiteFocusGained
 
-    private void bttnStopTestRunMouseClicked(MouseEvent evt) {//GEN-FIRST:event_bttnStopTestRunMouseClicked
-        //ExecuteRegressionSuite.importDataFromExcelModel.setValueAt("Stopping...", getCurrRunId, 3);
-        //bttnStopTestRun.setEnabled(false);
-    }//GEN-LAST:event_bttnStopTestRunMouseClicked
-
     private void bttnStopTestRunMousePressed(MouseEvent evt) {//GEN-FIRST:event_bttnStopTestRunMousePressed
         if(bttnStopTestRun.isEnabled())
             ExecuteRegressionSuite.importDataFromExcelModel.setValueAt("Stopping...", getCurrRunId, 3);
     }//GEN-LAST:event_bttnStopTestRunMousePressed
-    
+
+    private void lblTestTypeMouseEntered(MouseEvent evt) {//GEN-FIRST:event_lblTestTypeMouseEntered
+        lblTestType.setForeground(java.awt.Color.PINK);
+    }//GEN-LAST:event_lblTestTypeMouseEntered
+
+    private void lblTestTypeMouseExited(MouseEvent evt) {//GEN-FIRST:event_lblTestTypeMouseExited
+        lblTestType.setForeground(new java.awt.Color(255,255,255)); 
+    }//GEN-LAST:event_lblTestTypeMouseExited
+
+    private void jTextTestTypeFocusLost(FocusEvent evt) {//GEN-FIRST:event_jTextTestTypeFocusLost
+        //if(!jTextTestType.getText().isEmpty() &&
+            //jTextTestType.getText().startsWith("@")){
+            //selectTestAsPerTestType();
+        //}
+    }//GEN-LAST:event_jTextTestTypeFocusLost
+         
     public void runTestWithChrome(){
         if(rdButtonChrome.isSelected() ==true){
             rdButtonEdge.setSelected(false);
@@ -1903,12 +1984,14 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
     public static JCheckBox chkBoxSelectDeselectAllRun;
     public JDesktopPane jDesktopPane1;
     public JDesktopPane jDesktopPane2;
+    public static JTextField jTextTestType;
     public static JLabel lblChrome;
     public static JLabel lblEdge;
     public JLabel lblImplicitWait;
     public JLabel lblPageLoadTimeout;
     public JLabel lblRunwith;
     public JLabel lblTestResultView;
+    public JLabel lblTestType;
     public JPanel pnlHeader;
     public JPanel pnlRunMenuBar;
     public JPanel pnlTimeOuts;

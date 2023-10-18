@@ -5,17 +5,11 @@
  */
 package com.automation.bolt.gui;
 
-import com.automation.bolt.common;
 import static com.automation.bolt.common.tabOutFromEditingColumn;
-import com.automation.bolt.constants;
 import static com.automation.bolt.gui.EditRegressionSuite.RegressionSuiteScrollPane;
-import static com.automation.bolt.gui.EditRegressionSuite.keywordList;
-import com.automation.bolt.renderer.*;
 import static com.automation.bolt.xlsCommonMethods.createObjectRepoSheetNew;
 import static com.automation.bolt.xlsCommonMethods.createTestFlowDataSheet;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.io.Files;
+
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;
@@ -28,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -37,10 +32,18 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+
+import com.automation.bolt.common;
+import com.automation.bolt.constants;
+import com.automation.bolt.renderer.tableCellRendererAPI;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.io.Files;
+
 
 /**
  *
