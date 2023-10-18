@@ -35,8 +35,6 @@ import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.gson.Gson;
@@ -44,7 +42,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
-import org.json.simple.JSONObject;
 
 /**
  *
@@ -171,6 +168,12 @@ public class CreateAPITest extends javax.swing.JFrame {
         testURLTxt.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent evt) {
                 testURLTxtKeyReleased(evt, testURLTxt);
+            }
+        });
+        
+        testPayloadTxt.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent evt) {
+                testPayloadTxtKeyReleased(evt, testPayloadTxt);
             }
         });
     }
@@ -554,6 +557,16 @@ public class CreateAPITest extends javax.swing.JFrame {
                                 txtAreaPayload.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
                                 txtAreaPayload.setForeground(java.awt.Color.pink);
                                 txtAreaPayload.setRows(5);
+                                txtAreaPayload.addFocusListener(new java.awt.event.FocusAdapter() {
+                                    public void focusLost(java.awt.event.FocusEvent evt) {
+                                        txtAreaPayloadFocusLost(evt);
+                                    }
+                                });
+                                txtAreaPayload.addKeyListener(new java.awt.event.KeyAdapter() {
+                                    public void keyReleased(java.awt.event.KeyEvent evt) {
+                                        txtAreaPayloadKeyReleased(evt);
+                                    }
+                                });
                                 scrlPnlPayload.setViewportView(txtAreaPayload);
 
                                 scrlPnlHeaders.setBackground(new java.awt.Color(51, 51, 51));
@@ -674,6 +687,11 @@ public class CreateAPITest extends javax.swing.JFrame {
      public static void testURLTxtKeyReleased(KeyEvent evt, JTextField textField) {
         String getURLText =textField.getText();
         txtAPIurl.setText(getURLText);
+    }
+     
+    public static void testPayloadTxtKeyReleased(KeyEvent evt, JTextField textField) {
+        String getPayloadText =textField.getText();
+        txtAreaPayload.setText(getPayloadText);
     }
      
     private void bttnAddNewTestStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnAddNewTestStepActionPerformed
@@ -1223,20 +1241,23 @@ public class CreateAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_tableAddTestFlowKeyReleased
     
     public static String writeJsonPayloadToTheTextArea(String jsonPayload){
-        
+    	String prettyJson ="";
     	if(jsonPayload ==null || jsonPayload.isEmpty())
     		 return jsonPayload="";
     	
-    	ObjectMapper objectMapper =new ObjectMapper();
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        JsonNode jsonNode;
-        String prettyJson ="";
-        
         try {
-            jsonNode =objectMapper.readTree(jsonPayload);
-            prettyJson =objectMapper.writeValueAsString(jsonNode);
+        	//ObjectMapper objectMapper =new ObjectMapper();
+            //objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+            //JsonNode jsonNode;
+            //jsonNode =objectMapper.readTree(jsonPayload);
+            //prettyJson =objectMapper.writeValueAsString(jsonNode);
+            //jsonPayload =prettyJson;
+            
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonElement jsonElement = JsonParser.parseString(jsonPayload);
+            prettyJson = gson.toJson(jsonElement);
             jsonPayload =prettyJson;
-        } catch (JsonProcessingException | JsonParseException ex) {
+        } catch (JsonParseException ex) {
             jsonPayload =jsonPayload;
             JOptionPane.showMessageDialog(null,"Invalid json body!","Alert",JOptionPane.WARNING_MESSAGE);
         }
@@ -1295,6 +1316,15 @@ public class CreateAPITest extends javax.swing.JFrame {
     private void tableAddTestFlowMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableAddTestFlowMouseReleased
       updateAPIAttributeData();
     }//GEN-LAST:event_tableAddTestFlowMouseReleased
+
+    private void txtAreaPayloadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAreaPayloadFocusLost
+        getApiPayload =txtAreaPayload.getText();
+        tableAddTestFlow.setValueAt(getApiPayload,getCurrRowBeforeKeyPressed, 7);
+    }//GEN-LAST:event_txtAreaPayloadFocusLost
+
+    private void txtAreaPayloadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAreaPayloadKeyReleased
+        tableAddTestFlow.setValueAt(txtAreaPayload.getText(),getCurrRowBeforeKeyPressed, 7);
+    }//GEN-LAST:event_txtAreaPayloadKeyReleased
     
     public static void updateAPIAttributeData(){
         getCurrRowBeforeKeyPressed =tableAddTestFlow.getSelectedRow();
