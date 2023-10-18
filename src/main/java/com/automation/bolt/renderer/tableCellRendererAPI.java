@@ -65,7 +65,9 @@ public class tableCellRendererAPI implements TableCellRenderer{
                     
                     for(int i=table.getSelectedRow(); i<table.getRowCount(); i++){
                         testStepSeries++;
+
                         //table.getModel().setValueAt(String.valueOf(testStepSeries), i, 1);
+                        table.getModel().setValueAt(String.valueOf(testStepSeries), i, 1);
                         
                         try{
                             if(table.getModel().getValueAt(i+1, 0) !=null && 
