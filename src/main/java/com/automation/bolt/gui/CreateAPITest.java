@@ -9,17 +9,14 @@ import com.automation.bolt.common;
 import static com.automation.bolt.common.tabOutFromEditingColumn;
 import com.automation.bolt.constants;
 import static com.automation.bolt.gui.EditRegressionSuite.RegressionSuiteScrollPane;
-import static com.automation.bolt.gui.EditRegressionSuite.keywordList;
 import com.automation.bolt.renderer.*;
 import static com.automation.bolt.xlsCommonMethods.createObjectRepoSheetNew;
 import static com.automation.bolt.xlsCommonMethods.createTestFlowDataSheet;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.io.Files;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -40,7 +37,14 @@ import javax.swing.table.TableColumn;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -99,6 +103,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     
     public static int getCurrRowBeforeKeyPressed;
     public static String getTheAPIurl;
+    public static String getApiPayload;
     
     /**
      * Creates new form CreateTestSuite
@@ -147,7 +152,7 @@ public class CreateAPITest extends javax.swing.JFrame {
         //elmXpathCol =tableAddOR.getColumnModel().getColumn(2);
         //elmXpathCol.setCellEditor(new DefaultCellEditor(elmXpathTxt));
         
-        elmNameTxt.addFocusListener(new FocusAdapter() {
+        /*elmNameTxt.addFocusListener(new FocusAdapter() {
             public void focusLost(FocusEvent evt) {
                 elmNameTxtFocusLost(evt);
             }
@@ -155,7 +160,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             private void elmNameTxtFocusLost(FocusEvent evt) {                                     
                 retrieveTestElmList();
             }   
-        });
+        });*/
        
         testIdTxt.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
@@ -978,8 +983,8 @@ public class CreateAPITest extends javax.swing.JFrame {
         if(common.checkForDuplicateTestId(createSuiteTabModel, tableAddTestFlow, editableRow, testIdTxt) ==true)
             return;
         
-        if(checkForDuplicateElementName() ==true)
-                return;
+        //if(checkForDuplicateElementName() ==true)
+                //return;
         
 //        if(common.checkForBlankColumnValue(tableAddOR, 0)){
 //            tableAddOR.editCellAt(common.blankRowIndex, 0);
@@ -1165,74 +1170,13 @@ public class CreateAPITest extends javax.swing.JFrame {
         getTestFlowCellEditorStatus =false;
         getElmRepoCellEditorStatus =false;
     }//GEN-LAST:event_bttnAddNewTestSuiteActionPerformed
-    
-    public static void retrieveTestElmList(){
-        //coBoxObjectRepo.removeAllItems();
-        
-//        String getCellTxt =null;
-//        for(int i=0; i<tableAddOR.getRowCount(); i++){
-//            try{
-//                getCellTxt =tableAddOR.getValueAt(i, 0).toString();
-//            }catch(NullPointerException exp){
-//                getCellTxt ="";
-//            }
-//            
-//            if(!getCellTxt.isEmpty()){
-//                if(checkElementExistInTheList(getCellTxt) ==false)
-//                    coBoxObjectRepo.addItem(getCellTxt);
-//            }
-//        }
-    }
-    
-    public static boolean checkForDuplicateElementName(){
-//        String getCellVal = null;
-//        duplicateElement =false;
-//        
-//        if(createORTabModel.isCellEditable(tableAddOR.getSelectedRow(), 0) ==true){
-//             try{
-//                getCellVal =elmNameTxt.getText();
-//            }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){
-//                getCellVal ="";
-//            }
-//             
-//            if(!getCellVal.isEmpty()){
-//               int elmIndex =0;
-//               for(int i=0; i<createORTabModel.getRowCount(); i++){
-//                       String getCellTxt=null;
-//                       try{
-//                           getCellTxt =createORTabModel.getValueAt(i, 0).toString().toLowerCase();
-//                       }catch (NullPointerException exp){
-//                           getCellTxt ="";
-//                       }
-//                       if(getCellVal.toLowerCase().contentEquals(getCellTxt)){
-//                           elmIndex++;
-//                           if(elmIndex ==2){
-//                               //editableRow =tableAddOR.getSelectedRow();
-//                               //tableAddOR.editCellAt(editableAddElmRow, 0);
-//                               //tableAddOR.setSurrendersFocusOnKeystroke(true);
-//                               //tableAddOR.getEditorComponent().requestFocus();
-//                               
-//                               //tableAddOR.clearSelection();
-//                               //tableAddOR.changeSelection(editableAddElmRow, 0, false, true);
-//                               elmNameTxt.selectAll();
-//                               duplicateElement =true;
-//                               JOptionPane.showMessageDialog(null, "Element name ["+getCellTxt+"] already exist!", "Alert", JOptionPane.WARNING_MESSAGE);
-//                               break;
-//                           }
-//                       }
-//               }
-//           }
-//        }
-//        
-        return duplicateElement;
-    }
         
     private void tableAddTestFlowMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableAddTestFlowMousePressed
         
         //getElmRepoSelectedRow =tableAddOR.getSelectedRow();
         //tabOutFromEditingColumn(getElmRepoCellEditorStatus, tableAddOR, getRepoCellxPoint, getRepoCellyPoint, getElmRepoSelectedRow);
        
-        writeJsonPayloadToTheTextArea();
+        //writeJsonPayloadToTheTextArea();
         
         if(common.checkForDuplicateTestId(createSuiteTabModel, tableAddTestFlow, editableRow, testIdTxt) ==true)
             return;
@@ -1278,9 +1222,28 @@ public class CreateAPITest extends javax.swing.JFrame {
         common.checkForDuplicateTestId(createSuiteTabModel, tableAddTestFlow, editableRow, testIdTxt);
     }//GEN-LAST:event_tableAddTestFlowKeyReleased
     
-    public static void writeJsonPayloadToTheTextArea(){
-        int getSelRow =tableAddTestFlow.getSelectedRow();
+    public static String writeJsonPayloadToTheTextArea(String jsonPayload){
         
+    	if(jsonPayload ==null || jsonPayload.isEmpty())
+    		 return jsonPayload="";
+    	
+    	ObjectMapper objectMapper =new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        JsonNode jsonNode;
+        String prettyJson ="";
+        
+        try {
+            jsonNode =objectMapper.readTree(jsonPayload);
+            prettyJson =objectMapper.writeValueAsString(jsonNode);
+            jsonPayload =prettyJson;
+        } catch (JsonProcessingException | JsonParseException ex) {
+            jsonPayload =jsonPayload;
+            JOptionPane.showMessageDialog(null,"Invalid json body!","Alert",JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return jsonPayload;
+                 
+        /*int getSelRow =tableAddTestFlow.getSelectedRow(); 
         try{
             String getPayload =tableAddTestFlow.getValueAt(getSelRow, 7).toString();
             //System.out.println(getPayload);
@@ -1301,7 +1264,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                 if(exp.getMessage().contains("cannot be cast"))
                     txtAreaPayload.setText("Invalid JSON body!");
             }
-        }catch (NullPointerException exp){}
+        }catch (NullPointerException exp){}*/
     }
     
     private void txtAPIurlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAPIurlActionPerformed
@@ -1334,14 +1297,26 @@ public class CreateAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_tableAddTestFlowMouseReleased
     
     public static void updateAPIAttributeData(){
-        try{
-            getCurrRowBeforeKeyPressed =tableAddTestFlow.getSelectedRow();
+        getCurrRowBeforeKeyPressed =tableAddTestFlow.getSelectedRow();
+        
+        try{    
             getTheAPIurl =tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 2).toString();
             txtAPIurl.setText(getTheAPIurl);
             txtAPIurl.setCaretPosition(0);
-        }catch(NullPointerException exp){
+        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){
             txtAPIurl.setText("");
             txtAPIurl.setCaretPosition(0);
+        }
+        
+        try{
+            getApiPayload =tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 7).toString();
+            if(getApiPayload !=null){
+                txtAreaPayload.setText(writeJsonPayloadToTheTextArea(getApiPayload));
+                txtAreaPayload.setCaretPosition(0);
+            }
+        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){
+            txtAreaPayload.setText("");
+            txtAreaPayload.setCaretPosition(0);
         }
     }
     
@@ -1421,7 +1396,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     public javax.swing.JScrollPane scrlPnlAuthorization;
     public javax.swing.JScrollPane scrlPnlHeaders;
     public javax.swing.JScrollPane scrlPnlParams;
-    public javax.swing.JScrollPane scrlPnlPayload;
+    public static javax.swing.JScrollPane scrlPnlPayload;
     public static javax.swing.JScrollPane scrollPaneTestFlow;
     public static javax.swing.JTable tableAddTestFlow;
     public static javax.swing.JTextField txtAPIurl;
