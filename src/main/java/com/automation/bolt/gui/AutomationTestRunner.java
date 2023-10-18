@@ -96,7 +96,7 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 9)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Test Automation Accelerator");
+        jLabel2.setText("Test Automation Builder");
 
         javax.swing.GroupLayout pnlBoltLayout = new javax.swing.GroupLayout(pnlBolt);
         pnlBolt.setLayout(pnlBoltLayout);
@@ -104,9 +104,11 @@ public class AutomationTestRunner extends javax.swing.JFrame {
             pnlBoltLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBoltLayout.createSequentialGroup()
                 .addContainerGap(595, Short.MAX_VALUE)
-                .addGroup(pnlBoltLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(pnlBoltLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addGroup(pnlBoltLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel2)))
                 .addGap(13, 13, 13))
         );
         pnlBoltLayout.setVerticalGroup(
@@ -353,7 +355,6 @@ public class AutomationTestRunner extends javax.swing.JFrame {
 
                         lblSettingsAndConfiguration.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/settingAndConfiguration.png"));
                             lblSettingsAndConfiguration.setToolTipText("Setting & Configuration");
-                            lblSettingsAndConfiguration.setEnabled(false);
                             lblSettingsAndConfiguration.setFocusable(false);
                             lblSettingsAndConfiguration.addMouseListener(new java.awt.event.MouseAdapter() {
                                 public void mousePressed(java.awt.event.MouseEvent evt) {
