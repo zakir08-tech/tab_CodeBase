@@ -80,7 +80,6 @@
           <Color blue="af" green="af" id="pink" palette="1" red="ff" type="palette"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="2"/>
-        <Property name="text" type="java.lang.String" value="http"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
             <EmptyBorder bottom="1" left="4" right="1" top="1"/>
@@ -105,7 +104,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="scrollPaneTestFlow" alignment="1" pref="983" max="32767" attributes="0"/>
+              <Component id="scrollPaneTestFlow" alignment="1" pref="1094" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -228,6 +227,7 @@
               </Properties>
               <Events>
                 <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableAddTestFlowMousePressed"/>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableAddTestFlowMouseReleased"/>
                 <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tableAddTestFlowKeyPressed"/>
                 <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tableAddTestFlowKeyReleased"/>
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tableAddTestFlowKeyTyped"/>
@@ -245,10 +245,10 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                  <Component id="pnlCreateSuiteMenu" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                  <Component id="pnlCreateSuiteMenu" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -274,12 +274,17 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="bttnDeleteTestStep" alignment="0" max="32767" attributes="0"/>
-                  <Component id="bttnAddStepUp" alignment="0" max="32767" attributes="0"/>
-                  <Component id="bttnAddStepDown" alignment="0" pref="157" max="32767" attributes="0"/>
-                  <Component id="bttnSaveSuite" alignment="0" max="32767" attributes="0"/>
-                  <Component id="bttnAddNewTestSuite" alignment="0" max="32767" attributes="0"/>
-                  <Component id="bttnAddNewTestStep" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="bttnAddNewTestSuite" alignment="1" pref="35" max="32767" attributes="0"/>
+                          <Component id="bttnSaveSuite" alignment="1" max="32767" attributes="0"/>
+                          <Component id="bttnAddStepDown" alignment="1" max="32767" attributes="0"/>
+                          <Component id="bttnAddStepUp" alignment="1" max="32767" attributes="0"/>
+                          <Component id="bttnDeleteTestStep" alignment="1" max="32767" attributes="0"/>
+                          <Component id="bttnAddNewTestStep" alignment="1" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -317,7 +322,6 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new javax.swing.ImageIcon(System.getProperty(&quot;user.dir&quot;).replaceAll(&quot;\\\\&quot;, &quot;/&quot;)+&quot;/icons/addTestStep_Element.png&quot;)" type="code"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Add New Test Step"/>
                 <Property name="toolTipText" type="java.lang.String" value="will add a blank test step"/>
                 <Property name="actionCommand" type="java.lang.String" value="OpenRegressionSuite"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -353,7 +357,6 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new javax.swing.ImageIcon(System.getProperty(&quot;user.dir&quot;).replaceAll(&quot;\\\\&quot;, &quot;/&quot;)+&quot;/icons/deleteTestStep_Element.png&quot;)" type="code"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Delete Test Step"/>
                 <Property name="toolTipText" type="java.lang.String" value="will delete the selected test step"/>
                 <Property name="actionCommand" type="java.lang.String" value="OpenRegressionSuite"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -389,7 +392,6 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new javax.swing.ImageIcon(System.getProperty(&quot;user.dir&quot;).replaceAll(&quot;\\\\&quot;, &quot;/&quot;)+&quot;/icons/addTestStepUp.png&quot;)" type="code"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Add Test Step Up"/>
                 <Property name="toolTipText" type="java.lang.String" value="will add a new test step above the selected step"/>
                 <Property name="actionCommand" type="java.lang.String" value="AddNewStep"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -428,7 +430,6 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new javax.swing.ImageIcon(System.getProperty(&quot;user.dir&quot;).replaceAll(&quot;\\\\&quot;, &quot;/&quot;)+&quot;/icons/addStepUpDown.png&quot;)" type="code"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Add Test Step Down"/>
                 <Property name="toolTipText" type="java.lang.String" value="will add a new test step below the selected step"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -465,7 +466,6 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new javax.swing.ImageIcon(System.getProperty(&quot;user.dir&quot;).replaceAll(&quot;\\\\&quot;, &quot;/&quot;)+&quot;/icons/saveTestSuite.png&quot;)" type="code"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Save Test Suite"/>
                 <Property name="toolTipText" type="java.lang.String" value="will save the test suite"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -502,7 +502,6 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new javax.swing.ImageIcon(System.getProperty(&quot;user.dir&quot;).replaceAll(&quot;\\\\&quot;, &quot;/&quot;)+&quot;/icons/addUploadTestSuite.png&quot;)" type="code"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Add New Test Suite"/>
                 <Property name="toolTipText" type="java.lang.String" value="will add a blank test suite"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
