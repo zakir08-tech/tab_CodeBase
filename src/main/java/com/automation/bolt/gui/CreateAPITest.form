@@ -41,8 +41,11 @@
           <Group type="102" alignment="1" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="pnlCreateTestSuite" max="32767" attributes="0"/>
-                  <Component id="pnlTestAttributes" alignment="0" max="32767" attributes="0"/>
                   <Component id="txtAPIurl" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="pnlTestAttributes" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <Component id="dPanelMenu" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
@@ -58,7 +61,7 @@
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="txtAPIurl" min="-2" pref="29" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="pnlTestAttributes" min="-2" max="-2" attributes="0"/>
+                      <Component id="pnlTestAttributes" max="32767" attributes="0"/>
                   </Group>
                   <Component id="dPanelMenu" max="32767" attributes="0"/>
               </Group>
@@ -146,8 +149,8 @@
                     <Column editable="true" title="Params (key)" type="java.lang.Object"/>
                     <Column editable="true" title="Params (value)" type="java.lang.Object"/>
                     <Column editable="true" title="Payload" type="java.lang.Object"/>
-                    <Column editable="true" title="Authorization" type="java.lang.Object"/>
-                    <Column editable="true" title="" type="java.lang.Object"/>
+                    <Column editable="true" title="Modify Payload (key)" type="java.lang.Object"/>
+                    <Column editable="true" title="Modify Payload (value)" type="java.lang.Object"/>
                     <Column editable="true" title="" type="java.lang.Object"/>
                   </Table>
                 </Property>
@@ -550,10 +553,9 @@
                   </Group>
                   <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="scrlPnlPayload" max="32767" attributes="0"/>
                       <Component id="lblPayload" max="32767" attributes="0"/>
+                      <Component id="scrlPnlPayload" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
