@@ -227,7 +227,7 @@ public class CreateAPITest extends javax.swing.JFrame {
 
         txtAPIurl.setBackground(new java.awt.Color(51, 51, 51));
         txtAPIurl.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtAPIurl.setForeground(java.awt.Color.pink);
+        txtAPIurl.setForeground(java.awt.Color.orange);
         txtAPIurl.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtAPIurl.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 1));
         txtAPIurl.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -546,7 +546,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                                 txtAreaParams.setBackground(new java.awt.Color(51, 51, 51));
                                 txtAreaParams.setColumns(20);
                                 txtAreaParams.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-                                txtAreaParams.setForeground(java.awt.Color.pink);
+                                txtAreaParams.setForeground(java.awt.Color.orange);
                                 txtAreaParams.setRows(5);
                                 scrlPnlParams.setViewportView(txtAreaParams);
 
@@ -555,8 +555,9 @@ public class CreateAPITest extends javax.swing.JFrame {
                                 txtAreaPayload.setBackground(new java.awt.Color(51, 51, 51));
                                 txtAreaPayload.setColumns(20);
                                 txtAreaPayload.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-                                txtAreaPayload.setForeground(java.awt.Color.pink);
+                                txtAreaPayload.setForeground(java.awt.Color.orange);
                                 txtAreaPayload.setRows(5);
+                                txtAreaPayload.setTabSize(1);
                                 txtAreaPayload.addFocusListener(new java.awt.event.FocusAdapter() {
                                     public void focusLost(java.awt.event.FocusEvent evt) {
                                         txtAreaPayloadFocusLost(evt);
@@ -572,10 +573,11 @@ public class CreateAPITest extends javax.swing.JFrame {
                                 scrlPnlHeaders.setBackground(new java.awt.Color(51, 51, 51));
                                 scrlPnlHeaders.setBorder(null);
 
+                                txtAreaHeaders.setEditable(false);
                                 txtAreaHeaders.setBackground(new java.awt.Color(51, 51, 51));
                                 txtAreaHeaders.setColumns(20);
                                 txtAreaHeaders.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-                                txtAreaHeaders.setForeground(java.awt.Color.pink);
+                                txtAreaHeaders.setForeground(java.awt.Color.orange);
                                 txtAreaHeaders.setRows(5);
                                 scrlPnlHeaders.setViewportView(txtAreaHeaders);
 
@@ -584,7 +586,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                                 txtAreaAuthorization.setBackground(new java.awt.Color(51, 51, 51));
                                 txtAreaAuthorization.setColumns(20);
                                 txtAreaAuthorization.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-                                txtAreaAuthorization.setForeground(java.awt.Color.pink);
+                                txtAreaAuthorization.setForeground(java.awt.Color.orange);
                                 txtAreaAuthorization.setRows(5);
                                 scrlPnlAuthorization.setViewportView(txtAreaAuthorization);
 
@@ -691,7 +693,7 @@ public class CreateAPITest extends javax.swing.JFrame {
      
     public static void testPayloadTxtKeyReleased(KeyEvent evt, JTextField textField) {
         String getPayloadText =textField.getText();
-        txtAreaPayload.setText(getPayloadText);
+        txtAreaPayload.setText(writeJsonPayloadToTheTextArea(getPayloadText));
     }
      
     private void bttnAddNewTestStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnAddNewTestStepActionPerformed
@@ -1323,7 +1325,9 @@ public class CreateAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_txtAreaPayloadFocusLost
 
     private void txtAreaPayloadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAreaPayloadKeyReleased
-        tableAddTestFlow.setValueAt(txtAreaPayload.getText(),getCurrRowBeforeKeyPressed, 7);
+        try{
+            tableAddTestFlow.setValueAt(txtAreaPayload.getText(),getCurrRowBeforeKeyPressed, 7);
+        }catch(ArrayIndexOutOfBoundsException exp){}
     }//GEN-LAST:event_txtAreaPayloadKeyReleased
     
     public static void updateAPIAttributeData(){
@@ -1347,6 +1351,43 @@ public class CreateAPITest extends javax.swing.JFrame {
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){
             txtAreaPayload.setText("");
             txtAreaPayload.setCaretPosition(0);
+        }
+        
+        try{
+            String getTestId =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
+            String setHeaders ="";
+            
+            if(getTestId !=null && !getTestId.isEmpty())
+            {
+            	int getRowCnt =tableAddTestFlow.getRowCount();
+            	int rowStart =getCurrRowBeforeKeyPressed;
+            	
+            	for(int rowStart1=rowStart; rowStart1<=getRowCnt;rowStart1++) {
+            		String getHeaderName =(String) tableAddTestFlow.getValueAt(rowStart1, 3);
+                    if(getHeaderName ==null)
+                    	getHeaderName ="";
+                    
+                    String getHeaderValue = (String) tableAddTestFlow.getValueAt(rowStart1, 4);
+                    if(getHeaderValue ==null)
+                    	getHeaderValue ="";
+                    
+                    if(!getHeaderName.isEmpty() || !getHeaderValue.isEmpty()) {
+                    	setHeaders = setHeaders + getHeaderName +":"+ getHeaderValue+"\n";
+                    }
+                    
+                    try {
+                    	String getTestId1 =(String) tableAddTestFlow.getValueAt(rowStart1+1, 0);
+                        if(getTestId1 !=null && !getTestId1.isEmpty()) {
+                        	txtAreaHeaders.setText(setHeaders);
+                        	break;
+                        }
+                    }catch(ArrayIndexOutOfBoundsException exp) {txtAreaHeaders.setText(setHeaders);break;}
+            	}
+            }else
+            	txtAreaHeaders.setText("");
+            
+        }catch(NullPointerException exp){
+            System.out.println(exp.getMessage());
         }
     }
     
@@ -1431,7 +1472,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     public static javax.swing.JTable tableAddTestFlow;
     public static javax.swing.JTextField txtAPIurl;
     public javax.swing.JTextArea txtAreaAuthorization;
-    public javax.swing.JTextArea txtAreaHeaders;
+    public static javax.swing.JTextArea txtAreaHeaders;
     public javax.swing.JTextArea txtAreaParams;
     public static javax.swing.JTextArea txtAreaPayload;
     // End of variables declaration//GEN-END:variables
