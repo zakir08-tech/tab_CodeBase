@@ -108,6 +108,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     public CreateAPITest() {
         
         initComponents();
+         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         createSuiteTabModel =(DefaultTableModel) tableAddTestFlow.getModel();
 
         testIdCol =tableAddTestFlow.getColumnModel().getColumn(0);
@@ -291,12 +292,15 @@ public class CreateAPITest extends javax.swing.JFrame {
             }
         });
         scrollPaneTestFlow.setViewportView(tableAddTestFlow);
+        if (tableAddTestFlow.getColumnModel().getColumnCount() > 0) {
+            tableAddTestFlow.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         javax.swing.GroupLayout pnlCreateTestSuiteLayout = new javax.swing.GroupLayout(pnlCreateTestSuite);
         pnlCreateTestSuite.setLayout(pnlCreateTestSuiteLayout);
         pnlCreateTestSuiteLayout.setHorizontalGroup(
             pnlCreateTestSuiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPaneTestFlow, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1094, Short.MAX_VALUE)
+            .addComponent(scrollPaneTestFlow, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1096, Short.MAX_VALUE)
         );
         pnlCreateTestSuiteLayout.setVerticalGroup(
             pnlCreateTestSuiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -506,7 +510,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                                         .addComponent(bttnSaveSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addContainerGap(453, Short.MAX_VALUE))
                                 );
 
                                 dPanelMenu.setLayer(pnlCreateSuiteMenu, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -516,7 +520,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                                 dPanelMenuLayout.setHorizontalGroup(
                                     dPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(dPanelMenuLayout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
+                                        .addGap(4, 4, 4)
                                         .addComponent(pnlCreateSuiteMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 );
@@ -528,17 +532,17 @@ public class CreateAPITest extends javax.swing.JFrame {
                                         .addContainerGap())
                                 );
 
-                                lblPayload.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+                                lblPayload.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
                                 lblPayload.setText("Payload");
 
-                                lblParams.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+                                lblParams.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
                                 lblParams.setText("Params");
 
                                 lblAuthorization.setBackground(new java.awt.Color(51, 51, 51));
-                                lblAuthorization.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+                                lblAuthorization.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
                                 lblAuthorization.setText("Authorization");
 
-                                lblHeaders.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+                                lblHeaders.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
                                 lblHeaders.setText("Headers");
 
                                 scrlPnlParams.setBorder(null);
@@ -577,7 +581,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                                 txtAreaHeaders.setBackground(new java.awt.Color(51, 51, 51));
                                 txtAreaHeaders.setColumns(20);
                                 txtAreaHeaders.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-                                txtAreaHeaders.setForeground(java.awt.Color.orange);
+                                txtAreaHeaders.setForeground(java.awt.Color.pink);
                                 txtAreaHeaders.setRows(5);
                                 scrlPnlHeaders.setViewportView(txtAreaHeaders);
 
@@ -596,8 +600,8 @@ public class CreateAPITest extends javax.swing.JFrame {
                                     pnlTestAttributesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlTestAttributesLayout.createSequentialGroup()
                                         .addGroup(pnlTestAttributesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(scrlPnlParams)
-                                            .addComponent(lblParams, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(lblParams, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(scrlPnlParams))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(pnlTestAttributesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(scrlPnlHeaders)
@@ -606,10 +610,14 @@ public class CreateAPITest extends javax.swing.JFrame {
                                         .addGroup(pnlTestAttributesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(scrlPnlAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(lblAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(7, 7, 7)
+                                        .addGap(6, 6, 6)
                                         .addGroup(pnlTestAttributesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblPayload, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(scrlPnlPayload)))
+                                            .addGroup(pnlTestAttributesLayout.createSequentialGroup()
+                                                .addComponent(scrlPnlPayload)
+                                                .addGap(1, 1, 1))
+                                            .addGroup(pnlTestAttributesLayout.createSequentialGroup()
+                                                .addComponent(lblPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                 );
                                 pnlTestAttributesLayout.setVerticalGroup(
                                     pnlTestAttributesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -619,13 +627,11 @@ public class CreateAPITest extends javax.swing.JFrame {
                                             .addComponent(lblPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(lblAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(lblHeaders, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, 0)
                                         .addGroup(pnlTestAttributesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(scrlPnlParams, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
                                             .addComponent(scrlPnlHeaders, javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(scrlPnlAuthorization, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(scrlPnlPayload, javax.swing.GroupLayout.Alignment.LEADING))
-                                        .addGap(0, 0, 0))
+                                            .addComponent(scrlPnlPayload, javax.swing.GroupLayout.Alignment.LEADING)))
                                 );
 
                                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -637,8 +643,9 @@ public class CreateAPITest extends javax.swing.JFrame {
                                             .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(txtAPIurl)
                                             .addGroup(layout.createSequentialGroup()
+                                                .addGap(1, 1, 1)
                                                 .addComponent(pnlTestAttributes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                .addGap(1, 1, 1)))
                                         .addComponent(dPanelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(1, 1, 1))
                                 );
@@ -1413,17 +1420,23 @@ public class CreateAPITest extends javax.swing.JFrame {
         tableAddTestFlow.getColumnModel().getColumn(1).setMaxWidth(72);
         tableAddTestFlow.getColumnModel().getColumn(1).setMinWidth(72);
         
-        tableAddTestFlow.getColumnModel().getColumn(2).setMaxWidth(300);
-        tableAddTestFlow.getColumnModel().getColumn(2).setMinWidth(300);
+        //tableAddTestFlow.getColumnModel().getColumn(2).setMaxWidth(250);
+        //tableAddTestFlow.getColumnModel().getColumn(2).setMinWidth(250);
         
-        tableAddTestFlow.getColumnModel().getColumn(7).setMaxWidth(200);
-        tableAddTestFlow.getColumnModel().getColumn(7).setMinWidth(200);
+        //tableAddTestFlow.getColumnModel().getColumn(3).setMaxWidth(250);
+        //tableAddTestFlow.getColumnModel().getColumn(3).setMinWidth(250);
         
-        tableAddTestFlow.getColumnModel().getColumn(8).setMaxWidth(150);
-        tableAddTestFlow.getColumnModel().getColumn(8).setMinWidth(150);
+        //tableAddTestFlow.getColumnModel().getColumn(4).setMaxWidth(80);
+        //tableAddTestFlow.getColumnModel().getColumn(4).setMinWidth(100);
         
-        tableAddTestFlow.getColumnModel().getColumn(9).setMaxWidth(200);
-        tableAddTestFlow.getColumnModel().getColumn(9).setMinWidth(200);
+        //tableAddTestFlow.getColumnModel().getColumn(7).setMaxWidth(200);
+        //tableAddTestFlow.getColumnModel().getColumn(7).setMinWidth(100);
+        
+        //tableAddTestFlow.getColumnModel().getColumn(8).setMaxWidth(150);
+        //tableAddTestFlow.getColumnModel().getColumn(8).setMinWidth(110);
+        
+        //tableAddTestFlow.getColumnModel().getColumn(9).setMaxWidth(200);
+        //tableAddTestFlow.getColumnModel().getColumn(9).setMinWidth(120);
     }
     
     /**

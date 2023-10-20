@@ -7,6 +7,7 @@ package com.automation.bolt.renderer;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
@@ -22,7 +23,8 @@ public class tableCellRendererAPI implements TableCellRenderer{
             
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        Component c= RENDERER.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);      
+        Component c= RENDERER.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        Font f;
         switch (column) {
             case 2:
                 c.setForeground(Color.pink);
@@ -44,10 +46,23 @@ public class tableCellRendererAPI implements TableCellRenderer{
                 }
                 break;
             case 1:
-                if(table.getModel().getValueAt(row, 1) ==null || table.getModel().getValueAt(row, 1).toString().isEmpty()){
-                    //table.getModel().setValueAt(Integer.valueOf(table.getModel().getValueAt(row-1, 1).toString())+1, row, 1);
+                String getRequest ="";
+                try{
+                    getRequest =table.getModel().getValueAt(row, 1).toString().toUpperCase();
+                }catch (NullPointerException exp){}
+                
+                if(getRequest.contentEquals("GET")){
+                    c.setForeground(Color.green);
+                }else if(getRequest.contentEquals("POST")){
+                    c.setForeground(new java.awt.Color(255,153,0));
+                }else if(getRequest.contentEquals("PUT")){
+                    c.setForeground(new java.awt.Color(153,153,255));
+                }else if(getRequest.contentEquals("PATCH")){
+                    c.setForeground(new java.awt.Color(255,255,255));
+                }else if(getRequest.contentEquals("DELETE")){
+                    c.setForeground(new java.awt.Color(255,102,102));
                 }
-                c.setForeground(Color.white);
+                
                 c.setBackground(new java.awt.Color(51, 51, 51));
                 break;
             default:
