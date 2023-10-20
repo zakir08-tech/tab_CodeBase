@@ -262,7 +262,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                 "Test ID", "Request", "URL", "Headers (key)", "Headers (value)", "Params (key)", "Params (value)", "Payload", "Modify Payload (key)", "Modify Payload (value)", ""
             }
         ));
-        tableAddTestFlow.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tableAddTestFlow.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tableAddTestFlow.setName("tableAddTestFlow"); // NOI18N
         tableAddTestFlow.setRowHeight(30);
         tableAddTestFlow.setRowMargin(2);
@@ -1417,23 +1417,29 @@ public class CreateAPITest extends javax.swing.JFrame {
         tableAddTestFlow.getColumnModel().getColumn(1).setMaxWidth(72);
         tableAddTestFlow.getColumnModel().getColumn(1).setMinWidth(72);
         
-        //tableAddTestFlow.getColumnModel().getColumn(2).setMaxWidth(250);
-        //tableAddTestFlow.getColumnModel().getColumn(2).setMinWidth(250);
+        tableAddTestFlow.getColumnModel().getColumn(2).setMaxWidth(350);
+        tableAddTestFlow.getColumnModel().getColumn(2).setMinWidth(350);
         
-        //tableAddTestFlow.getColumnModel().getColumn(3).setMaxWidth(250);
-        //tableAddTestFlow.getColumnModel().getColumn(3).setMinWidth(250);
+        tableAddTestFlow.getColumnModel().getColumn(3).setMaxWidth(120);
+        tableAddTestFlow.getColumnModel().getColumn(3).setMinWidth(120);
         
-        //tableAddTestFlow.getColumnModel().getColumn(4).setMaxWidth(80);
-        //tableAddTestFlow.getColumnModel().getColumn(4).setMinWidth(100);
+        tableAddTestFlow.getColumnModel().getColumn(4).setMaxWidth(120);
+        tableAddTestFlow.getColumnModel().getColumn(4).setMinWidth(120);
         
-        //tableAddTestFlow.getColumnModel().getColumn(7).setMaxWidth(200);
-        //tableAddTestFlow.getColumnModel().getColumn(7).setMinWidth(100);
+        tableAddTestFlow.getColumnModel().getColumn(5).setMaxWidth(120);
+        tableAddTestFlow.getColumnModel().getColumn(5).setMinWidth(120);
         
-        //tableAddTestFlow.getColumnModel().getColumn(8).setMaxWidth(150);
-        //tableAddTestFlow.getColumnModel().getColumn(8).setMinWidth(110);
+        tableAddTestFlow.getColumnModel().getColumn(6).setMaxWidth(120);
+        tableAddTestFlow.getColumnModel().getColumn(6).setMinWidth(120);
         
-        //tableAddTestFlow.getColumnModel().getColumn(9).setMaxWidth(200);
-        //tableAddTestFlow.getColumnModel().getColumn(9).setMinWidth(120);
+        tableAddTestFlow.getColumnModel().getColumn(7).setMaxWidth(300);
+        tableAddTestFlow.getColumnModel().getColumn(7).setMinWidth(300);
+        
+        tableAddTestFlow.getColumnModel().getColumn(8).setMaxWidth(150);
+        tableAddTestFlow.getColumnModel().getColumn(8).setMinWidth(150);
+        
+        //tableAddTestFlow.getColumnModel().getColumn(9).setMaxWidth(150);
+        tableAddTestFlow.getColumnModel().getColumn(9).setMinWidth(150);
     }
     
     /**
