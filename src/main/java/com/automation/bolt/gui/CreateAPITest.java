@@ -292,9 +292,6 @@ public class CreateAPITest extends javax.swing.JFrame {
             }
         });
         scrollPaneTestFlow.setViewportView(tableAddTestFlow);
-        if (tableAddTestFlow.getColumnModel().getColumnCount() > 0) {
-            tableAddTestFlow.getColumnModel().getColumn(4).setResizable(false);
-        }
 
         javax.swing.GroupLayout pnlCreateTestSuiteLayout = new javax.swing.GroupLayout(pnlCreateTestSuite);
         pnlCreateTestSuite.setLayout(pnlCreateTestSuiteLayout);
