@@ -43,8 +43,9 @@
                   <Component id="pnlCreateTestSuite" max="32767" attributes="0"/>
                   <Component id="txtAPIurl" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                       <Component id="pnlTestAttributes" max="32767" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <Component id="dPanelMenu" min="-2" max="-2" attributes="0"/>
@@ -107,7 +108,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="scrollPaneTestFlow" alignment="1" pref="1094" max="32767" attributes="0"/>
+              <Component id="scrollPaneTestFlow" alignment="1" pref="1096" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -249,7 +250,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                   <Component id="pnlCreateSuiteMenu" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -305,7 +306,7 @@
                       <Component id="bttnSaveSuite" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="bttnAddNewTestSuite" min="-2" pref="30" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="453" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -538,8 +539,8 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="scrlPnlParams" max="32767" attributes="0"/>
                       <Component id="lblParams" max="32767" attributes="0"/>
+                      <Component id="scrlPnlParams" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -551,10 +552,16 @@
                       <Component id="scrlPnlAuthorization" min="-2" max="-2" attributes="0"/>
                       <Component id="lblAuthorization" min="-2" pref="227" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblPayload" max="32767" attributes="0"/>
-                      <Component id="scrlPnlPayload" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="scrlPnlPayload" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="lblPayload" min="-2" pref="366" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
           </Group>
@@ -568,14 +575,12 @@
                       <Component id="lblAuthorization" alignment="0" min="-2" pref="16" max="-2" attributes="0"/>
                       <Component id="lblHeaders" min="-2" pref="16" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="scrlPnlParams" alignment="0" pref="221" max="32767" attributes="0"/>
                       <Component id="scrlPnlHeaders" alignment="0" max="32767" attributes="0"/>
                       <Component id="scrlPnlAuthorization" alignment="0" max="32767" attributes="0"/>
                       <Component id="scrlPnlPayload" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -584,7 +589,7 @@
         <Component class="javax.swing.JLabel" name="lblPayload">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="12" style="1"/>
+              <Font name="Tahoma" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Payload"/>
           </Properties>
@@ -592,7 +597,7 @@
         <Component class="javax.swing.JLabel" name="lblParams">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="12" style="1"/>
+              <Font name="Tahoma" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Params"/>
           </Properties>
@@ -603,7 +608,7 @@
               <Color blue="33" green="33" red="33" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="12" style="1"/>
+              <Font name="Tahoma" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Authorization"/>
           </Properties>
@@ -611,7 +616,7 @@
         <Component class="javax.swing.JLabel" name="lblHeaders">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="12" style="1"/>
+              <Font name="Tahoma" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Headers"/>
           </Properties>
@@ -702,7 +707,7 @@
                   <Font name="Calibri" size="14" style="0"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="c8" id="orange" palette="1" red="ff" type="palette"/>
+                  <Color blue="af" green="af" id="pink" palette="1" red="ff" type="palette"/>
                 </Property>
                 <Property name="rows" type="int" value="5"/>
               </Properties>
