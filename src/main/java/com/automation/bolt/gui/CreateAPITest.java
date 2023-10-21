@@ -12,8 +12,6 @@ import static com.automation.bolt.gui.EditRegressionSuite.RegressionSuiteScrollP
 import com.automation.bolt.renderer.*;
 import static com.automation.bolt.xlsCommonMethods.createObjectRepoSheetNew;
 import static com.automation.bolt.xlsCommonMethods.createTestFlowDataSheet;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.io.Files;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -35,13 +33,12 @@ import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+import java.util.Arrays;
 
 /**
  *
@@ -51,8 +48,9 @@ public class CreateAPITest extends javax.swing.JFrame {
     public static DefaultTableModel createSuiteTabModel =new DefaultTableModel();
     public static DefaultTableModel createORTabModel =new DefaultTableModel();
     
-    public static JComboBox<String> cBoxtestFlow =new JComboBox<String>();
-    public static JComboBox<String> coBoxObjectRepo =new JComboBox<String>();
+    public static JComboBox<String> cBoxApiRequest =new JComboBox<String>();
+    public static JComboBox<String> coBoxPayloadType =new JComboBox<String>();
+    public static JComboBox<String> coBoxAuth =new JComboBox<String>();
     
     public static JTextField elmNameTxt =new JTextField();
     public static JTextField elmIdTxt =new JTextField();
@@ -77,7 +75,10 @@ public class CreateAPITest extends javax.swing.JFrame {
     
     public static TableColumn testIdCol =null;
     public static TableColumn testURLCol =null;
+    public static TableColumn testApiTypeCol =null;
     public static TableColumn testPayloadCol =null;
+    public static TableColumn testPayloadTypeCol =null;
+    public static TableColumn testAuthCol =null;
     
     public static boolean getTestFlowCellEditorStatus;
     public static int getTestFlowSelectedRow =0;
@@ -119,6 +120,25 @@ public class CreateAPITest extends javax.swing.JFrame {
         
         testPayloadCol =tableAddTestFlow.getColumnModel().getColumn(7);
         testPayloadCol.setCellEditor(new DefaultCellEditor(testPayloadTxt));
+        
+        testApiTypeCol = tableAddTestFlow.getColumnModel().getColumn(1);
+        cBoxApiRequest = new JComboBox<String>();
+        apiRequestList(cBoxApiRequest);
+        testApiTypeCol.setCellEditor(new DefaultCellEditor(cBoxApiRequest));
+        //cBoxApiRequest.setEditable(true);
+        
+        testPayloadTypeCol = tableAddTestFlow.getColumnModel().getColumn(8);
+        coBoxPayloadType = new JComboBox<String>();
+        apiPayloadTypeList(coBoxPayloadType);
+        testPayloadTypeCol.setCellEditor(new DefaultCellEditor(coBoxPayloadType));
+        //coBoxPayloadType.setEditable(true);
+        
+        testAuthCol = tableAddTestFlow.getColumnModel().getColumn(11);
+        coBoxAuth = new JComboBox<String>();
+        apiAuthList(coBoxAuth);
+        testAuthCol.setCellEditor(new DefaultCellEditor(coBoxAuth));
+        //coBoxAuth.setEditable(true);
+        
         
         // test flow cell editors
         /*testIdCol =tableAddTestFlow.getColumnModel().getColumn(0);
@@ -259,7 +279,7 @@ public class CreateAPITest extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Test ID", "Request", "URL", "Headers (key)", "Headers (value)", "Params (key)", "Params (value)", "Payload", "Modify Payload (key)", "Modify Payload (value)", ""
+                "Test ID", "Request", "URL", "Headers (key)", "Headers (value)", "Params (key)", "Params (value)", "Payload", "Payload Type", "Modify Payload (key)", "Modify Payload (value)", "Authorization", "", ""
             }
         ));
         tableAddTestFlow.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
@@ -573,12 +593,14 @@ public class CreateAPITest extends javax.swing.JFrame {
 
                                 scrlPnlHeaders.setBackground(new java.awt.Color(51, 51, 51));
                                 scrlPnlHeaders.setBorder(null);
+                                scrlPnlHeaders.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
                                 txtAreaHeaders.setEditable(false);
                                 txtAreaHeaders.setBackground(new java.awt.Color(51, 51, 51));
                                 txtAreaHeaders.setColumns(20);
                                 txtAreaHeaders.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
                                 txtAreaHeaders.setForeground(java.awt.Color.pink);
+                                txtAreaHeaders.setLineWrap(true);
                                 txtAreaHeaders.setRows(5);
                                 scrlPnlHeaders.setViewportView(txtAreaHeaders);
 
@@ -1226,7 +1248,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                     break;
                 case 3:
                     tableAddTestFlow.editCellAt(getCurRow, 3);
-                    coBoxObjectRepo.requestFocusInWindow();
+                    //coBoxObjectRepo.requestFocusInWindow();
                     break;    
                 case 4:
                     tableAddTestFlow.editCellAt(getCurRow, 4);
@@ -1398,7 +1420,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     
     public static boolean checkElementExistInTheList(String listItem){
         boolean itemExist =false;
-        String getText =null;
+        /*String getText =null;
         
         for(int x=0; x<coBoxObjectRepo.getItemCount(); x++){
             getText =coBoxObjectRepo.getItemAt(x).trim().toLowerCase();
@@ -1406,10 +1428,52 @@ public class CreateAPITest extends javax.swing.JFrame {
                 itemExist =true;
                 break;
             }
-        }
+        }*/
         return itemExist;
     }
-     
+    
+    public static void apiRequestList(JComboBox<String> cBoxTestFlow) {
+        String keywordlist = "," +"GET,"
+                + "POST,"
+                + "PUT,"
+                + "PATCH,"
+                + "DELETE";
+              
+        String[] keywordList = keywordlist.split(",");
+        //Arrays.sort(keywordList);
+         
+        for (String txt : keywordList) {
+            cBoxTestFlow.addItem(txt);
+        }
+    }
+    
+    public static void apiPayloadTypeList(JComboBox<String> cBoxTestFlow) {
+        String keywordlist = "," +"form-data,"
+                + "x-www-form-urlencoded,"
+                + "JSON,"
+                + "HTML,"
+                + "XML";
+              
+        String[] keywordList = keywordlist.split(",");
+        //Arrays.sort(keywordList);
+         
+        for (String txt : keywordList) {
+            cBoxTestFlow.addItem(txt);
+        }
+    }
+    
+    public static void apiAuthList(JComboBox<String> cBoxTestFlow) {
+        String keywordlist = "," +"Basic Auth,"
+                + "Bearer Token";
+              
+        String[] keywordList = keywordlist.split(",");
+        //Arrays.sort(keywordList);
+         
+        for (String txt : keywordList) {
+            cBoxTestFlow.addItem(txt);
+        }
+    }
+    
     public static void setTableColWidthForCreateRegSuiteTable(){
         tableAddTestFlow.getColumnModel().getColumn(0).setMaxWidth(50);
         tableAddTestFlow.getColumnModel().getColumn(0).setMinWidth(50);
@@ -1435,11 +1499,23 @@ public class CreateAPITest extends javax.swing.JFrame {
         tableAddTestFlow.getColumnModel().getColumn(7).setMaxWidth(300);
         tableAddTestFlow.getColumnModel().getColumn(7).setMinWidth(300);
         
-        tableAddTestFlow.getColumnModel().getColumn(8).setMaxWidth(150);
-        tableAddTestFlow.getColumnModel().getColumn(8).setMinWidth(150);
+        //tableAddTestFlow.getColumnModel().getColumn(8).setMaxWidth(100);
+        tableAddTestFlow.getColumnModel().getColumn(8).setMinWidth(100);
         
-        //tableAddTestFlow.getColumnModel().getColumn(9).setMaxWidth(150);
+        tableAddTestFlow.getColumnModel().getColumn(9).setMaxWidth(150);
         tableAddTestFlow.getColumnModel().getColumn(9).setMinWidth(150);
+        
+        tableAddTestFlow.getColumnModel().getColumn(10).setMaxWidth(150);
+        tableAddTestFlow.getColumnModel().getColumn(10).setMinWidth(150);
+        
+        tableAddTestFlow.getColumnModel().getColumn(11).setMaxWidth(150);
+        tableAddTestFlow.getColumnModel().getColumn(11).setMinWidth(150);
+        
+        tableAddTestFlow.getColumnModel().getColumn(12).setMaxWidth(150);
+        tableAddTestFlow.getColumnModel().getColumn(12).setMinWidth(150);
+        
+        //tableAddTestFlow.getColumnModel().getColumn(13).setMaxWidth(150);
+        tableAddTestFlow.getColumnModel().getColumn(13).setMinWidth(150);
     }
     
     /**
