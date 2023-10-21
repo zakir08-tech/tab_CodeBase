@@ -38,6 +38,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+import java.awt.event.ItemEvent;
 import java.util.Arrays;
 
 /**
@@ -197,6 +198,25 @@ public class CreateAPITest extends javax.swing.JFrame {
                 testPayloadTxtKeyReleased(evt, testPayloadTxt);
             }
         });
+        
+        /*coBoxAuth.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+            	authSelected(evt, coBoxAuth);
+            }
+        });*/
+        
+        /*coBoxAuth.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                authSelected(evt, coBoxAuth);
+            }
+        });*/
+        
+        coBoxAuth.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                authSelected(evt, coBoxAuth);
+            }
+        });
+
     }
 
     /**
@@ -721,6 +741,51 @@ public class CreateAPITest extends javax.swing.JFrame {
     public static void testPayloadTxtKeyReleased(KeyEvent evt, JTextField textField) {
         String getPayloadText =textField.getText();
         txtAreaPayload.setText(writeJsonPayloadToTheTextArea(getPayloadText));
+    }
+    
+    public static void authSelected(java.awt.event.FocusEvent evt, JComboBox<String> authField) {
+    	getCurrRowBeforeKeyPressed =tableAddTestFlow.getSelectedRow();
+    	try{
+            String getTestId =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
+            if(getTestId !=null && !getTestId.isEmpty())
+            {
+                String getAuth =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 11);
+                if(getAuth.contentEquals("Basic Auth")){
+                	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
+                	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+                	txtAreaAuthorization.setText("");
+                	
+                    String getUsername =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                    if(getUsername ==null)
+                    	getUsername ="";
+                    String getPassword =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
+                    if(getPassword ==null)
+                    	getPassword ="";
+                    
+                    txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
+                }else if(getAuth.contentEquals("Bearer Token")){
+                	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
+                	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+                	txtAreaAuthorization.setText("");
+                	
+                    String getToken =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                    if(getToken ==null)
+                    	getToken ="";
+                    
+                    txtAreaAuthorization.setText("Token: "+getToken);
+                }else {
+                	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
+                	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+                	txtAreaAuthorization.setText("");
+                }
+                	
+            }else {
+            	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
+            	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+            	txtAreaAuthorization.setText("");
+            }
+            	
+        }catch(NullPointerException exp){}
     }
      
     private void bttnAddNewTestStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnAddNewTestStepActionPerformed
@@ -1360,6 +1425,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     public static void updateAPIAttributeData(){
         getCurrRowBeforeKeyPressed =tableAddTestFlow.getSelectedRow();
         
+        // update api test url
         try{    
             getTheAPIurl =tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 2).toString();
             txtAPIurl.setText(getTheAPIurl);
@@ -1369,6 +1435,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             txtAPIurl.setCaretPosition(0);
         }
         
+        // update api payload body
         try{
             getApiPayload =tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 7).toString();
             if(getApiPayload !=null){
@@ -1380,6 +1447,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             txtAreaPayload.setCaretPosition(0);
         }
         
+        // update api header list
         try{
             String getTestId =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
             String setHeaders ="";
@@ -1416,6 +1484,46 @@ public class CreateAPITest extends javax.swing.JFrame {
         }catch(NullPointerException exp){
             System.out.println(exp.getMessage());
         }
+        
+        // update authentication
+        /*try{
+            String getTestId =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
+            if(getTestId !=null && !getTestId.isEmpty())
+            {
+                String getAuth =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 11);
+                if(getAuth.contentEquals("Basic Auth")){
+                	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
+                	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+                	
+                    String getUsername =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                    if(getUsername ==null)
+                    	getUsername ="";
+                    String getPassword =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
+                    if(getPassword ==null)
+                    	getPassword ="";
+                    
+                    txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
+                }else if(getAuth.contentEquals("Bearer Token")){
+                	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
+                	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+                	
+                	String getToken =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                    if(getToken ==null)
+                    	getToken ="";
+                    
+                    txtAreaAuthorization.setText("Token: "+getToken);
+                }else {
+                	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
+                	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+                	txtAreaAuthorization.setText("");
+                }
+            }else {
+            	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
+            	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+            	txtAreaAuthorization.setText("");
+            }
+            	
+        }catch(NullPointerException exp){}*/
     }
     
     public static boolean checkElementExistInTheList(String listItem){
@@ -1570,7 +1678,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     public static javax.swing.JScrollPane scrollPaneTestFlow;
     public static javax.swing.JTable tableAddTestFlow;
     public static javax.swing.JTextField txtAPIurl;
-    public javax.swing.JTextArea txtAreaAuthorization;
+    public static javax.swing.JTextArea txtAreaAuthorization;
     public static javax.swing.JTextArea txtAreaHeaders;
     public javax.swing.JTextArea txtAreaParams;
     public static javax.swing.JTextArea txtAreaPayload;
