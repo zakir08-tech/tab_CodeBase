@@ -30,11 +30,11 @@ public class tableCellRendererAPI implements TableCellRenderer{
         Font f;
         switch (column) {
             case 2:
-                c.setForeground(Color.pink);
+                c.setForeground(new java.awt.Color(255,255,204));
                 c.setBackground(new java.awt.Color(51, 51, 51));
                 break;
             case 3:
-                c.setForeground(new java.awt.Color(246, 255, 199));
+                c.setForeground(new java.awt.Color(255,102,102));
                 c.setBackground(new java.awt.Color(51, 51, 51));
                 break;
             case 0:
@@ -70,6 +70,10 @@ public class tableCellRendererAPI implements TableCellRenderer{
                 break;
             case 7:
                 c.setForeground(new java.awt.Color(255,153,0));
+                c.setBackground(new java.awt.Color(51, 51, 51));
+                break;
+            case 11:
+                c.setForeground(new java.awt.Color(204,204,255));
                 c.setBackground(new java.awt.Color(51, 51, 51));
                 break;
             default:
