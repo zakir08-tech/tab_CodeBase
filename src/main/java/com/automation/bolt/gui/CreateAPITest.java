@@ -690,24 +690,25 @@ public class CreateAPITest extends javax.swing.JFrame {
                     	getPassword ="";
                     
                     txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
+                    lblAuthorization.setText("Authorization: Basic Auth");
                 }else if(getAuth.contentEquals("Bearer Token")){
                     String getToken =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
                     if(getToken ==null)
                     	getToken ="";
                     tableAddTestFlow.setValueAt("",getCurrRowBeforeKeyPressed, 13);
                     txtAreaAuthorization.setText("Token: "+getToken);
+                    lblAuthorization.setText("Authorization: Bearer Token");
                 }else {
                     tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
                     tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+                    lblAuthorization.setText("Authorization");
                     txtAreaAuthorization.setText("");
                 }
                 	
             }else {
-            	//tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
-            	//tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+                lblAuthorization.setText("Authorization");
             	txtAreaAuthorization.setText("");
             }
-            	
         }catch(NullPointerException exp){}
     }
      
@@ -1361,20 +1362,24 @@ public class CreateAPITest extends javax.swing.JFrame {
                     	getPassword ="";
                     
                     txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
+                    lblAuthorization.setText("Authorization: Basic Auth");
                 }else if(getAuth.contentEquals("Bearer Token")){
                     String getToken =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
                     if(getToken ==null)
                     	getToken ="";
                     
                     txtAreaAuthorization.setText("Token: "+getToken);
+                    lblAuthorization.setText("Authorization: Bearer Token");
                 }else {
                 	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
                 	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+                	lblAuthorization.setText("Authorization");
                 	txtAreaAuthorization.setText("");
                 }
-            }else
-               txtAreaAuthorization.setText("");
-            
+            }else {
+            	lblAuthorization.setText("Authorization"); 
+                txtAreaAuthorization.setText("");
+            }
         }catch(NullPointerException exp){}
     }
     
@@ -1516,7 +1521,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     public javax.swing.JButton bttnDeleteTestStep;
     public static javax.swing.JButton bttnSaveSuite;
     public javax.swing.JDesktopPane dPanelMenu;
-    public javax.swing.JLabel lblAuthorization;
+    public static javax.swing.JLabel lblAuthorization;
     public javax.swing.JLabel lblHeaders;
     public javax.swing.JLabel lblParams;
     public javax.swing.JLabel lblPayload;

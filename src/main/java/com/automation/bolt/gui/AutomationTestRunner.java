@@ -313,6 +313,9 @@ public class AutomationTestRunner extends javax.swing.JFrame {
                             public void mousePressed(java.awt.event.MouseEvent evt) {
                                 radioBttnGUIMousePressed(evt);
                             }
+                            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                                radioBttnGUIMouseReleased(evt);
+                            }
                         });
                         radioBttnGUI.addActionListener(new java.awt.event.ActionListener() {
                             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -511,7 +514,8 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         if(radioBttnGUI.isSelected()){
             radioBttnAPI.setSelected(false);
             lblSettingsAndConfiguration.setEnabled(false);
-        }
+        }else
+            radioBttnGUI.setSelected(true);
     }//GEN-LAST:event_radioBttnGUIActionPerformed
 
     private void radioBttnAPIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBttnAPIActionPerformed
@@ -519,11 +523,15 @@ public class AutomationTestRunner extends javax.swing.JFrame {
             radioBttnGUI.setSelected(false);
             JOptionPane.showMessageDialog(null, "Under Construction!", "Alert", JOptionPane.WARNING_MESSAGE);
             lblSettingsAndConfiguration.setEnabled(true);
-        }
+        }else
+            radioBttnAPI.setSelected(true);
     }//GEN-LAST:event_radioBttnAPIActionPerformed
 
     private void radioBttnGUIMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioBttnGUIMouseClicked
-        //lblCreateTestSuite.setText("Build Test Suite");
+        lblCreateTestSuite.setText("Build Test Suite");
+        lblEditTestSuite.setText("Edit Test Suite");
+        lblExecuteTestSuite.setText("Execute Test Suite");
+        lblAutomationTestReport.setText("Automation Test Report");
     }//GEN-LAST:event_radioBttnGUIMouseClicked
 
     private void radioBttnAPIMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioBttnAPIMouseClicked
@@ -531,10 +539,10 @@ public class AutomationTestRunner extends javax.swing.JFrame {
     }//GEN-LAST:event_radioBttnAPIMouseClicked
 
     private void radioBttnGUIMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioBttnGUIMousePressed
-        lblCreateTestSuite.setText("Build Test Suite");
-        lblEditTestSuite.setText("Edit Test Suite");
-        lblExecuteTestSuite.setText("Execute Test Suite");
-        lblAutomationTestReport.setText("Automation Test Report");
+        //lblCreateTestSuite.setText("Build Test Suite");
+        //lblEditTestSuite.setText("Edit Test Suite");
+        //lblExecuteTestSuite.setText("Execute Test Suite");
+        //lblAutomationTestReport.setText("Automation Test Report");
     }//GEN-LAST:event_radioBttnGUIMousePressed
 
     private void radioBttnAPIMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioBttnAPIMousePressed
@@ -570,6 +578,10 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         killProcess("chromedriver.exe");
         killProcess("msedgedriver.exe");
     }//GEN-LAST:event_formWindowClosing
+
+    private void radioBttnGUIMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioBttnGUIMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radioBttnGUIMouseReleased
 
     /**
      * @param args the command line arguments
