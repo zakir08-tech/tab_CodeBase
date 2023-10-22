@@ -5,6 +5,9 @@
  */
 package com.automation.bolt.renderer;
 
+import static com.automation.bolt.gui.CreateAPITest.getCurrRowBeforeKeyPressed;
+import static com.automation.bolt.gui.CreateAPITest.tableAddTestFlow;
+import static com.automation.bolt.gui.CreateAPITest.txtAreaAuthorization;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -63,6 +66,10 @@ public class tableCellRendererAPI implements TableCellRenderer{
                     c.setForeground(new java.awt.Color(255,102,102));
                 }
                 
+                c.setBackground(new java.awt.Color(51, 51, 51));
+                break;
+            case 7:
+                c.setForeground(new java.awt.Color(255,153,0));
                 c.setBackground(new java.awt.Color(51, 51, 51));
                 break;
             default:
