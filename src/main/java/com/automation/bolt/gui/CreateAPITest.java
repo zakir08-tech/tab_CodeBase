@@ -769,11 +769,6 @@ public class CreateAPITest extends javax.swing.JFrame {
             return;
         
         String getTestId =null;
-        String getTestIdx =null;
-        boolean diffTestId =false;
-        Object getSelTestStep =null;
-        String getNextStepVal ="";
-        boolean lastRowSelected =false;
             
         if (tableAddTestFlow.getRowCount() > 0) {
             getTestFlowSelectedRow =tableAddTestFlow.getSelectedRow();
@@ -785,79 +780,36 @@ public class CreateAPITest extends javax.swing.JFrame {
                 getTestId ="";
             }
             
-            try {
-                getTestIdx =tableAddTestFlow.getValueAt(tableAddTestFlow.getSelectedRow() + 1, 0).toString();                
-            } catch (ArrayIndexOutOfBoundsException | NullPointerException exp) {
-                getTestIdx ="";
+            if(!getTestId.isEmpty())
+            {
+            	JOptionPane.showMessageDialog(null, "Can not delete a step with Test Id!", "Alert", JOptionPane.WARNING_MESSAGE);
+            	return;
             }
-            
-            if (!getTestIdx.isEmpty() && !getTestIdx.contentEquals("#")) {
-                if (!getTestId.contentEquals(getTestIdx)) {
-                    diffTestId =true;
-                }
-            }
-            
-            getSelTestStep = tableAddTestFlow.getValueAt(tableAddTestFlow.getSelectedRow(), 1);
-            int newTestStep = Integer.valueOf(String.valueOf(getSelTestStep));
+             
             createSuiteTabModel.removeRow(rowIndex);
-              
-            if (tableAddTestFlow.getRowCount() != 0) {
-                if (tableAddTestFlow.getRowCount() ==rowIndex) {
-                    rowIndex =rowIndex-1;
-                    lastRowSelected =true;
-                }
-                tableAddTestFlow.setRowSelectionInterval(rowIndex, rowIndex);
-                tableAddTestFlow.requestFocus();
-                
-                if(lastRowSelected ==true)
-                    return;
-               
-                if (getTestId ==null || !getTestId.isEmpty() && !getTestId.contentEquals("#")) {
-                    try{
-                        try{
-                            getNextStepVal =createSuiteTabModel.getValueAt(tableAddTestFlow.getSelectedRow() + 1, 0).toString();
-                        }catch (NullPointerException exp){
-                            getNextStepVal ="";
-                        }
-                        
-                        if (getNextStepVal.isEmpty()
-                            || !getTestIdx.contentEquals(getTestId)) {
-                        if (diffTestId == true) {
-                            getTestId = getTestIdx;
-                        }
-                        tableAddTestFlow.setValueAt(getTestId, tableAddTestFlow.getSelectedRow(), 0);
-                    }
-                    }catch (ArrayIndexOutOfBoundsException exp){ 
-                        tableAddTestFlow.setValueAt(getTestId, tableAddTestFlow.getSelectedRow(), 0);
-                    }
-                }
-                
-                for (int i = tableAddTestFlow.getSelectedRow(); i <tableAddTestFlow.getRowCount(); i++) {
-                    tableAddTestFlow.getModel().setValueAt(newTestStep,i , 1);
-                    try{
-                        try{
-                            getNextStepVal =tableAddTestFlow.getModel().getValueAt(i + 1, 0).toString();
-                        }catch(NullPointerException exp){
-                            getNextStepVal ="";
-                        }
-                        
-                        if (tableAddTestFlow.getModel().getValueAt(i, 0) != null && 
-                                !getNextStepVal.isEmpty() &&
-                                !getNextStepVal.contentEquals("#")) {
-                            break;
-                        } else if (tableAddTestFlow.getModel().getValueAt(i, 1) == null || 
-                                   tableAddTestFlow.getModel().getValueAt(i + 1, 1).toString().isEmpty()) {
-                            break;
-                        }
-                    }catch (ArrayIndexOutOfBoundsException exp){
-                        tableAddTestFlow.getModel().setValueAt(newTestStep, i, 1);
-                    }
-                    newTestStep++;
-                }
-            }
             
+            try {
+                tableAddTestFlow.setRowSelectionInterval(rowIndex-1, rowIndex-1);
+                tableAddTestFlow.setColumnSelectionInterval(rowIndex-1, 0);
+                tableAddTestFlow.requestFocus();
+            }catch(IllegalArgumentException exp) {
+            	rowIndex =tableAddTestFlow.getSelectedRow();
+            	if(rowIndex ==-1 && tableAddTestFlow.getRowCount() ==0)
+            		{return;}
+            	
+            	rowIndex =tableAddTestFlow.getSelectedRow();
+            	if(rowIndex ==-1)
+            		rowIndex =0;
+            	else if(tableAddTestFlow.getRowCount() ==-1)
+            		return;
+            	
+            	tableAddTestFlow.setRowSelectionInterval(rowIndex, rowIndex);
+                tableAddTestFlow.setColumnSelectionInterval(rowIndex, 0);
+                tableAddTestFlow.requestFocus();
+            }
+    
         }else {
-            JOptionPane.showMessageDialog(tableAddTestFlow, "No test step(s) available to delete!", "Alert", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No test step(s) available to delete!", "Alert", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_bttnDeleteTestStepActionPerformed
 
@@ -888,41 +840,28 @@ public class CreateAPITest extends javax.swing.JFrame {
         int getTestStep =0;
         if(tableAddTestFlow.getRowCount()>0){
             getTestFlowSelectedRow =tableAddTestFlow.getSelectedRow();
-            int rowIndex = tableAddTestFlow.getSelectedRow();
+            int rowIndex =tableAddTestFlow.getSelectedRow();
+            
+            if(rowIndex ==0) {
+            	try {
+            		tableAddTestFlow.setColumnSelectionInterval(rowIndex, 0);
+                	return;
+            	}catch(IllegalArgumentException exp) {return;}
+            }
+            	
             if(rowIndex !=-1){
-                rowIndex = tableAddTestFlow.getSelectedRow();
+                rowIndex =tableAddTestFlow.getSelectedRow();
                 String getTestId = null;
                     
                 try{
-                    getTestId = tableAddTestFlow.getValueAt(rowIndex, 0).toString();
+                    getTestId =tableAddTestFlow.getValueAt(rowIndex, 0).toString();
                 }catch(NullPointerException exp){
                     getTestId ="";
                 }
-                        
-                if(rowIndex ==0)
-                    getTestStep = Integer.valueOf(tableAddTestFlow.getValueAt(rowIndex, 1).toString());
-                else
-                    getTestStep = Integer.valueOf(tableAddTestFlow.getValueAt(rowIndex-1, 1).toString())+1;
-             
+                                    
                 createSuiteTabModel.insertRow(rowIndex, new Object[] {null,null,null,null,null,null });
                 tableAddTestFlow.setRowSelectionInterval(rowIndex, rowIndex);
-                tableAddTestFlow.scrollRectToVisible(tableAddTestFlow.getCellRect(rowIndex,0, true));
-                tableAddTestFlow.requestFocus();
-                    
-                for(int i=rowIndex; i<tableAddTestFlow.getRowCount(); i++ ){
-                    try{
-                        if(!tableAddTestFlow.getValueAt(i, 0).toString().isEmpty())
-                            break;
-                    }catch(NullPointerException exp){
-
-                    }
-                    tableAddTestFlow.setValueAt(getTestStep++, i, 1);
-                }
-                    
-                if(!getTestId.isEmpty()){
-                    tableAddTestFlow.setValueAt(getTestId, tableAddTestFlow.getSelectedRow(), 0);
-                    tableAddTestFlow.setValueAt("", tableAddTestFlow.getSelectedRow()+1, 0);
-                }
+                tableAddTestFlow.setColumnSelectionInterval(rowIndex, 0);
         
             }else
                   JOptionPane.showMessageDialog(scrollPaneTestFlow,"Select row to add test step!","Alert",JOptionPane.WARNING_MESSAGE);
@@ -1343,9 +1282,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             }else
             	txtAreaHeaders.setText("");
             
-        }catch(NullPointerException exp){
-            System.out.println(exp.getMessage());
-        }
+        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
         
         // update authentication
         try{
@@ -1380,7 +1317,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             	lblAuthorization.setText("Authorization"); 
                 txtAreaAuthorization.setText("");
             }
-        }catch(NullPointerException exp){}
+        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
     }
     
     public static boolean checkElementExistInTheList(String listItem){
