@@ -798,7 +798,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             }
             
             getSelTestStep = tableAddTestFlow.getValueAt(tableAddTestFlow.getSelectedRow(), 1);
-            int newTestStep = Integer.valueOf(String.valueOf(getSelTestStep));
+            //int newTestStep = Integer.valueOf(String.valueOf(getSelTestStep));
             createSuiteTabModel.removeRow(rowIndex);
               
             if (tableAddTestFlow.getRowCount() != 0) {
@@ -832,8 +832,8 @@ public class CreateAPITest extends javax.swing.JFrame {
                     }
                 }
                 
-                for (int i = tableAddTestFlow.getSelectedRow(); i <tableAddTestFlow.getRowCount(); i++) {
-                    tableAddTestFlow.getModel().setValueAt(newTestStep,i , 1);
+                /*for (int i = tableAddTestFlow.getSelectedRow(); i <tableAddTestFlow.getRowCount(); i++) {
+                    //tableAddTestFlow.getModel().setValueAt(newTestStep,i , 1);
                     try{
                         try{
                             getNextStepVal =tableAddTestFlow.getModel().getValueAt(i + 1, 0).toString();
@@ -853,7 +853,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                         tableAddTestFlow.getModel().setValueAt(newTestStep, i, 1);
                     }
                     newTestStep++;
-                }
+                }*/
             }
             
         }else {
@@ -888,28 +888,37 @@ public class CreateAPITest extends javax.swing.JFrame {
         int getTestStep =0;
         if(tableAddTestFlow.getRowCount()>0){
             getTestFlowSelectedRow =tableAddTestFlow.getSelectedRow();
-            int rowIndex = tableAddTestFlow.getSelectedRow();
+            int rowIndex =tableAddTestFlow.getSelectedRow();
+            
+            if(rowIndex ==0) {
+            	try {
+            		tableAddTestFlow.setColumnSelectionInterval(rowIndex, 0);
+                	return;
+            	}catch(IllegalArgumentException exp) {return;}
+            }
+            	
             if(rowIndex !=-1){
-                rowIndex = tableAddTestFlow.getSelectedRow();
+                rowIndex =tableAddTestFlow.getSelectedRow();
                 String getTestId = null;
                     
                 try{
-                    getTestId = tableAddTestFlow.getValueAt(rowIndex, 0).toString();
+                    getTestId =tableAddTestFlow.getValueAt(rowIndex, 0).toString();
                 }catch(NullPointerException exp){
                     getTestId ="";
                 }
                         
-                if(rowIndex ==0)
+                /*if(rowIndex ==0)
                     getTestStep = Integer.valueOf(tableAddTestFlow.getValueAt(rowIndex, 1).toString());
                 else
-                    getTestStep = Integer.valueOf(tableAddTestFlow.getValueAt(rowIndex-1, 1).toString())+1;
+                    getTestStep = Integer.valueOf(tableAddTestFlow.getValueAt(rowIndex-1, 1).toString())+1;*/
              
                 createSuiteTabModel.insertRow(rowIndex, new Object[] {null,null,null,null,null,null });
                 tableAddTestFlow.setRowSelectionInterval(rowIndex, rowIndex);
-                tableAddTestFlow.scrollRectToVisible(tableAddTestFlow.getCellRect(rowIndex,0, true));
-                tableAddTestFlow.requestFocus();
+                tableAddTestFlow.setColumnSelectionInterval(rowIndex, 0);
+                //tableAddTestFlow.scrollRectToVisible(tableAddTestFlow.getCellRect(rowIndex,0, true));
+                //tableAddTestFlow.requestFocus();
                     
-                for(int i=rowIndex; i<tableAddTestFlow.getRowCount(); i++ ){
+                /*for(int i=rowIndex; i<tableAddTestFlow.getRowCount(); i++ ){
                     try{
                         if(!tableAddTestFlow.getValueAt(i, 0).toString().isEmpty())
                             break;
@@ -917,11 +926,11 @@ public class CreateAPITest extends javax.swing.JFrame {
 
                     }
                     tableAddTestFlow.setValueAt(getTestStep++, i, 1);
-                }
+                }*/
                     
                 if(!getTestId.isEmpty()){
-                    tableAddTestFlow.setValueAt(getTestId, tableAddTestFlow.getSelectedRow(), 0);
-                    tableAddTestFlow.setValueAt("", tableAddTestFlow.getSelectedRow()+1, 0);
+                    //tableAddTestFlow.setValueAt(getTestId, tableAddTestFlow.getSelectedRow(), 0);
+                    //tableAddTestFlow.setValueAt("", tableAddTestFlow.getSelectedRow()+1, 0);
                 }
         
             }else
