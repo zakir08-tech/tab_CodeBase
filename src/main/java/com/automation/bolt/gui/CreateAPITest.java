@@ -515,10 +515,12 @@ public class CreateAPITest extends javax.swing.JFrame {
 
                                 scrlPnlParams.setBorder(null);
 
+                                txtAreaParams.setEditable(false);
                                 txtAreaParams.setBackground(new java.awt.Color(51, 51, 51));
                                 txtAreaParams.setColumns(20);
                                 txtAreaParams.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-                                txtAreaParams.setForeground(java.awt.Color.orange);
+                                txtAreaParams.setForeground(new java.awt.Color(153, 255, 204));
+                                txtAreaParams.setLineWrap(true);
                                 txtAreaParams.setRows(5);
                                 scrlPnlParams.setViewportView(txtAreaParams);
 
@@ -550,7 +552,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                                 txtAreaHeaders.setBackground(new java.awt.Color(51, 51, 51));
                                 txtAreaHeaders.setColumns(20);
                                 txtAreaHeaders.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-                                txtAreaHeaders.setForeground(new java.awt.Color(255, 102, 102));
+                                txtAreaHeaders.setForeground(new java.awt.Color(255, 153, 153));
                                 txtAreaHeaders.setLineWrap(true);
                                 txtAreaHeaders.setRows(5);
                                 scrlPnlHeaders.setViewportView(txtAreaHeaders);
@@ -1276,6 +1278,42 @@ public class CreateAPITest extends javax.swing.JFrame {
             	}
             }else
             	txtAreaHeaders.setText("");
+            
+        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
+        
+        // update api param list
+        try{
+            String getTestId =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
+            String setParams ="";
+            
+            if(getTestId !=null && !getTestId.isEmpty())
+            {
+            	int getRowCnt =tableAddTestFlow.getRowCount();
+            	int rowStart =getCurrRowBeforeKeyPressed;
+            	
+            	for(int rowStart1=rowStart; rowStart1<=getRowCnt;rowStart1++) {
+            		String getParamName =(String) tableAddTestFlow.getValueAt(rowStart1, 5);
+                    if(getParamName ==null)
+                    	getParamName ="";
+                    
+                    String getParamValue = (String) tableAddTestFlow.getValueAt(rowStart1, 6);
+                    if(getParamValue ==null)
+                    	getParamValue ="";
+                    
+                    if(!getParamName.isEmpty() || !getParamValue.isEmpty()) {
+                    	setParams = setParams + getParamName +": "+ getParamValue+"\n";
+                    }
+                    
+                    try {
+                    	String getTestId1 =(String) tableAddTestFlow.getValueAt(rowStart1+1, 0);
+                        if(getTestId1 !=null && !getTestId1.isEmpty()) {
+                        	txtAreaParams.setText(setParams);
+                        	break;
+                        }
+                    }catch(ArrayIndexOutOfBoundsException exp) {txtAreaParams.setText(setParams);break;}
+            	}
+            }else
+            	txtAreaParams.setText("");
             
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
         
