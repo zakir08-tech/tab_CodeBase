@@ -178,6 +178,190 @@ public class xlsCommonMethods {
         return testSuite;
     }
     
+    public static XSSFWorkbook createAPITestFlowDataSheet(XSSFWorkbook testSuite, DefaultTableModel testFlowTableModel){
+        XSSFRow excelRow;
+        
+        XSSFSheet excelSheet = testSuite.createSheet("API Test Flow");
+        excelRow = excelSheet.createRow(0);
+
+        XSSFFont font = testSuite.createFont();
+        //font.setColor(IndexedColors.WHITE.getIndex());
+        
+        XSSFCellStyle cellStyle = testSuite.createCellStyle();
+        cellStyle.setFont(font);
+        //cellStyle.setFillBackgroundColor(IndexedColors.BLACK.getIndex());
+        //cellStyle.setFillPattern(FillPatternType.ALT_BARS);
+        
+        XSSFFont testRunFont = testSuite.createFont();
+        //testRunFont.setColor(IndexedColors.LIGHT_BLUE.getIndex());
+        XSSFCellStyle testRunStyle = testSuite.createCellStyle();
+        //testRunStyle.setFillBackgroundColor(IndexedColors.BLACK.getIndex());
+        //testRunStyle.setFillPattern(FillPatternType.ALT_BARS);
+        testRunStyle.setFont(testRunFont);
+
+        XSSFFont testIdFont = testSuite.createFont();
+        //testIdFont.setColor(IndexedColors.RED.getIndex());
+        XSSFCellStyle testIdStyle = testSuite.createCellStyle();
+        //testIdStyle.setFillBackgroundColor(IndexedColors.BLACK.getIndex());
+        //testIdStyle.setFillPattern(FillPatternType.ALT_BARS);
+        testIdStyle.setFont(testIdFont);
+
+        XSSFFont testFlowFont = testSuite.createFont();
+        //testFlowFont.setColor(IndexedColors.LIGHT_YELLOW.getIndex());
+        XSSFCellStyle testFlowStyle = testSuite.createCellStyle();
+        //testFlowStyle.setFillBackgroundColor(IndexedColors.BLACK.getIndex());
+        //testFlowStyle.setFillPattern(FillPatternType.ALT_BARS);
+        testFlowStyle.setFont(testFlowFont);
+
+        XSSFFont testElmFont = testSuite.createFont();
+        //testElmFont.setColor(IndexedColors.AQUA.getIndex());
+        XSSFCellStyle testElmStyle = testSuite.createCellStyle();
+        //testElmStyle.setFillBackgroundColor(IndexedColors.BLACK.getIndex());
+        //testElmStyle.setFillPattern(FillPatternType.ALT_BARS);
+        testElmStyle.setFont(testElmFont);
+
+        XSSFFont testDataFont = testSuite.createFont();
+        //testDataFont.setColor(IndexedColors.LIGHT_ORANGE.getIndex());
+        XSSFCellStyle testDataStyle = testSuite.createCellStyle();
+        //testDataStyle.setFillBackgroundColor(IndexedColors.BLACK.getIndex());
+        //testDataStyle.setFillPattern(FillPatternType.ALT_BARS);
+        testDataStyle.setFont(testDataFont);
+
+        XSSFFont testDescFont = testSuite.createFont();
+        //testDescFont.setColor(IndexedColors.LIGHT_GREEN.getIndex());
+        XSSFCellStyle testDescStyle = testSuite.createCellStyle();
+        //testDescStyle.setFillBackgroundColor(IndexedColors.BLACK.getIndex());
+        //testDescStyle.setFillPattern(FillPatternType.ALT_BARS);
+        testDescStyle.setFont(testDescFont);
+
+        XSSFCell cell = excelRow.createCell(0);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.RED.getIndex()));
+        cell.setCellValue("Test Id");
+
+        cell = excelRow.createCell(1);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.WHITE.getIndex()));
+        cell.setCellValue("Request");
+
+        cell = excelRow.createCell(2);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_YELLOW.getIndex()));
+        cell.setCellValue("URL");
+
+        cell = excelRow.createCell(3);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.AQUA.getIndex()));
+        cell.setCellValue("Headers (key)");
+
+        cell = excelRow.createCell(4);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_ORANGE.getIndex()));
+        cell.setCellValue("Headers (value)");
+
+        cell = excelRow.createCell(5);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
+        cell.setCellValue("Params (key)");
+        
+        cell = excelRow.createCell(6);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
+        cell.setCellValue("Params (value)");
+        
+        cell = excelRow.createCell(7);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
+        cell.setCellValue("Payload");
+        
+        cell = excelRow.createCell(8);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
+        cell.setCellValue("Payload Type");
+        
+        cell = excelRow.createCell(9);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
+        cell.setCellValue("Modify Payload (key)");
+        
+        cell = excelRow.createCell(10);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
+        cell.setCellValue("Modify Payload (vlue)");
+        
+        cell = excelRow.createCell(11);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
+        cell.setCellValue("Authorization");
+        
+        cell = excelRow.createCell(14);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
+        cell.setCellValue("Test Description");
+        
+        for (int i = 0; i < testFlowTableModel.getRowCount(); i++) {
+            excelRow = excelSheet.createRow(i + 1);
+            for (int j = 0; j < testFlowTableModel.getColumnCount(); j++) {
+                cell = excelRow.createCell(j);
+                cell.setCellType(CellType.STRING);
+                cell.setCellStyle(cellStyle);
+                try {
+                    /*switch (j) {
+                        case 3:
+                            cell.setCellStyle(testFlowStyle);
+                            break;
+                        case 4:
+                            cell.setCellStyle(testElmStyle);
+                            break;
+                        case 5:
+                            cell.setCellStyle(testDataStyle);
+                            break;
+                        case 6:
+                            cell.setCellStyle(testDescStyle);
+                            break;
+                        case 1:
+                            cell.setCellStyle(testIdStyle);
+                            break;
+                        case 0:
+                            cell.setCellStyle(testRunStyle);
+                            break;
+                        default:
+                            break;
+                    }*/
+                	String getCellText =testFlowTableModel.getValueAt(i, j).toString();
+                	
+                	if(j ==7) {
+                		getCellText =common.writeJsonPayloadToTheTextArea(getCellText);
+                	}
+                    cell.setCellValue(getCellText);
+                } catch (NullPointerException exp) {
+                    cell.setCellValue("");
+                }
+            }
+        }
+        
+        excelSheet.autoSizeColumn(0);
+        excelSheet.autoSizeColumn(1);
+        excelSheet.autoSizeColumn(2);
+        excelSheet.autoSizeColumn(3);
+        excelSheet.autoSizeColumn(4);
+        excelSheet.autoSizeColumn(5);
+        excelSheet.autoSizeColumn(6);
+        excelSheet.autoSizeColumn(6);
+        excelSheet.autoSizeColumn(7);
+        excelSheet.autoSizeColumn(8);
+        excelSheet.autoSizeColumn(9);
+        excelSheet.autoSizeColumn(10);
+        excelSheet.autoSizeColumn(11);
+        excelSheet.autoSizeColumn(12);
+        excelSheet.autoSizeColumn(13);
+        excelSheet.autoSizeColumn(14);
+   
+        excelSheet.createFreezePane(0, 1);
+        
+        return testSuite;
+    }
+    
     public static XSSFWorkbook createObjectRepoSheetNew(XSSFWorkbook testElmRepository, DefaultTableModel testRepoTableModel){
         XSSFRow excelRow;
         XSSFCell cell;

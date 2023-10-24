@@ -70,6 +70,12 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.openqa.selenium.WebElement;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
+
 public class common extends userDefineTest{
     public static Workbook testRunnerWorkbook =null;
     public static File testRunnerFile =null;
@@ -1524,5 +1530,24 @@ public class common extends userDefineTest{
 			}
 		
 		return foundFiles.get(0).getParent(); 
+    }
+    
+    public static String writeJsonPayloadToTheTextArea(String jsonPayload){
+    	String prettyJson ="";
+        
+    	if(jsonPayload ==null || jsonPayload.isEmpty())
+            return jsonPayload="";
+    	
+        try {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonElement jsonElement = JsonParser.parseString(jsonPayload);
+            prettyJson = gson.toJson(jsonElement);
+            jsonPayload =prettyJson;
+        } catch (JsonParseException ex) {
+            jsonPayload =jsonPayload;
+            JOptionPane.showMessageDialog(null,"Invalid json body!","Alert",JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return jsonPayload;
     }
 }
