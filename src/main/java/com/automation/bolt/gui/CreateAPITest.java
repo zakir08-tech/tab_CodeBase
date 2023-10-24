@@ -5,14 +5,10 @@
  */
 package com.automation.bolt.gui;
 
-import com.automation.bolt.common;
 import static com.automation.bolt.common.tabOutFromEditingColumn;
-import com.automation.bolt.constants;
 import static com.automation.bolt.gui.EditRegressionSuite.RegressionSuiteScrollPane;
-import com.automation.bolt.renderer.*;
-import static com.automation.bolt.xlsCommonMethods.createObjectRepoSheetNew;
-import static com.automation.bolt.xlsCommonMethods.createTestFlowDataSheet;
-import com.google.common.io.Files;
+import static com.automation.bolt.xlsCommonMethods.createAPITestFlowDataSheet;
+
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
@@ -21,8 +17,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -32,7 +27,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.automation.bolt.common;
+import com.automation.bolt.constants;
+import com.automation.bolt.renderer.tableCellRendererAPI;
+import com.google.common.io.Files;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -235,7 +236,7 @@ public class CreateAPITest extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Test ID", "Request", "URL", "Headers (key)", "Headers (value)", "Params (key)", "Params (value)", "Payload", "Payload Type", "Modify Payload (key)", "Modify Payload (value)", "Authorization", "", ""
+                "Test ID", "Request", "URL", "Headers (key)", "Headers (value)", "Params (key)", "Params (value)", "Payload", "Payload Type", "Modify Payload (key)", "Modify Payload (value)", "Authorization", "", "", "Test Description"
             }
         ));
         tableAddTestFlow.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
@@ -561,6 +562,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                                 txtAreaAuthorization.setColumns(20);
                                 txtAreaAuthorization.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
                                 txtAreaAuthorization.setForeground(new java.awt.Color(204, 204, 255));
+                                txtAreaAuthorization.setLineWrap(true);
                                 txtAreaAuthorization.setRows(5);
                                 scrlPnlAuthorization.setViewportView(txtAreaAuthorization);
 
@@ -671,7 +673,7 @@ public class CreateAPITest extends javax.swing.JFrame {
      
     public static void testPayloadTxtKeyReleased(KeyEvent evt, JTextField textField) {
         String getPayloadText =textField.getText();
-        txtAreaPayload.setText(writeJsonPayloadToTheTextArea(getPayloadText));
+        txtAreaPayload.setText(common.writeJsonPayloadToTheTextArea(getPayloadText));
     }
     
     public static void authSelected(java.awt.event.FocusEvent evt, JComboBox<String> authField) {
@@ -790,7 +792,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             
             try {
                 tableAddTestFlow.setRowSelectionInterval(rowIndex-1, rowIndex-1);
-                tableAddTestFlow.setColumnSelectionInterval(rowIndex-1, 0);
+                tableAddTestFlow.setColumnSelectionInterval(0, 0);
                 tableAddTestFlow.requestFocus();
             }catch(IllegalArgumentException exp) {
             	rowIndex =tableAddTestFlow.getSelectedRow();
@@ -804,7 +806,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             		return;
             	
             	tableAddTestFlow.setRowSelectionInterval(rowIndex, rowIndex);
-                tableAddTestFlow.setColumnSelectionInterval(rowIndex, 0);
+                tableAddTestFlow.setColumnSelectionInterval(0, 0);
                 tableAddTestFlow.requestFocus();
             }
     
@@ -1000,9 +1002,9 @@ public class CreateAPITest extends javax.swing.JFrame {
             fileSaved =false;
             try {
                 // create test flow sheet
-                excelJTableExport =createTestFlowDataSheet(excelJTableExport, createSuiteTabModel);   
+                excelJTableExport =createAPITestFlowDataSheet(excelJTableExport, createSuiteTabModel);   
                 // create test element repository sheet
-                excelJTableExport =createObjectRepoSheetNew(excelJTableExport, createORTabModel);
+                //excelJTableExport =createObjectRepoSheetNew(excelJTableExport, createORTabModel);
 
                 String getFilePath =null;
                 if(fileExist ==true)
@@ -1019,7 +1021,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                 
                 JOptionPane.showMessageDialog(scrollPaneTestFlow, "Test suite " + "\"" + excelFileExport.getSelectedFile().getName() + "\"" + " saved successfully!", "Alert", JOptionPane.INFORMATION_MESSAGE);
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
                 if (ex.getMessage().contains("The process cannot access the file because it is being used by another process")) {
                     int response;
 
@@ -1041,22 +1043,22 @@ public class CreateAPITest extends javax.swing.JFrame {
                                 fileSaved =true;
                                 break;
                             } catch (FileNotFoundException ex1) {
-                                if (ex1.getMessage().contains("The process cannot access the file because it is being used by another process")) {
+                                /*if (ex1.getMessage().contains("The process cannot access the file because it is being used by another process")) {
 
-                                }
+                                }*/
                             } catch (IOException ex1) {
-                                Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex1);
+                                //Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex1);
                             }
                         }
                     } while (response != JOptionPane.CANCEL_OPTION);
                 }
             } catch (IOException ex) {
-                Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
             }
             
         }
-        //else
-            //JOptionPane.showMessageDialog(tableAddOR,"No test suite is available to save!","Alert",JOptionPane.WARNING_MESSAGE);
+        else
+            JOptionPane.showMessageDialog(null,"No test suite is available to save!","Alert",JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_bttnSaveSuiteActionPerformed
 
     private void bttnAddNewTestSuiteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddNewTestSuiteMouseEntered
@@ -1168,7 +1170,7 @@ public class CreateAPITest extends javax.swing.JFrame {
         common.checkForDuplicateTestId(createSuiteTabModel, tableAddTestFlow, editableRow, testIdTxt);
     }//GEN-LAST:event_tableAddTestFlowKeyReleased
     
-    public static String writeJsonPayloadToTheTextArea(String jsonPayload){
+    /*public static String writeJsonPayloadToTheTextArea(String jsonPayload){
     	String prettyJson ="";
         
     	if(jsonPayload ==null || jsonPayload.isEmpty())
@@ -1185,7 +1187,7 @@ public class CreateAPITest extends javax.swing.JFrame {
         }
         
         return jsonPayload;
-    }
+    }*/
     
     private void txtAPIurlFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAPIurlFocusLost
         getTheAPIurl =txtAPIurl.getText();
@@ -1233,7 +1235,7 @@ public class CreateAPITest extends javax.swing.JFrame {
         try{
             getApiPayload =tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 7).toString();
             if(getApiPayload !=null){
-                txtAreaPayload.setText(writeJsonPayloadToTheTextArea(getApiPayload));
+                txtAreaPayload.setText(common.writeJsonPayloadToTheTextArea(getApiPayload));
                 txtAreaPayload.setCaretPosition(0);
             }
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){
@@ -1411,6 +1413,9 @@ public class CreateAPITest extends javax.swing.JFrame {
         
         //tableAddTestFlow.getColumnModel().getColumn(13).setMaxWidth(150);
         tableAddTestFlow.getColumnModel().getColumn(13).setMinWidth(150);
+        
+        //tableAddTestFlow.getColumnModel().getColumn(14).setMaxWidth(200);
+        tableAddTestFlow.getColumnModel().getColumn(14).setMinWidth(200);
     }
     
     /**
