@@ -844,8 +844,8 @@ public class CreateAPITest extends javax.swing.JFrame {
             
             if(rowIndex ==0) {
             	try {
-            		tableAddTestFlow.setColumnSelectionInterval(rowIndex, 0);
-                	return;
+                    tableAddTestFlow.setColumnSelectionInterval(rowIndex, 0);
+                    return;
             	}catch(IllegalArgumentException exp) {return;}
             }
             	
@@ -861,8 +861,8 @@ public class CreateAPITest extends javax.swing.JFrame {
                                     
                 createSuiteTabModel.insertRow(rowIndex, new Object[] {null,null,null,null,null,null });
                 tableAddTestFlow.setRowSelectionInterval(rowIndex, rowIndex);
-                tableAddTestFlow.setColumnSelectionInterval(rowIndex, 0);
-        
+                tableAddTestFlow.setColumnSelectionInterval(0, 0);
+                tableAddTestFlow.scrollRectToVisible(tableAddTestFlow.getCellRect(rowIndex, 0, true));
             }else
                   JOptionPane.showMessageDialog(scrollPaneTestFlow,"Select row to add test step!","Alert",JOptionPane.WARNING_MESSAGE);
         }else
@@ -886,8 +886,8 @@ public class CreateAPITest extends javax.swing.JFrame {
         }
             
         if(getTestFlowSelectedRow !=-1){
-            getTestFlowSelectedRow =tableAddTestFlow.getSelectedRow();
-            tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableAddTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
+            //getTestFlowSelectedRow =tableAddTestFlow.getSelectedRow();
+            //tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableAddTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
         if(common.checkForDuplicateTestId(createSuiteTabModel, tableAddTestFlow, editableRow, testIdTxt) ==true)
@@ -899,33 +899,26 @@ public class CreateAPITest extends javax.swing.JFrame {
             if (rowIndex != -1) {
                 try {
                     try {
-                        String getTestID = tableAddTestFlow.getValueAt(tableAddTestFlow.getSelectedRow(), 0).toString();
-                        String getTestStep = tableAddTestFlow.getValueAt(tableAddTestFlow.getSelectedRow(), 1).toString();
-
-                        if ((getTestID.isEmpty()) && (getTestStep.isEmpty())) {
-                            return;
-                        } else {
-                            createSuiteTabModel.insertRow(rowIndex + 1, new Object[]{null, null, null, null, null, null});
-                            rowIndex = tableAddTestFlow.getSelectedRow();
-                            tableAddTestFlow.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
-                            tableAddTestFlow.scrollRectToVisible(tableAddTestFlow.getCellRect(rowIndex + 1, 0, true));
-                            tableAddTestFlow.requestFocus();
-                        }
+                        //String getTestID = tableAddTestFlow.getValueAt(tableAddTestFlow.getSelectedRow(), 0).toString();
+                        createSuiteTabModel.insertRow(rowIndex + 1, new Object[]{null, null, null, null, null, null});
+                        rowIndex = tableAddTestFlow.getSelectedRow();
+                        tableAddTestFlow.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
+                        tableAddTestFlow.setColumnSelectionInterval(0, 0);
+                        tableAddTestFlow.scrollRectToVisible(tableAddTestFlow.getCellRect(rowIndex+1, 0, true));
                     } catch (NullPointerException exp) {
                         createSuiteTabModel.insertRow(rowIndex + 1, new Object[]{null, null, null, null, null, null});
                         rowIndex = tableAddTestFlow.getSelectedRow();
                         tableAddTestFlow.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
-                        tableAddTestFlow.scrollRectToVisible(tableAddTestFlow.getCellRect(rowIndex + 1, 0, true));
-                        tableAddTestFlow.requestFocus();
+                        tableAddTestFlow.setColumnSelectionInterval(0, 0);
+                        tableAddTestFlow.scrollRectToVisible(tableAddTestFlow.getCellRect(rowIndex+1, 0, true));
                     }
                 } catch (NullPointerException exp) {
                     createSuiteTabModel.insertRow(rowIndex + 1, new Object[]{null, null, null, null, null, null});
                     rowIndex = tableAddTestFlow.getSelectedRow();
                     tableAddTestFlow.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
-                    tableAddTestFlow.scrollRectToVisible(tableAddTestFlow.getCellRect(rowIndex + 1, 0, true));
-                    tableAddTestFlow.requestFocus();
+                    tableAddTestFlow.setColumnSelectionInterval(0, 0);
+                    tableAddTestFlow.scrollRectToVisible(tableAddTestFlow.getCellRect(rowIndex+1, 0, true));
                 }
-
             } else {
                 JOptionPane.showMessageDialog(tableAddTestFlow, "Select row to add test step!", "Alert", JOptionPane.WARNING_MESSAGE);
                 return;
