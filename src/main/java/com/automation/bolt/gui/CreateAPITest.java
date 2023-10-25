@@ -514,6 +514,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                                 lblHeaders.setText("Headers");
 
                                 scrlPnlParams.setBorder(null);
+                                scrlPnlParams.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
                                 txtAreaParams.setEditable(false);
                                 txtAreaParams.setBackground(new java.awt.Color(51, 51, 51));
