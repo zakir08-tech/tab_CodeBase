@@ -484,6 +484,9 @@ public class SSLCertificate extends javax.swing.JFrame {
             createSuiteTabModel.addRow(getJsonTxt);
         });
         
+        //tableSSLCertConfig.setColumnSelectionInterval(0, 0);
+        //tableSSLCertConfig.setRowSelectionInterval(0, 0);
+        
         fileSaved =false;
     }//GEN-LAST:event_formWindowOpened
 
@@ -1150,7 +1153,7 @@ public class SSLCertificate extends javax.swing.JFrame {
         tableSSLCertConfig.getColumnModel().getColumn(3).setMinWidth(254);
         
         //tableAddTestFlow.getColumnModel().getColumn(4).setMaxWidth(120);
-        tableSSLCertConfig.getColumnModel().getColumn(4).setMinWidth(150);
+        tableSSLCertConfig.getColumnModel().getColumn(4).setMinWidth(149);
     }
     
     /**
