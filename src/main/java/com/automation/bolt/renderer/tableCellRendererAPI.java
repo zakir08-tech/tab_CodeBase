@@ -34,7 +34,11 @@ public class tableCellRendererAPI implements TableCellRenderer{
                 c.setBackground(new java.awt.Color(51, 51, 51));
                 break;
             case 3:
-                c.setForeground(new java.awt.Color(255,102,102));
+                c.setForeground(new java.awt.Color(255,153,153));
+                c.setBackground(new java.awt.Color(51, 51, 51));
+                break;
+            case 5:
+                c.setForeground(new java.awt.Color(153,255,204));
                 c.setBackground(new java.awt.Color(51, 51, 51));
                 break;
             case 0:
