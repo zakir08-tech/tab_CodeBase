@@ -39,8 +39,13 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -193,6 +198,9 @@ public class SSLCertificate extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -774,127 +782,85 @@ public class SSLCertificate extends javax.swing.JFrame {
     }//GEN-LAST:event_bttnSaveSuiteMouseExited
 
     private void bttnSaveSuiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnSaveSuiteActionPerformed
-        if(getTestFlowSelectedRow !=-1){
-            //getElmRepoSelectedRow =tableAddOR.getSelectedRow();
-            //tabOutFromEditingColumn(getElmRepoCellEditorStatus, tableAddOR, getRepoCellxPoint, getRepoCellyPoint, getElmRepoSelectedRow);
-        }
-            
-        if(getTestFlowSelectedRow !=-1){
-            getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
-            tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableSSLCertConfig, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
-        }
-        
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableSSLCertConfig, editableRow, testIdTxt) ==true)
-            return;
-                
-        if(tableSSLCertConfig.getRowCount() > 0){
-            FileOutputStream excelFos;
-            XSSFWorkbook excelJTableExport = new XSSFWorkbook();
-            boolean fileExist;
-            fileExist = false;
-            String getCurrDir;
-            
-            try{
-                File getCurrDirectory =excelFileExport.getCurrentDirectory();
-                getCurrDir =getCurrDirectory.getAbsolutePath();
-            }catch(NullPointerException exp){
-                getCurrDir =FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
-            }
-            
-            excelFileExport = new JFileChooser(getCurrDir);
-            excelFileExport.setDialogTitle("Save Test Suite");
-            excelFileExport.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-            excelFileExport.addChoosableFileFilter(new FileNameExtensionFilter("EXCEL WORKBOOK", "xlsx"));
-            excelFileExport.setAcceptAllFileFilterUsed(false);
-
-            int excelChooser = excelFileExport.showSaveDialog(this);
-            
-            if (excelChooser == JFileChooser.APPROVE_OPTION) {
-                String getFilePath =excelFileExport.getSelectedFile().toString();
-                String extension = Files.getFileExtension(getFilePath);
-                if(extension.isEmpty())
-                    getFilePath =getFilePath+".xlsx";
-                
-                File exclFile = new File(getFilePath);
-                if (exclFile.exists()) {
-                    fileExist =true;
-                    int response = JOptionPane.showConfirmDialog(RegressionSuiteScrollPane, //
-                            "Test suite " + "\"" + excelFileExport.getSelectedFile().getName() + "\"" + " already exist!,\nDo you want to replace the existing test suite?", //
-                            "Confirm", JOptionPane.YES_NO_OPTION, //
-                            JOptionPane.QUESTION_MESSAGE);
-                    if (response != JOptionPane.YES_OPTION) {
-                        bttnSaveSuite.doClick();
-                        return;
-                    }
-                }
-            }
-            
-            if (excelChooser == JFileChooser.CANCEL_OPTION) {
-                return;
-            }
-            fileSaved =false;
-            try {
-                // create test flow sheet
-                excelJTableExport =createAPITestFlowDataSheet(excelJTableExport, createSuiteTabModel);   
-                // create test element repository sheet
-                //excelJTableExport =createObjectRepoSheetNew(excelJTableExport, createORTabModel);
-
-                String getFilePath =null;
-                if(fileExist ==true)
-                    getFilePath =excelFileExport.getSelectedFile().toString();
-                else if(fileExist ==false)
-                        getFilePath =excelFileExport.getSelectedFile()+".xlsx";
-
-                excelFos = new FileOutputStream(getFilePath);
-                excelJTableExport.write(excelFos);
-
-                excelFos.close();
-                excelJTableExport.close();
-                fileSaved =true;
-                
-                JOptionPane.showMessageDialog(scrollPaneTestFlow, "Test suite " + "\"" + excelFileExport.getSelectedFile().getName() + "\"" + " saved successfully!", "Alert", JOptionPane.INFORMATION_MESSAGE);
-            } catch (FileNotFoundException ex) {
-                //Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
-                if (ex.getMessage().contains("The process cannot access the file because it is being used by another process")) {
-                    int response;
-
-                    do {
-                        response = JOptionPane.showConfirmDialog(scrollPaneTestFlow, //
-                                "Close test suite " + "\"" + excelFileExport.getSelectedFile().getName() + "\"" + " to save the changes!", //
-                                "Alert", JOptionPane.OK_CANCEL_OPTION, //
-                                JOptionPane.WARNING_MESSAGE);
-
-                        if (response == JOptionPane.OK_OPTION) {
-                            try {
-                                excelFos = new FileOutputStream(excelFileExport.getSelectedFile());
-                                excelJTableExport.write(excelFos);
-
-                                excelFos.close();
-                                excelJTableExport.close();
-
-                                JOptionPane.showMessageDialog(scrollPaneTestFlow, "Test suite " + "\"" + excelFileExport.getSelectedFile().getName() + "\"" + " saved successfully!", "Alert", JOptionPane.INFORMATION_MESSAGE);
-                                fileSaved =true;
-                                break;
-                            } catch (FileNotFoundException ex1) {
-                                /*if (ex1.getMessage().contains("The process cannot access the file because it is being used by another process")) {
-
-                                }*/
-                            } catch (IOException ex1) {
-                                //Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex1);
-                            }
-                        }
-                    } while (response != JOptionPane.CANCEL_OPTION);
-                }
-            } catch (IOException ex) {
-                //Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        }
-        else
-            JOptionPane.showMessageDialog(null,"No test suite is available to save!","Alert",JOptionPane.WARNING_MESSAGE);
+        saveSSLCertConfigFile();
+        JOptionPane.showMessageDialog(null, "saved successfully!", "SSL Certificate Configuration", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_bttnSaveSuiteActionPerformed
+    
+    public static void saveSSLCertConfigFile(){
+        JSONObject jsonObject = new JSONObject();
+        JSONArray array = new JSONArray();
         
+        if(tableSSLCertConfig.getRowCount() > 0){
+            for(int i =0; i<tableSSLCertConfig.getRowCount(); i++){
+                
+                Object getName =tableSSLCertConfig.getValueAt(i, 0);
+                if(getName ==null)
+                    getName ="";
+
+                Object getKeyStore =tableSSLCertConfig.getValueAt(i, 1);
+                if(getKeyStore ==null)
+                    getKeyStore ="";
+
+                Object getKeyStorePwd =tableSSLCertConfig.getValueAt(i, 2);
+                if(getKeyStorePwd ==null)
+                    getKeyStorePwd ="";
+
+                Object getTrustStore =tableSSLCertConfig.getValueAt(i, 3);
+                if(getTrustStore ==null)
+                    getTrustStore ="";
+
+                Object getTrustStorePwd =tableSSLCertConfig.getValueAt(i, 4);
+                if(getTrustStorePwd ==null)
+                    getTrustStorePwd ="";
+                
+                jsonObject.put("name", getName);
+                jsonObject.put("keystore", getKeyStore);
+                jsonObject.put("keystore-pwd", getKeyStorePwd);
+                jsonObject.put("truststore", getTrustStore);
+                jsonObject.put("truststore-pwd", getTrustStorePwd);
+                
+                array.add(jsonObject);
+                jsonObject = new JSONObject();
+            }
+            
+            try {
+	    	 
+	    	  Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	    	  JsonElement jsonElement = JsonParser.parseString(array.toJSONString());
+	    	  Object prettyJson = gson.toJson(jsonElement);
+	    	  
+	    	  File directory = new File(String.valueOf("./ssl"));
+
+	    	  if (!directory.exists()) {
+	    		  directory.mkdir();    
+	    	  }
+	    	  
+	          FileWriter file = new FileWriter("./ssl/sslCert.json");
+	          file.write(prettyJson.toString());
+	          file.close();
+                  	          	    	  
+            } catch (IOException e) {
+               // TODO Auto-generated catch block
+               e.printStackTrace();
+            }
+        }else{
+            File directory = new File(String.valueOf("./ssl"));
+            if (!directory.exists()) {
+                    directory.mkdir();    
+            }
+
+            FileWriter file;
+            try {
+                file = new FileWriter("./ssl/sslCert.json");
+                file.write(array.toJSONString());
+                file.close();
+            } catch (IOException ex) {
+                Logger.getLogger(SSLCertificate.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+    }
+    
     private void tableSSLCertConfigMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSSLCertConfigMousePressed
         
         //getElmRepoSelectedRow =tableAddOR.getSelectedRow();
@@ -949,6 +915,10 @@ public class SSLCertificate extends javax.swing.JFrame {
     private void tableSSLCertConfigMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSSLCertConfigMouseReleased
       //updateAPIAttributeData();
     }//GEN-LAST:event_tableSSLCertConfigMouseReleased
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+       saveSSLCertConfigFile();
+    }//GEN-LAST:event_formWindowClosed
     
     /*public static void updateAPIAttributeData(){
         getCurrRowBeforeKeyPressed =tableAddTestFlow.getSelectedRow();
