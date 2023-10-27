@@ -486,14 +486,15 @@ public class SSLCertificate extends javax.swing.JFrame {
         this.setIconImage(titleIcon);
         setTableColWidthForCreateRegSuiteTable();
         
-        HashMap<Integer, Object> jsonMap =common.uploadSSLCertConfiguration();
-        
+        HashMap<Integer, Object> jsonMap =common.uploadSSLCertConfiguration();    
         jsonMap.entrySet().stream().map(entry -> entry.getValue().toString().split("[,]")).forEachOrdered(getJsonTxt -> {
             createSuiteTabModel.addRow(getJsonTxt);
         });
         
-        //tableSSLCertConfig.setColumnSelectionInterval(0, 0);
-        //tableSSLCertConfig.setRowSelectionInterval(0, 0);
+        try{
+            tableSSLCertConfig.setColumnSelectionInterval(0, 0);
+            tableSSLCertConfig.setRowSelectionInterval(0, 0);
+        }catch (IllegalArgumentException exp){}
         
         fileSaved =false;
     }//GEN-LAST:event_formWindowOpened

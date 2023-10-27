@@ -25,6 +25,7 @@ public class AutomationTestRunner extends javax.swing.JFrame {
     public EditRegressionSuite editTestSuite = new EditRegressionSuite();
     public ExecuteRegressionSuite runTestSuite = new ExecuteRegressionSuite();
     public CreateTestSuite createTestSuite = new CreateTestSuite();
+    public SSLCertificate sslCertConfig = new SSLCertificate();
     public TestReporting testReporting = new TestReporting();
     public SettingsAndConfiguration settingsAndConfiguration = new SettingsAndConfiguration(); 
     public static String bttnAPIBackColor;
@@ -65,7 +66,7 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         lblChooseTestType = new javax.swing.JLabel();
         lblSettingsAndConfiguration = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(955, 258));
         setName("tab"); // NOI18N
         setResizable(false);
@@ -358,6 +359,7 @@ public class AutomationTestRunner extends javax.swing.JFrame {
 
                         lblSettingsAndConfiguration.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/settingAndConfiguration.png"));
                             lblSettingsAndConfiguration.setToolTipText("Setting & Configuration");
+                            lblSettingsAndConfiguration.setEnabled(false);
                             lblSettingsAndConfiguration.setFocusable(false);
                             lblSettingsAndConfiguration.addMouseListener(new java.awt.event.MouseAdapter() {
                                 public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -553,12 +555,30 @@ public class AutomationTestRunner extends javax.swing.JFrame {
     }//GEN-LAST:event_radioBttnAPIMousePressed
 
     private void lblSettingsAndConfigurationMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSettingsAndConfigurationMousePressed
+        if(lblSettingsAndConfiguration.isEnabled() && radioBttnAPI.isSelected()){
+            sslCertConfig.setLocationRelativeTo(null);
+            sslCertConfig.setVisible(true);
+        }
         //settingsAndConfiguration.setLocationRelativeTo(null);
         //settingsAndConfiguration.setVisible(true);
     }//GEN-LAST:event_lblSettingsAndConfigurationMousePressed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-
+        if(sslCertConfig.isVisible())
+            sslCertConfig.dispose();
+        
+        if(editTestSuite.isVisible())
+            editTestSuite.dispose();
+        
+        if(runTestSuite.isVisible())
+            runTestSuite.dispose();
+        
+        if(createTestSuite.isVisible())
+            createTestSuite.dispose();
+        
+        if(testReporting.isVisible())
+            testReporting.dispose();
+        
     }//GEN-LAST:event_formWindowClosed
 
     private void lblAutomationTestReportMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAutomationTestReportMousePressed

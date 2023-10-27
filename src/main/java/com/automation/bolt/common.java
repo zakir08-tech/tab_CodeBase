@@ -1567,35 +1567,35 @@ public class common extends userDefineTest{
                 for (int i = 0; i < certList.size(); i++) {   
                         JSONObject certObject = (JSONObject) certList.get(i);
 
-                Object getName =certObject.get("name");
-                if(getName ==null)
-                    getName ="";
+                        Object getName =certObject.get("name");
+                        if(getName ==null)
+                            getName ="";
 
-                Object getKeyStore =certObject.get("keystore");
-                if(getKeyStore ==null)
-                    getKeyStore ="";
+                        Object getKeyStore =certObject.get("keystore");
+                        if(getKeyStore ==null)
+                            getKeyStore ="";
 
-                Object getKeyStorePwd =certObject.get("keystore-pwd");
-                if(getKeyStorePwd ==null)
-                    getKeyStorePwd ="";
+                        Object getKeyStorePwd =certObject.get("keystore-pwd");
+                        if(getKeyStorePwd ==null)
+                            getKeyStorePwd ="";
 
-                Object getTrustStore =certObject.get("truststore");
-                if(getTrustStore ==null)
-                    getTrustStore ="";
+                        Object getTrustStore =certObject.get("truststore");
+                        if(getTrustStore ==null)
+                            getTrustStore ="";
 
-                Object getTrustStorePwd =certObject.get("truststore-pwd");
-                if(getTrustStorePwd ==null)
-                    getTrustStorePwd ="";
+                        Object getTrustStorePwd =certObject.get("truststore-pwd");
+                        if(getTrustStorePwd ==null)
+                            getTrustStorePwd ="";
 
-                Object getJsonObj =getName +","+ 
-                getKeyStore +","+ 
-                getKeyStorePwd +","+ 
-                getTrustStore +","+ 
-                getTrustStorePwd;
+                        Object getJsonObj =getName +","+ 
+                        getKeyStore +","+ 
+                        getKeyStorePwd +","+ 
+                        getTrustStore +","+ 
+                        getTrustStorePwd;
 
-                jsonMap.put(i+1, getJsonObj);
-            }
-
+                        jsonMap.put(i+1, getJsonObj);
+                }
+                reader.close();
             } catch (IOException | ParseException e) {}
 
         } catch (FileNotFoundException e) {}
