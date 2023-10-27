@@ -6,16 +6,11 @@
 package com.automation.bolt.gui;
 
 import static com.automation.bolt.common.tabOutFromEditingColumn;
-import static com.automation.bolt.gui.EditRegressionSuite.RegressionSuiteScrollPane;
-import static com.automation.bolt.xlsCommonMethods.createAPITestFlowDataSheet;
 
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.swing.DefaultCellEditor;
@@ -23,25 +18,20 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.automation.bolt.common;
 import com.automation.bolt.constants;
 import com.automation.bolt.renderer.tableCellRendererAPI;
-import com.google.common.io.Files;
+import com.automation.bolt.renderer.tableSSLCertConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import java.io.FileWriter;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.simple.JSONArray;
@@ -55,11 +45,11 @@ public class SSLCertificate extends javax.swing.JFrame {
     public static DefaultTableModel createSuiteTabModel =new DefaultTableModel();
     public static DefaultTableModel createORTabModel =new DefaultTableModel();
     
-    public static JComboBox<String> cBoxApiRequest =new JComboBox<String>();
+    /*public static JComboBox<String> cBoxApiRequest =new JComboBox<String>();
     public static JComboBox<String> coBoxPayloadType =new JComboBox<String>();
-    public static JComboBox<String> coBoxAuth =new JComboBox<String>();
+    public static JComboBox<String> coBoxAuth =new JComboBox<String>();*/
     
-    public static JTextField elmNameTxt =new JTextField();
+    /*public static JTextField elmNameTxt =new JTextField();
     public static JTextField elmIdTxt =new JTextField();
     public static JTextField elmXpathTxt =new JTextField();
     
@@ -68,7 +58,7 @@ public class SSLCertificate extends javax.swing.JFrame {
     public static JTextField testPayloadTxt =new JTextField();
     
     public static TableColumn testFlowColumn =null;
-    public static TableColumn testObjectRepoColumn =null;
+    public static TableColumn testObjectRepoColumn =null;*/
     
     public static boolean duplicateElement =false;
     public static boolean duplicateTestId =false;
@@ -76,7 +66,7 @@ public class SSLCertificate extends javax.swing.JFrame {
     public static int editableRow;
     public static int editableAddElmRow;
     
-    public static TableColumn elmNameCol =null;
+    /*public static TableColumn elmNameCol =null;
     public static TableColumn elmIdCol =null;
     public static TableColumn elmXpathCol =null;
     
@@ -85,7 +75,7 @@ public class SSLCertificate extends javax.swing.JFrame {
     public static TableColumn testApiTypeCol =null;
     public static TableColumn testPayloadCol =null;
     public static TableColumn testPayloadTypeCol =null;
-    public static TableColumn testAuthCol =null;
+    public static TableColumn testAuthCol =null;*/
     
     public static boolean getTestFlowCellEditorStatus;
     public static int getTestFlowSelectedRow =0;
@@ -119,11 +109,11 @@ public class SSLCertificate extends javax.swing.JFrame {
         //setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         createSuiteTabModel =(DefaultTableModel) tableSSLCertConfig.getModel();
 
-        testIdCol =tableSSLCertConfig.getColumnModel().getColumn(0);
-        testIdCol.setCellEditor(new DefaultCellEditor(testIdTxt));
+        //testIdCol =tableSSLCertConfig.getColumnModel().getColumn(0);
+        //testIdCol.setCellEditor(new DefaultCellEditor(testIdTxt));
         
-        testURLCol =tableSSLCertConfig.getColumnModel().getColumn(2);
-        testURLCol.setCellEditor(new DefaultCellEditor(testURLTxt));
+        //testURLCol =tableSSLCertConfig.getColumnModel().getColumn(2);
+        //testURLCol.setCellEditor(new DefaultCellEditor(testURLTxt));
         
         /*testPayloadCol =tableAddTestFlow.getColumnModel().getColumn(7);
         testPayloadCol.setCellEditor(new DefaultCellEditor(testPayloadTxt));
@@ -164,11 +154,11 @@ public class SSLCertificate extends javax.swing.JFrame {
             }
         });*/
          
-        coBoxAuth.addFocusListener(new java.awt.event.FocusAdapter() {
+        /*coBoxAuth.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 //authSelected(evt, coBoxAuth);
             }
-        });
+        });*/
     }
 
     /**
@@ -228,6 +218,11 @@ public class SSLCertificate extends javax.swing.JFrame {
         tableSSLCertConfig.getTableHeader().setReorderingAllowed(false);
         tableSSLCertConfig.setUpdateSelectionOnSort(false);
         tableSSLCertConfig.setVerifyInputWhenFocusTarget(false);
+        tableSSLCertConfig.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tableSSLCertConfigFocusLost(evt);
+            }
+        });
         tableSSLCertConfig.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tableSSLCertConfigMousePressed(evt);
@@ -474,11 +469,8 @@ public class SSLCertificate extends javax.swing.JFrame {
                         }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-       tableCellRendererAPI renderer = new tableCellRendererAPI();
-       //tableAddORCellRenderer addORrenderer = new tableAddORCellRenderer();
-       
+        tableSSLCertConfig renderer = new tableSSLCertConfig();
         tableSSLCertConfig.setDefaultRenderer(Object.class, renderer);
-       //tableAddOR.setDefaultRenderer(Object.class, addORrenderer);
     }//GEN-LAST:event_formWindowActivated
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -508,69 +500,13 @@ public class SSLCertificate extends javax.swing.JFrame {
         bttnAddNewTestStep.setBackground(new java.awt.Color(0,0,0));
         bttnAddNewTestStep.setForeground(new java.awt.Color(255,255,255));
     }//GEN-LAST:event_bttnAddNewTestStepMouseExited
-    
-     public static void testURLTxtKeyReleased(KeyEvent evt, JTextField textField) {
-        //String getURLText =textField.getText();
-        //txtAPIurl.setText(getURLText);
-    }
-     
-    public static void testPayloadTxtKeyReleased(KeyEvent evt, JTextField textField) {
-        //String getPayloadText =textField.getText();
-        //txtAreaPayload.setText(common.writeJsonPayloadToTheTextArea(getPayloadText));
-    }
-    
-    /*public static void authSelected(java.awt.event.FocusEvent evt, JComboBox<String> authField) {
-    	getCurrRowBeforeKeyPressed =tableAddTestFlow.getSelectedRow();
-    	try{
-            String getTestId =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
-            
-            if(getTestId !=null && !getTestId.isEmpty()){
-                String getAuth =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 11);
-                if(getAuth.contentEquals("Basic Auth")){
-                    String getUsername =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
-                    if(getUsername ==null)
-                    	getUsername ="";
-                    String getPassword =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
-                    if(getPassword ==null)
-                    	getPassword ="";
-                    
-                    txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
-                    lblAuthorization.setText("Authorization: Basic Auth");
-                }else if(getAuth.contentEquals("Bearer Token")){
-                    String getToken =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
-                    if(getToken ==null)
-                    	getToken ="";
-                    tableAddTestFlow.setValueAt("",getCurrRowBeforeKeyPressed, 13);
-                    txtAreaAuthorization.setText("Token: "+getToken);
-                    lblAuthorization.setText("Authorization: Bearer Token");
-                }else {
-                    tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
-                    tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
-                    lblAuthorization.setText("Authorization");
-                    txtAreaAuthorization.setText("");
-                }
-                	
-            }else {
-                lblAuthorization.setText("Authorization");
-            	txtAreaAuthorization.setText("");
-            }
-        }catch(NullPointerException exp){}
-    }*/
-     
+
     private void bttnAddNewTestStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnAddNewTestStepActionPerformed
-        if(getElmRepoSelectedRow !=-1){
-            //getElmRepoSelectedRow =tableAddOR.getSelectedRow();
-            //tabOutFromEditingColumn(getElmRepoCellEditorStatus, tableAddOR, getRepoCellxPoint, getRepoCellyPoint, getElmRepoSelectedRow);
-        }
-            
         if(getTestFlowSelectedRow !=-1){
             getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableSSLCertConfig, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
-            
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableSSLCertConfig, editableRow, testIdTxt) ==true)
-            return;
-        
+                
         Object getPreviosTestStepNo =null;
         if(tableSSLCertConfig.getRowCount() ==0)
             getPreviosTestStepNo ="0";
@@ -601,19 +537,11 @@ public class SSLCertificate extends javax.swing.JFrame {
 
     private void bttnDeleteTestStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnDeleteTestStepActionPerformed
         if(getTestFlowSelectedRow !=-1){
-            //getElmRepoSelectedRow =tableAddOR.getSelectedRow();
-            //tabOutFromEditingColumn(getElmRepoCellEditorStatus, tableAddOR, getRepoCellxPoint, getRepoCellyPoint, getElmRepoSelectedRow);
-        }
-            
-        if(getTestFlowSelectedRow !=-1){
             getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableSSLCertConfig, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableSSLCertConfig, editableRow, testIdTxt) ==true)
-            return;
-        
-        String getTestId =null;
+        String getTestId ="";
             
         if (tableSSLCertConfig.getRowCount() > 0) {
             getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
@@ -624,13 +552,7 @@ public class SSLCertificate extends javax.swing.JFrame {
             } catch (NullPointerException exp) {
                 getTestId ="";
             }
-            
-            if(!getTestId.isEmpty())
-            {
-            	JOptionPane.showMessageDialog(null, "Can not delete a step with Test Id!", "Alert", JOptionPane.WARNING_MESSAGE);
-            	return;
-            }
-             
+               
             createSuiteTabModel.removeRow(rowIndex);
             
             try {
@@ -670,19 +592,10 @@ public class SSLCertificate extends javax.swing.JFrame {
 
     private void bttnAddStepUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnAddStepUpActionPerformed
         if(getTestFlowSelectedRow !=-1){
-            //getElmRepoSelectedRow =tableAddOR.getSelectedRow();
-            //tabOutFromEditingColumn(getElmRepoCellEditorStatus, tableAddOR, getRepoCellxPoint, getRepoCellyPoint, getElmRepoSelectedRow);
-        }
-            
-        if(getTestFlowSelectedRow !=-1){
             getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableSSLCertConfig, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableSSLCertConfig, editableRow, testIdTxt) ==true)
-            return;
-        
-        int getTestStep =0;
         if(tableSSLCertConfig.getRowCount()>0){
             getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
             int rowIndex =tableSSLCertConfig.getSelectedRow();
@@ -726,17 +639,9 @@ public class SSLCertificate extends javax.swing.JFrame {
 
     private void bttnAddStepDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnAddStepDownActionPerformed
         if(getTestFlowSelectedRow !=-1){
-            //getElmRepoSelectedRow =tableAddOR.getSelectedRow();
-            //tabOutFromEditingColumn(getElmRepoCellEditorStatus, tableAddOR, getRepoCellxPoint, getRepoCellyPoint, getElmRepoSelectedRow);
+            getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
+            tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableSSLCertConfig, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
-            
-        if(getTestFlowSelectedRow !=-1){
-            //getTestFlowSelectedRow =tableAddTestFlow.getSelectedRow();
-            //tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableAddTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
-        }
-        
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableSSLCertConfig, editableRow, testIdTxt) ==true)
-            return;
         
         if(tableSSLCertConfig.getRowCount()>0){
             getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
@@ -783,6 +688,11 @@ public class SSLCertificate extends javax.swing.JFrame {
     }//GEN-LAST:event_bttnSaveSuiteMouseExited
 
     private void bttnSaveSuiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnSaveSuiteActionPerformed
+        if(getTestFlowSelectedRow !=-1){
+            getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
+            tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableSSLCertConfig, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
+        }
+        
         saveSSLCertConfigFile();
         JOptionPane.showMessageDialog(null, "saved successfully!", "SSL Certificate Configuration", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_bttnSaveSuiteActionPerformed
@@ -863,15 +773,6 @@ public class SSLCertificate extends javax.swing.JFrame {
     }
     
     private void tableSSLCertConfigMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSSLCertConfigMousePressed
-        
-        //getElmRepoSelectedRow =tableAddOR.getSelectedRow();
-        //tabOutFromEditingColumn(getElmRepoCellEditorStatus, tableAddOR, getRepoCellxPoint, getRepoCellyPoint, getElmRepoSelectedRow);
-       
-        //writeJsonPayloadToTheTextArea();
-        
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableSSLCertConfig, editableRow, testIdTxt) ==true)
-            return;
-         
         int getCurRow = tableSSLCertConfig.convertRowIndexToModel(tableSSLCertConfig.rowAtPoint(evt.getPoint()));
         int gerCurrCol = tableSSLCertConfig.convertColumnIndexToModel(tableSSLCertConfig.columnAtPoint(evt.getPoint()));
         
@@ -879,7 +780,7 @@ public class SSLCertificate extends javax.swing.JFrame {
         getFlowCellxPoint =tableSSLCertConfig.rowAtPoint(evt.getPoint());
         getFlowCellyPoint =tableSSLCertConfig.columnAtPoint(evt.getPoint());
         
-        if(duplicateTestId ==false){
+        /*if(duplicateTestId ==false){
             switch (gerCurrCol) {
                 case 0:
                     tableSSLCertConfig.editCellAt(getCurRow, 0);
@@ -905,7 +806,7 @@ public class SSLCertificate extends javax.swing.JFrame {
                 default:
                     break;
             }
-        }
+        }*/
     }//GEN-LAST:event_tableSSLCertConfigMousePressed
 
     private void tableSSLCertConfigKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableSSLCertConfigKeyReleased
@@ -920,196 +821,11 @@ public class SSLCertificate extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
        saveSSLCertConfigFile();
     }//GEN-LAST:event_formWindowClosed
-    
-    /*public static void updateAPIAttributeData(){
-        getCurrRowBeforeKeyPressed =tableAddTestFlow.getSelectedRow();
-        
-        // update api test url
-        try{    
-            getTheAPIurl =tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 2).toString();
-            txtAPIurl.setText(getTheAPIurl);
-            txtAPIurl.setCaretPosition(0);
-        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){
-            txtAPIurl.setText("");
-            txtAPIurl.setCaretPosition(0);
-        }
-        
-        // update api payload body
-        try{
-            getApiPayload =tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 7).toString();
-            if(getApiPayload !=null){
-                txtAreaPayload.setText(common.writeJsonPayloadToTheTextArea(getApiPayload));
-                txtAreaPayload.setCaretPosition(0);
-            }
-        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){
-            txtAreaPayload.setText("");
-            txtAreaPayload.setCaretPosition(0);
-        }
-        
-        // update api header list
-        try{
-            String getTestId =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
-            String setHeaders ="";
-            
-            if(getTestId !=null && !getTestId.isEmpty())
-            {
-            	int getRowCnt =tableAddTestFlow.getRowCount();
-            	int rowStart =getCurrRowBeforeKeyPressed;
-            	
-            	for(int rowStart1=rowStart; rowStart1<=getRowCnt;rowStart1++) {
-            		String getHeaderName =(String) tableAddTestFlow.getValueAt(rowStart1, 3);
-                    if(getHeaderName ==null)
-                    	getHeaderName ="";
-                    
-                    String getHeaderValue = (String) tableAddTestFlow.getValueAt(rowStart1, 4);
-                    if(getHeaderValue ==null)
-                    	getHeaderValue ="";
-                    
-                    if(!getHeaderName.isEmpty() || !getHeaderValue.isEmpty()) {
-                    	setHeaders = setHeaders + getHeaderName +": "+ getHeaderValue+"\n";
-                    }
-                    
-                    try {
-                    	String getTestId1 =(String) tableAddTestFlow.getValueAt(rowStart1+1, 0);
-                        if(getTestId1 !=null && !getTestId1.isEmpty()) {
-                        	txtAreaHeaders.setText(setHeaders);
-                        	break;
-                        }
-                    }catch(ArrayIndexOutOfBoundsException exp) {txtAreaHeaders.setText(setHeaders);break;}
-            	}
-            }else
-            	txtAreaHeaders.setText("");
-            
-        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
-        
-        // update api param list
-        try{
-            String getTestId =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
-            String setParams ="";
-            
-            if(getTestId !=null && !getTestId.isEmpty())
-            {
-            	int getRowCnt =tableAddTestFlow.getRowCount();
-            	int rowStart =getCurrRowBeforeKeyPressed;
-            	
-            	for(int rowStart1=rowStart; rowStart1<=getRowCnt;rowStart1++) {
-            		String getParamName =(String) tableAddTestFlow.getValueAt(rowStart1, 5);
-                    if(getParamName ==null)
-                    	getParamName ="";
-                    
-                    String getParamValue = (String) tableAddTestFlow.getValueAt(rowStart1, 6);
-                    if(getParamValue ==null)
-                    	getParamValue ="";
-                    
-                    if(!getParamName.isEmpty() || !getParamValue.isEmpty()) {
-                    	setParams = setParams + getParamName +": "+ getParamValue+"\n";
-                    }
-                    
-                    try {
-                    	String getTestId1 =(String) tableAddTestFlow.getValueAt(rowStart1+1, 0);
-                        if(getTestId1 !=null && !getTestId1.isEmpty()) {
-                        	txtAreaParams.setText(setParams);
-                        	break;
-                        }
-                    }catch(ArrayIndexOutOfBoundsException exp) {txtAreaParams.setText(setParams);break;}
-            	}
-            }else
-            	txtAreaParams.setText("");
-            
-        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
-        
-        // update authentication
-        try{
-            String getTestId =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
-            if(getTestId !=null && !getTestId.isEmpty())
-            {
-                String getAuth =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 11);
-                if(getAuth.contentEquals("Basic Auth")){
-                    String getUsername =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
-                    if(getUsername ==null)
-                    	getUsername ="";
-                    String getPassword =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
-                    if(getPassword ==null)
-                    	getPassword ="";
-                    
-                    txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
-                    lblAuthorization.setText("Authorization: Basic Auth");
-                }else if(getAuth.contentEquals("Bearer Token")){
-                    String getToken =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
-                    if(getToken ==null)
-                    	getToken ="";
-                    
-                    txtAreaAuthorization.setText("Token: "+getToken);
-                    lblAuthorization.setText("Authorization: Bearer Token");
-                }else {
-                	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
-                	tableAddTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
-                	lblAuthorization.setText("Authorization");
-                	txtAreaAuthorization.setText("");
-                }
-            }else {
-            	lblAuthorization.setText("Authorization"); 
-                txtAreaAuthorization.setText("");
-            }
-        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
-    }*/
-    
-    /*public static boolean checkElementExistInTheList(String listItem){
-        boolean itemExist =false;
-        String getText =null;
-        
-        for(int x=0; x<coBoxObjectRepo.getItemCount(); x++){
-            getText =coBoxObjectRepo.getItemAt(x).trim().toLowerCase();
-            if(getText.contentEquals(listItem.toLowerCase().trim())){
-                itemExist =true;
-                break;
-            }
-        }
-        return itemExist;
-    }*/
-    
-    /*public static void apiRequestList(JComboBox<String> cBoxTestFlow) {
-        String keywordlist = "," +"GET,"
-                + "POST,"
-                + "PUT,"
-                + "PATCH,"
-                + "DELETE";
-              
-        String[] keywordList = keywordlist.split(",");
-        //Arrays.sort(keywordList);
-         
-        for (String txt : keywordList) {
-            cBoxTestFlow.addItem(txt);
-        }
-    }*/
-    
-    /*public static void apiPayloadTypeList(JComboBox<String> cBoxTestFlow) {
-        String keywordlist = "," +"form-data,"
-                + "x-www-form-urlencoded,"
-                + "JSON,"
-                + "HTML,"
-                + "XML";
-              
-        String[] keywordList = keywordlist.split(",");
-        //Arrays.sort(keywordList);
-         
-        for (String txt : keywordList) {
-            cBoxTestFlow.addItem(txt);
-        }
-    }*/
-    
-    /*public static void apiAuthList(JComboBox<String> cBoxTestFlow) {
-        String keywordlist = "," +"Basic Auth,"
-                + "Bearer Token";
-              
-        String[] keywordList = keywordlist.split(",");
-        //Arrays.sort(keywordList);
-         
-        for (String txt : keywordList) {
-            cBoxTestFlow.addItem(txt);
-        }
-    }*/
-    
+
+    private void tableSSLCertConfigFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tableSSLCertConfigFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableSSLCertConfigFocusLost
+     
     public static void setTableColWidthForCreateRegSuiteTable(){
         //tableAddTestFlow.getColumnModel().getColumn(0).setMaxWidth(50);
         tableSSLCertConfig.getColumnModel().getColumn(0).setMinWidth(180);

@@ -5,12 +5,17 @@
  */
 package com.automation.bolt.renderer;
 
+import static com.automation.bolt.gui.CreateAPITest.apiSSLCertList;
+import static com.automation.bolt.gui.CreateAPITest.cBoxApiSSL;
 import static com.automation.bolt.gui.CreateAPITest.getCurrRowBeforeKeyPressed;
 import static com.automation.bolt.gui.CreateAPITest.tableAddTestFlow;
+import static com.automation.bolt.gui.CreateAPITest.testApiSSLCol;
 import static com.automation.bolt.gui.CreateAPITest.txtAreaAuthorization;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
@@ -80,6 +85,13 @@ public class tableCellRendererAPI implements TableCellRenderer{
                 c.setForeground(new java.awt.Color(204,204,255));
                 c.setBackground(new java.awt.Color(51, 51, 51));
                 break;
+            case 14:
+                testApiSSLCol = tableAddTestFlow.getColumnModel().getColumn(14);
+                cBoxApiSSL = new JComboBox<String>();
+                apiSSLCertList(cBoxApiSSL);
+                testApiSSLCol.setCellEditor(new DefaultCellEditor(cBoxApiSSL));
+                //cBoxApiSSL.setEditable(true);
+            break;
             default:
                 c.setForeground(Color.white);
                 c.setBackground(new java.awt.Color(51, 51, 51));

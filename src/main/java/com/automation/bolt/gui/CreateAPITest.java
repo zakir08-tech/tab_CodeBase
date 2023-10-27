@@ -39,6 +39,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -49,6 +51,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     public static DefaultTableModel createORTabModel =new DefaultTableModel();
     
     public static JComboBox<String> cBoxApiRequest =new JComboBox<String>();
+    public static JComboBox<String> cBoxApiSSL =new JComboBox<String>();
     public static JComboBox<String> coBoxPayloadType =new JComboBox<String>();
     public static JComboBox<String> coBoxAuth =new JComboBox<String>();
     
@@ -76,6 +79,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     public static TableColumn testIdCol =null;
     public static TableColumn testURLCol =null;
     public static TableColumn testApiTypeCol =null;
+    public static TableColumn testApiSSLCol =null;
     public static TableColumn testPayloadCol =null;
     public static TableColumn testPayloadTypeCol =null;
     public static TableColumn testAuthCol =null;
@@ -126,6 +130,12 @@ public class CreateAPITest extends javax.swing.JFrame {
         apiRequestList(cBoxApiRequest);
         testApiTypeCol.setCellEditor(new DefaultCellEditor(cBoxApiRequest));
         //cBoxApiRequest.setEditable(true);
+        
+        testApiSSLCol = tableAddTestFlow.getColumnModel().getColumn(14);
+        cBoxApiSSL = new JComboBox<String>();
+        apiSSLCertList(cBoxApiSSL);
+        testApiSSLCol.setCellEditor(new DefaultCellEditor(cBoxApiSSL));
+        //cBoxApiSSL.setEditable(true);
         
         testPayloadTypeCol = tableAddTestFlow.getColumnModel().getColumn(8);
         coBoxPayloadType = new JComboBox<String>();
@@ -236,7 +246,7 @@ public class CreateAPITest extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Test ID", "Request", "URL", "Headers (key)", "Headers (value)", "Params (key)", "Params (value)", "Payload", "Payload Type", "Modify Payload (key)", "Modify Payload (value)", "Authorization", "", "", "Test Description"
+                "Test ID", "Request", "URL", "Headers (key)", "Headers (value)", "Params (key)", "Params (value)", "Payload", "Payload Type", "Modify Payload (key)", "Modify Payload (value)", "Authorization", "", "", "SSL Validation", "Test Description"
             }
         ));
         tableAddTestFlow.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
@@ -1383,6 +1393,30 @@ public class CreateAPITest extends javax.swing.JFrame {
         }
     }
     
+    public static void apiSSLCertList(JComboBox<String> cBoxTestFlow) {
+        HashMap<Integer, Object> jsonMap =common.uploadSSLCertConfiguration();
+        
+        for (Map.Entry<Integer,Object> entry : jsonMap.entrySet()){
+            try{
+                String getCertName =entry.getValue().toString().split("[,]")[0];
+                cBoxTestFlow.addItem(getCertName);
+            }catch(ArrayIndexOutOfBoundsException exp){} 
+        }
+        
+        /*String keywordlist = "," +"GET,"
+                + "POST,"
+                + "PUT,"
+                + "PATCH,"
+                + "DELETE";
+              
+        String[] keywordList = keywordlist.split(",");
+        //Arrays.sort(keywordList);
+         
+        for (String txt : keywordList) {
+            cBoxTestFlow.addItem(txt);
+        }*/
+    }
+    
     public static void apiPayloadTypeList(JComboBox<String> cBoxTestFlow) {
         String keywordlist = "," +"form-data,"
                 + "x-www-form-urlencoded,"
@@ -1445,7 +1479,7 @@ public class CreateAPITest extends javax.swing.JFrame {
         tableAddTestFlow.getColumnModel().getColumn(10).setMinWidth(150);
         
         //tableAddTestFlow.getColumnModel().getColumn(11).setMaxWidth(150);
-        tableAddTestFlow.getColumnModel().getColumn(11).setMinWidth(150);
+        tableAddTestFlow.getColumnModel().getColumn(11).setMinWidth(100);
         
         //tableAddTestFlow.getColumnModel().getColumn(12).setMaxWidth(150);
         tableAddTestFlow.getColumnModel().getColumn(12).setMinWidth(150);
@@ -1454,7 +1488,10 @@ public class CreateAPITest extends javax.swing.JFrame {
         tableAddTestFlow.getColumnModel().getColumn(13).setMinWidth(150);
         
         //tableAddTestFlow.getColumnModel().getColumn(14).setMaxWidth(200);
-        tableAddTestFlow.getColumnModel().getColumn(14).setMinWidth(200);
+        tableAddTestFlow.getColumnModel().getColumn(14).setMinWidth(120);
+        
+        //tableAddTestFlow.getColumnModel().getColumn(14).setMaxWidth(200);
+        tableAddTestFlow.getColumnModel().getColumn(15).setMinWidth(200);
     }
     
     /**
