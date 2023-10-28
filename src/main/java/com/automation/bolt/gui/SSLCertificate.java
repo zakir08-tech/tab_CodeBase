@@ -198,7 +198,6 @@ public class SSLCertificate extends javax.swing.JFrame {
         });
 
         scrollPaneTestFlow.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPaneTestFlow.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         tableSSLCertConfig.setBackground(new java.awt.Color(51, 51, 51));
         tableSSLCertConfig.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
@@ -208,10 +207,9 @@ public class SSLCertificate extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Certificate Name (user define)", "KeyStore", "KeyStore Password", "TrustStore", "TrustStore Password"
+                "SSL Name", "KeyStore", "KeyStore Password", "TrustStore", "TrustStore Password"
             }
         ));
-        tableSSLCertConfig.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tableSSLCertConfig.setName("tableSSLCertConfig"); // NOI18N
         tableSSLCertConfig.setRowHeight(30);
         tableSSLCertConfig.setRowMargin(2);
@@ -245,7 +243,7 @@ public class SSLCertificate extends javax.swing.JFrame {
         pnlCreateTestSuite.setLayout(pnlCreateTestSuiteLayout);
         pnlCreateTestSuiteLayout.setHorizontalGroup(
             pnlCreateTestSuiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPaneTestFlow, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 995, Short.MAX_VALUE)
+            .addComponent(scrollPaneTestFlow, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 778, Short.MAX_VALUE)
         );
         pnlCreateTestSuiteLayout.setVerticalGroup(
             pnlCreateTestSuiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -446,21 +444,20 @@ public class SSLCertificate extends javax.swing.JFrame {
                                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                     .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGap(0, 0, 0)
-                                    .addComponent(dPanelMenu)
-                                    .addGap(1, 1, 1))
+                                    .addGap(1, 1, 1)
+                                    .addComponent(dPanelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             );
                             layout.setVerticalGroup(
                                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(dPanelMenu)
+                                    .addComponent(dPanelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(1, 1, 1))
                             );
 
                             getAccessibleContext().setAccessibleParent(this);
 
-                            setSize(new java.awt.Dimension(1055, 266));
+                            setSize(new java.awt.Dimension(838, 266));
                             setLocationRelativeTo(null);
                         }// </editor-fold>//GEN-END:initComponents
 
@@ -824,19 +821,19 @@ public class SSLCertificate extends javax.swing.JFrame {
      
     public static void setTableColWidthForCreateRegSuiteTable(){
         //tableAddTestFlow.getColumnModel().getColumn(0).setMaxWidth(50);
-        tableSSLCertConfig.getColumnModel().getColumn(0).setMinWidth(170);
+        tableSSLCertConfig.getColumnModel().getColumn(0).setMinWidth(100);
         
         //tableAddTestFlow.getColumnModel().getColumn(1).setMaxWidth(72);
         tableSSLCertConfig.getColumnModel().getColumn(1).setMinWidth(255);
         
         //tableAddTestFlow.getColumnModel().getColumn(2).setMaxWidth(350);
-          tableSSLCertConfig.getColumnModel().getColumn(2).setMinWidth(155);
+          tableSSLCertConfig.getColumnModel().getColumn(2).setMinWidth(125);
         
         //tableAddTestFlow.getColumnModel().getColumn(3).setMaxWidth(120);
         tableSSLCertConfig.getColumnModel().getColumn(3).setMinWidth(255);
         
         //tableAddTestFlow.getColumnModel().getColumn(4).setMaxWidth(120);
-        tableSSLCertConfig.getColumnModel().getColumn(4).setMinWidth(155);
+        tableSSLCertConfig.getColumnModel().getColumn(4).setMinWidth(125);
     }
     
     /**

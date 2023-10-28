@@ -48,11 +48,11 @@ public class tableCellRendererAPI implements TableCellRenderer{
                 break;
             case 0:
                 try{
-                    if(!table.getModel().getValueAt(row, 0).toString().isEmpty()){
-                        c.setBackground(Color.darkGray);
+                    //if(!table.getModel().getValueAt(row, 0).toString().isEmpty()){
+                        //c.setBackground(Color.darkGray);
                         c.setForeground(Color.yellow);
-                        c.setFont(new java.awt.Font("Calibri", 1, 14));
-                    }else
+                        //c.setFont(new java.awt.Font("Calibri", 1, 14));
+                    //}else
                         c.setBackground(new java.awt.Color(51, 51, 51));
                 }catch(NullPointerException exp){
                 }
@@ -91,7 +91,14 @@ public class tableCellRendererAPI implements TableCellRenderer{
                 apiSSLCertList(cBoxApiSSL);
                 testApiSSLCol.setCellEditor(new DefaultCellEditor(cBoxApiSSL));
                 //cBoxApiSSL.setEditable(true);
-            break;
+                
+                c.setForeground(Color.pink);
+                c.setBackground(new java.awt.Color(51, 51, 51));
+                break;
+            case 15:
+                c.setForeground(Color.yellow);
+                c.setBackground(new java.awt.Color(51, 51, 51));
+                break;
             default:
                 c.setForeground(Color.white);
                 c.setBackground(new java.awt.Color(51, 51, 51));

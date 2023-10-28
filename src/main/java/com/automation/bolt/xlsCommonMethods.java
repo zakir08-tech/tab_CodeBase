@@ -297,6 +297,11 @@ public class xlsCommonMethods {
         cell = excelRow.createCell(14);
         cell.setCellType(CellType.STRING);
         //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
+        cell.setCellValue("SSL Validation");
+        
+         cell = excelRow.createCell(15);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
         cell.setCellValue("Test Description");
         
         for (int i = 0; i < testFlowTableModel.getRowCount(); i++) {
@@ -356,6 +361,7 @@ public class xlsCommonMethods {
         excelSheet.autoSizeColumn(12);
         excelSheet.autoSizeColumn(13);
         excelSheet.autoSizeColumn(14);
+        excelSheet.autoSizeColumn(15);
    
         excelSheet.createFreezePane(0, 1);
         

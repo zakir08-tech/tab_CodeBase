@@ -25,6 +25,7 @@ public class AutomationTestRunner extends javax.swing.JFrame {
     public EditRegressionSuite editTestSuite = new EditRegressionSuite();
     public ExecuteRegressionSuite runTestSuite = new ExecuteRegressionSuite();
     public CreateTestSuite createTestSuite = new CreateTestSuite();
+    public CreateAPITest createApiTestSuite = new CreateAPITest();
     public SSLCertificate sslCertConfig = new SSLCertificate();
     public TestReporting testReporting = new TestReporting();
     public SettingsAndConfiguration settingsAndConfiguration = new SettingsAndConfiguration(); 
@@ -381,7 +382,7 @@ public class AutomationTestRunner extends javax.swing.JFrame {
                             );
                             jDesktopPane2Layout.setVerticalGroup(
                                 jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(pnlMenuBarGUI, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                                .addComponent(pnlMenuBarGUI, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
                             );
 
                             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -406,7 +407,7 @@ public class AutomationTestRunner extends javax.swing.JFrame {
                                     .addGap(1, 1, 1))
                             );
 
-                            setSize(new java.awt.Dimension(996, 328));
+                            setSize(new java.awt.Dimension(996, 300));
                             setLocationRelativeTo(null);
                         }// </editor-fold>//GEN-END:initComponents
 
@@ -483,6 +484,9 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         if(lblCreateTestSuite.getText().contentEquals("Build Test Suite")){
             createTestSuite.setLocationRelativeTo(null);
             createTestSuite.setVisible(true);
+        }else if(lblCreateTestSuite.getText().contentEquals("Build API Test")){
+            createApiTestSuite.setLocationRelativeTo(null);
+            createApiTestSuite.setVisible(true);
         }
     }//GEN-LAST:event_lblCreateTestSuiteMousePressed
 
@@ -579,6 +583,8 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         if(testReporting.isVisible())
             testReporting.dispose();
         
+        if(createApiTestSuite.isVisible())
+            createApiTestSuite.dispose();
     }//GEN-LAST:event_formWindowClosed
 
     private void lblAutomationTestReportMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAutomationTestReportMousePressed
