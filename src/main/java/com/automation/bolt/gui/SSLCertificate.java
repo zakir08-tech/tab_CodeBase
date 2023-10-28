@@ -183,7 +183,7 @@ public class SSLCertificate extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SSL Certificate Configuration");
-        setMinimumSize(new java.awt.Dimension(955, 492));
+        setMinimumSize(new java.awt.Dimension(1041, 229));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -196,6 +196,9 @@ public class SSLCertificate extends javax.swing.JFrame {
                 formWindowOpened(evt);
             }
         });
+
+        scrollPaneTestFlow.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPaneTestFlow.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         tableSSLCertConfig.setBackground(new java.awt.Color(51, 51, 51));
         tableSSLCertConfig.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
@@ -246,10 +249,7 @@ public class SSLCertificate extends javax.swing.JFrame {
         );
         pnlCreateTestSuiteLayout.setVerticalGroup(
             pnlCreateTestSuiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlCreateTestSuiteLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(scrollPaneTestFlow, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(scrollPaneTestFlow, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         pnlCreateSuiteMenu.setBackground(new java.awt.Color(0, 153, 153));
@@ -421,7 +421,7 @@ public class SSLCertificate extends javax.swing.JFrame {
                                     .addComponent(bttnAddStepDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(bttnSaveSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addContainerGap(35, Short.MAX_VALUE))
                             );
 
                             dPanelMenu.setLayer(pnlCreateSuiteMenu, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -432,15 +432,12 @@ public class SSLCertificate extends javax.swing.JFrame {
                                 dPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(dPanelMenuLayout.createSequentialGroup()
                                     .addGap(4, 4, 4)
-                                    .addComponent(pnlCreateSuiteMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(pnlCreateSuiteMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             );
                             dPanelMenuLayout.setVerticalGroup(
                                 dPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(dPanelMenuLayout.createSequentialGroup()
-                                    .addContainerGap()
-                                    .addComponent(pnlCreateSuiteMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addContainerGap())
+                                .addComponent(pnlCreateSuiteMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             );
 
                             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -450,21 +447,20 @@ public class SSLCertificate extends javax.swing.JFrame {
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                     .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGap(0, 0, 0)
-                                    .addComponent(dPanelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dPanelMenu)
                                     .addGap(1, 1, 1))
                             );
                             layout.setVerticalGroup(
                                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(dPanelMenu)
-                                        .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(dPanelMenu)
                                     .addGap(1, 1, 1))
                             );
 
                             getAccessibleContext().setAccessibleParent(this);
 
-                            setSize(new java.awt.Dimension(1055, 534));
+                            setSize(new java.awt.Dimension(1055, 266));
                             setLocationRelativeTo(null);
                         }// </editor-fold>//GEN-END:initComponents
 
@@ -828,19 +824,19 @@ public class SSLCertificate extends javax.swing.JFrame {
      
     public static void setTableColWidthForCreateRegSuiteTable(){
         //tableAddTestFlow.getColumnModel().getColumn(0).setMaxWidth(50);
-        tableSSLCertConfig.getColumnModel().getColumn(0).setMinWidth(180);
+        tableSSLCertConfig.getColumnModel().getColumn(0).setMinWidth(170);
         
         //tableAddTestFlow.getColumnModel().getColumn(1).setMaxWidth(72);
         tableSSLCertConfig.getColumnModel().getColumn(1).setMinWidth(255);
         
         //tableAddTestFlow.getColumnModel().getColumn(2).setMaxWidth(350);
-          tableSSLCertConfig.getColumnModel().getColumn(2).setMinWidth(150);
+          tableSSLCertConfig.getColumnModel().getColumn(2).setMinWidth(155);
         
         //tableAddTestFlow.getColumnModel().getColumn(3).setMaxWidth(120);
-        tableSSLCertConfig.getColumnModel().getColumn(3).setMinWidth(254);
+        tableSSLCertConfig.getColumnModel().getColumn(3).setMinWidth(255);
         
         //tableAddTestFlow.getColumnModel().getColumn(4).setMaxWidth(120);
-        tableSSLCertConfig.getColumnModel().getColumn(4).setMinWidth(149);
+        tableSSLCertConfig.getColumnModel().getColumn(4).setMinWidth(155);
     }
     
     /**
