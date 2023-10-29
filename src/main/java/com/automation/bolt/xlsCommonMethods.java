@@ -299,7 +299,12 @@ public class xlsCommonMethods {
         //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
         cell.setCellValue("SSL Validation");
         
-         cell = excelRow.createCell(15);
+        cell = excelRow.createCell(15);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
+        cell.setCellValue("Expected Status");
+        
+         cell = excelRow.createCell(16);
         cell.setCellType(CellType.STRING);
         //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
         cell.setCellValue("Test Description");

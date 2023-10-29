@@ -34,11 +34,7 @@ import com.automation.bolt.common;
 import com.automation.bolt.constants;
 import com.automation.bolt.renderer.tableCellRendererAPI;
 import com.google.common.io.Files;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonParser;
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +57,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     
     public static JTextField testIdTxt =new JTextField();
     public static JTextField testURLTxt =new JTextField();
+    public static JTextField testExpectedStatusTxt =new JTextField();
     public static JTextField testPayloadTxt =new JTextField();
     
     public static TableColumn testFlowColumn =null;
@@ -78,6 +75,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     
     public static TableColumn testIdCol =null;
     public static TableColumn testURLCol =null;
+    public static TableColumn testExpectedStatusCol =null;
     public static TableColumn testApiTypeCol =null;
     public static TableColumn testApiSSLCol =null;
     public static TableColumn testPayloadCol =null;
@@ -122,6 +120,9 @@ public class CreateAPITest extends javax.swing.JFrame {
         testURLCol =tableAddTestFlow.getColumnModel().getColumn(2);
         testURLCol.setCellEditor(new DefaultCellEditor(testURLTxt));
         
+        testExpectedStatusCol =tableAddTestFlow.getColumnModel().getColumn(15);
+        testExpectedStatusCol.setCellEditor(new DefaultCellEditor(testExpectedStatusTxt));
+        
         testPayloadCol =tableAddTestFlow.getColumnModel().getColumn(7);
         testPayloadCol.setCellEditor(new DefaultCellEditor(testPayloadTxt));
         
@@ -158,6 +159,18 @@ public class CreateAPITest extends javax.swing.JFrame {
         testURLTxt.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent evt) {
                 testURLTxtKeyReleased(evt, testURLTxt);
+            }
+        });
+        
+        testExpectedStatusTxt.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent evt) {
+                common.testIdTxtKeyTyped(evt, testExpectedStatusTxt);
+            }
+        });
+        
+        testExpectedStatusTxt.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent evt) {
+                testExpectedStatusTxtKeyReleased(evt, testExpectedStatusTxt);
             }
         });
         
@@ -208,8 +221,8 @@ public class CreateAPITest extends javax.swing.JFrame {
         txtAreaAuthorization = new javax.swing.JTextArea();
         scrlPnlPayload = new javax.swing.JScrollPane();
         txtAreaPayload = new javax.swing.JTextArea();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtRequestType = new javax.swing.JTextField();
+        txtExpStatus = new javax.swing.JTextField();
         lblHeaders1 = new javax.swing.JLabel();
         lblHeaders2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -251,7 +264,7 @@ public class CreateAPITest extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Test ID", "Request", "URL", "Headers (key)", "Headers (value)", "Params (key)", "Params (value)", "Payload", "Payload Type", "Modify Payload (key)", "Modify Payload (value)", "Authorization", "", "", "SSL Validation", "Test Description"
+                "Test ID", "Request", "URL", "Headers (key)", "Headers (value)", "Params (key)", "Params (value)", "Payload", "Payload Type", "Modify Payload (key)", "Modify Payload (value)", "Authorization", "", "", "SSL Validation", "Expected Status", "Test Description"
             }
         ));
         tableAddTestFlow.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
@@ -584,29 +597,27 @@ public class CreateAPITest extends javax.swing.JFrame {
                                 });
                                 scrlPnlPayload.setViewportView(txtAreaPayload);
 
-                                jTextField1.setEditable(false);
-                                jTextField1.setBackground(new java.awt.Color(51, 51, 51));
-                                jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-                                jTextField1.setForeground(new java.awt.Color(255, 204, 102));
-                                jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-                                jTextField1.setText("POST");
-                                jTextField1.setBorder(null);
-                                jTextField1.addActionListener(new java.awt.event.ActionListener() {
+                                txtRequestType.setEditable(false);
+                                txtRequestType.setBackground(new java.awt.Color(51, 51, 51));
+                                txtRequestType.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+                                txtRequestType.setForeground(new java.awt.Color(255, 204, 102));
+                                txtRequestType.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+                                txtRequestType.setBorder(null);
+                                txtRequestType.addActionListener(new java.awt.event.ActionListener() {
                                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                        jTextField1ActionPerformed(evt);
+                                        txtRequestTypeActionPerformed(evt);
                                     }
                                 });
 
-                                jTextField2.setEditable(false);
-                                jTextField2.setBackground(new java.awt.Color(51, 51, 51));
-                                jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-                                jTextField2.setForeground(new java.awt.Color(255, 204, 102));
-                                jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-                                jTextField2.setText("200");
-                                jTextField2.setBorder(null);
-                                jTextField2.addActionListener(new java.awt.event.ActionListener() {
+                                txtExpStatus.setEditable(false);
+                                txtExpStatus.setBackground(new java.awt.Color(51, 51, 51));
+                                txtExpStatus.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+                                txtExpStatus.setForeground(new java.awt.Color(255, 204, 102));
+                                txtExpStatus.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+                                txtExpStatus.setBorder(null);
+                                txtExpStatus.addActionListener(new java.awt.event.ActionListener() {
                                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                        jTextField2ActionPerformed(evt);
+                                        txtExpStatusActionPerformed(evt);
                                     }
                                 });
 
@@ -633,11 +644,11 @@ public class CreateAPITest extends javax.swing.JFrame {
                                                 .addGroup(pnlTestAttributesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(lblHeaders2)
                                                     .addGroup(pnlTestAttributesLayout.createSequentialGroup()
-                                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(txtRequestType, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                         .addGroup(pnlTestAttributesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                             .addComponent(lblHeaders1)
-                                                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                                            .addComponent(txtExpStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                                         .addGap(4, 4, 4)
                                         .addGroup(pnlTestAttributesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(scrlPnlAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -655,30 +666,28 @@ public class CreateAPITest extends javax.swing.JFrame {
                                     .addGroup(pnlTestAttributesLayout.createSequentialGroup()
                                         .addComponent(lblPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, 0)
-                                        .addComponent(scrlPnlPayload)
-                                        .addGap(0, 0, 0))
-                                    .addGroup(pnlTestAttributesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(pnlTestAttributesLayout.createSequentialGroup()
-                                            .addGroup(pnlTestAttributesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(lblHeaders2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(lblHeaders1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGap(1, 1, 1)
-                                            .addGroup(pnlTestAttributesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGap(10, 10, 10)
-                                            .addComponent(lblHeaders, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(scrlPnlHeaders)
-                                            .addGap(1, 1, 1))
-                                        .addGroup(pnlTestAttributesLayout.createSequentialGroup()
-                                            .addComponent(lblParams, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(scrlPnlParams, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(4, 4, 4)
-                                            .addComponent(lblAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(scrlPnlAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(scrlPnlPayload))
+                                    .addGroup(pnlTestAttributesLayout.createSequentialGroup()
+                                        .addGroup(pnlTestAttributesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblHeaders2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblHeaders1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, 0)
+                                        .addGroup(pnlTestAttributesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtRequestType, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtExpStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(1, 1, 1)
+                                        .addComponent(lblHeaders, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, 0)
+                                        .addComponent(scrlPnlHeaders)
+                                        .addGap(1, 1, 1))
+                                    .addGroup(pnlTestAttributesLayout.createSequentialGroup()
+                                        .addComponent(lblParams, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, 0)
+                                        .addComponent(scrlPnlParams, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(4, 4, 4)
+                                        .addComponent(lblAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, 0)
+                                        .addComponent(scrlPnlAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 );
 
                                 javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -762,6 +771,16 @@ public class CreateAPITest extends javax.swing.JFrame {
      public static void testURLTxtKeyReleased(KeyEvent evt, JTextField textField) {
         String getURLText =textField.getText();
         txtAPIurl.setText(getURLText);
+    }
+    
+    public static void testExpectedStatusTxtKeyReleased(KeyEvent evt, JTextField textField) {
+        getCurrRowBeforeKeyPressed =tableAddTestFlow.getSelectedRow();
+        String getTestId =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
+
+        if(getTestId !=null && !getTestId.isEmpty()){
+            String getStatusText =textField.getText();
+            txtExpStatus.setText(getStatusText);
+        }
     }
      
     public static void testPayloadTxtKeyReleased(KeyEvent evt, JTextField textField) {
@@ -1252,6 +1271,9 @@ public class CreateAPITest extends javax.swing.JFrame {
                     tableAddTestFlow.editCellAt(getCurRow, 7);
                     testPayloadTxt.requestFocusInWindow();
                     break;
+                case 15:
+                    tableAddTestFlow.editCellAt(getCurRow, 15);
+                    testExpectedStatusTxt.requestFocusInWindow();
                 default:
                     break;
             }
@@ -1311,13 +1333,13 @@ public class CreateAPITest extends javax.swing.JFrame {
         }catch(ArrayIndexOutOfBoundsException exp){}
     }//GEN-LAST:event_txtAreaPayloadKeyReleased
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtExpStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtExpStatusActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtExpStatusActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtRequestTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRequestTypeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtRequestTypeActionPerformed
     
     public static void updateAPIAttributeData(){
         getCurrRowBeforeKeyPressed =tableAddTestFlow.getSelectedRow();
@@ -1450,6 +1472,44 @@ public class CreateAPITest extends javax.swing.JFrame {
                 txtAreaAuthorization.setText("");
             }
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
+        
+        // update expected status
+        try{
+           String getTestId =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
+           if(getTestId !=null && !getTestId.isEmpty()){
+                String getStatus =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 15);
+                if(getStatus ==null)
+                     getStatus ="";
+
+                txtExpStatus.setText(getStatus);
+            }else
+                txtExpStatus.setText("");
+        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
+        
+        // update request type
+        try{
+           String getTestId =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
+           if(getTestId !=null && !getTestId.isEmpty()){
+                String getReqType =(String) tableAddTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 1);
+                if(getReqType ==null)
+                     getReqType ="";
+                
+                if(getReqType.contentEquals("GET")){
+                    txtRequestType.setForeground(Color.green);
+                }else if(getReqType.contentEquals("POST")){
+                    txtRequestType.setForeground(new java.awt.Color(255,153,0));
+                }else if(getReqType.contentEquals("PUT")){
+                    txtRequestType.setForeground(new java.awt.Color(153,153,255));
+                }else if(getReqType.contentEquals("PATCH")){
+                    txtRequestType.setForeground(new java.awt.Color(255,255,255));
+                }else if(getReqType.contentEquals("DELETE")){
+                    txtRequestType.setForeground(new java.awt.Color(255,102,102));
+                }
+                
+                txtRequestType.setText(getReqType);
+            }else
+               txtRequestType.setText("");
+        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}   
     }
     
     public static boolean checkElementExistInTheList(String listItem){
@@ -1473,9 +1533,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                 + "PATCH,"
                 + "DELETE";
               
-        String[] keywordList = keywordlist.split(",");
-        //Arrays.sort(keywordList);
-         
+        String[] keywordList = keywordlist.split(","); 
         for (String txt : keywordList) {
             cBoxTestFlow.addItem(txt);
         }
@@ -1490,19 +1548,6 @@ public class CreateAPITest extends javax.swing.JFrame {
                 cBoxTestFlow.addItem(getCertName);
             }catch(ArrayIndexOutOfBoundsException exp){} 
         }
-        
-        /*String keywordlist = "," +"GET,"
-                + "POST,"
-                + "PUT,"
-                + "PATCH,"
-                + "DELETE";
-              
-        String[] keywordList = keywordlist.split(",");
-        //Arrays.sort(keywordList);
-         
-        for (String txt : keywordList) {
-            cBoxTestFlow.addItem(txt);
-        }*/
     }
     
     public static void apiPayloadTypeList(JComboBox<String> cBoxTestFlow) {
@@ -1512,9 +1557,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                 + "HTML,"
                 + "XML";
               
-        String[] keywordList = keywordlist.split(",");
-        //Arrays.sort(keywordList);
-         
+        String[] keywordList = keywordlist.split(",");  
         for (String txt : keywordList) {
             cBoxTestFlow.addItem(txt);
         }
@@ -1524,14 +1567,12 @@ public class CreateAPITest extends javax.swing.JFrame {
         String keywordlist = "," +"Basic Auth,"
                 + "Bearer Token";
               
-        String[] keywordList = keywordlist.split(",");
-        //Arrays.sort(keywordList);
-         
+        String[] keywordList = keywordlist.split(",");  
         for (String txt : keywordList) {
             cBoxTestFlow.addItem(txt);
         }
     }
-    
+        
     public static void setTableColWidthForCreateRegSuiteTable(){
         tableAddTestFlow.getColumnModel().getColumn(0).setMaxWidth(50);
         tableAddTestFlow.getColumnModel().getColumn(0).setMinWidth(50);
@@ -1578,8 +1619,11 @@ public class CreateAPITest extends javax.swing.JFrame {
         //tableAddTestFlow.getColumnModel().getColumn(14).setMaxWidth(200);
         tableAddTestFlow.getColumnModel().getColumn(14).setMinWidth(120);
         
-        //tableAddTestFlow.getColumnModel().getColumn(14).setMaxWidth(200);
-        tableAddTestFlow.getColumnModel().getColumn(15).setMinWidth(200);
+        //tableAddTestFlow.getColumnModel().getColumn(15).setMaxWidth(100);
+        tableAddTestFlow.getColumnModel().getColumn(15).setMinWidth(100);
+        
+        //tableAddTestFlow.getColumnModel().getColumn(16).setMaxWidth(200);
+        tableAddTestFlow.getColumnModel().getColumn(16).setMinWidth(200);
     }
     
     /**
@@ -1621,8 +1665,6 @@ public class CreateAPITest extends javax.swing.JFrame {
     public static javax.swing.JButton bttnSaveSuite;
     public javax.swing.JDesktopPane dPanelMenu;
     public javax.swing.JPanel jPanel1;
-    public javax.swing.JTextField jTextField1;
-    public javax.swing.JTextField jTextField2;
     public static javax.swing.JLabel lblAuthorization;
     public javax.swing.JLabel lblHeaders;
     public javax.swing.JLabel lblHeaders1;
@@ -1643,5 +1685,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     public static javax.swing.JTextArea txtAreaHeaders;
     public static javax.swing.JTextArea txtAreaParams;
     public static javax.swing.JTextArea txtAreaPayload;
+    public static javax.swing.JTextField txtExpStatus;
+    public static javax.swing.JTextField txtRequestType;
     // End of variables declaration//GEN-END:variables
 }

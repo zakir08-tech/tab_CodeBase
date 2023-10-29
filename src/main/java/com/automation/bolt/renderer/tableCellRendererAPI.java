@@ -7,10 +7,8 @@ package com.automation.bolt.renderer;
 
 import static com.automation.bolt.gui.CreateAPITest.apiSSLCertList;
 import static com.automation.bolt.gui.CreateAPITest.cBoxApiSSL;
-import static com.automation.bolt.gui.CreateAPITest.getCurrRowBeforeKeyPressed;
 import static com.automation.bolt.gui.CreateAPITest.tableAddTestFlow;
 import static com.automation.bolt.gui.CreateAPITest.testApiSSLCol;
-import static com.automation.bolt.gui.CreateAPITest.txtAreaAuthorization;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;

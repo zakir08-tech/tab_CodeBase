@@ -485,7 +485,7 @@ public class AutomationTestRunner extends javax.swing.JFrame {
             createTestSuite.setLocationRelativeTo(null);
             createTestSuite.setVisible(true);
         }else if(lblCreateTestSuite.getText().contentEquals("Build API Test")){
-            createApiTestSuite.setLocationRelativeTo(null);
+            //createApiTestSuite.setLocationRelativeTo(null);
             createApiTestSuite.setVisible(true);
         }
     }//GEN-LAST:event_lblCreateTestSuiteMousePressed
