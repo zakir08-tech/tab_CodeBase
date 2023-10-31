@@ -15,6 +15,8 @@ import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 
 import com.automation.bolt.constants;
+import static com.automation.bolt.gui.CreateAPITest.saveTestFileWhileClosingTheWindow;
+import static com.automation.bolt.gui.EditAPITest.saveTestSuitWhenWindowIsGettingClosed;
 import com.automation.bolt.renderer.JTreeCellRenderer;
 
 /**
@@ -23,6 +25,7 @@ import com.automation.bolt.renderer.JTreeCellRenderer;
  */
 public class AutomationTestRunner extends javax.swing.JFrame {
     public EditRegressionSuite editTestSuite = new EditRegressionSuite();
+    public EditAPITest editApiTest = new EditAPITest();
     public ExecuteRegressionSuite runTestSuite = new ExecuteRegressionSuite();
     public CreateTestSuite createTestSuite = new CreateTestSuite();
     public CreateAPITest createApiTestSuite = new CreateAPITest();
@@ -463,6 +466,9 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         if(lblEditTestSuite.getText().contentEquals("Edit Test Suite")){
             editTestSuite.setLocationRelativeTo(null);
             editTestSuite.setVisible(true);
+        }else if(lblEditTestSuite.getText().contentEquals("Edit API Test")){
+            //createApiTestSuite.setLocationRelativeTo(null);
+            editApiTest.setVisible(true);
         }
     }//GEN-LAST:event_lblEditTestSuiteMousePressed
 
@@ -585,6 +591,10 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         
         if(createApiTestSuite.isVisible())
             createApiTestSuite.dispose();
+        
+        if(editApiTest.isVisible())
+            editApiTest.dispose();
+        
     }//GEN-LAST:event_formWindowClosed
 
     private void lblAutomationTestReportMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAutomationTestReportMousePressed
@@ -603,6 +613,12 @@ public class AutomationTestRunner extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         killProcess("chromedriver.exe");
         killProcess("msedgedriver.exe");
+        
+        if(editApiTest.isVisible())
+            saveTestSuitWhenWindowIsGettingClosed();
+        
+        if(createApiTestSuite.isVisible())
+            saveTestFileWhileClosingTheWindow();
     }//GEN-LAST:event_formWindowClosing
 
     private void radioBttnGUIMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioBttnGUIMouseReleased

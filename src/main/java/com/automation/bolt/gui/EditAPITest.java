@@ -6,8 +6,6 @@
 package com.automation.bolt.gui;
 
 import static com.automation.bolt.common.tabOutFromEditingColumn;
-import static com.automation.bolt.gui.EditRegressionSuite.RegressionSuiteScrollPane;
-import static com.automation.bolt.xlsCommonMethods.createAPITestFlowDataSheet;
 
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -32,8 +30,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.automation.bolt.common;
 import com.automation.bolt.constants;
+import static com.automation.bolt.gui.EditRegressionSuite.RegressionSuiteScrollPane;
 import com.automation.bolt.renderer.tableCellRendererAPI;
-import com.google.common.io.Files;
 import java.awt.Color;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -41,7 +39,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 //import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -255,6 +256,9 @@ public class EditAPITest extends javax.swing.JFrame {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -384,6 +388,11 @@ public class EditAPITest extends javax.swing.JFrame {
         tableEditTestFlow.getTableHeader().setReorderingAllowed(false);
         tableEditTestFlow.setUpdateSelectionOnSort(false);
         tableEditTestFlow.setVerifyInputWhenFocusTarget(false);
+        tableEditTestFlow.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tableEditTestFlowFocusGained(evt);
+            }
+        });
         tableEditTestFlow.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tableEditTestFlowMousePressed(evt);
@@ -1092,115 +1101,135 @@ public class EditAPITest extends javax.swing.JFrame {
         
         if(common.checkForDuplicateTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
             return;
-                
-        if(tableEditTestFlow.getRowCount() > 0){
-            FileOutputStream excelFos;
-            XSSFWorkbook excelJTableExport = new XSSFWorkbook();
-            boolean fileExist;
-            fileExist = false;
-            String getCurrDir;
-            
-            try{
-                File getCurrDirectory =excelFileExport.getCurrentDirectory();
-                getCurrDir =getCurrDirectory.getAbsolutePath();
-            }catch(NullPointerException exp){
-                getCurrDir =FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
+        
+        if (excelFile != null) {
+            try {
+                bttnSaveSuite.setEnabled(false);
+                if (deleteAllTestSteps(excelFile, 0) == true) {
+                    updateTestSuite(excelFile);
+                    JOptionPane.showMessageDialog(RegressionSuiteScrollPane, "Test suite " + "\"" + excelFileImport.getName(excelFile) + "\"" + " updated and saved!", "Alert", JOptionPane.WARNING_MESSAGE);
+                }
+                bttnSaveSuite.setEnabled(true);
+            } catch (IOException ex) {
+                Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            excelFileExport = new JFileChooser(getCurrDir);
-            excelFileExport.setDialogTitle("Save Test Suite");
-            excelFileExport.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        }else
+            JOptionPane.showMessageDialog(RegressionSuiteScrollPane, "No test suite is available to save!", "Alert", JOptionPane.WARNING_MESSAGE);   
+    }//GEN-LAST:event_bttnSaveSuiteActionPerformed
+    
+    public static void saveTestSuitWhenWindowIsGettingClosed(){
+        if (excelFile != null) {
+            try {
+                bttnSaveSuite.setEnabled(false);
+                if (deleteAllTestSteps(excelFile, 0) == true) {
+                    updateTestSuite(excelFile);
+                    //JOptionPane.showMessageDialog(RegressionSuiteScrollPane, "Test suite " + "\"" + excelFileImport.getName(excelFile) + "\"" + " updated and saved!", "Alert", JOptionPane.WARNING_MESSAGE);
+                }
+                bttnSaveSuite.setEnabled(true);
+            } catch (IOException ex) {
+                Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public static void updateTestSuite(File excelFile) {
+        FileInputStream fis = null;
 
-            excelFileExport.addChoosableFileFilter(new FileNameExtensionFilter("EXCEL WORKBOOK", "xlsx"));
-            excelFileExport.setAcceptAllFileFilterUsed(false);
+        try {
+            fis = new FileInputStream(excelFile);
+            XSSFWorkbook wbSuite = new XSSFWorkbook(fis);
+            XSSFSheet excelSheetTestFlow = wbSuite.getSheetAt(0);
+            XSSFCell cell = null;
+            //XSSFDataFormat format = wbSuite.createDataFormat();
 
-            int excelChooser = excelFileExport.showSaveDialog(this);
-            
-            if (excelChooser == JFileChooser.APPROVE_OPTION) {
-                String getFilePath =excelFileExport.getSelectedFile().toString();
-                String extension = Files.getFileExtension(getFilePath);
-                if(extension.isEmpty())
-                    getFilePath =getFilePath+".xlsx";
-                
-                File exclFile = new File(getFilePath);
-                if (exclFile.exists()) {
-                    fileExist =true;
-                    int response = JOptionPane.showConfirmDialog(RegressionSuiteScrollPane, //
-                            "Test suite " + "\"" + excelFileExport.getSelectedFile().getName() + "\"" + " already exist!,\nDo you want to replace the existing test suite?", //
-                            "Confirm", JOptionPane.YES_NO_OPTION, //
-                            JOptionPane.QUESTION_MESSAGE);
-                    if (response != JOptionPane.YES_OPTION) {
-                        bttnSaveSuite.doClick();
-                        return;
+            XSSFFont font = wbSuite.createFont();
+            //font.setColor(IndexedColors.WHITE.getIndex());
+            XSSFCellStyle cellStyle = wbSuite.createCellStyle();
+            cellStyle.setFont(font);
+
+            //cellStyle.setFillBackgroundColor(IndexedColors.BLACK.getIndex());
+            //cellStyle.setFillPattern(FillPatternType.ALT_BARS);
+
+            for (int j = 0; j < createSuiteTabModel.getRowCount(); j++) {
+                XSSFRow row = excelSheetTestFlow.createRow(j + 1);
+                for (int k = 0; k < createSuiteTabModel.getColumnCount(); k++) {
+                    cell = row.createCell(k);
+                    cell.setCellType(CellType.STRING);
+                    cell.setCellStyle(cellStyle);
+                    try {
+                        cell.setCellValue(createSuiteTabModel.getValueAt(j, k).toString());
+                    } catch (NullPointerException exp) {
+                        cell.setCellValue("");
                     }
                 }
             }
-            
-            if (excelChooser == JFileChooser.CANCEL_OPTION) {
-                return;
+
+            fis.close();
+            FileOutputStream outFile = new FileOutputStream(excelFile);
+            wbSuite.write(outFile);
+            wbSuite.close();
+            outFile.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+  
+    public static boolean deleteAllTestSteps(File excelFileSuite, int sheetIndex) throws IOException {
+        FileInputStream fis;
+        boolean deleteSuccessfull = true;
+        XSSFWorkbook wbSuite = null;
+        FileOutputStream outFile;
+
+        try {
+            fis = new FileInputStream(excelFileSuite);
+            wbSuite = new XSSFWorkbook(fis);
+            XSSFSheet excelSheetTestFlow = wbSuite.getSheetAt(sheetIndex);
+
+            for (int i = 1; i <= excelSheetTestFlow.getLastRowNum(); i++) {
+                XSSFRow row = excelSheetTestFlow.getRow(i);
+                excelSheetTestFlow.removeRow(row);
             }
-            fileSaved =false;
-            try {
-                // create test flow sheet
-                excelJTableExport =createAPITestFlowDataSheet(excelJTableExport, createSuiteTabModel);   
-                // create test element repository sheet
-                //excelJTableExport =createObjectRepoSheetNew(excelJTableExport, createORTabModel);
 
-                String getFilePath =null;
-                if(fileExist ==true)
-                    getFilePath =excelFileExport.getSelectedFile().toString();
-                else if(fileExist ==false)
-                        getFilePath =excelFileExport.getSelectedFile()+".xlsx";
+            fis.close();
+            outFile = new FileOutputStream(excelFileSuite);
+            wbSuite.write(outFile);
+            wbSuite.close();
+            outFile.close();
+        } catch (FileNotFoundException ex) {
+            deleteSuccessfull = false;
 
-                excelFos = new FileOutputStream(getFilePath);
-                excelJTableExport.write(excelFos);
+            if (ex.getMessage().contains("The process cannot access the file because it is being used by another process")) {
+                int response;
 
-                excelFos.close();
-                excelJTableExport.close();
-                fileSaved =true;
-                
-                JOptionPane.showMessageDialog(scrollPaneTestFlow, "Test suite " + "\"" + excelFileExport.getSelectedFile().getName() + "\"" + " saved successfully!", "Alert", JOptionPane.INFORMATION_MESSAGE);
-            } catch (FileNotFoundException ex) {
-                //Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
-                if (ex.getMessage().contains("The process cannot access the file because it is being used by another process")) {
-                    int response;
+                do {
+                    response = JOptionPane.showConfirmDialog(RegressionSuiteScrollPane, //
+                            "Close test suite " + "\"" + excelFileImport.getName(excelFile) + "\"" + " to save the changes!", //
+                            "Alert", JOptionPane.OK_CANCEL_OPTION, //
+                            JOptionPane.WARNING_MESSAGE);
 
-                    do {
-                        response = JOptionPane.showConfirmDialog(scrollPaneTestFlow, //
-                                "Close test suite " + "\"" + excelFileExport.getSelectedFile().getName() + "\"" + " to save the changes!", //
-                                "Alert", JOptionPane.OK_CANCEL_OPTION, //
-                                JOptionPane.WARNING_MESSAGE);
+                    if (response == JOptionPane.OK_OPTION) {
+                        try {
+                            outFile = new FileOutputStream(excelFileSuite);
+                            wbSuite.write(outFile);
+                            outFile.close();
+                            deleteSuccessfull = true;
+                            break;
+                        } catch (FileNotFoundException ex1) {
+                            if (ex.getMessage().contains("The process cannot access the file because it is being used by another process")) {
 
-                        if (response == JOptionPane.OK_OPTION) {
-                            try {
-                                excelFos = new FileOutputStream(excelFileExport.getSelectedFile());
-                                excelJTableExport.write(excelFos);
-
-                                excelFos.close();
-                                excelJTableExport.close();
-
-                                JOptionPane.showMessageDialog(scrollPaneTestFlow, "Test suite " + "\"" + excelFileExport.getSelectedFile().getName() + "\"" + " saved successfully!", "Alert", JOptionPane.INFORMATION_MESSAGE);
-                                fileSaved =true;
-                                break;
-                            } catch (FileNotFoundException ex1) {
-                                /*if (ex1.getMessage().contains("The process cannot access the file because it is being used by another process")) {
-
-                                }*/
-                            } catch (IOException ex1) {
-                                //Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex1);
                             }
                         }
-                    } while (response != JOptionPane.CANCEL_OPTION);
-                }
-            } catch (IOException ex) {
-                //Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } while (response != JOptionPane.CANCEL_OPTION);
             }
-            
+        } catch (IOException ex) {
+            Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
         }
-        else
-            JOptionPane.showMessageDialog(null,"No test suite is available to save!","Alert",JOptionPane.WARNING_MESSAGE);
-    }//GEN-LAST:event_bttnSaveSuiteActionPerformed
-
+        return deleteSuccessfull;
+    }
+    
     private void bttnAddNewTestSuiteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddNewTestSuiteMouseEntered
         bttnAddNewTestSuite.setBackground(new java.awt.Color(250, 128, 114));
         bttnAddNewTestSuite.setForeground(new java.awt.Color(0,0,0));
@@ -1318,6 +1347,7 @@ public class EditAPITest extends javax.swing.JFrame {
                 }
 
                 tableEditTestFlow.setRowSelectionInterval(0, 0);
+                tableEditTestFlow.setColumnSelectionInterval(0, 0);
                 tableEditTestFlow.scrollRectToVisible(tableEditTestFlow.getCellRect(0, 0, true));
                 tableEditTestFlow.requestFocus();
                 
@@ -1497,6 +1527,14 @@ public class EditAPITest extends javax.swing.JFrame {
             tableEditTestFlow.setValueAt(getApiPayload,getCurrRowBeforeKeyPressed, 7);
         }catch(ArrayIndexOutOfBoundsException exp){}
     }//GEN-LAST:event_txtAreaPayloadFocusLost
+
+    private void tableEditTestFlowFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tableEditTestFlowFocusGained
+        updateAPIAttributeData();
+    }//GEN-LAST:event_tableEditTestFlowFocusGained
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+       saveTestSuitWhenWindowIsGettingClosed();
+    }//GEN-LAST:event_formWindowClosing
     
     public static void updateAPIAttributeData(){
         getCurrRowBeforeKeyPressed =tableEditTestFlow.getSelectedRow();
@@ -1528,7 +1566,7 @@ public class EditAPITest extends javax.swing.JFrame {
             Object getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
             String setHeaders ="";
             
-            if(getTestId !=null)
+            if(getTestId !=null && !getTestId.toString().isEmpty())
             {
             	int getRowCnt =tableEditTestFlow.getRowCount();
             	int rowStart =getCurrRowBeforeKeyPressed;
@@ -1570,21 +1608,21 @@ public class EditAPITest extends javax.swing.JFrame {
             	int rowStart =getCurrRowBeforeKeyPressed;
             	
             	for(int rowStart1=rowStart; rowStart1<=getRowCnt;rowStart1++) {
-            		String getParamName =(String) tableEditTestFlow.getValueAt(rowStart1, 5);
+            		Object getParamName =tableEditTestFlow.getValueAt(rowStart1, 5);
                     if(getParamName ==null)
                     	getParamName ="";
                     
-                    String getParamValue = (String) tableEditTestFlow.getValueAt(rowStart1, 6);
+                    Object getParamValue =tableEditTestFlow.getValueAt(rowStart1, 6);
                     if(getParamValue ==null)
                     	getParamValue ="";
                     
-                    if(!getParamName.isEmpty() || !getParamValue.isEmpty()) {
+                    if(!getParamName.toString().isEmpty() || !getParamValue.toString().isEmpty()) {
                     	setParams = setParams + getParamName +": "+ getParamValue+"\n";
                     }
                     
                     try {
-                    	String getTestId1 =(String) tableEditTestFlow.getValueAt(rowStart1+1, 0);
-                        if(getTestId1 !=null && !getTestId1.isEmpty()) {
+                    	Object getTestId1 =tableEditTestFlow.getValueAt(rowStart1+1, 0);
+                        if(getTestId1 !=null && !getTestId1.toString().isEmpty()) {
                         	txtAreaParams.setText(setParams);
                         	break;
                         }
@@ -1597,21 +1635,21 @@ public class EditAPITest extends javax.swing.JFrame {
         
         // update authentication
         try{
-            String getTestId =(String) tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
-            if(getTestId !=null && !getTestId.isEmpty())
+            Object getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
+            if(getTestId !=null && !getTestId.toString().isEmpty())
             {
-                String getAuth =(String) tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 11);
-                if(getAuth.contentEquals("Basic Auth")){
-                    String getUsername =(String) tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                Object getAuth =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 11);
+                if(getAuth.toString().contentEquals("Basic Auth")){
+                    Object getUsername =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
                     if(getUsername ==null)
                     	getUsername ="";
-                    String getPassword =(String) tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
+                    Object getPassword =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
                     if(getPassword ==null)
                     	getPassword ="";
                     
                     txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
                     lblAuthorization.setText("Authorization: Basic Auth");
-                }else if(getAuth.contentEquals("Bearer Token")){
+                }else if(getAuth.toString().contentEquals("Bearer Token")){
                     String getToken =(String) tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
                     if(getToken ==null)
                     	getToken ="";
@@ -1632,38 +1670,38 @@ public class EditAPITest extends javax.swing.JFrame {
         
         // update expected status
         try{
-           String getTestId =(String) tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
-           if(getTestId !=null && !getTestId.isEmpty()){
-                String getStatus =(String) tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 15);
+           Object getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
+           if(getTestId !=null && !getTestId.toString().isEmpty()){
+                Object getStatus =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 15);
                 if(getStatus ==null)
                      getStatus ="";
 
-                txtExpStatus.setText(getStatus);
+                txtExpStatus.setText(getStatus.toString());
             }else
                 txtExpStatus.setText("");
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
         
         // update request type
         try{
-           String getTestId =(String) tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
-           if(getTestId !=null && !getTestId.isEmpty()){
-                String getReqType =(String) tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 1);
+           Object getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
+           if(getTestId !=null && !getTestId.toString().isEmpty()){
+                Object getReqType =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 1);
                 if(getReqType ==null)
                      getReqType ="";
                 
-                if(getReqType.contentEquals("GET")){
+                if(getReqType.toString().contentEquals("GET")){
                     txtRequestType.setForeground(Color.green);
-                }else if(getReqType.contentEquals("POST")){
+                }else if(getReqType.toString().contentEquals("POST")){
                     txtRequestType.setForeground(new java.awt.Color(255,153,0));
-                }else if(getReqType.contentEquals("PUT")){
+                }else if(getReqType.toString().contentEquals("PUT")){
                     txtRequestType.setForeground(new java.awt.Color(153,153,255));
-                }else if(getReqType.contentEquals("PATCH")){
+                }else if(getReqType.toString().contentEquals("PATCH")){
                     txtRequestType.setForeground(new java.awt.Color(255,255,255));
-                }else if(getReqType.contentEquals("DELETE")){
+                }else if(getReqType.toString().contentEquals("DELETE")){
                     txtRequestType.setForeground(new java.awt.Color(255,102,102));
                 }
                 
-                txtRequestType.setText(getReqType);
+                txtRequestType.setText(getReqType.toString());
             }else
                txtRequestType.setText("");
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}   
