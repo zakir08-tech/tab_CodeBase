@@ -165,19 +165,20 @@ public class SSLCertificate extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlCreateTestSuite = new javax.swing.JPanel();
-        scrollPaneTestFlow = new javax.swing.JScrollPane();
-        tableSSLCertConfig = new javax.swing.JTable();
         dPanelMenu = new javax.swing.JDesktopPane();
-        pnlCreateSuiteMenu = new javax.swing.JPanel();
         bttnAddNewTestStep = new javax.swing.JButton();
         bttnDeleteTestStep = new javax.swing.JButton();
         bttnAddStepUp = new javax.swing.JButton();
         bttnAddStepDown = new javax.swing.JButton();
         bttnSaveSuite = new javax.swing.JButton();
+        scrollPaneTestFlow = new javax.swing.JScrollPane();
+        tableSSLCertConfig = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SSL Certificate Configuration");
+        setBackground(new java.awt.Color(51, 51, 51));
         setMinimumSize(new java.awt.Dimension(1041, 229));
+        setPreferredSize(new java.awt.Dimension(1041, 229));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -191,61 +192,7 @@ public class SSLCertificate extends javax.swing.JFrame {
             }
         });
 
-        scrollPaneTestFlow.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-        tableSSLCertConfig.setBackground(new java.awt.Color(51, 51, 51));
-        tableSSLCertConfig.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
-        tableSSLCertConfig.setForeground(new java.awt.Color(255, 255, 255));
-        tableSSLCertConfig.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "SSL Name", "KeyStore", "KeyStore Password", "TrustStore", "TrustStore Password"
-            }
-        ));
-        tableSSLCertConfig.setName("tableSSLCertConfig"); // NOI18N
-        tableSSLCertConfig.setRowHeight(30);
-        tableSSLCertConfig.setRowMargin(2);
-        tableSSLCertConfig.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tableSSLCertConfig.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tableSSLCertConfig.setShowGrid(true);
-        tableSSLCertConfig.getTableHeader().setReorderingAllowed(false);
-        tableSSLCertConfig.setUpdateSelectionOnSort(false);
-        tableSSLCertConfig.setVerifyInputWhenFocusTarget(false);
-        tableSSLCertConfig.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tableSSLCertConfigFocusLost(evt);
-            }
-        });
-        tableSSLCertConfig.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                tableSSLCertConfigMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tableSSLCertConfigMouseReleased(evt);
-            }
-        });
-        tableSSLCertConfig.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tableSSLCertConfigKeyReleased(evt);
-            }
-        });
-        scrollPaneTestFlow.setViewportView(tableSSLCertConfig);
-
-        javax.swing.GroupLayout pnlCreateTestSuiteLayout = new javax.swing.GroupLayout(pnlCreateTestSuite);
-        pnlCreateTestSuite.setLayout(pnlCreateTestSuiteLayout);
-        pnlCreateTestSuiteLayout.setHorizontalGroup(
-            pnlCreateTestSuiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPaneTestFlow, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 778, Short.MAX_VALUE)
-        );
-        pnlCreateTestSuiteLayout.setVerticalGroup(
-            pnlCreateTestSuiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPaneTestFlow, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-        );
-
-        pnlCreateSuiteMenu.setBackground(new java.awt.Color(0, 153, 153));
-        pnlCreateSuiteMenu.setOpaque(false);
+        pnlCreateTestSuite.setForeground(new java.awt.Color(51, 51, 51));
 
         bttnAddNewTestStep.setBackground(new java.awt.Color(0, 0, 0));
         bttnAddNewTestStep.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
@@ -387,23 +334,30 @@ public class SSLCertificate extends javax.swing.JFrame {
                                 }
                             });
 
-                            javax.swing.GroupLayout pnlCreateSuiteMenuLayout = new javax.swing.GroupLayout(pnlCreateSuiteMenu);
-                            pnlCreateSuiteMenu.setLayout(pnlCreateSuiteMenuLayout);
-                            pnlCreateSuiteMenuLayout.setHorizontalGroup(
-                                pnlCreateSuiteMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCreateSuiteMenuLayout.createSequentialGroup()
-                                    .addGap(0, 0, Short.MAX_VALUE)
-                                    .addGroup(pnlCreateSuiteMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(bttnSaveSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                            dPanelMenu.setLayer(bttnAddNewTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                            dPanelMenu.setLayer(bttnDeleteTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                            dPanelMenu.setLayer(bttnAddStepUp, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                            dPanelMenu.setLayer(bttnAddStepDown, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                            dPanelMenu.setLayer(bttnSaveSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+                            javax.swing.GroupLayout dPanelMenuLayout = new javax.swing.GroupLayout(dPanelMenu);
+                            dPanelMenu.setLayout(dPanelMenuLayout);
+                            dPanelMenuLayout.setHorizontalGroup(
+                                dPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(dPanelMenuLayout.createSequentialGroup()
+                                    .addGap(1, 1, 1)
+                                    .addGroup(dPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(bttnSaveSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(bttnAddStepDown, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(bttnAddStepUp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(1, 1, 1))
                             );
-                            pnlCreateSuiteMenuLayout.setVerticalGroup(
-                                pnlCreateSuiteMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCreateSuiteMenuLayout.createSequentialGroup()
-                                    .addGap(19, 19, 19)
+                            dPanelMenuLayout.setVerticalGroup(
+                                dPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(dPanelMenuLayout.createSequentialGroup()
+                                    .addGap(27, 27, 27)
                                     .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -413,46 +367,86 @@ public class SSLCertificate extends javax.swing.JFrame {
                                     .addComponent(bttnAddStepDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(bttnSaveSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addContainerGap(35, Short.MAX_VALUE))
+                                    .addContainerGap(47, Short.MAX_VALUE))
                             );
 
-                            dPanelMenu.setLayer(pnlCreateSuiteMenu, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                            scrollPaneTestFlow.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-                            javax.swing.GroupLayout dPanelMenuLayout = new javax.swing.GroupLayout(dPanelMenu);
-                            dPanelMenu.setLayout(dPanelMenuLayout);
-                            dPanelMenuLayout.setHorizontalGroup(
-                                dPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(dPanelMenuLayout.createSequentialGroup()
-                                    .addGap(4, 4, 4)
-                                    .addComponent(pnlCreateSuiteMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            tableSSLCertConfig.setBackground(new java.awt.Color(51, 51, 51));
+                            tableSSLCertConfig.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+                            tableSSLCertConfig.setForeground(new java.awt.Color(255, 255, 255));
+                            tableSSLCertConfig.setModel(new javax.swing.table.DefaultTableModel(
+                                new Object [][] {
+
+                                },
+                                new String [] {
+                                    "SSL Name", "KeyStore", "KeyStore Password", "TrustStore", "TrustStore Password"
+                                }
+                            ));
+                            tableSSLCertConfig.setName("tableSSLCertConfig"); // NOI18N
+                            tableSSLCertConfig.setRowHeight(30);
+                            tableSSLCertConfig.setRowMargin(2);
+                            tableSSLCertConfig.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+                            tableSSLCertConfig.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+                            tableSSLCertConfig.setShowGrid(true);
+                            tableSSLCertConfig.getTableHeader().setReorderingAllowed(false);
+                            tableSSLCertConfig.setUpdateSelectionOnSort(false);
+                            tableSSLCertConfig.setVerifyInputWhenFocusTarget(false);
+                            tableSSLCertConfig.addFocusListener(new java.awt.event.FocusAdapter() {
+                                public void focusLost(java.awt.event.FocusEvent evt) {
+                                    tableSSLCertConfigFocusLost(evt);
+                                }
+                            });
+                            tableSSLCertConfig.addMouseListener(new java.awt.event.MouseAdapter() {
+                                public void mousePressed(java.awt.event.MouseEvent evt) {
+                                    tableSSLCertConfigMousePressed(evt);
+                                }
+                                public void mouseReleased(java.awt.event.MouseEvent evt) {
+                                    tableSSLCertConfigMouseReleased(evt);
+                                }
+                            });
+                            tableSSLCertConfig.addKeyListener(new java.awt.event.KeyAdapter() {
+                                public void keyReleased(java.awt.event.KeyEvent evt) {
+                                    tableSSLCertConfigKeyReleased(evt);
+                                }
+                            });
+                            scrollPaneTestFlow.setViewportView(tableSSLCertConfig);
+
+                            javax.swing.GroupLayout pnlCreateTestSuiteLayout = new javax.swing.GroupLayout(pnlCreateTestSuite);
+                            pnlCreateTestSuite.setLayout(pnlCreateTestSuiteLayout);
+                            pnlCreateTestSuiteLayout.setHorizontalGroup(
+                                pnlCreateTestSuiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCreateTestSuiteLayout.createSequentialGroup()
+                                    .addGap(1, 1, 1)
+                                    .addComponent(scrollPaneTestFlow, javax.swing.GroupLayout.DEFAULT_SIZE, 1005, Short.MAX_VALUE)
+                                    .addGap(1, 1, 1)
+                                    .addComponent(dPanelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(1, 1, 1))
                             );
-                            dPanelMenuLayout.setVerticalGroup(
-                                dPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(pnlCreateSuiteMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            pnlCreateTestSuiteLayout.setVerticalGroup(
+                                pnlCreateTestSuiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(scrollPaneTestFlow, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addComponent(dPanelMenu)
                             );
 
                             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
                             getContentPane().setLayout(layout);
                             layout.setHorizontalGroup(
                                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createSequentialGroup()
                                     .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGap(1, 1, 1)
-                                    .addComponent(dPanelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(1, 1, 1))
                             );
                             layout.setVerticalGroup(
                                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(dPanelMenu, javax.swing.GroupLayout.Alignment.LEADING))
-                                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(1, 1, 1))
                             );
 
                             getAccessibleContext().setAccessibleParent(this);
 
-                            setSize(new java.awt.Dimension(838, 266));
+                            setSize(new java.awt.Dimension(1060, 286));
                             setLocationRelativeTo(null);
                         }// </editor-fold>//GEN-END:initComponents
 
@@ -870,7 +864,6 @@ public class SSLCertificate extends javax.swing.JFrame {
     public javax.swing.JButton bttnDeleteTestStep;
     public static javax.swing.JButton bttnSaveSuite;
     public javax.swing.JDesktopPane dPanelMenu;
-    public javax.swing.JPanel pnlCreateSuiteMenu;
     public javax.swing.JPanel pnlCreateTestSuite;
     public static javax.swing.JScrollPane scrollPaneTestFlow;
     public static javax.swing.JTable tableSSLCertConfig;

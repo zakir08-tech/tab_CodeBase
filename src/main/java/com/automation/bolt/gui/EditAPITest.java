@@ -812,9 +812,9 @@ public class EditAPITest extends javax.swing.JFrame {
     
     public static void testExpectedStatusTxtKeyReleased(KeyEvent evt, JTextField textField) {
         getCurrRowBeforeKeyPressed =tableEditTestFlow.getSelectedRow();
-        String getTestId =(String) tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
+        Object getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
 
-        if(getTestId !=null && !getTestId.isEmpty()){
+        if(getTestId !=null && !getTestId.toString().isEmpty()){
             String getStatusText =textField.getText();
             txtExpStatus.setText(getStatusText);
         }
