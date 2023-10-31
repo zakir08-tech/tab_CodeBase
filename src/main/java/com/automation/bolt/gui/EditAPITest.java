@@ -42,7 +42,7 @@ import java.util.Map;
  *
  * @author zakir
  */
-public class CreateAPITest extends javax.swing.JFrame {
+public class EditAPITest extends javax.swing.JFrame {
     public static DefaultTableModel createSuiteTabModel =new DefaultTableModel();
     public static DefaultTableModel createORTabModel =new DefaultTableModel();
     
@@ -108,7 +108,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     /**
      * Creates new form CreateTestSuite
      */
-    public CreateAPITest() {
+    public EditAPITest() {
         
         initComponents();
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
@@ -216,12 +216,12 @@ public class CreateAPITest extends javax.swing.JFrame {
         scrollPaneTestFlow = new javax.swing.JScrollPane();
         tableAddTestFlow = new javax.swing.JTable();
         dPanelMenu = new javax.swing.JDesktopPane();
+        bttnAddNewTestSuite = new javax.swing.JButton();
         bttnAddNewTestStep = new javax.swing.JButton();
         bttnDeleteTestStep = new javax.swing.JButton();
         bttnAddStepUp = new javax.swing.JButton();
         bttnAddStepDown = new javax.swing.JButton();
         bttnSaveSuite = new javax.swing.JButton();
-        bttnAddNewTestSuite = new javax.swing.JButton();
         txtRequestType = new javax.swing.JTextField();
         txtExpStatus = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -232,7 +232,7 @@ public class CreateAPITest extends javax.swing.JFrame {
         lblParams3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Create API Test");
+        setTitle("Edit API Test");
         setMinimumSize(new java.awt.Dimension(1464, 761));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -398,199 +398,201 @@ public class CreateAPITest extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
-        bttnAddNewTestStep.setBackground(new java.awt.Color(0, 0, 0));
-        bttnAddNewTestStep.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        bttnAddNewTestStep.setForeground(new java.awt.Color(255, 255, 255));
-        bttnAddNewTestStep.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addTestStep_Element.png"));
-            bttnAddNewTestStep.setToolTipText("will add a blank test step");
-            bttnAddNewTestStep.setActionCommand("OpenRegressionSuite");
-            bttnAddNewTestStep.setBorder(null);
-            bttnAddNewTestStep.setBorderPainted(false);
-            bttnAddNewTestStep.setContentAreaFilled(false);
-            bttnAddNewTestStep.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-            bttnAddNewTestStep.setOpaque(true);
-            bttnAddNewTestStep.setRequestFocusEnabled(false);
-            bttnAddNewTestStep.setRolloverEnabled(false);
-            bttnAddNewTestStep.addMouseListener(new java.awt.event.MouseAdapter() {
+        bttnAddNewTestSuite.setBackground(new java.awt.Color(0, 0, 0));
+        bttnAddNewTestSuite.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        bttnAddNewTestSuite.setForeground(new java.awt.Color(255, 255, 255));
+        bttnAddNewTestSuite.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addUploadTestSuite.png"));
+            bttnAddNewTestSuite.setToolTipText("will add a blank test suite");
+            bttnAddNewTestSuite.setBorder(null);
+            bttnAddNewTestSuite.setBorderPainted(false);
+            bttnAddNewTestSuite.setContentAreaFilled(false);
+            bttnAddNewTestSuite.setFocusPainted(false);
+            bttnAddNewTestSuite.setFocusable(false);
+            bttnAddNewTestSuite.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            bttnAddNewTestSuite.setOpaque(true);
+            bttnAddNewTestSuite.setRequestFocusEnabled(false);
+            bttnAddNewTestSuite.setRolloverEnabled(false);
+            bttnAddNewTestSuite.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseEntered(java.awt.event.MouseEvent evt) {
-                    bttnAddNewTestStepMouseEntered(evt);
+                    bttnAddNewTestSuiteMouseEntered(evt);
                 }
                 public void mouseExited(java.awt.event.MouseEvent evt) {
-                    bttnAddNewTestStepMouseExited(evt);
+                    bttnAddNewTestSuiteMouseExited(evt);
                 }
             });
-            bttnAddNewTestStep.addActionListener(new java.awt.event.ActionListener() {
+            bttnAddNewTestSuite.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    bttnAddNewTestStepActionPerformed(evt);
+                    bttnAddNewTestSuiteActionPerformed(evt);
                 }
             });
 
-            bttnDeleteTestStep.setBackground(new java.awt.Color(0, 0, 0));
-            bttnDeleteTestStep.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-            bttnDeleteTestStep.setForeground(new java.awt.Color(255, 255, 255));
-            bttnDeleteTestStep.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/deleteTestStep_Element.png"));
-                bttnDeleteTestStep.setToolTipText("will delete the selected test step");
-                bttnDeleteTestStep.setActionCommand("OpenRegressionSuite");
-                bttnDeleteTestStep.setBorder(null);
-                bttnDeleteTestStep.setBorderPainted(false);
-                bttnDeleteTestStep.setContentAreaFilled(false);
-                bttnDeleteTestStep.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-                bttnDeleteTestStep.setOpaque(true);
-                bttnDeleteTestStep.setRequestFocusEnabled(false);
-                bttnDeleteTestStep.setRolloverEnabled(false);
-                bttnDeleteTestStep.addMouseListener(new java.awt.event.MouseAdapter() {
+            bttnAddNewTestStep.setBackground(new java.awt.Color(0, 0, 0));
+            bttnAddNewTestStep.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+            bttnAddNewTestStep.setForeground(new java.awt.Color(255, 255, 255));
+            bttnAddNewTestStep.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addTestStep_Element.png"));
+                bttnAddNewTestStep.setToolTipText("will add a blank test step");
+                bttnAddNewTestStep.setActionCommand("OpenRegressionSuite");
+                bttnAddNewTestStep.setBorder(null);
+                bttnAddNewTestStep.setBorderPainted(false);
+                bttnAddNewTestStep.setContentAreaFilled(false);
+                bttnAddNewTestStep.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                bttnAddNewTestStep.setOpaque(true);
+                bttnAddNewTestStep.setRequestFocusEnabled(false);
+                bttnAddNewTestStep.setRolloverEnabled(false);
+                bttnAddNewTestStep.addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
-                        bttnDeleteTestStepMouseEntered(evt);
+                        bttnAddNewTestStepMouseEntered(evt);
                     }
                     public void mouseExited(java.awt.event.MouseEvent evt) {
-                        bttnDeleteTestStepMouseExited(evt);
+                        bttnAddNewTestStepMouseExited(evt);
                     }
                 });
-                bttnDeleteTestStep.addActionListener(new java.awt.event.ActionListener() {
+                bttnAddNewTestStep.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        bttnDeleteTestStepActionPerformed(evt);
+                        bttnAddNewTestStepActionPerformed(evt);
                     }
                 });
 
-                bttnAddStepUp.setBackground(new java.awt.Color(0, 0, 0));
-                bttnAddStepUp.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-                bttnAddStepUp.setForeground(new java.awt.Color(255, 255, 255));
-                bttnAddStepUp.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addTestStepUp.png"));
-                    bttnAddStepUp.setToolTipText("will add a new test step above the selected step");
-                    bttnAddStepUp.setActionCommand("AddNewStep");
-                    bttnAddStepUp.setBorder(null);
-                    bttnAddStepUp.setBorderPainted(false);
-                    bttnAddStepUp.setContentAreaFilled(false);
-                    bttnAddStepUp.setDefaultCapable(false);
-                    bttnAddStepUp.setFocusPainted(false);
-                    bttnAddStepUp.setFocusable(false);
-                    bttnAddStepUp.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-                    bttnAddStepUp.setOpaque(true);
-                    bttnAddStepUp.setRequestFocusEnabled(false);
-                    bttnAddStepUp.setRolloverEnabled(false);
-                    bttnAddStepUp.addMouseListener(new java.awt.event.MouseAdapter() {
+                bttnDeleteTestStep.setBackground(new java.awt.Color(0, 0, 0));
+                bttnDeleteTestStep.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+                bttnDeleteTestStep.setForeground(new java.awt.Color(255, 255, 255));
+                bttnDeleteTestStep.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/deleteTestStep_Element.png"));
+                    bttnDeleteTestStep.setToolTipText("will delete the selected test step");
+                    bttnDeleteTestStep.setActionCommand("OpenRegressionSuite");
+                    bttnDeleteTestStep.setBorder(null);
+                    bttnDeleteTestStep.setBorderPainted(false);
+                    bttnDeleteTestStep.setContentAreaFilled(false);
+                    bttnDeleteTestStep.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                    bttnDeleteTestStep.setOpaque(true);
+                    bttnDeleteTestStep.setRequestFocusEnabled(false);
+                    bttnDeleteTestStep.setRolloverEnabled(false);
+                    bttnDeleteTestStep.addMouseListener(new java.awt.event.MouseAdapter() {
                         public void mouseEntered(java.awt.event.MouseEvent evt) {
-                            bttnAddStepUpMouseEntered(evt);
+                            bttnDeleteTestStepMouseEntered(evt);
                         }
                         public void mouseExited(java.awt.event.MouseEvent evt) {
-                            bttnAddStepUpMouseExited(evt);
+                            bttnDeleteTestStepMouseExited(evt);
                         }
                     });
-                    bttnAddStepUp.addActionListener(new java.awt.event.ActionListener() {
+                    bttnDeleteTestStep.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
-                            bttnAddStepUpActionPerformed(evt);
+                            bttnDeleteTestStepActionPerformed(evt);
                         }
                     });
 
-                    bttnAddStepDown.setBackground(new java.awt.Color(0, 0, 0));
-                    bttnAddStepDown.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-                    bttnAddStepDown.setForeground(new java.awt.Color(255, 255, 255));
-                    bttnAddStepDown.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addStepUpDown.png"));
-                        bttnAddStepDown.setToolTipText("will add a new test step below the selected step");
-                        bttnAddStepDown.setBorder(null);
-                        bttnAddStepDown.setBorderPainted(false);
-                        bttnAddStepDown.setContentAreaFilled(false);
-                        bttnAddStepDown.setFocusPainted(false);
-                        bttnAddStepDown.setFocusable(false);
-                        bttnAddStepDown.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-                        bttnAddStepDown.setOpaque(true);
-                        bttnAddStepDown.setRequestFocusEnabled(false);
-                        bttnAddStepDown.setRolloverEnabled(false);
-                        bttnAddStepDown.addMouseListener(new java.awt.event.MouseAdapter() {
+                    bttnAddStepUp.setBackground(new java.awt.Color(0, 0, 0));
+                    bttnAddStepUp.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+                    bttnAddStepUp.setForeground(new java.awt.Color(255, 255, 255));
+                    bttnAddStepUp.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addTestStepUp.png"));
+                        bttnAddStepUp.setToolTipText("will add a new test step above the selected step");
+                        bttnAddStepUp.setActionCommand("AddNewStep");
+                        bttnAddStepUp.setBorder(null);
+                        bttnAddStepUp.setBorderPainted(false);
+                        bttnAddStepUp.setContentAreaFilled(false);
+                        bttnAddStepUp.setDefaultCapable(false);
+                        bttnAddStepUp.setFocusPainted(false);
+                        bttnAddStepUp.setFocusable(false);
+                        bttnAddStepUp.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                        bttnAddStepUp.setOpaque(true);
+                        bttnAddStepUp.setRequestFocusEnabled(false);
+                        bttnAddStepUp.setRolloverEnabled(false);
+                        bttnAddStepUp.addMouseListener(new java.awt.event.MouseAdapter() {
                             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                                bttnAddStepDownMouseEntered(evt);
+                                bttnAddStepUpMouseEntered(evt);
                             }
                             public void mouseExited(java.awt.event.MouseEvent evt) {
-                                bttnAddStepDownMouseExited(evt);
+                                bttnAddStepUpMouseExited(evt);
                             }
                         });
-                        bttnAddStepDown.addActionListener(new java.awt.event.ActionListener() {
+                        bttnAddStepUp.addActionListener(new java.awt.event.ActionListener() {
                             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                bttnAddStepDownActionPerformed(evt);
+                                bttnAddStepUpActionPerformed(evt);
                             }
                         });
 
-                        bttnSaveSuite.setBackground(new java.awt.Color(0, 0, 0));
-                        bttnSaveSuite.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-                        bttnSaveSuite.setForeground(new java.awt.Color(255, 255, 255));
-                        bttnSaveSuite.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/saveTestSuite.png"));
-                            bttnSaveSuite.setToolTipText("will save the test suite");
-                            bttnSaveSuite.setBorder(null);
-                            bttnSaveSuite.setBorderPainted(false);
-                            bttnSaveSuite.setContentAreaFilled(false);
-                            bttnSaveSuite.setFocusPainted(false);
-                            bttnSaveSuite.setFocusable(false);
-                            bttnSaveSuite.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-                            bttnSaveSuite.setOpaque(true);
-                            bttnSaveSuite.setRequestFocusEnabled(false);
-                            bttnSaveSuite.setRolloverEnabled(false);
-                            bttnSaveSuite.addMouseListener(new java.awt.event.MouseAdapter() {
+                        bttnAddStepDown.setBackground(new java.awt.Color(0, 0, 0));
+                        bttnAddStepDown.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+                        bttnAddStepDown.setForeground(new java.awt.Color(255, 255, 255));
+                        bttnAddStepDown.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addStepUpDown.png"));
+                            bttnAddStepDown.setToolTipText("will add a new test step below the selected step");
+                            bttnAddStepDown.setBorder(null);
+                            bttnAddStepDown.setBorderPainted(false);
+                            bttnAddStepDown.setContentAreaFilled(false);
+                            bttnAddStepDown.setFocusPainted(false);
+                            bttnAddStepDown.setFocusable(false);
+                            bttnAddStepDown.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                            bttnAddStepDown.setOpaque(true);
+                            bttnAddStepDown.setRequestFocusEnabled(false);
+                            bttnAddStepDown.setRolloverEnabled(false);
+                            bttnAddStepDown.addMouseListener(new java.awt.event.MouseAdapter() {
                                 public void mouseEntered(java.awt.event.MouseEvent evt) {
-                                    bttnSaveSuiteMouseEntered(evt);
+                                    bttnAddStepDownMouseEntered(evt);
                                 }
                                 public void mouseExited(java.awt.event.MouseEvent evt) {
-                                    bttnSaveSuiteMouseExited(evt);
+                                    bttnAddStepDownMouseExited(evt);
                                 }
                             });
-                            bttnSaveSuite.addActionListener(new java.awt.event.ActionListener() {
+                            bttnAddStepDown.addActionListener(new java.awt.event.ActionListener() {
                                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                    bttnSaveSuiteActionPerformed(evt);
+                                    bttnAddStepDownActionPerformed(evt);
                                 }
                             });
 
-                            bttnAddNewTestSuite.setBackground(new java.awt.Color(0, 0, 0));
-                            bttnAddNewTestSuite.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-                            bttnAddNewTestSuite.setForeground(new java.awt.Color(255, 255, 255));
-                            bttnAddNewTestSuite.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addUploadTestSuite.png"));
-                                bttnAddNewTestSuite.setToolTipText("will add a blank test suite");
-                                bttnAddNewTestSuite.setBorder(null);
-                                bttnAddNewTestSuite.setBorderPainted(false);
-                                bttnAddNewTestSuite.setContentAreaFilled(false);
-                                bttnAddNewTestSuite.setFocusPainted(false);
-                                bttnAddNewTestSuite.setFocusable(false);
-                                bttnAddNewTestSuite.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-                                bttnAddNewTestSuite.setOpaque(true);
-                                bttnAddNewTestSuite.setRequestFocusEnabled(false);
-                                bttnAddNewTestSuite.setRolloverEnabled(false);
-                                bttnAddNewTestSuite.addMouseListener(new java.awt.event.MouseAdapter() {
+                            bttnSaveSuite.setBackground(new java.awt.Color(0, 0, 0));
+                            bttnSaveSuite.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+                            bttnSaveSuite.setForeground(new java.awt.Color(255, 255, 255));
+                            bttnSaveSuite.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/saveTestSuite.png"));
+                                bttnSaveSuite.setToolTipText("will save the test suite");
+                                bttnSaveSuite.setBorder(null);
+                                bttnSaveSuite.setBorderPainted(false);
+                                bttnSaveSuite.setContentAreaFilled(false);
+                                bttnSaveSuite.setFocusPainted(false);
+                                bttnSaveSuite.setFocusable(false);
+                                bttnSaveSuite.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                                bttnSaveSuite.setOpaque(true);
+                                bttnSaveSuite.setRequestFocusEnabled(false);
+                                bttnSaveSuite.setRolloverEnabled(false);
+                                bttnSaveSuite.addMouseListener(new java.awt.event.MouseAdapter() {
                                     public void mouseEntered(java.awt.event.MouseEvent evt) {
-                                        bttnAddNewTestSuiteMouseEntered(evt);
+                                        bttnSaveSuiteMouseEntered(evt);
                                     }
                                     public void mouseExited(java.awt.event.MouseEvent evt) {
-                                        bttnAddNewTestSuiteMouseExited(evt);
+                                        bttnSaveSuiteMouseExited(evt);
                                     }
                                 });
-                                bttnAddNewTestSuite.addActionListener(new java.awt.event.ActionListener() {
+                                bttnSaveSuite.addActionListener(new java.awt.event.ActionListener() {
                                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                        bttnAddNewTestSuiteActionPerformed(evt);
+                                        bttnSaveSuiteActionPerformed(evt);
                                     }
                                 });
 
+                                dPanelMenu.setLayer(bttnAddNewTestSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
                                 dPanelMenu.setLayer(bttnAddNewTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
                                 dPanelMenu.setLayer(bttnDeleteTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
                                 dPanelMenu.setLayer(bttnAddStepUp, javax.swing.JLayeredPane.DEFAULT_LAYER);
                                 dPanelMenu.setLayer(bttnAddStepDown, javax.swing.JLayeredPane.DEFAULT_LAYER);
                                 dPanelMenu.setLayer(bttnSaveSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                dPanelMenu.setLayer(bttnAddNewTestSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
                                 javax.swing.GroupLayout dPanelMenuLayout = new javax.swing.GroupLayout(dPanelMenu);
                                 dPanelMenu.setLayout(dPanelMenuLayout);
                                 dPanelMenuLayout.setHorizontalGroup(
                                     dPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dPanelMenuLayout.createSequentialGroup()
-                                        .addGap(1, 1, 1)
+                                    .addGroup(dPanelMenuLayout.createSequentialGroup()
                                         .addGroup(dPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(bttnSaveSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(bttnAddStepDown, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(bttnAddStepUp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, 0))
                                 );
                                 dPanelMenuLayout.setVerticalGroup(
                                     dPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(dPanelMenuLayout.createSequentialGroup()
-                                        .addGap(27, 27, 27)
+                                        .addGap(28, 28, 28)
+                                        .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -600,8 +602,6 @@ public class CreateAPITest extends javax.swing.JFrame {
                                         .addComponent(bttnAddStepDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(bttnSaveSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 );
 
@@ -696,7 +696,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                             .addGroup(layout.createSequentialGroup()
                                                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(0, 1002, Short.MAX_VALUE))
+                                                                .addGap(0, 1003, Short.MAX_VALUE))
                                                             .addComponent(txtAPIurl)))
                                                     .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                 .addGap(1, 1, 1)
@@ -1654,8 +1654,10 @@ public class CreateAPITest extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CreateAPITest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditAPITest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+         //</editor-fold>
+         //</editor-fold>
          //</editor-fold>
          //</editor-fold>
          
@@ -1663,7 +1665,7 @@ public class CreateAPITest extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new CreateAPITest().setVisible(true);
+            new EditAPITest().setVisible(true);
         });
     }
 
