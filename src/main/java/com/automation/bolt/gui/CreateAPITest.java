@@ -35,8 +35,12 @@ import com.automation.bolt.constants;
 import com.automation.bolt.renderer.tableCellRendererAPI;
 import com.google.common.io.Files;
 import java.awt.Color;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -237,6 +241,9 @@ public class CreateAPITest extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -1183,7 +1190,33 @@ public class CreateAPITest extends javax.swing.JFrame {
         else
             JOptionPane.showMessageDialog(null,"No test suite is available to save!","Alert",JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_bttnSaveSuiteActionPerformed
+    
+    public static void saveTestFileWhileClosingTheWindow() {
+        if(tableAddTestFlow.getRowCount() > 0){
+            String tmpdir = System.getProperty("java.io.tmpdir");
+            Date dNow = new Date();
+            SimpleDateFormat ft = new SimpleDateFormat("yyMMddhhmmMs");
+            String datetime = ft.format(dNow);
+    
+            FileOutputStream excelFos;
+            XSSFWorkbook excelJTableExport = new XSSFWorkbook();
+            excelJTableExport =createAPITestFlowDataSheet(excelJTableExport, createSuiteTabModel);
+            
+            try {
+                excelFos = new FileOutputStream(tmpdir +"/apiTestSuite"+ datetime +".xlsx");
+                excelJTableExport.write(excelFos);
 
+                excelFos.close();
+                excelJTableExport.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(CreateAPITest.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(CreateAPITest.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+    }
+    
     private void bttnAddNewTestSuiteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddNewTestSuiteMouseEntered
         bttnAddNewTestSuite.setBackground(new java.awt.Color(250, 128, 114));
         bttnAddNewTestSuite.setForeground(new java.awt.Color(0,0,0));
@@ -1351,6 +1384,10 @@ public class CreateAPITest extends javax.swing.JFrame {
             tableAddTestFlow.setValueAt(getApiPayload,getCurrRowBeforeKeyPressed, 7);
         }catch(ArrayIndexOutOfBoundsException exp){}
     }//GEN-LAST:event_txtAreaPayloadFocusLost
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        saveTestFileWhileClosingTheWindow();
+    }//GEN-LAST:event_formWindowClosing
     
     public static void updateAPIAttributeData(){
         getCurrRowBeforeKeyPressed =tableAddTestFlow.getSelectedRow();
