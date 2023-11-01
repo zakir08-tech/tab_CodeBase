@@ -35,6 +35,7 @@ import com.automation.bolt.constants;
 import com.automation.bolt.renderer.tableCellRendererAPI;
 import com.google.common.io.Files;
 import java.awt.Color;
+import java.awt.IllegalComponentStateException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -160,6 +161,14 @@ public class CreateAPITest extends javax.swing.JFrame {
             }
         });
         
+        tableCreateApiTest.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent evt) {
+                int getCol =tableCreateApiTest.getSelectedColumn();
+                if(getCol ==0 || getCol==15)
+                    common.testIdTxtKeyTyped(evt, null);
+            }
+        });
+         
         testURLTxt.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent evt) {
                 testURLTxtKeyReleased(evt, testURLTxt);
@@ -858,7 +867,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableCreateApiTest, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
             
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableCreateApiTest, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableCreateApiTest, editableRow, testIdTxt) ==true)
             return;
         
         Object getPreviosTestStepNo =null;
@@ -900,7 +909,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableCreateApiTest, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableCreateApiTest, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableCreateApiTest, editableRow, testIdTxt) ==true)
             return;
         
         String getTestId =null;
@@ -969,7 +978,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableCreateApiTest, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableCreateApiTest, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableCreateApiTest, editableRow, testIdTxt) ==true)
             return;
         
         int getTestStep =0;
@@ -1025,7 +1034,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             //tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableAddTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableCreateApiTest, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableCreateApiTest, editableRow, testIdTxt) ==true)
             return;
         
         if(tableCreateApiTest.getRowCount()>0){
@@ -1083,7 +1092,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableCreateApiTest, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableCreateApiTest, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableCreateApiTest, editableRow, testIdTxt) ==true)
             return;
                 
         if(tableCreateApiTest.getRowCount() > 0){
@@ -1285,7 +1294,7 @@ public class CreateAPITest extends javax.swing.JFrame {
        
         //writeJsonPayloadToTheTextArea();
         
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableCreateApiTest, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableCreateApiTest, editableRow, testIdTxt) ==true)
             return;
          
         int getCurRow = tableCreateApiTest.convertRowIndexToModel(tableCreateApiTest.rowAtPoint(evt.getPoint()));
@@ -1302,34 +1311,38 @@ public class CreateAPITest extends javax.swing.JFrame {
                     editableRow =tableCreateApiTest.getEditingRow();
                     testIdTxt.requestFocusInWindow();
                     break;
-                case 2:
-                    tableCreateApiTest.editCellAt(getCurRow, 2);
-                    testURLTxt.requestFocusInWindow();
+                case 1:
+                    cBoxApiRequest.setFocusable(true);
+                    cBoxApiRequest.showPopup();
                     break;
-                case 3:
-                    tableCreateApiTest.editCellAt(getCurRow, 3);
-                    //coBoxObjectRepo.requestFocusInWindow();
-                    break;    
-                case 4:
-                    tableCreateApiTest.editCellAt(getCurRow, 4);
-                    testURLTxt.requestFocusInWindow();
+                case 8:
+                    coBoxPayloadType.setFocusable(true);
+                    coBoxPayloadType.showPopup();
                     break;
-                case 7:
-                    tableCreateApiTest.editCellAt(getCurRow, 7);
-                    testPayloadTxt.requestFocusInWindow();
+                case 11:
+                    coBoxAuth.setFocusable(true);
+                    coBoxAuth.showPopup();
                     break;
-                case 15:
-                    tableCreateApiTest.editCellAt(getCurRow, 15);
-                    testExpectedStatusTxt.requestFocusInWindow();
+                case 14:
+                    cBoxApiSSL = new JComboBox<String>();
+                    apiSSLCertList(cBoxApiSSL);
+                    testApiSSLCol.setCellEditor(new DefaultCellEditor(cBoxApiSSL));
+                    
+                    try{
+                        cBoxApiSSL.setFocusable(true);
+                        cBoxApiSSL.showPopup();
+                    }catch(IllegalComponentStateException exp){}
+                    break;
                 default:
-                    break;
+                    tableCreateApiTest.editCellAt(getCurRow, gerCurrCol);
+                    tableCreateApiTest.requestFocus();
             }
         }
     }//GEN-LAST:event_tableCreateApiTestMousePressed
 
     private void tableCreateApiTestKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableCreateApiTestKeyReleased
         updateAPIAttributeData();
-        common.checkForDuplicateTestId(createSuiteTabModel, tableCreateApiTest, editableRow, testIdTxt);
+        common.checkForDuplicateApiTestId(createSuiteTabModel, tableCreateApiTest, editableRow, testIdTxt);
     }//GEN-LAST:event_tableCreateApiTestKeyReleased
     
     /*public static String writeJsonPayloadToTheTextArea(String jsonPayload){

@@ -5,6 +5,7 @@
  */
 package com.automation.bolt.renderer;
 
+import com.automation.bolt.common;
 import static com.automation.bolt.gui.CreateAPITest.apiSSLCertList;
 import static com.automation.bolt.gui.CreateAPITest.cBoxApiSSL;
 import static com.automation.bolt.gui.CreateAPITest.testApiSSLCol;
@@ -85,20 +86,6 @@ public class tableCellRendererAPI implements TableCellRenderer{
                 c.setBackground(new java.awt.Color(51, 51, 51));
                 break;
             case 14:
-                try{
-                    testApiSSLCol = tableCreateApiTest.getColumnModel().getColumn(14);
-                    cBoxApiSSL = new JComboBox<String>();
-                    apiSSLCertList(cBoxApiSSL);
-                    testApiSSLCol.setCellEditor(new DefaultCellEditor(cBoxApiSSL));
-                    //cBoxApiSSL.setEditable(true);
-                }catch(NullPointerException exp){
-                    testApiSSLCol = tableEditTestFlow.getColumnModel().getColumn(14);
-                    cBoxApiSSL = new JComboBox<String>();
-                    apiSSLCertList(cBoxApiSSL);
-                    testApiSSLCol.setCellEditor(new DefaultCellEditor(cBoxApiSSL));
-                    //cBoxApiSSL.setEditable(true);
-                }
-         
                 c.setForeground(Color.pink);
                 c.setBackground(new java.awt.Color(51, 51, 51));
                 break;
