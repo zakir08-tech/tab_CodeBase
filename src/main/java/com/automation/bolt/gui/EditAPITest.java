@@ -33,6 +33,7 @@ import com.automation.bolt.constants;
 import static com.automation.bolt.gui.EditRegressionSuite.RegressionSuiteScrollPane;
 import com.automation.bolt.renderer.tableCellRendererAPI;
 import java.awt.Color;
+import java.awt.IllegalComponentStateException;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.util.HashMap;
@@ -171,6 +172,14 @@ public class EditAPITest extends javax.swing.JFrame {
         testIdTxt.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
                 common.testIdTxtKeyTyped(evt, testIdTxt);
+            }
+        });
+        
+        tableEditTestFlow.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent evt) {
+                int getCol =tableEditTestFlow.getSelectedColumn();
+                if(getCol ==0 || getCol==15)
+                    common.testIdTxtKeyTyped(evt, null);
             }
         });
         
@@ -828,22 +837,22 @@ public class EditAPITest extends javax.swing.JFrame {
     public static void authSelected(java.awt.event.FocusEvent evt, JComboBox<String> authField) {
     	getCurrRowBeforeKeyPressed =tableEditTestFlow.getSelectedRow();
     	try{
-            String getTestId =(String) tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
+            Object getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
             
-            if(getTestId !=null && !getTestId.isEmpty()){
-                String getAuth =(String) tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 11);
-                if(getAuth.contentEquals("Basic Auth")){
-                    String getUsername =(String) tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+            if(getTestId !=null && !getTestId.toString().isEmpty()){
+                Object getAuth =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 11);
+                if(getAuth.toString().contentEquals("Basic Auth")){
+                    Object getUsername =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
                     if(getUsername ==null)
                     	getUsername ="";
-                    String getPassword =(String) tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
+                    Object getPassword =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
                     if(getPassword ==null)
                     	getPassword ="";
                     
                     txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
                     lblAuthorization.setText("Authorization: Basic Auth");
-                }else if(getAuth.contentEquals("Bearer Token")){
-                    String getToken =(String) tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                }else if(getAuth.toString().contentEquals("Bearer Token")){
+                    Object getToken =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
                     if(getToken ==null)
                     	getToken ="";
                     tableEditTestFlow.setValueAt("",getCurrRowBeforeKeyPressed, 13);
@@ -874,7 +883,7 @@ public class EditAPITest extends javax.swing.JFrame {
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableEditTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
             
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
             return;
         
         Object getPreviosTestStepNo =null;
@@ -916,7 +925,7 @@ public class EditAPITest extends javax.swing.JFrame {
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableEditTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
             return;
         
         String getTestId =null;
@@ -985,7 +994,7 @@ public class EditAPITest extends javax.swing.JFrame {
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableEditTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
             return;
         
         int getTestStep =0;
@@ -1041,7 +1050,7 @@ public class EditAPITest extends javax.swing.JFrame {
             //tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableAddTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
             return;
         
         if(tableEditTestFlow.getRowCount()>0){
@@ -1099,7 +1108,7 @@ public class EditAPITest extends javax.swing.JFrame {
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableEditTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
             return;
         
         if (excelFile != null) {
@@ -1292,29 +1301,6 @@ public class EditAPITest extends javax.swing.JFrame {
                 excelImportWorkBook = new XSSFWorkbook(excelBIS);
                 excelSheetTestFlow = excelImportWorkBook.getSheetAt(0);
 
-                /*if (AssociateObjORJCheckBox.isSelected() == false) {
-                    try { // add local object repositroy to the test suite
-                        excelSheetObjectRepository = excelImportWorkBook.getSheetAt(1);
-                        excelSheetObjectRepositoryOR = excelImportWorkBook.getSheetAt(1);
-
-                        getObjectListFromObjectRepository(excelSheetObjectRepository);
-                        ObjectRepositoryList();
-                        try{
-                            testObjectRepoColumn.setCellEditor(new DefaultCellEditor(comboBoxObjectRepository));
-                        }catch(NullPointerException exp){
-                            
-                        } 
-                    } catch (IllegalArgumentException exp) {
-                        if (exp.getMessage().contains("Sheet index (1) is out of range")) {
-                            JOptionPane.showMessageDialog(RegressionSuiteScrollPane, "No Object Repository found for the loaded test suite!", "Alert", JOptionPane.WARNING_MESSAGE);
-                            testObjectRepoColumn.setCellEditor(null);
-                            noRepoFound = true;
-                        }
-                    }
-                } else {
-                    //excelSheetObjectRepositoryOR = excelImportWorkBook.getSheetAt(1);
-                }*/
-
                 for (int i = 1; i <= excelSheetTestFlow.getLastRowNum(); i++) {
                     excelRow = excelSheetTestFlow.getRow(i);
                     try {
@@ -1345,21 +1331,19 @@ public class EditAPITest extends javax.swing.JFrame {
 
                     }
                 }
-
+                
+                if(tableEditTestFlow.getRowCount() <=0){
+                    createSuiteTabModel.addRow(new Object[]{null, null, null, null, null, null,
+                            null, null, null, null, null, null,
+                            null, null, null, null, null  
+                        });
+                }
+                
                 tableEditTestFlow.setRowSelectionInterval(0, 0);
                 tableEditTestFlow.setColumnSelectionInterval(0, 0);
                 tableEditTestFlow.scrollRectToVisible(tableEditTestFlow.getCellRect(0, 0, true));
                 tableEditTestFlow.requestFocus();
                 
-                /*if(objRepo.isVisible())
-                    objRepo.dispose();*/
-                
-                /*if (objRepo.isVisible()) {
-                    ObjectRepoFrame.importObjectRepoData.getDataVector().removeAllElements();
-                    ObjectRepoFrame.importObjectRepoData.fireTableDataChanged();
-                    objRepo.setTitle("Object Repository: " + excelFileImport.getName(excelFile));
-                    objRepo.openObjectRepository(excelSheetObjectRepository);
-                }*/
                 this.setTitle("Edit API Test: " + excelFileImport.getName(excelFile));
             } catch (FileNotFoundException exp) {
                 if (exp.getMessage().contains("The system cannot find the file specified")) {
@@ -1372,50 +1356,10 @@ public class EditAPITest extends javax.swing.JFrame {
             } catch (IllegalArgumentException exp) {
                 if (exp.getMessage().contains("Row index out of range")) {
                     JOptionPane.showMessageDialog(RegressionSuiteScrollPane, "No test steps found in " + "\"" + excelFileImport.getName(excelFile) + "\"" + " test suite to upload!", "Alert", JOptionPane.WARNING_MESSAGE);
-                    //excelFile = null;
+                    //excelFile =null;
                 }
             }
         }
-        
-        /*if(fileSaved ==false){
-            int response = JOptionPane.showConfirmDialog(RegressionSuiteScrollPane, //
-                            "the test suite is not saved, all changes will be lost!\n\ndo you want to continue?", //
-                            "Confirm", JOptionPane.YES_NO_OPTION, //
-                            JOptionPane.QUESTION_MESSAGE);
-            if (response != JOptionPane.YES_OPTION) {
-                //bttnSaveSuite.doClick();
-                return;
-            }
-        }
-        fileSaved =false;
-        
-        DefaultTableModel modelAddTestFlow = (DefaultTableModel)tableAddTestFlow.getModel();
-        modelAddTestFlow.getDataVector().removeAllElements();
-        modelAddTestFlow.fireTableDataChanged();
-       
-        editableRow =0;
-        editableAddElmRow =0;
-        
-        //tableAddOR.removeEditor();
-        tableAddTestFlow.removeEditor();
-        
-        createSuiteTabModel =(DefaultTableModel) tableAddTestFlow.getModel();
-        //createORTabModel =(DefaultTableModel) tableAddOR.getModel();
-        
-        elmNameTxt =new JTextField();
-        //elmNameCol =tableAddOR.getColumnModel().getColumn(0);
-        elmNameCol.setCellEditor(new DefaultCellEditor(elmNameTxt));
-        
-        elmIdTxt =new JTextField();
-        //elmIdCol =tableAddOR.getColumnModel().getColumn(1);
-        elmIdCol.setCellEditor(new DefaultCellEditor(elmIdTxt));
-        
-        elmXpathTxt =new JTextField();
-        //elmXpathCol =tableAddOR.getColumnModel().getColumn(2);
-        elmXpathCol.setCellEditor(new DefaultCellEditor(elmXpathTxt));*/
-        
-        //getTestFlowCellEditorStatus =false;
-        //getElmRepoCellEditorStatus =false;
     }//GEN-LAST:event_bttnAddNewTestSuiteActionPerformed
         
     private void tableEditTestFlowMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEditTestFlowMousePressed
@@ -1425,7 +1369,7 @@ public class EditAPITest extends javax.swing.JFrame {
        
         //writeJsonPayloadToTheTextArea();
         
-        if(common.checkForDuplicateTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
             return;
          
         int getCurRow = tableEditTestFlow.convertRowIndexToModel(tableEditTestFlow.rowAtPoint(evt.getPoint()));
@@ -1442,34 +1386,38 @@ public class EditAPITest extends javax.swing.JFrame {
                     editableRow =tableEditTestFlow.getEditingRow();
                     testIdTxt.requestFocusInWindow();
                     break;
-                case 2:
-                    tableEditTestFlow.editCellAt(getCurRow, 2);
-                    testURLTxt.requestFocusInWindow();
+                case 1:
+                    cBoxApiRequest.setFocusable(true);
+                    cBoxApiRequest.showPopup();
                     break;
-                case 3:
-                    tableEditTestFlow.editCellAt(getCurRow, 3);
-                    //coBoxObjectRepo.requestFocusInWindow();
-                    break;    
-                case 4:
-                    tableEditTestFlow.editCellAt(getCurRow, 4);
-                    testURLTxt.requestFocusInWindow();
+                case 8:
+                    coBoxPayloadType.setFocusable(true);
+                    coBoxPayloadType.showPopup();
                     break;
-                case 7:
-                    tableEditTestFlow.editCellAt(getCurRow, 7);
-                    testPayloadTxt.requestFocusInWindow();
+                case 11:
+                    coBoxAuth.setFocusable(true);
+                    coBoxAuth.showPopup();
                     break;
-                case 15:
-                    tableEditTestFlow.editCellAt(getCurRow, 15);
-                    testExpectedStatusTxt.requestFocusInWindow();
+                case 14:
+                    cBoxApiSSL = new JComboBox<String>();
+                    apiSSLCertList(cBoxApiSSL);
+                    testApiSSLCol.setCellEditor(new DefaultCellEditor(cBoxApiSSL));
+                    
+                    try{
+                        cBoxApiSSL.setFocusable(true);
+                        cBoxApiSSL.showPopup();
+                    }catch(IllegalComponentStateException exp){}
+                    break;
                 default:
-                    break;
+                    tableEditTestFlow.editCellAt(getCurRow, gerCurrCol);
+                    tableEditTestFlow.requestFocus();
             }
         }
     }//GEN-LAST:event_tableEditTestFlowMousePressed
 
     private void tableEditTestFlowKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableEditTestFlowKeyReleased
         updateAPIAttributeData();
-        common.checkForDuplicateTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt);
+        common.checkForDuplicateApiTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt);
     }//GEN-LAST:event_tableEditTestFlowKeyReleased
     
     /*public static String writeJsonPayloadToTheTextArea(String jsonPayload){
@@ -1653,7 +1601,7 @@ public class EditAPITest extends javax.swing.JFrame {
                     txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
                     lblAuthorization.setText("Authorization: Basic Auth");
                 }else if(getAuth.toString().contentEquals("Bearer Token")){
-                    String getToken =(String) tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                    Object getToken =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
                     if(getToken ==null)
                     	getToken ="";
                     

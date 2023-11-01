@@ -1036,6 +1036,65 @@ public class common extends userDefineTest{
         return duplicateTestId;
     }
     
+    public static boolean checkForDuplicateApiTestId(DefaultTableModel tableModel, 
+        javax.swing.JTable JTable, 
+        int editableRow,
+        JTextField testIdTxt){
+        
+        String getCellVal ="";
+        String getTestStepId ="";
+        boolean duplicateTestId =false;
+        
+        if(tableModel.isCellEditable(JTable.getSelectedRow(), 0) ==true){
+             try{
+                //getTestStepId =tableModel.getValueAt(editableRow, 1).toString();
+                getCellVal =testIdTxt.getText();
+                //getCellVal =createORTabModel.getValueAt(tableAddOR.getSelectedRow(), 0).toString();
+            }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){
+                getCellVal ="";
+            }
+             
+            if(!getCellVal.isEmpty() && !getCellVal.contentEquals("#")){
+               int elmIndex =0;
+               for(int i=0; i<tableModel.getRowCount(); i++){
+                       String getCellTxt=null;
+                       try{
+                           getCellTxt =tableModel.getValueAt(i, 0).toString().toLowerCase();
+                       }catch (NullPointerException exp){
+                           getCellTxt ="";
+                       }
+                       if(getCellVal.toLowerCase().contentEquals(getCellTxt)){
+                           elmIndex++;
+                           if(elmIndex ==2){
+                               //editableRow =tableAddOR.getSelectedRow();
+                               JTable.editCellAt(editableRow, 0);
+                               JTable.setSurrendersFocusOnKeystroke(true);
+                               JTable.getEditorComponent().requestFocus();
+                               
+                               JTable.clearSelection();
+                               JTable.changeSelection(editableRow, 0, false, true);
+                               testIdTxt.selectAll();
+                               duplicateTestId =true;
+                               JOptionPane.showMessageDialog(null, "Test Id ["+getCellTxt+"] already exist!", "Alert", JOptionPane.WARNING_MESSAGE);
+                               break;
+                           }
+                       }
+               }
+           }else if (getCellVal.contentEquals("#") && getTestStepId.contentEquals("1")){
+                JTable.editCellAt(editableRow, 0);
+                JTable.setSurrendersFocusOnKeystroke(true);
+                JTable.getEditorComponent().requestFocus();
+
+                JTable.clearSelection();
+                JTable.changeSelection(editableRow, 0, false, true);
+                testIdTxt.selectAll();
+                duplicateTestId =true;
+                JOptionPane.showMessageDialog(null, "Can not set SKIP for setp 1, for any given test scenario!", "Alert", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        return duplicateTestId;
+    }
+    
     public static boolean checkForDuplicateElementName(DefaultTableModel tableModel, JTextField testElmNameTxt,
             javax.swing.JTable JTable,
             boolean testElmNameVisible,
