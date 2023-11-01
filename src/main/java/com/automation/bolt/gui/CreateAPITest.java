@@ -256,6 +256,7 @@ public class CreateAPITest extends javax.swing.JFrame {
         txtAPIurl.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtAPIurl.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 1));
         txtAPIurl.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtAPIurl.setName("APIurl"); // NOI18N
         txtAPIurl.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtAPIurlFocusLost(evt);
@@ -585,7 +586,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                                 dPanelMenuLayout.setHorizontalGroup(
                                     dPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dPanelMenuLayout.createSequentialGroup()
-                                        .addGap(1, 1, 1)
+                                        .addGap(0, 0, 0)
                                         .addGroup(dPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(bttnSaveSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -703,7 +704,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                             .addGroup(layout.createSequentialGroup()
                                                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(0, 1002, Short.MAX_VALUE))
+                                                                .addGap(0, 1003, Short.MAX_VALUE))
                                                             .addComponent(txtAPIurl)))
                                                     .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                 .addGap(1, 1, 1)
@@ -1350,7 +1351,9 @@ public class CreateAPITest extends javax.swing.JFrame {
     
     private void txtAPIurlFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAPIurlFocusLost
         getTheAPIurl =txtAPIurl.getText();
-        tableAddTestFlow.setValueAt(getTheAPIurl,getCurrRowBeforeKeyPressed, 2);
+        try {
+        	tableAddTestFlow.setValueAt(getTheAPIurl,getCurrRowBeforeKeyPressed, 2);
+        }catch(ArrayIndexOutOfBoundsException exp) {}
     }//GEN-LAST:event_txtAPIurlFocusLost
 
     private void txtAPIurlKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAPIurlKeyReleased
