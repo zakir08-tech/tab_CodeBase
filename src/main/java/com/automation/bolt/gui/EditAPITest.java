@@ -402,6 +402,7 @@ public class EditAPITest extends javax.swing.JFrame {
         scrollModifyPayload.setBackground(new java.awt.Color(51, 51, 51));
         scrollModifyPayload.setBorder(null);
 
+        txtModifyPayload.setEditable(false);
         txtModifyPayload.setBackground(new java.awt.Color(51, 51, 51));
         txtModifyPayload.setColumns(20);
         txtModifyPayload.setForeground(new java.awt.Color(255, 255, 204));
@@ -412,6 +413,7 @@ public class EditAPITest extends javax.swing.JFrame {
         scrollVerifyPayload.setBorder(null);
         scrollVerifyPayload.setForeground(new java.awt.Color(51, 51, 51));
 
+        txtVerifyPayload.setEditable(false);
         txtVerifyPayload.setBackground(new java.awt.Color(51, 51, 51));
         txtVerifyPayload.setColumns(20);
         txtVerifyPayload.setForeground(new java.awt.Color(255, 204, 204));

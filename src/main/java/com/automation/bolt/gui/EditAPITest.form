@@ -479,6 +479,7 @@
       <SubComponents>
         <Component class="javax.swing.JTextArea" name="txtModifyPayload">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="33" red="33" type="rgb"/>
             </Property>
@@ -509,6 +510,7 @@
       <SubComponents>
         <Component class="javax.swing.JTextArea" name="txtVerifyPayload">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="33" red="33" type="rgb"/>
             </Property>
