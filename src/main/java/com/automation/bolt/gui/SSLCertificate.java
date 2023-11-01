@@ -367,7 +367,7 @@ public class SSLCertificate extends javax.swing.JFrame {
                                     .addComponent(bttnAddStepDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(bttnSaveSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addContainerGap(47, Short.MAX_VALUE))
+                                    .addContainerGap(48, Short.MAX_VALUE))
                             );
 
                             scrollPaneTestFlow.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -417,31 +417,29 @@ public class SSLCertificate extends javax.swing.JFrame {
                             pnlCreateTestSuiteLayout.setHorizontalGroup(
                                 pnlCreateTestSuiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCreateTestSuiteLayout.createSequentialGroup()
-                                    .addGap(1, 1, 1)
-                                    .addComponent(scrollPaneTestFlow, javax.swing.GroupLayout.DEFAULT_SIZE, 1005, Short.MAX_VALUE)
-                                    .addGap(1, 1, 1)
-                                    .addComponent(dPanelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(1, 1, 1))
+                                    .addGap(0, 0, 0)
+                                    .addComponent(scrollPaneTestFlow, javax.swing.GroupLayout.DEFAULT_SIZE, 1009, Short.MAX_VALUE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(dPanelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             );
                             pnlCreateTestSuiteLayout.setVerticalGroup(
                                 pnlCreateTestSuiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(scrollPaneTestFlow, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(dPanelMenu)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCreateTestSuiteLayout.createSequentialGroup()
+                                    .addGroup(pnlCreateTestSuiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(scrollPaneTestFlow, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                        .addComponent(dPanelMenu))
+                                    .addGap(0, 0, 0))
                             );
 
                             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
                             getContentPane().setLayout(layout);
                             layout.setHorizontalGroup(
                                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGap(1, 1, 1))
+                                .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             );
                             layout.setVerticalGroup(
                                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGap(1, 1, 1))
+                                .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             );
 
                             getAccessibleContext().setAccessibleParent(this);

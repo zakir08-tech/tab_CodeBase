@@ -304,7 +304,17 @@ public class xlsCommonMethods {
         //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
         cell.setCellValue("Expected Status");
         
-         cell = excelRow.createCell(16);
+        cell = excelRow.createCell(16);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
+        cell.setCellValue("Verify Payload (key)");
+        
+        cell = excelRow.createCell(17);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
+        cell.setCellValue("Verify Payload (value)");
+        
+         cell = excelRow.createCell(18);
         cell.setCellType(CellType.STRING);
         //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
         cell.setCellValue("Test Description");

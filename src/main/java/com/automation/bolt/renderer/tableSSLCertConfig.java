@@ -7,7 +7,6 @@ package com.automation.bolt.renderer;
 
 import static com.automation.bolt.gui.CreateAPITest.apiSSLCertList;
 import static com.automation.bolt.gui.CreateAPITest.cBoxApiSSL;
-import static com.automation.bolt.gui.CreateAPITest.tableAddTestFlow;
 import static com.automation.bolt.gui.CreateAPITest.testApiSSLCol;
 import java.awt.Color;
 import java.awt.Component;
@@ -16,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
+import static com.automation.bolt.gui.CreateAPITest.tableCreateApiTest;
 
 /**
  *
