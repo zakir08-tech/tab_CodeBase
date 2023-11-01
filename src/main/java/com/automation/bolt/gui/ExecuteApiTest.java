@@ -294,7 +294,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             });
 
             jTextTestType.setBackground(new java.awt.Color(0, 0, 0));
-            jTextTestType.setFont(new Font("Consolas", 0, 12)); // NOI18N
+            jTextTestType.setFont(new Font("Tahoma", 0, 14)); // NOI18N
             jTextTestType.setForeground(java.awt.Color.pink);
             jTextTestType.setHorizontalAlignment(JTextField.LEFT);
             jTextTestType.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -397,7 +397,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
 
                         jLabel1.setFont(new Font("Consolas", 0, 12)); // NOI18N
                         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-                        jLabel1.setText("test type: @tag");
+                        jLabel1.setText("test type: @<tag_name>");
 
                         jDesktopPane1.setLayer(bttnStartTestRun, JLayeredPane.DEFAULT_LAYER);
                         jDesktopPane1.setLayer(jTextTestType, JLayeredPane.DEFAULT_LAYER);
@@ -418,7 +418,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                                 .addComponent(jLabel1)
                                 .addGap(2, 2, 2)
                                 .addComponent(jTextTestType, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(bttnStartTestRun, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(bttnStopTestRun, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
@@ -697,7 +697,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
 
                     try{
                          XSSFCell testId = excelRow.getCell(0);
-                         XSSFCell testSummary = excelRow.getCell(16);
+                         XSSFCell testSummary = excelRow.getCell(18);
 
                         String getTestRunId =null;
                         if(testId.getCellType().toString().contentEquals("NUMERIC")){

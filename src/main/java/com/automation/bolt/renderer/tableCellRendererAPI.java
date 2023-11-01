@@ -7,7 +7,6 @@ package com.automation.bolt.renderer;
 
 import static com.automation.bolt.gui.CreateAPITest.apiSSLCertList;
 import static com.automation.bolt.gui.CreateAPITest.cBoxApiSSL;
-import static com.automation.bolt.gui.CreateAPITest.tableAddTestFlow;
 import static com.automation.bolt.gui.CreateAPITest.testApiSSLCol;
 import static com.automation.bolt.gui.EditAPITest.tableEditTestFlow;
 import java.awt.Color;
@@ -18,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
+import static com.automation.bolt.gui.CreateAPITest.tableCreateApiTest;
 
 /**
  *
@@ -86,7 +86,7 @@ public class tableCellRendererAPI implements TableCellRenderer{
                 break;
             case 14:
                 try{
-                    testApiSSLCol = tableAddTestFlow.getColumnModel().getColumn(14);
+                    testApiSSLCol = tableCreateApiTest.getColumnModel().getColumn(14);
                     cBoxApiSSL = new JComboBox<String>();
                     apiSSLCertList(cBoxApiSSL);
                     testApiSSLCol.setCellEditor(new DefaultCellEditor(cBoxApiSSL));
