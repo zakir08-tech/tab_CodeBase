@@ -1323,11 +1323,13 @@ public class EditAPITest extends javax.swing.JFrame {
                         XSSFCell testAuthVal2 = excelRow.getCell(13);
                         XSSFCell testSSLValidation = excelRow.getCell(14);
                         XSSFCell testExpStatus = excelRow.getCell(15);
-                        XSSFCell testTestDesc = excelRow.getCell(16);
+                        XSSFCell testVerifyPayloadKey = excelRow.getCell(16);
+                        XSSFCell testVerifyPayloadValue = excelRow.getCell(17);
+                        XSSFCell testTestDesc = excelRow.getCell(18);
 
                         createSuiteTabModel.addRow(new Object[]{testId, testRequest, testURL, testHeaderKey, testHeaderValue, testParamKey,
                             testParamValue, testPayload, testPayloadType, testModifyPayloadKey, testModifyPayloadValue, testAuthorizationType,
-                            testAuthVal1, testAuthVal2, testSSLValidation, testExpStatus, testTestDesc  
+                            testAuthVal1, testAuthVal2, testSSLValidation, testExpStatus, testVerifyPayloadKey, testVerifyPayloadValue, testTestDesc  
                         });
                     } catch (NullPointerException exp) {
 
@@ -1337,7 +1339,7 @@ public class EditAPITest extends javax.swing.JFrame {
                 if(tableEditTestFlow.getRowCount() <=0){
                     createSuiteTabModel.addRow(new Object[]{null, null, null, null, null, null,
                             null, null, null, null, null, null,
-                            null, null, null, null, null  
+                            null, null, null, null, null, null, null  
                         });
                 }
                 
