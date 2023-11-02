@@ -506,9 +506,9 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                         pnlHeaderLayout.setVerticalGroup(pnlHeaderLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
                                 .addContainerGap(14, Short.MAX_VALUE)
-                                .addGroup(pnlHeaderLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                    .addComponent(chkBoxFilterFailTest, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(chkBoxSelectDeselectAllRun))
+                                .addGroup(pnlHeaderLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(chkBoxSelectDeselectAllRun, GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                                    .addComponent(chkBoxFilterFailTest, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap())
                         );
 
