@@ -442,7 +442,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                         pnlHeader.setMinimumSize(new Dimension(206, 40));
                         pnlHeader.setOpaque(false);
 
-                        chkBoxSelectDeselectAllRun.setFont(new Font("Consolas", 0, 10)); // NOI18N
+                        chkBoxSelectDeselectAllRun.setFont(new Font("Consolas", 1, 10)); // NOI18N
                         chkBoxSelectDeselectAllRun.setForeground(new java.awt.Color(255, 255, 255));
                         chkBoxSelectDeselectAllRun.setText("Select ALL Run");
                         chkBoxSelectDeselectAllRun.setToolTipText("will select all test(s) for run");
@@ -466,7 +466,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                             }
                         });
 
-                        chkBoxFilterFailTest.setFont(new Font("Consolas", 0, 10)); // NOI18N
+                        chkBoxFilterFailTest.setFont(new Font("Consolas", 1, 10)); // NOI18N
                         chkBoxFilterFailTest.setForeground(new java.awt.Color(255, 255, 255));
                         chkBoxFilterFailTest.setText("Filter FAIL test(s)");
                         chkBoxFilterFailTest.setToolTipText("will select only failed test(s) for re-run");
@@ -504,12 +504,12 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                                 .addContainerGap())
                         );
                         pnlHeaderLayout.setVerticalGroup(pnlHeaderLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlHeaderLayout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addGroup(pnlHeaderLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(chkBoxSelectDeselectAllRun)
-                                    .addComponent(chkBoxFilterFailTest, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-                                .addGap(1, 1, 1))
+                            .addGroup(GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
+                                .addContainerGap(14, Short.MAX_VALUE)
+                                .addGroup(pnlHeaderLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                    .addComponent(chkBoxFilterFailTest, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(chkBoxSelectDeselectAllRun))
+                                .addContainerGap())
                         );
 
                         jDesktopPane2.setLayer(pnlHeader, JLayeredPane.DEFAULT_LAYER);
@@ -526,7 +526,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                             .addGroup(jDesktopPane2Layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
                                 .addComponent(pnlHeader, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addGap(1, 1, 1))
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         );
 
                         GroupLayout layout = new GroupLayout(getContentPane());
@@ -545,7 +545,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                                 .addGap(1, 1, 1)
                                 .addComponent(jDesktopPane2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(1, 1, 1)
-                                .addComponent(scrollExecuteRegSuite, GroupLayout.PREFERRED_SIZE, 394, Short.MAX_VALUE)
+                                .addComponent(scrollExecuteRegSuite, GroupLayout.PREFERRED_SIZE, 396, Short.MAX_VALUE)
                                 .addGap(1, 1, 1)
                                 .addComponent(jDesktopPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(1, 1, 1))
@@ -553,7 +553,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
 
                         getAccessibleContext().setAccessibleParent(this);
 
-                        setSize(new Dimension(913, 504));
+                        setSize(new Dimension(913, 529));
                         setLocationRelativeTo(null);
                     }// </editor-fold>//GEN-END:initComponents
     
