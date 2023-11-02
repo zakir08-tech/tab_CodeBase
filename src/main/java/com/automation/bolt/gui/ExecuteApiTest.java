@@ -74,6 +74,7 @@ import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
@@ -296,8 +297,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             jTextTestType.setBackground(new java.awt.Color(0, 0, 0));
             jTextTestType.setFont(new Font("Tahoma", 0, 14)); // NOI18N
             jTextTestType.setForeground(java.awt.Color.pink);
-            jTextTestType.setHorizontalAlignment(JTextField.LEFT);
-            jTextTestType.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+            jTextTestType.setBorder(BorderFactory.createEmptyBorder(1, 2, 1, 1));
             jTextTestType.setCursor(new Cursor(Cursor.TEXT_CURSOR));
             jTextTestType.setName("SetTestType"); // NOI18N
             jTextTestType.addFocusListener(new FocusAdapter() {
@@ -416,13 +416,13 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                                 .addComponent(bttnRefreshTestRun, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel1)
-                                .addGap(2, 2, 2)
-                                .addComponent(jTextTestType, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextTestType, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(bttnStartTestRun, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(bttnStopTestRun, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(394, Short.MAX_VALUE))
                         );
                         jDesktopPane1Layout.setVerticalGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(jDesktopPane1Layout.createSequentialGroup()
@@ -988,7 +988,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
 
                 try{
                     XSSFCell testId = excelRow.getCell(0);
-                    XSSFCell testSummary = excelRow.getCell(5);
+                    XSSFCell testSummary = excelRow.getCell(18);
 
                     String getTestRunId =null;
                     if(testId.getCellType().toString().contentEquals("NUMERIC")){

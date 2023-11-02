@@ -26,6 +26,7 @@ import com.automation.bolt.renderer.JTreeCellRenderer;
 public class AutomationTestRunner extends javax.swing.JFrame {
     public EditRegressionSuite editTestSuite = new EditRegressionSuite();
     public EditAPITest editApiTest = new EditAPITest();
+    public ExecuteApiTest runApiTest = new ExecuteApiTest();
     public ExecuteRegressionSuite runTestSuite = new ExecuteRegressionSuite();
     public CreateTestSuite createTestSuite = new CreateTestSuite();
     public CreateAPITest createApiTestSuite = new CreateAPITest();
@@ -441,6 +442,9 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         if(lblExecuteTestSuite.getText().contentEquals("Execute Test Suite")){
             runTestSuite.setLocationRelativeTo(null);
             runTestSuite.setVisible(true);
+        }else if(lblExecuteTestSuite.getText().contentEquals("Execute API Test")){
+            //runApiTest.setLocationRelativeTo(null);
+            runApiTest.setVisible(true);
         }
     }//GEN-LAST:event_lblExecuteTestSuiteMousePressed
 
@@ -594,6 +598,9 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         
         if(editApiTest.isVisible())
             editApiTest.dispose();
+        
+        if(runApiTest.isVisible())
+            runApiTest.dispose();
         
     }//GEN-LAST:event_formWindowClosed
 

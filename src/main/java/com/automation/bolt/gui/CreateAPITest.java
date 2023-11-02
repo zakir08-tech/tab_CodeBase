@@ -952,9 +952,9 @@ public class CreateAPITest extends javax.swing.JFrame {
                 tableCreateApiTest.requestFocus();
             }
     
-        }else {
-            JOptionPane.showMessageDialog(null, "No test step(s) available to delete!", "Alert", JOptionPane.WARNING_MESSAGE);
-        }
+        }//else {
+            //JOptionPane.showMessageDialog(null, "No test step(s) available to delete!", "Alert", JOptionPane.WARNING_MESSAGE);
+        //}
     }//GEN-LAST:event_bttnDeleteTestStepActionPerformed
 
     private void bttnAddStepUpMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddStepUpMouseEntered
@@ -1009,8 +1009,8 @@ public class CreateAPITest extends javax.swing.JFrame {
                 tableCreateApiTest.scrollRectToVisible(tableCreateApiTest.getCellRect(rowIndex, 0, true));
             }else
                   JOptionPane.showMessageDialog(scrollCreateApiTest,"Select row to add test step!","Alert",JOptionPane.WARNING_MESSAGE);
-        }else
-            JOptionPane.showMessageDialog(scrollCreateApiTest,"No test step(s) available to add a new step up!","Alert",JOptionPane.WARNING_MESSAGE);
+        }//else
+            //JOptionPane.showMessageDialog(scrollCreateApiTest,"No test step(s) available to add a new step up!","Alert",JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_bttnAddStepUpActionPerformed
 
     private void bttnAddStepDownMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddStepDownMouseEntered
@@ -1067,8 +1067,8 @@ public class CreateAPITest extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(tableCreateApiTest, "Select row to add test step!", "Alert", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-        }else
-            JOptionPane.showMessageDialog(scrollCreateApiTest,"No test step(s) available to add a new step down!","Alert",JOptionPane.WARNING_MESSAGE);
+        }//else
+            //JOptionPane.showMessageDialog(scrollCreateApiTest,"No test step(s) available to add a new step down!","Alert",JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_bttnAddStepDownActionPerformed
 
     private void bttnSaveSuiteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnSaveSuiteMouseEntered
@@ -1198,9 +1198,8 @@ public class CreateAPITest extends javax.swing.JFrame {
                 //Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-        }
-        else
-            JOptionPane.showMessageDialog(null,"No test suite is available to save!","Alert",JOptionPane.WARNING_MESSAGE);
+        }//else
+            //JOptionPane.showMessageDialog(null,"No test suite is available to save!","Alert",JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_bttnSaveSuiteActionPerformed
     
     public static void saveTestFileWhileClosingTheWindow() {
@@ -1240,7 +1239,9 @@ public class CreateAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_bttnAddNewTestSuiteMouseExited
 
     private void bttnAddNewTestSuiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnAddNewTestSuiteActionPerformed
-            
+        if(tableCreateApiTest.getRowCount() ==0)
+            return;
+        
         if(getTestFlowSelectedRow !=-1){
             getTestFlowSelectedRow =tableCreateApiTest.getSelectedRow();
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableCreateApiTest, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
@@ -1271,20 +1272,20 @@ public class CreateAPITest extends javax.swing.JFrame {
         createSuiteTabModel =(DefaultTableModel) tableCreateApiTest.getModel();
         //createORTabModel =(DefaultTableModel) tableAddOR.getModel();
         
-        elmNameTxt =new JTextField();
-        //elmNameCol =tableAddOR.getColumnModel().getColumn(0);
-        elmNameCol.setCellEditor(new DefaultCellEditor(elmNameTxt));
+        /*testURLTxt =new JTextField();      
+        testURLCol =tableCreateApiTest.getColumnModel().getColumn(2);
+        testURLCol.setCellEditor(new DefaultCellEditor(testURLTxt));
         
-        elmIdTxt =new JTextField();
-        //elmIdCol =tableAddOR.getColumnModel().getColumn(1);
-        elmIdCol.setCellEditor(new DefaultCellEditor(elmIdTxt));
+        testExpectedStatusTxt =new JTextField();
+        testExpectedStatusCol =tableCreateApiTest.getColumnModel().getColumn(15);
+        testExpectedStatusCol.setCellEditor(new DefaultCellEditor(testExpectedStatusTxt));
         
-        elmXpathTxt =new JTextField();
-        //elmXpathCol =tableAddOR.getColumnModel().getColumn(2);
-        elmXpathCol.setCellEditor(new DefaultCellEditor(elmXpathTxt));
-        
-        getTestFlowCellEditorStatus =false;
-        getElmRepoCellEditorStatus =false;
+        testPayloadTxt =new JTextField();
+        testPayloadCol =tableCreateApiTest.getColumnModel().getColumn(7);
+        testPayloadCol.setCellEditor(new DefaultCellEditor(testPayloadTxt));*/
+         
+        //getTestFlowCellEditorStatus =false;
+        //getElmRepoCellEditorStatus =false;
     }//GEN-LAST:event_bttnAddNewTestSuiteActionPerformed
         
     private void tableCreateApiTestMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCreateApiTestMousePressed
@@ -1314,6 +1315,10 @@ public class CreateAPITest extends javax.swing.JFrame {
                 case 1:
                     cBoxApiRequest.setFocusable(true);
                     cBoxApiRequest.showPopup();
+                    break;
+                case 2:
+                    tableCreateApiTest.editCellAt(getCurRow, 2);
+                    testURLTxt.requestFocusInWindow();
                     break;
                 case 8:
                     coBoxPayloadType.setFocusable(true);

@@ -373,10 +373,13 @@ public class xlsCommonMethods {
         excelSheet.autoSizeColumn(9);
         excelSheet.autoSizeColumn(10);
         excelSheet.autoSizeColumn(11);
-        excelSheet.autoSizeColumn(12);
-        excelSheet.autoSizeColumn(13);
+        //excelSheet.autoSizeColumn(12);
+        //excelSheet.autoSizeColumn(13);
         excelSheet.autoSizeColumn(14);
         excelSheet.autoSizeColumn(15);
+        excelSheet.autoSizeColumn(16);
+        excelSheet.autoSizeColumn(17);
+        excelSheet.autoSizeColumn(18);
    
         excelSheet.createFreezePane(0, 1);
         
