@@ -251,7 +251,7 @@ public class EditAPITest extends javax.swing.JFrame {
         scrollEditApiTest = new javax.swing.JScrollPane();
         tableEditTestFlow = new javax.swing.JTable();
         dPaneMenu = new javax.swing.JDesktopPane();
-        bttnAddNewTestSuite = new javax.swing.JButton();
+        bttnLoadApiTest = new javax.swing.JButton();
         bttnAddNewTestStep = new javax.swing.JButton();
         bttnDeleteTestStep = new javax.swing.JButton();
         bttnAddStepUp = new javax.swing.JButton();
@@ -261,6 +261,11 @@ public class EditAPITest extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit API Test");
         setMinimumSize(new java.awt.Dimension(1464, 761));
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                formFocusLost(evt);
+            }
+        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -478,31 +483,31 @@ public class EditAPITest extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
-        bttnAddNewTestSuite.setBackground(new java.awt.Color(0, 0, 0));
-        bttnAddNewTestSuite.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        bttnAddNewTestSuite.setForeground(new java.awt.Color(255, 255, 255));
-        bttnAddNewTestSuite.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addUploadTestSuite.png"));
-            bttnAddNewTestSuite.setToolTipText("will add a blank test suite");
-            bttnAddNewTestSuite.setBorder(null);
-            bttnAddNewTestSuite.setBorderPainted(false);
-            bttnAddNewTestSuite.setContentAreaFilled(false);
-            bttnAddNewTestSuite.setFocusPainted(false);
-            bttnAddNewTestSuite.setFocusable(false);
-            bttnAddNewTestSuite.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-            bttnAddNewTestSuite.setOpaque(true);
-            bttnAddNewTestSuite.setRequestFocusEnabled(false);
-            bttnAddNewTestSuite.setRolloverEnabled(false);
-            bttnAddNewTestSuite.addMouseListener(new java.awt.event.MouseAdapter() {
+        bttnLoadApiTest.setBackground(new java.awt.Color(0, 0, 0));
+        bttnLoadApiTest.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        bttnLoadApiTest.setForeground(new java.awt.Color(255, 255, 255));
+        bttnLoadApiTest.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addUploadTestSuite.png"));
+            bttnLoadApiTest.setToolTipText("will add a blank test suite");
+            bttnLoadApiTest.setBorder(null);
+            bttnLoadApiTest.setBorderPainted(false);
+            bttnLoadApiTest.setContentAreaFilled(false);
+            bttnLoadApiTest.setFocusPainted(false);
+            bttnLoadApiTest.setFocusable(false);
+            bttnLoadApiTest.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            bttnLoadApiTest.setOpaque(true);
+            bttnLoadApiTest.setRequestFocusEnabled(false);
+            bttnLoadApiTest.setRolloverEnabled(false);
+            bttnLoadApiTest.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseEntered(java.awt.event.MouseEvent evt) {
-                    bttnAddNewTestSuiteMouseEntered(evt);
+                    bttnLoadApiTestMouseEntered(evt);
                 }
                 public void mouseExited(java.awt.event.MouseEvent evt) {
-                    bttnAddNewTestSuiteMouseExited(evt);
+                    bttnLoadApiTestMouseExited(evt);
                 }
             });
-            bttnAddNewTestSuite.addActionListener(new java.awt.event.ActionListener() {
+            bttnLoadApiTest.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    bttnAddNewTestSuiteActionPerformed(evt);
+                    bttnLoadApiTestActionPerformed(evt);
                 }
             });
 
@@ -646,7 +651,7 @@ public class EditAPITest extends javax.swing.JFrame {
                                     }
                                 });
 
-                                dPaneMenu.setLayer(bttnAddNewTestSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                dPaneMenu.setLayer(bttnLoadApiTest, javax.swing.JLayeredPane.DEFAULT_LAYER);
                                 dPaneMenu.setLayer(bttnAddNewTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
                                 dPaneMenu.setLayer(bttnDeleteTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
                                 dPaneMenu.setLayer(bttnAddStepUp, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -659,7 +664,7 @@ public class EditAPITest extends javax.swing.JFrame {
                                     dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(dPaneMenuLayout.createSequentialGroup()
                                         .addGroup(dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(bttnLoadApiTest, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(bttnSaveSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(bttnAddStepDown, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(bttnAddStepUp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -671,7 +676,7 @@ public class EditAPITest extends javax.swing.JFrame {
                                     dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(dPaneMenuLayout.createSequentialGroup()
                                         .addGap(28, 28, 28)
-                                        .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(bttnLoadApiTest, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -875,6 +880,10 @@ public class EditAPITest extends javax.swing.JFrame {
     }
      
     private void bttnAddNewTestStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnAddNewTestStepActionPerformed
+        
+        if(excelFile ==null)
+            return;
+        
         if(getElmRepoSelectedRow !=-1){
             //getElmRepoSelectedRow =tableAddOR.getSelectedRow();
             //tabOutFromEditingColumn(getElmRepoCellEditorStatus, tableAddOR, getRepoCellxPoint, getRepoCellyPoint, getElmRepoSelectedRow);
@@ -971,7 +980,7 @@ public class EditAPITest extends javax.swing.JFrame {
             }
     
         }else {
-            JOptionPane.showMessageDialog(null, "No test step(s) available to delete!", "Alert", JOptionPane.WARNING_MESSAGE);
+            //JOptionPane.showMessageDialog(null, "No test step(s) available to delete!", "Alert", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_bttnDeleteTestStepActionPerformed
 
@@ -1027,8 +1036,8 @@ public class EditAPITest extends javax.swing.JFrame {
                 tableEditTestFlow.scrollRectToVisible(tableEditTestFlow.getCellRect(rowIndex, 0, true));
             }else
                   JOptionPane.showMessageDialog(scrollEditApiTest,"Select row to add test step!","Alert",JOptionPane.WARNING_MESSAGE);
-        }else
-            JOptionPane.showMessageDialog(scrollEditApiTest,"No test step(s) available to add a new step up!","Alert",JOptionPane.WARNING_MESSAGE);
+        }//else
+            //JOptionPane.showMessageDialog(scrollEditApiTest,"No test step(s) available to add a new step up!","Alert",JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_bttnAddStepUpActionPerformed
 
     private void bttnAddStepDownMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddStepDownMouseEntered
@@ -1085,8 +1094,8 @@ public class EditAPITest extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(tableEditTestFlow, "Select row to add test step!", "Alert", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-        }else
-            JOptionPane.showMessageDialog(scrollEditApiTest,"No test step(s) available to add a new step down!","Alert",JOptionPane.WARNING_MESSAGE);
+        }//else
+            //JOptionPane.showMessageDialog(scrollEditApiTest,"No test step(s) available to add a new step down!","Alert",JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_bttnAddStepDownActionPerformed
 
     private void bttnSaveSuiteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnSaveSuiteMouseEntered
@@ -1124,8 +1133,8 @@ public class EditAPITest extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else
-            JOptionPane.showMessageDialog(RegressionSuiteScrollPane, "No test suite is available to save!", "Alert", JOptionPane.WARNING_MESSAGE);   
+        }//else
+            //JOptionPane.showMessageDialog(RegressionSuiteScrollPane, "No test suite is available to save!", "Alert", JOptionPane.WARNING_MESSAGE);   
     }//GEN-LAST:event_bttnSaveSuiteActionPerformed
     
     public static void saveTestSuitWhenWindowIsGettingClosed(){
@@ -1241,17 +1250,17 @@ public class EditAPITest extends javax.swing.JFrame {
         return deleteSuccessfull;
     }
     
-    private void bttnAddNewTestSuiteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddNewTestSuiteMouseEntered
-        bttnAddNewTestSuite.setBackground(new java.awt.Color(250, 128, 114));
-        bttnAddNewTestSuite.setForeground(new java.awt.Color(0,0,0));
-    }//GEN-LAST:event_bttnAddNewTestSuiteMouseEntered
+    private void bttnLoadApiTestMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnLoadApiTestMouseEntered
+        bttnLoadApiTest.setBackground(new java.awt.Color(250, 128, 114));
+        bttnLoadApiTest.setForeground(new java.awt.Color(0,0,0));
+    }//GEN-LAST:event_bttnLoadApiTestMouseEntered
 
-    private void bttnAddNewTestSuiteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddNewTestSuiteMouseExited
-        bttnAddNewTestSuite.setBackground(new java.awt.Color(0,0,0));
-        bttnAddNewTestSuite.setForeground(new java.awt.Color(255,255,255));
-    }//GEN-LAST:event_bttnAddNewTestSuiteMouseExited
+    private void bttnLoadApiTestMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnLoadApiTestMouseExited
+        bttnLoadApiTest.setBackground(new java.awt.Color(0,0,0));
+        bttnLoadApiTest.setForeground(new java.awt.Color(255,255,255));
+    }//GEN-LAST:event_bttnLoadApiTestMouseExited
 
-    private void bttnAddNewTestSuiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnAddNewTestSuiteActionPerformed
+    private void bttnLoadApiTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnLoadApiTestActionPerformed
         
         String getCurrDir;
         BufferedInputStream excelBIS;
@@ -1364,7 +1373,7 @@ public class EditAPITest extends javax.swing.JFrame {
                 }
             }
         }
-    }//GEN-LAST:event_bttnAddNewTestSuiteActionPerformed
+    }//GEN-LAST:event_bttnLoadApiTestActionPerformed
         
     private void tableEditTestFlowMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEditTestFlowMousePressed
         
@@ -1489,6 +1498,10 @@ public class EditAPITest extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
        saveTestSuitWhenWindowIsGettingClosed();
     }//GEN-LAST:event_formWindowClosing
+
+    private void formFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formFocusLost
     
     public static void updateAPIAttributeData(){
         getCurrRowBeforeKeyPressed =tableEditTestFlow.getSelectedRow();
@@ -1888,10 +1901,10 @@ public class EditAPITest extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton bttnAddNewTestStep;
-    public static javax.swing.JButton bttnAddNewTestSuite;
     public static javax.swing.JButton bttnAddStepDown;
     public static javax.swing.JButton bttnAddStepUp;
     public javax.swing.JButton bttnDeleteTestStep;
+    public static javax.swing.JButton bttnLoadApiTest;
     public static javax.swing.JButton bttnSaveSuite;
     public javax.swing.JDesktopPane dPaneMenu;
     public static javax.swing.JLabel lblAuthorization;
