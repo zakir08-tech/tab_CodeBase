@@ -970,7 +970,8 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     }//GEN-LAST:event_bttnRefreshTestRunMouseExited
 
     private void bttnRefreshTestRunActionPerformed(ActionEvent evt) {//GEN-FIRST:event_bttnRefreshTestRunActionPerformed
-         try {
+        duplicateRunId =false; 
+        try {
             excelImportWorkBook = new XSSFWorkbook();
             importDataFromExcelModel.setRowCount(0);
                 
@@ -1041,6 +1042,20 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(scrollExecuteRegSuite,"duplicate run Id's discovered, update the suite and reload again"
                     + "\n\nRun Id list: "+readTestIds,"Alert",JOptionPane.WARNING_MESSAGE);
         } 
+        
+        if(bttnStartTestRun.isFocusable() ==true){
+            if(checkForRunRunning() ==true){
+                bttnStartTestRun.setEnabled(false);
+                chkBoxFilterFailTest.setEnabled(false);
+            }else{
+                if(duplicateRunId ==false){
+                    bttnStartTestRun.setEnabled(true);
+                }
+                chkBoxSelectDeselectAllRun.setEnabled(true);
+                tableExecuteRegSuite.setEnabled(true);
+                bttnLoadRegSuite.setEnabled(true);
+            } 
+        }
         
         if(importDataFromExcelModel.getRowCount()>0){
             chkBoxSelectDeselectAllRun.setEnabled(true);
