@@ -63,8 +63,10 @@
                               <Component id="scrlPnlPayload" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblPayload" min="-2" pref="120" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="lblPayload" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblInvalidBody" min="-2" pref="232" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -138,7 +140,10 @@
                       <Component id="scrlPnlHeaders" min="-2" pref="252" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="lblPayload" min="-2" pref="16" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblInvalidBody" alignment="0" min="-2" pref="16" max="-2" attributes="0"/>
+                          <Component id="lblPayload" min="-2" pref="16" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="scrlPnlPayload" min="-2" pref="252" max="-2" attributes="0"/>
                   </Group>
@@ -239,7 +244,9 @@
         <Property name="name" type="java.lang.String" value="APIurl" noResource="true"/>
       </Properties>
       <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtAPIurlFocusGained"/>
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtAPIurlFocusLost"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtAPIurlMouseClicked"/>
         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtAPIurlKeyReleased"/>
       </Events>
       <AuxValues>
@@ -454,6 +461,7 @@
             <Property name="tabSize" type="int" value="1"/>
           </Properties>
           <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtAreaPayloadFocusGained"/>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtAreaPayloadFocusLost"/>
             <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtAreaPayloadKeyReleased"/>
           </Events>
@@ -526,6 +534,9 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="pnlCreateApiTest">
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="pnlCreateApiTestFocusLost"/>
+      </Events>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -703,6 +714,7 @@
                 <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
               </Properties>
               <Events>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tableCreateApiTestFocusLost"/>
                 <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableCreateApiTestMousePressed"/>
                 <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableCreateApiTestMouseReleased"/>
                 <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tableCreateApiTestKeyReleased"/>
@@ -972,5 +984,18 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="lblInvalidBody">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="33" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+      </AuxValues>
+    </Component>
   </SubComponents>
 </Form>

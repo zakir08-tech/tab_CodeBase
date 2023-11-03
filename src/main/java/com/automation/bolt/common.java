@@ -1154,6 +1154,18 @@ public class common extends userDefineTest{
         }
     }
     
+    public static void tabOutFromAnyEditingColumn(boolean editingColStatus, JTable myTable, int xCellPoint, int yCellPoint, int selectedRow){
+        Component getCellComp = myTable.getComponentAt(xCellPoint, yCellPoint);
+        if(getCellComp !=null){
+            myTable.setFocusable(true);
+            getCellComp.dispatchEvent(new KeyEvent(getCellComp,KeyEvent.KEY_PRESSED, selectedRow,0,KeyEvent.VK_TAB, ' '));
+            //if(selectedRow >=0)
+                //myTable.setRowSelectionInterval(selectedRow, selectedRow);
+                //myTable.requestFocus();
+                //myTable.scrollRectToVisible(myTable.getCellRect(selectedRow,selectedRow, true));
+        }
+    }
+    
     public static boolean checkForBlankColumnValue(JTable myTable, int colNumber){
         boolean isBlankfnd =false;
         
@@ -1604,8 +1616,8 @@ public class common extends userDefineTest{
             prettyJson = gson.toJson(jsonElement);
             jsonPayload =prettyJson;
         } catch (JsonParseException ex) {
-            //jsonPayload =jsonPayload;
-            JOptionPane.showMessageDialog(null,"Invalid json body!","Alert",JOptionPane.WARNING_MESSAGE);
+            jsonPayload ="Invalid json body!";
+            //JOptionPane.showMessageDialog(null,"Invalid json body!","Alert",JOptionPane.WARNING_MESSAGE);
         }
         
         return jsonPayload;

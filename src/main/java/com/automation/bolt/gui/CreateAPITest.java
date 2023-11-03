@@ -31,6 +31,7 @@ import javax.swing.table.TableColumn;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.automation.bolt.common;
+import static com.automation.bolt.common.tabOutFromAnyEditingColumn;
 import com.automation.bolt.constants;
 import com.automation.bolt.renderer.tableCellRendererAPI;
 import com.google.common.io.Files;
@@ -49,7 +50,7 @@ import java.util.logging.Logger;
  */
 public class CreateAPITest extends javax.swing.JFrame {
     public static DefaultTableModel createSuiteTabModel =new DefaultTableModel();
-    public static DefaultTableModel createORTabModel =new DefaultTableModel();
+    //public static DefaultTableModel createORTabModel =new DefaultTableModel();
     
     public static JComboBox<String> cBoxApiRequest =new JComboBox<String>();
     public static JComboBox<String> cBoxApiSSL =new JComboBox<String>();
@@ -73,7 +74,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     public static boolean duplicateTestId =false;
     
     public static int editableRow;
-    public static int editableAddElmRow;
+    //public static int editableAddElmRow;
     
     //public static TableColumn elmNameCol =null;
     //public static TableColumn elmIdCol =null;
@@ -245,6 +246,7 @@ public class CreateAPITest extends javax.swing.JFrame {
         bttnAddStepDown = new javax.swing.JButton();
         bttnSaveSuite = new javax.swing.JButton();
         bttnAddNewTestSuite = new javax.swing.JButton();
+        lblInvalidBody = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create API Test");
@@ -293,8 +295,16 @@ public class CreateAPITest extends javax.swing.JFrame {
         txtAPIurl.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtAPIurl.setName("APIurl"); // NOI18N
         txtAPIurl.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtAPIurlFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtAPIurlFocusLost(evt);
+            }
+        });
+        txtAPIurl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtAPIurlMouseClicked(evt);
             }
         });
         txtAPIurl.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -377,6 +387,9 @@ public class CreateAPITest extends javax.swing.JFrame {
         txtAreaPayload.setRows(5);
         txtAreaPayload.setTabSize(1);
         txtAreaPayload.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtAreaPayloadFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtAreaPayloadFocusLost(evt);
             }
@@ -410,6 +423,12 @@ public class CreateAPITest extends javax.swing.JFrame {
         textVerifyPayload.setRows(5);
         scrollVerifyPayload.setViewportView(textVerifyPayload);
 
+        pnlCreateApiTest.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                pnlCreateApiTestFocusLost(evt);
+            }
+        });
+
         tableCreateApiTest.setBackground(new java.awt.Color(51, 51, 51));
         tableCreateApiTest.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         tableCreateApiTest.setForeground(new java.awt.Color(255, 255, 255));
@@ -431,6 +450,11 @@ public class CreateAPITest extends javax.swing.JFrame {
         tableCreateApiTest.getTableHeader().setReorderingAllowed(false);
         tableCreateApiTest.setUpdateSelectionOnSort(false);
         tableCreateApiTest.setVerifyInputWhenFocusTarget(false);
+        tableCreateApiTest.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tableCreateApiTestFocusLost(evt);
+            }
+        });
         tableCreateApiTest.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tableCreateApiTestMousePressed(evt);
@@ -669,6 +693,9 @@ public class CreateAPITest extends javax.swing.JFrame {
                                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 );
 
+                                lblInvalidBody.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+                                lblInvalidBody.setForeground(new java.awt.Color(255, 51, 51));
+
                                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
                                 getContentPane().setLayout(layout);
                                 layout.setHorizontalGroup(
@@ -694,7 +721,9 @@ public class CreateAPITest extends javax.swing.JFrame {
                                                         .addComponent(scrlPnlPayload)
                                                         .addGap(4, 4, 4))
                                                     .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(lblPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(lblPayload)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(lblInvalidBody, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(scrollModifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -748,7 +777,9 @@ public class CreateAPITest extends javax.swing.JFrame {
                                                 .addGap(0, 0, 0)
                                                 .addComponent(scrlPnlHeaders, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lblInvalidBody, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(lblPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGap(0, 0, 0)
                                                 .addComponent(scrlPnlPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(layout.createSequentialGroup()
@@ -1266,7 +1297,7 @@ public class CreateAPITest extends javax.swing.JFrame {
         modelAddTestFlow.fireTableDataChanged();
        
         editableRow =0;
-        editableAddElmRow =0;
+        //editableAddElmRow =0;
         
         //tableAddOR.removeEditor();
         tableCreateApiTest.removeEditor();
@@ -1320,7 +1351,11 @@ public class CreateAPITest extends javax.swing.JFrame {
                     break;
                 case 2:
                     tableCreateApiTest.editCellAt(getCurRow, 2);
-                    testURLTxt.requestFocusInWindow();
+                    testPayloadTxt.requestFocusInWindow();
+                    break;
+                case 7:
+                    tableCreateApiTest.editCellAt(getCurRow, 7);
+                    testPayloadTxt.requestFocusInWindow();
                     break;
                 case 8:
                     coBoxPayloadType.setFocusable(true);
@@ -1416,6 +1451,32 @@ public class CreateAPITest extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         saveTestFileWhileClosingTheWindow();
     }//GEN-LAST:event_formWindowClosing
+
+    private void tableCreateApiTestFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tableCreateApiTestFocusLost
+        
+    }//GEN-LAST:event_tableCreateApiTestFocusLost
+
+    private void pnlCreateApiTestFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pnlCreateApiTestFocusLost
+
+    }//GEN-LAST:event_pnlCreateApiTestFocusLost
+
+    private void txtAPIurlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAPIurlMouseClicked
+
+    }//GEN-LAST:event_txtAPIurlMouseClicked
+
+    private void txtAPIurlFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAPIurlFocusGained
+        if(getTestFlowSelectedRow !=-1){
+            getTestFlowSelectedRow =tableCreateApiTest.getSelectedRow();
+            tabOutFromAnyEditingColumn(getTestFlowCellEditorStatus, tableCreateApiTest, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
+        }
+    }//GEN-LAST:event_txtAPIurlFocusGained
+
+    private void txtAreaPayloadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAreaPayloadFocusGained
+        if(getTestFlowSelectedRow !=-1){
+            getTestFlowSelectedRow =tableCreateApiTest.getSelectedRow();
+            tabOutFromAnyEditingColumn(getTestFlowCellEditorStatus, tableCreateApiTest, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
+        }
+    }//GEN-LAST:event_txtAreaPayloadFocusGained
     
     public static void updateAPIAttributeData(){
         getCurrRowBeforeKeyPressed =tableCreateApiTest.getSelectedRow();
@@ -1434,7 +1495,26 @@ public class CreateAPITest extends javax.swing.JFrame {
         try{
             getApiPayload =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 7).toString();
             if(getApiPayload !=null){
-                txtAreaPayload.setText(common.writeJsonPayloadToTheTextArea(getApiPayload));
+                Object getPayloadType =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 8);
+                if(getPayloadType ==null || 
+                        getPayloadType.toString().contentEquals("JSON") || 
+                        getPayloadType.toString().isEmpty()){
+                    
+                    String getJsonBody =common.writeJsonPayloadToTheTextArea(getApiPayload);
+                    if(!getJsonBody.contentEquals("Invalid json body!")){
+                        lblInvalidBody.setText("");
+                        txtAreaPayload.setText(common.writeJsonPayloadToTheTextArea(getApiPayload));
+                    }
+                    else{
+                       lblInvalidBody.setText(getJsonBody);
+                       txtAreaPayload.setText(getApiPayload); 
+                    } 
+                }
+                else{
+                    lblInvalidBody.setText("");
+                    txtAreaPayload.setText(getApiPayload);
+                }
+                   
                 txtAreaPayload.setCaretPosition(0);
             }
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){
@@ -1547,7 +1627,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             	lblAuthorization.setText("Authorization"); 
                 txtAreaAuthorization.setText("");
             }
-        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, exp);}
+        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){/*Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, exp);*/}
         
         // update expected status
         try{
@@ -1820,6 +1900,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     public javax.swing.JDesktopPane dPaneMenu;
     public static javax.swing.JLabel lblAuthorization;
     public javax.swing.JLabel lblHeaders;
+    public static javax.swing.JLabel lblInvalidBody;
     public javax.swing.JLabel lblModifyPayload;
     public javax.swing.JLabel lblParams;
     public javax.swing.JLabel lblPayload;
