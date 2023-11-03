@@ -29,6 +29,7 @@ import javax.swing.table.TableColumn;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.automation.bolt.common;
+import static com.automation.bolt.common.tabOutFromAnyEditingColumn;
 import com.automation.bolt.constants;
 import static com.automation.bolt.gui.EditRegressionSuite.RegressionSuiteScrollPane;
 import com.automation.bolt.renderer.tableCellRendererAPI;
@@ -46,16 +47,13 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-//import org.apache.poi.xssf.usermodel.XSSFCell;
-//import org.apache.poi.xssf.usermodel.XSSFRow;
-//import org.apache.poi.xssf.usermodel.XSSFSheet;
 /**
  *
  * @author zakir
  */
 public class EditAPITest extends javax.swing.JFrame {
-    public static DefaultTableModel createSuiteTabModel =new DefaultTableModel();
-    public static DefaultTableModel createORTabModel =new DefaultTableModel();
+    public static DefaultTableModel editSuiteTabModel =new DefaultTableModel();
+    //public static DefaultTableModel createORTabModel =new DefaultTableModel();
     
     public static JComboBox<String> cBoxApiRequest =new JComboBox<String>();
     public static JComboBox<String> cBoxApiSSL =new JComboBox<String>();
@@ -67,7 +65,7 @@ public class EditAPITest extends javax.swing.JFrame {
     //public static JTextField elmXpathTxt =new JTextField();
     
     public static JTextField testIdTxt =new JTextField();
-    public static JTextField testURLTxt =new JTextField();
+    public static JTextField etestURLTxt =new JTextField();
     public static JTextField testExpectedStatusTxt =new JTextField();
     public static JTextField testPayloadTxt =new JTextField();
     public static JTextField testComTxt =new JTextField();
@@ -79,14 +77,14 @@ public class EditAPITest extends javax.swing.JFrame {
     public static boolean duplicateTestId =false;
     
     public static int editableRow;
-    public static int editableAddElmRow;
+    //public static int editableAddElmRow;
     
     //public static TableColumn elmNameCol =null;
     //public static TableColumn elmIdCol =null;
     //public static TableColumn elmXpathCol =null;
     
     public static TableColumn testIdCol =null;
-    public static TableColumn testURLCol =null;
+    public static TableColumn etestURLCol =null;
     public static TableColumn testExpectedStatusCol =null;
     public static TableColumn testApiTypeCol =null;
     public static TableColumn testApiSSLCol =null;
@@ -133,13 +131,13 @@ public class EditAPITest extends javax.swing.JFrame {
         
         initComponents();
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-        createSuiteTabModel =(DefaultTableModel) tableEditTestFlow.getModel();
+        editSuiteTabModel =(DefaultTableModel) tableEditTestFlow.getModel();
 
         testIdCol =tableEditTestFlow.getColumnModel().getColumn(0);
         testIdCol.setCellEditor(new DefaultCellEditor(testIdTxt));
         
-        testURLCol =tableEditTestFlow.getColumnModel().getColumn(2);
-        testURLCol.setCellEditor(new DefaultCellEditor(testURLTxt));
+        etestURLCol =tableEditTestFlow.getColumnModel().getColumn(2);
+        etestURLCol.setCellEditor(new DefaultCellEditor(etestURLTxt));
         
         testExpectedStatusCol =tableEditTestFlow.getColumnModel().getColumn(15);
         testExpectedStatusCol.setCellEditor(new DefaultCellEditor(testExpectedStatusTxt));
@@ -185,9 +183,9 @@ public class EditAPITest extends javax.swing.JFrame {
             }
         });
         
-        testURLTxt.addKeyListener(new KeyAdapter() {
+        etestURLTxt.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent evt) {
-                testURLTxtKeyReleased(evt, testURLTxt);
+                etestURLTxtKeyReleased(evt, etestURLTxt);
             }
         });
         
@@ -227,7 +225,7 @@ public class EditAPITest extends javax.swing.JFrame {
 
         txtRequestType = new javax.swing.JTextField();
         txtExpStatus = new javax.swing.JTextField();
-        txtAPIurl = new javax.swing.JTextField();
+        etxtAPIurl = new javax.swing.JTextField();
         lblURL = new javax.swing.JLabel();
         lblStatus = new javax.swing.JLabel();
         lblRequest = new javax.swing.JLabel();
@@ -259,6 +257,7 @@ public class EditAPITest extends javax.swing.JFrame {
         bttnAddStepUp = new javax.swing.JButton();
         bttnAddStepDown = new javax.swing.JButton();
         bttnSaveSuite = new javax.swing.JButton();
+        lblInvalidBody = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit API Test");
@@ -304,18 +303,21 @@ public class EditAPITest extends javax.swing.JFrame {
             }
         });
 
-        txtAPIurl.setBackground(new java.awt.Color(51, 51, 51));
-        txtAPIurl.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtAPIurl.setForeground(new java.awt.Color(255, 255, 204));
-        txtAPIurl.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtAPIurl.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 1));
-        txtAPIurl.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        txtAPIurl.addFocusListener(new java.awt.event.FocusAdapter() {
+        etxtAPIurl.setBackground(new java.awt.Color(51, 51, 51));
+        etxtAPIurl.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        etxtAPIurl.setForeground(new java.awt.Color(255, 255, 204));
+        etxtAPIurl.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        etxtAPIurl.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 1));
+        etxtAPIurl.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        etxtAPIurl.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtAPIurlFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtAPIurlFocusLost(evt);
             }
         });
-        txtAPIurl.addKeyListener(new java.awt.event.KeyAdapter() {
+        etxtAPIurl.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtAPIurlKeyReleased(evt);
             }
@@ -395,6 +397,9 @@ public class EditAPITest extends javax.swing.JFrame {
         txtAreaPayload.setRows(5);
         txtAreaPayload.setTabSize(1);
         txtAreaPayload.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtAreaPayloadFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtAreaPayloadFocusLost(evt);
             }
@@ -692,6 +697,9 @@ public class EditAPITest extends javax.swing.JFrame {
                                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 );
 
+                                lblInvalidBody.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+                                lblInvalidBody.setForeground(new java.awt.Color(255, 51, 51));
+
                                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
                                 getContentPane().setLayout(layout);
                                 layout.setHorizontalGroup(
@@ -717,7 +725,9 @@ public class EditAPITest extends javax.swing.JFrame {
                                                         .addComponent(scrlPnlPayload)
                                                         .addGap(4, 4, 4))
                                                     .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(lblPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(lblPayload)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(lblInvalidBody, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(scrollModifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -741,7 +751,7 @@ public class EditAPITest extends javax.swing.JFrame {
                                                             .addGroup(layout.createSequentialGroup()
                                                                 .addComponent(lblURL, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(0, 1003, Short.MAX_VALUE))
-                                                            .addComponent(txtAPIurl)))
+                                                            .addComponent(etxtAPIurl)))
                                                     .addComponent(pnlEditApiTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                 .addGap(1, 1, 1)
                                                 .addComponent(dPaneMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -761,7 +771,7 @@ public class EditAPITest extends javax.swing.JFrame {
                                                 .addComponent(lblRequest)))
                                         .addGap(1, 1, 1)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(txtAPIurl, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(etxtAPIurl, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtExpStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtRequestType, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(4, 4, 4)
@@ -771,7 +781,9 @@ public class EditAPITest extends javax.swing.JFrame {
                                                 .addGap(0, 0, 0)
                                                 .addComponent(scrlPnlHeaders, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                    .addComponent(lblPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(lblInvalidBody, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGap(0, 0, 0)
                                                 .addComponent(scrlPnlPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(layout.createSequentialGroup()
@@ -823,9 +835,9 @@ public class EditAPITest extends javax.swing.JFrame {
         bttnAddNewTestStep.setForeground(new java.awt.Color(255,255,255));
     }//GEN-LAST:event_bttnAddNewTestStepMouseExited
     
-     public static void testURLTxtKeyReleased(KeyEvent evt, JTextField textField) {
+     public static void etestURLTxtKeyReleased(KeyEvent evt, JTextField textField) {
         String getURLText =textField.getText();
-        txtAPIurl.setText(getURLText);
+        etxtAPIurl.setText(getURLText);
     }
     
     public static void testExpectedStatusTxtKeyReleased(KeyEvent evt, JTextField textField) {
@@ -896,7 +908,7 @@ public class EditAPITest extends javax.swing.JFrame {
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableEditTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
             
-        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(editSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
             return;
         
         Object getPreviosTestStepNo =null;
@@ -905,7 +917,7 @@ public class EditAPITest extends javax.swing.JFrame {
         else
             getPreviosTestStepNo = tableEditTestFlow.getValueAt(tableEditTestFlow.getRowCount()-1, 1);
         
-        createSuiteTabModel.addRow(new Object[] {null,null,null,null,null,null});
+        editSuiteTabModel.addRow(new Object[] {null,null,null,null,null,null});
         tableEditTestFlow.setColumnSelectionInterval(0, 0);
         //tableAddTestFlow.setValueAt(Integer.valueOf(getPreviosTestStepNo.toString())+1, tableAddTestFlow.getRowCount()-1, 1);
         tableEditTestFlow.setRowSelectionInterval(tableEditTestFlow.getRowCount()-1, tableEditTestFlow.getRowCount()-1);
@@ -938,7 +950,7 @@ public class EditAPITest extends javax.swing.JFrame {
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableEditTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
-        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(editSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
             return;
         
         String getTestId =null;
@@ -959,7 +971,7 @@ public class EditAPITest extends javax.swing.JFrame {
             	return;
             }
              
-            createSuiteTabModel.removeRow(rowIndex);
+            editSuiteTabModel.removeRow(rowIndex);
             
             try {
                 tableEditTestFlow.setRowSelectionInterval(rowIndex-1, rowIndex-1);
@@ -1007,7 +1019,7 @@ public class EditAPITest extends javax.swing.JFrame {
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableEditTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
-        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(editSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
             return;
         
         int getTestStep =0;
@@ -1032,7 +1044,7 @@ public class EditAPITest extends javax.swing.JFrame {
                     getTestId ="";
                 }
                                     
-                createSuiteTabModel.insertRow(rowIndex, new Object[] {null,null,null,null,null,null });
+                editSuiteTabModel.insertRow(rowIndex, new Object[] {null,null,null,null,null,null });
                 tableEditTestFlow.setRowSelectionInterval(rowIndex, rowIndex);
                 tableEditTestFlow.setColumnSelectionInterval(0, 0);
                 tableEditTestFlow.scrollRectToVisible(tableEditTestFlow.getCellRect(rowIndex, 0, true));
@@ -1063,7 +1075,7 @@ public class EditAPITest extends javax.swing.JFrame {
             //tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableAddTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
-        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(editSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
             return;
         
         if(tableEditTestFlow.getRowCount()>0){
@@ -1073,20 +1085,20 @@ public class EditAPITest extends javax.swing.JFrame {
                 try {
                     try {
                         //String getTestID = tableAddTestFlow.getValueAt(tableAddTestFlow.getSelectedRow(), 0).toString();
-                        createSuiteTabModel.insertRow(rowIndex + 1, new Object[]{null, null, null, null, null, null});
+                        editSuiteTabModel.insertRow(rowIndex + 1, new Object[]{null, null, null, null, null, null});
                         rowIndex = tableEditTestFlow.getSelectedRow();
                         tableEditTestFlow.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
                         tableEditTestFlow.setColumnSelectionInterval(0, 0);
                         tableEditTestFlow.scrollRectToVisible(tableEditTestFlow.getCellRect(rowIndex+1, 0, true));
                     } catch (NullPointerException exp) {
-                        createSuiteTabModel.insertRow(rowIndex + 1, new Object[]{null, null, null, null, null, null});
+                        editSuiteTabModel.insertRow(rowIndex + 1, new Object[]{null, null, null, null, null, null});
                         rowIndex = tableEditTestFlow.getSelectedRow();
                         tableEditTestFlow.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
                         tableEditTestFlow.setColumnSelectionInterval(0, 0);
                         tableEditTestFlow.scrollRectToVisible(tableEditTestFlow.getCellRect(rowIndex+1, 0, true));
                     }
                 } catch (NullPointerException exp) {
-                    createSuiteTabModel.insertRow(rowIndex + 1, new Object[]{null, null, null, null, null, null});
+                    editSuiteTabModel.insertRow(rowIndex + 1, new Object[]{null, null, null, null, null, null});
                     rowIndex = tableEditTestFlow.getSelectedRow();
                     tableEditTestFlow.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
                     tableEditTestFlow.setColumnSelectionInterval(0, 0);
@@ -1121,7 +1133,7 @@ public class EditAPITest extends javax.swing.JFrame {
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableEditTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
-        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(editSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
             return;
         
         if (excelFile != null) {
@@ -1172,14 +1184,14 @@ public class EditAPITest extends javax.swing.JFrame {
             //cellStyle.setFillBackgroundColor(IndexedColors.BLACK.getIndex());
             //cellStyle.setFillPattern(FillPatternType.ALT_BARS);
 
-            for (int j = 0; j < createSuiteTabModel.getRowCount(); j++) {
+            for (int j = 0; j < editSuiteTabModel.getRowCount(); j++) {
                 XSSFRow row = excelSheetTestFlow.createRow(j + 1);
-                for (int k = 0; k < createSuiteTabModel.getColumnCount(); k++) {
+                for (int k = 0; k < editSuiteTabModel.getColumnCount(); k++) {
                     cell = row.createCell(k);
                     cell.setCellType(CellType.STRING);
                     cell.setCellStyle(cellStyle);
                     try {
-                        cell.setCellValue(createSuiteTabModel.getValueAt(j, k).toString());
+                        cell.setCellValue(editSuiteTabModel.getValueAt(j, k).toString());
                     } catch (NullPointerException exp) {
                         cell.setCellValue("");
                     }
@@ -1263,7 +1275,6 @@ public class EditAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_bttnLoadApiTestMouseExited
 
     private void bttnLoadApiTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnLoadApiTestActionPerformed
-        
         String getCurrDir;
         BufferedInputStream excelBIS;
         XSSFRow excelRow;
@@ -1292,11 +1303,11 @@ public class EditAPITest extends javax.swing.JFrame {
         }
         
         if (excelChooser == JFileChooser.APPROVE_OPTION) {
-            createSuiteTabModel = (DefaultTableModel) tableEditTestFlow.getModel();
+            editSuiteTabModel = (DefaultTableModel) tableEditTestFlow.getModel();
             
             testSuiteUploaded = true;
             excelImportWorkBook = new XSSFWorkbook();
-            createSuiteTabModel.setRowCount(0);
+            editSuiteTabModel.setRowCount(0);
             excelFile = excelFileImport.getSelectedFile();
             testSuiteFilePath = excelFile.getPath();
 
@@ -1338,7 +1349,7 @@ public class EditAPITest extends javax.swing.JFrame {
                         XSSFCell testVerifyPayloadValue = excelRow.getCell(17);
                         XSSFCell testTestDesc = excelRow.getCell(18);
 
-                        createSuiteTabModel.addRow(new Object[]{testId, testRequest, testURL, testHeaderKey, testHeaderValue, testParamKey,
+                        editSuiteTabModel.addRow(new Object[]{testId, testRequest, testURL, testHeaderKey, testHeaderValue, testParamKey,
                             testParamValue, testPayload, testPayloadType, testModifyPayloadKey, testModifyPayloadValue, testAuthorizationType,
                             testAuthVal1, testAuthVal2, testSSLValidation, testExpStatus, testVerifyPayloadKey, testVerifyPayloadValue, testTestDesc  
                         });
@@ -1348,7 +1359,7 @@ public class EditAPITest extends javax.swing.JFrame {
                 }
                 
                 if(tableEditTestFlow.getRowCount() <=0){
-                    createSuiteTabModel.addRow(new Object[]{null, null, null, null, null, null,
+                    editSuiteTabModel.addRow(new Object[]{null, null, null, null, null, null,
                             null, null, null, null, null, null,
                             null, null, null, null, null, null, null  
                         });
@@ -1384,7 +1395,7 @@ public class EditAPITest extends javax.swing.JFrame {
        
         //writeJsonPayloadToTheTextArea();
         
-        if(common.checkForDuplicateApiTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateApiTestId(editSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt) ==true)
             return;
          
         int getCurRow = tableEditTestFlow.convertRowIndexToModel(tableEditTestFlow.rowAtPoint(evt.getPoint()));
@@ -1404,6 +1415,14 @@ public class EditAPITest extends javax.swing.JFrame {
                 case 1:
                     cBoxApiRequest.setFocusable(true);
                     cBoxApiRequest.showPopup();
+                    break;
+                case 2:
+                    tableEditTestFlow.editCellAt(getCurRow, 2);
+                    testPayloadTxt.requestFocusInWindow();
+                    break;
+                case 7:
+                    tableEditTestFlow.editCellAt(getCurRow, 7);
+                    testPayloadTxt.requestFocusInWindow();
                     break;
                 case 8:
                     coBoxPayloadType.setFocusable(true);
@@ -1435,7 +1454,7 @@ public class EditAPITest extends javax.swing.JFrame {
 
     private void tableEditTestFlowKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableEditTestFlowKeyReleased
         updateAPIAttributeData();
-        common.checkForDuplicateApiTestId(createSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt);
+        common.checkForDuplicateApiTestId(editSuiteTabModel, tableEditTestFlow, editableRow, testIdTxt);
     }//GEN-LAST:event_tableEditTestFlowKeyReleased
     
     /*public static String writeJsonPayloadToTheTextArea(String jsonPayload){
@@ -1458,7 +1477,7 @@ public class EditAPITest extends javax.swing.JFrame {
     }*/
     
     private void txtAPIurlFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAPIurlFocusLost
-        getTheAPIurl =txtAPIurl.getText();
+        getTheAPIurl =etxtAPIurl.getText();
         try {
         	tableEditTestFlow.setValueAt(getTheAPIurl,getCurrRowBeforeKeyPressed, 2);
         }catch(ArrayIndexOutOfBoundsException exp) {}
@@ -1466,7 +1485,7 @@ public class EditAPITest extends javax.swing.JFrame {
 
     private void txtAPIurlKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAPIurlKeyReleased
         try{
-            tableEditTestFlow.setValueAt(txtAPIurl.getText(),getCurrRowBeforeKeyPressed, 2);
+            tableEditTestFlow.setValueAt(etxtAPIurl.getText(),getCurrRowBeforeKeyPressed, 2);
         }catch(ArrayIndexOutOfBoundsException exp){}
         
     }//GEN-LAST:event_txtAPIurlKeyReleased
@@ -1497,7 +1516,7 @@ public class EditAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_txtAreaPayloadFocusLost
 
     private void tableEditTestFlowFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tableEditTestFlowFocusGained
-        updateAPIAttributeData();
+        //updateAPIAttributeData();
     }//GEN-LAST:event_tableEditTestFlowFocusGained
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -1507,6 +1526,20 @@ public class EditAPITest extends javax.swing.JFrame {
     private void formFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_formFocusLost
+
+    private void txtAPIurlFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAPIurlFocusGained
+       if(getTestFlowSelectedRow !=-1){
+            getTestFlowSelectedRow =tableEditTestFlow.getSelectedRow();
+            tabOutFromAnyEditingColumn(getTestFlowCellEditorStatus, tableEditTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
+        }
+    }//GEN-LAST:event_txtAPIurlFocusGained
+
+    private void txtAreaPayloadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAreaPayloadFocusGained
+        if(getTestFlowSelectedRow !=-1){
+            getTestFlowSelectedRow =tableEditTestFlow.getSelectedRow();
+            tabOutFromAnyEditingColumn(getTestFlowCellEditorStatus, tableEditTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
+        }
+    }//GEN-LAST:event_txtAreaPayloadFocusGained
     
     public static void updateAPIAttributeData(){
         getCurrRowBeforeKeyPressed =tableEditTestFlow.getSelectedRow();
@@ -1514,18 +1547,37 @@ public class EditAPITest extends javax.swing.JFrame {
         // update api test url
         try{    
             getTheAPIurl =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 2).toString();
-            txtAPIurl.setText(getTheAPIurl);
-            txtAPIurl.setCaretPosition(0);
+            etxtAPIurl.setText(getTheAPIurl);
+            etxtAPIurl.setCaretPosition(0);
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){
-            txtAPIurl.setText("");
-            txtAPIurl.setCaretPosition(0);
+            etxtAPIurl.setText("");
+            etxtAPIurl.setCaretPosition(0);
         }
         
         // update api payload body
         try{
             getApiPayload =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 7).toString();
             if(getApiPayload !=null){
-                txtAreaPayload.setText(common.writeJsonPayloadToTheTextArea(getApiPayload));
+                Object getPayloadType =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 8).toString();
+                if(getPayloadType ==null || 
+                        getPayloadType.toString().contentEquals("JSON") || 
+                        getPayloadType.toString().isEmpty()){
+                    
+                    String getJsonBody =common.writeJsonPayloadToTheTextArea(getApiPayload);
+                    if(!getJsonBody.contentEquals("Invalid json body!")){
+                        lblInvalidBody.setText("");
+                        txtAreaPayload.setText(common.writeJsonPayloadToTheTextArea(getApiPayload));
+                    }
+                    else{
+                       lblInvalidBody.setText(getJsonBody);
+                       txtAreaPayload.setText(getApiPayload); 
+                    } 
+                }
+                else{
+                    lblInvalidBody.setText("");
+                    txtAreaPayload.setText(getApiPayload);
+                }
+                
                 txtAreaPayload.setCaretPosition(0);
             }
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){
@@ -1611,6 +1663,9 @@ public class EditAPITest extends javax.swing.JFrame {
             if(getTestId !=null && !getTestId.toString().isEmpty())
             {
                 Object getAuth =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 11);
+                if(getAuth ==null || getAuth.toString().isEmpty())
+                	getAuth ="";
+                
                 if(getAuth.toString().contentEquals("Basic Auth")){
                     Object getUsername =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
                     if(getUsername ==null)
@@ -1639,7 +1694,7 @@ public class EditAPITest extends javax.swing.JFrame {
             	lblAuthorization.setText("Authorization"); 
                 txtAreaAuthorization.setText("");
             }
-        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, exp);}
+        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){/*Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, exp);*/}
         
         // update expected status
         try{
@@ -1914,6 +1969,7 @@ public class EditAPITest extends javax.swing.JFrame {
     public javax.swing.JDesktopPane dPaneMenu;
     public static javax.swing.JLabel lblAuthorization;
     public javax.swing.JLabel lblHeaders;
+    public static javax.swing.JLabel lblInvalidBody;
     public javax.swing.JLabel lblModifyPayload;
     public javax.swing.JLabel lblParams;
     public javax.swing.JLabel lblPayload;
@@ -1930,7 +1986,7 @@ public class EditAPITest extends javax.swing.JFrame {
     public javax.swing.JScrollPane scrollModifyPayload;
     public javax.swing.JScrollPane scrollVerifyPayload;
     public static javax.swing.JTable tableEditTestFlow;
-    public static javax.swing.JTextField txtAPIurl;
+    public static javax.swing.JTextField etxtAPIurl;
     public static javax.swing.JTextArea txtAreaAuthorization;
     public static javax.swing.JTextArea txtAreaHeaders;
     public static javax.swing.JTextArea txtAreaParams;

@@ -28,6 +28,10 @@ import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
+import javax.swing.table.TableColumn;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -38,6 +42,9 @@ import org.json.simple.JSONObject;
 public class SSLCertificate extends javax.swing.JFrame {
     public static DefaultTableModel createSuiteTabModel =new DefaultTableModel();
     public static DefaultTableModel createORTabModel =new DefaultTableModel();
+    
+    public static TableColumn testComCol =null;
+    public static JTextField testComTxt =new JTextField();
     
     /*public static JComboBox<String> cBoxApiRequest =new JComboBox<String>();
     public static JComboBox<String> coBoxPayloadType =new JComboBox<String>();
@@ -93,7 +100,7 @@ public class SSLCertificate extends javax.swing.JFrame {
     public static int getCurrRowBeforeKeyPressed;
     public static String getTheAPIurl;
     public static String getApiPayload;
-    
+        
     /**
      * Creates new form CreateTestSuite
      */
@@ -102,7 +109,7 @@ public class SSLCertificate extends javax.swing.JFrame {
         initComponents();
         //setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         createSuiteTabModel =(DefaultTableModel) tableSSLCertConfig.getModel();
-
+        
         //testIdCol =tableSSLCertConfig.getColumnModel().getColumn(0);
         //testIdCol.setCellEditor(new DefaultCellEditor(testIdTxt));
         
@@ -745,6 +752,14 @@ public class SSLCertificate extends javax.swing.JFrame {
                 file = new FileWriter("./ssl/sslCert.json");
                 file.write(array.toJSONString());
                 file.close();
+                
+                CreateAPITest.cBoxApiSSL = new JComboBox<String>();
+                CreateAPITest.apiSSLCertList(CreateAPITest.cBoxApiSSL);
+                CreateAPITest.testApiSSLCol.setCellEditor(new DefaultCellEditor(CreateAPITest.cBoxApiSSL));
+                
+                EditAPITest.cBoxApiSSL = new JComboBox<String>();
+                EditAPITest.apiSSLCertList(EditAPITest.cBoxApiSSL);
+                EditAPITest.testApiSSLCol.setCellEditor(new DefaultCellEditor(EditAPITest.cBoxApiSSL));
             } catch (IOException ex) {
                 Logger.getLogger(SSLCertificate.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -759,6 +774,13 @@ public class SSLCertificate extends javax.swing.JFrame {
         getTestFlowSelectedRow =getCurRow;
         getFlowCellxPoint =tableSSLCertConfig.rowAtPoint(evt.getPoint());
         getFlowCellyPoint =tableSSLCertConfig.columnAtPoint(evt.getPoint());
+        
+        
+         testComCol =tableSSLCertConfig.getColumnModel().getColumn(gerCurrCol);
+        testComCol.setCellEditor(new DefaultCellEditor(testComTxt));
+
+        tableSSLCertConfig.editCellAt(getCurRow, gerCurrCol);
+        testComTxt.requestFocusInWindow();
         
         /*if(duplicateTestId ==false){
             switch (gerCurrCol) {
