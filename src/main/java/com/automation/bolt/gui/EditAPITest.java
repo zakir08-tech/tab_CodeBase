@@ -62,27 +62,28 @@ public class EditAPITest extends javax.swing.JFrame {
     public static JComboBox<String> coBoxPayloadType =new JComboBox<String>();
     public static JComboBox<String> coBoxAuth =new JComboBox<String>();
     
-    public static JTextField elmNameTxt =new JTextField();
-    public static JTextField elmIdTxt =new JTextField();
-    public static JTextField elmXpathTxt =new JTextField();
+    //public static JTextField elmNameTxt =new JTextField();
+    //public static JTextField elmIdTxt =new JTextField();
+    //public static JTextField elmXpathTxt =new JTextField();
     
     public static JTextField testIdTxt =new JTextField();
     public static JTextField testURLTxt =new JTextField();
     public static JTextField testExpectedStatusTxt =new JTextField();
     public static JTextField testPayloadTxt =new JTextField();
+    public static JTextField testComTxt =new JTextField();
     
-    public static TableColumn testFlowColumn =null;
-    public static TableColumn testObjectRepoColumn =null;
+    //public static TableColumn testFlowColumn =null;
+    //public static TableColumn testObjectRepoColumn =null;
     
-    public static boolean duplicateElement =false;
+    //public static boolean duplicateElement =false;
     public static boolean duplicateTestId =false;
     
     public static int editableRow;
     public static int editableAddElmRow;
     
-    public static TableColumn elmNameCol =null;
-    public static TableColumn elmIdCol =null;
-    public static TableColumn elmXpathCol =null;
+    //public static TableColumn elmNameCol =null;
+    //public static TableColumn elmIdCol =null;
+    //public static TableColumn elmXpathCol =null;
     
     public static TableColumn testIdCol =null;
     public static TableColumn testURLCol =null;
@@ -92,6 +93,7 @@ public class EditAPITest extends javax.swing.JFrame {
     public static TableColumn testPayloadCol =null;
     public static TableColumn testPayloadTypeCol =null;
     public static TableColumn testAuthCol =null;
+    public static TableColumn testComCol =null;
     
     public static boolean getTestFlowCellEditorStatus;
     public static int getTestFlowSelectedRow =0;
@@ -1422,8 +1424,11 @@ public class EditAPITest extends javax.swing.JFrame {
                     }catch(IllegalComponentStateException exp){}
                     break;
                 default:
+                    testComCol =tableEditTestFlow.getColumnModel().getColumn(gerCurrCol);
+                    testComCol.setCellEditor(new DefaultCellEditor(testComTxt));
+                    
                     tableEditTestFlow.editCellAt(getCurRow, gerCurrCol);
-                    tableEditTestFlow.requestFocus();
+                    testComTxt.requestFocusInWindow();
             }
         }
     }//GEN-LAST:event_tableEditTestFlowMousePressed
