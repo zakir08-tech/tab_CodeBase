@@ -56,27 +56,28 @@ public class CreateAPITest extends javax.swing.JFrame {
     public static JComboBox<String> coBoxPayloadType =new JComboBox<String>();
     public static JComboBox<String> coBoxAuth =new JComboBox<String>();
     
-    public static JTextField elmNameTxt =new JTextField();
-    public static JTextField elmIdTxt =new JTextField();
-    public static JTextField elmXpathTxt =new JTextField();
+    //public static JTextField elmNameTxt =new JTextField();
+    //public static JTextField elmIdTxt =new JTextField();
+    //public static JTextField elmXpathTxt =new JTextField();
     
     public static JTextField testIdTxt =new JTextField();
     public static JTextField testURLTxt =new JTextField();
     public static JTextField testExpectedStatusTxt =new JTextField();
     public static JTextField testPayloadTxt =new JTextField();
+    public static JTextField testComTxt =new JTextField();
     
-    public static TableColumn testFlowColumn =null;
-    public static TableColumn testObjectRepoColumn =null;
+    //public static TableColumn testFlowColumn =null;
+    //public static TableColumn testObjectRepoColumn =null;
     
-    public static boolean duplicateElement =false;
+    //public static boolean duplicateElement =false;
     public static boolean duplicateTestId =false;
     
     public static int editableRow;
     public static int editableAddElmRow;
     
-    public static TableColumn elmNameCol =null;
-    public static TableColumn elmIdCol =null;
-    public static TableColumn elmXpathCol =null;
+    //public static TableColumn elmNameCol =null;
+    //public static TableColumn elmIdCol =null;
+    //public static TableColumn elmXpathCol =null;
     
     public static TableColumn testIdCol =null;
     public static TableColumn testURLCol =null;
@@ -86,6 +87,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     public static TableColumn testPayloadCol =null;
     public static TableColumn testPayloadTypeCol =null;
     public static TableColumn testAuthCol =null;
+    public static TableColumn testComCol =null;
     
     public static boolean getTestFlowCellEditorStatus;
     public static int getTestFlowSelectedRow =0;
@@ -821,22 +823,22 @@ public class CreateAPITest extends javax.swing.JFrame {
     public static void authSelected(java.awt.event.FocusEvent evt, JComboBox<String> authField) {
     	getCurrRowBeforeKeyPressed =tableCreateApiTest.getSelectedRow();
     	try{
-            String getTestId =(String) tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 0);
+            Object getTestId =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 0);
             
-            if(getTestId !=null && !getTestId.isEmpty()){
-                String getAuth =(String) tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 11);
-                if(getAuth.contentEquals("Basic Auth")){
-                    String getUsername =(String) tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 12);
+            if(getTestId !=null && !getTestId.toString().isEmpty()){
+                Object getAuth =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 11);
+                if(getAuth.toString().contentEquals("Basic Auth")){
+                    Object getUsername =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 12);
                     if(getUsername ==null)
                     	getUsername ="";
-                    String getPassword =(String) tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 13);
+                    Object getPassword =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 13);
                     if(getPassword ==null)
                     	getPassword ="";
                     
                     txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
                     lblAuthorization.setText("Authorization: Basic Auth");
-                }else if(getAuth.contentEquals("Bearer Token")){
-                    String getToken =(String) tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                }else if(getAuth.toString().contentEquals("Bearer Token")){
+                    Object getToken =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 12);
                     if(getToken ==null)
                     	getToken ="";
                     tableCreateApiTest.setValueAt("",getCurrRowBeforeKeyPressed, 13);
@@ -1339,8 +1341,11 @@ public class CreateAPITest extends javax.swing.JFrame {
                     }catch(IllegalComponentStateException exp){}
                     break;
                 default:
+                    testComCol =tableCreateApiTest.getColumnModel().getColumn(gerCurrCol);
+                    testComCol.setCellEditor(new DefaultCellEditor(testComTxt));
+                    
                     tableCreateApiTest.editCellAt(getCurRow, gerCurrCol);
-                    tableCreateApiTest.requestFocus();
+                    testComTxt.requestFocusInWindow();
             }
         }
     }//GEN-LAST:event_tableCreateApiTestMousePressed
