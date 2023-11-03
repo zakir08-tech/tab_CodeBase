@@ -855,7 +855,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                 lblAuthorization.setText("Authorization");
             	txtAreaAuthorization.setText("");
             }
-        }catch(NullPointerException exp){}
+        }catch(NullPointerException exp){Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, exp);}
     }
      
     private void bttnAddNewTestStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnAddNewTestStepActionPerformed
@@ -1547,7 +1547,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             	lblAuthorization.setText("Authorization"); 
                 txtAreaAuthorization.setText("");
             }
-        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
+        }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, exp);}
         
         // update expected status
         try{
