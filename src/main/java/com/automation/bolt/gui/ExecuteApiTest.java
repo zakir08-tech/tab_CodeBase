@@ -442,12 +442,13 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                         pnlHeader.setMinimumSize(new Dimension(206, 40));
                         pnlHeader.setOpaque(false);
 
-                        chkBoxSelectDeselectAllRun.setFont(new Font("Consolas", 1, 10)); // NOI18N
+                        chkBoxSelectDeselectAllRun.setFont(new Font("Tahoma", 1, 10)); // NOI18N
                         chkBoxSelectDeselectAllRun.setForeground(new java.awt.Color(255, 255, 255));
                         chkBoxSelectDeselectAllRun.setText("Select ALL Run");
                         chkBoxSelectDeselectAllRun.setToolTipText("will select all test(s) for run");
                         chkBoxSelectDeselectAllRun.setBorder(null);
                         chkBoxSelectDeselectAllRun.setEnabled(false);
+                        chkBoxSelectDeselectAllRun.setHorizontalAlignment(SwingConstants.LEFT);
                         chkBoxSelectDeselectAllRun.setIconTextGap(2);
                         chkBoxSelectDeselectAllRun.setName(""); // NOI18N
                         chkBoxSelectDeselectAllRun.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -466,7 +467,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                             }
                         });
 
-                        chkBoxFilterFailTest.setFont(new Font("Consolas", 1, 10)); // NOI18N
+                        chkBoxFilterFailTest.setFont(new Font("Tahoma", 1, 10)); // NOI18N
                         chkBoxFilterFailTest.setForeground(new java.awt.Color(255, 255, 255));
                         chkBoxFilterFailTest.setText("Filter FAIL test(s)");
                         chkBoxFilterFailTest.setToolTipText("will select only failed test(s) for re-run");
@@ -505,9 +506,9 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                         );
                         pnlHeaderLayout.setVerticalGroup(pnlHeaderLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
-                                .addContainerGap(14, Short.MAX_VALUE)
-                                .addGroup(pnlHeaderLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(chkBoxSelectDeselectAllRun, GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                                .addContainerGap()
+                                .addGroup(pnlHeaderLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(chkBoxSelectDeselectAllRun, GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                                     .addComponent(chkBoxFilterFailTest, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap())
                         );

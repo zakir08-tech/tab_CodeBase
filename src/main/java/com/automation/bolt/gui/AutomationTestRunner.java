@@ -537,7 +537,7 @@ public class AutomationTestRunner extends javax.swing.JFrame {
     private void radioBttnAPIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBttnAPIActionPerformed
         if(radioBttnAPI.isSelected()){
             radioBttnGUI.setSelected(false);
-            JOptionPane.showMessageDialog(null, "Under Construction!", "Alert", JOptionPane.WARNING_MESSAGE);
+            //JOptionPane.showMessageDialog(null, "Under Construction!", "Alert", JOptionPane.WARNING_MESSAGE);
             lblSettingsAndConfiguration.setEnabled(true);
         }else
             radioBttnAPI.setSelected(true);
