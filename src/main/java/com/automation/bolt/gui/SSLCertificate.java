@@ -18,7 +18,21 @@ import javax.swing.table.DefaultTableModel;
 
 
 import com.automation.bolt.common;
+import static com.automation.bolt.common.tabOutFromEditingColumn;
 import com.automation.bolt.constants;
+import static com.automation.bolt.gui.CreateAPITest.apiSSLCertList;
+import static com.automation.bolt.gui.CreateAPITest.cBoxApiSSL;
+import static com.automation.bolt.gui.CreateAPITest.getFlowCellxPoint;
+import static com.automation.bolt.gui.CreateAPITest.getFlowCellyPoint;
+import static com.automation.bolt.gui.CreateAPITest.getTestFlowCellEditorStatus;
+import static com.automation.bolt.gui.CreateAPITest.getTestFlowSelectedRow;
+import static com.automation.bolt.gui.CreateAPITest.tableCreateApiTest;
+import static com.automation.bolt.gui.CreateAPITest.testApiSSLCol;
+import static com.automation.bolt.gui.EditAPITest.getFlowCellxPoint;
+import static com.automation.bolt.gui.EditAPITest.getFlowCellyPoint;
+import static com.automation.bolt.gui.EditAPITest.getTestFlowCellEditorStatus;
+import static com.automation.bolt.gui.EditAPITest.getTestFlowSelectedRow;
+import static com.automation.bolt.gui.EditAPITest.tableEditTestFlow;
 import com.automation.bolt.renderer.tableSSLCertConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -679,9 +693,20 @@ public class SSLCertificate extends javax.swing.JFrame {
             getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableSSLCertConfig, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
-        
         saveSSLCertConfigFile();
         JOptionPane.showMessageDialog(null, "saved successfully!", "SSL Certificate Configuration", JOptionPane.INFORMATION_MESSAGE);
+        
+        int getSelRow =tableCreateApiTest.getSelectedRow();
+        if(getSelRow !=-1){
+            //getTestFlowSelectedRow =tableCreateApiTest.getSelectedRow();
+            tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableCreateApiTest, getFlowCellxPoint, getFlowCellyPoint, getSelRow);
+        }
+        
+        getSelRow =tableEditTestFlow.getSelectedRow();
+        if(getSelRow !=-1){
+            //getTestFlowSelectedRow =tableEditTestFlow.getSelectedRow();
+            tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableEditTestFlow, getFlowCellxPoint, getFlowCellyPoint, getSelRow);
+        }
     }//GEN-LAST:event_bttnSaveSuiteActionPerformed
     
     public static void saveSSLCertConfigFile(){
@@ -752,14 +777,6 @@ public class SSLCertificate extends javax.swing.JFrame {
                 file = new FileWriter("./ssl/sslCert.json");
                 file.write(array.toJSONString());
                 file.close();
-                
-                CreateAPITest.cBoxApiSSL = new JComboBox<String>();
-                CreateAPITest.apiSSLCertList(CreateAPITest.cBoxApiSSL);
-                CreateAPITest.testApiSSLCol.setCellEditor(new DefaultCellEditor(CreateAPITest.cBoxApiSSL));
-                
-                EditAPITest.cBoxApiSSL = new JComboBox<String>();
-                EditAPITest.apiSSLCertList(EditAPITest.cBoxApiSSL);
-                EditAPITest.testApiSSLCol.setCellEditor(new DefaultCellEditor(EditAPITest.cBoxApiSSL));
             } catch (IOException ex) {
                 Logger.getLogger(SSLCertificate.class.getName()).log(Level.SEVERE, null, ex);
             }

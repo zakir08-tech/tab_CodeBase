@@ -153,7 +153,7 @@ public class EditAPITest extends javax.swing.JFrame {
         
         testApiSSLCol = tableEditTestFlow.getColumnModel().getColumn(14);
         cBoxApiSSL = new JComboBox<String>();
-        apiSSLCertList(cBoxApiSSL);
+        apiSSLCertList();
         testApiSSLCol.setCellEditor(new DefaultCellEditor(cBoxApiSSL));
         //cBoxApiSSL.setEditable(true);
         
@@ -973,6 +973,17 @@ public class EditAPITest extends javax.swing.JFrame {
              
             editSuiteTabModel.removeRow(rowIndex);
             
+            txtRequestType.setText("");
+            txtExpStatus.setText("");
+            etxtAPIurl.setText("");
+            txtAreaHeaders.setText("");
+            txtAreaParams.setText("");
+            txtAreaAuthorization.setText("");
+            txtAreaPayload.setText("");
+            txtModifyPayload.setText("");
+            txtVerifyPayload.setText("");
+            lblAuthorization.setText("Authorization"); 
+            
             try {
                 tableEditTestFlow.setRowSelectionInterval(rowIndex-1, rowIndex-1);
                 tableEditTestFlow.setColumnSelectionInterval(0, 0);
@@ -992,9 +1003,6 @@ public class EditAPITest extends javax.swing.JFrame {
                 tableEditTestFlow.setColumnSelectionInterval(0, 0);
                 tableEditTestFlow.requestFocus();
             }
-    
-        }else {
-            //JOptionPane.showMessageDialog(null, "No test step(s) available to delete!", "Alert", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_bttnDeleteTestStepActionPerformed
 
@@ -1411,6 +1419,7 @@ public class EditAPITest extends javax.swing.JFrame {
                     tableEditTestFlow.editCellAt(getCurRow, 0);
                     editableRow =tableEditTestFlow.getEditingRow();
                     testIdTxt.requestFocusInWindow();
+                    testIdTxt.setCaretPosition(0);
                     break;
                 case 1:
                     cBoxApiRequest.setFocusable(true);
@@ -1418,11 +1427,13 @@ public class EditAPITest extends javax.swing.JFrame {
                     break;
                 case 2:
                     tableEditTestFlow.editCellAt(getCurRow, 2);
-                    testPayloadTxt.requestFocusInWindow();
+                    etestURLTxt.requestFocusInWindow();
+                    etestURLTxt.setCaretPosition(0);
                     break;
                 case 7:
                     tableEditTestFlow.editCellAt(getCurRow, 7);
                     testPayloadTxt.requestFocusInWindow();
+                    testPayloadTxt.setCaretPosition(0);
                     break;
                 case 8:
                     coBoxPayloadType.setFocusable(true);
@@ -1433,11 +1444,9 @@ public class EditAPITest extends javax.swing.JFrame {
                     coBoxAuth.showPopup();
                     break;
                 case 14:
-                    cBoxApiSSL = new JComboBox<String>();
-                    apiSSLCertList(cBoxApiSSL);
-                    testApiSSLCol.setCellEditor(new DefaultCellEditor(cBoxApiSSL));
-                    
+                    apiSSLCertList();
                     try{
+                    	tableEditTestFlow.editCellAt(getCurRow, 14);
                         cBoxApiSSL.setFocusable(true);
                         cBoxApiSSL.showPopup();
                     }catch(IllegalComponentStateException exp){}
@@ -1448,6 +1457,7 @@ public class EditAPITest extends javax.swing.JFrame {
                     
                     tableEditTestFlow.editCellAt(getCurRow, gerCurrCol);
                     testComTxt.requestFocusInWindow();
+                    testComTxt.setCaretPosition(0);
             }
         }
     }//GEN-LAST:event_tableEditTestFlowMousePressed
@@ -1543,6 +1553,22 @@ public class EditAPITest extends javax.swing.JFrame {
     
     public static void updateAPIAttributeData(){
         getCurrRowBeforeKeyPressed =tableEditTestFlow.getSelectedRow();
+        Object getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
+        
+        if(getTestId ==null || getTestId.toString().isEmpty()){
+            txtRequestType.setText("");
+            txtExpStatus.setText("");
+            etxtAPIurl.setText("");
+            txtAreaHeaders.setText("");
+            txtAreaParams.setText("");
+            txtAreaAuthorization.setText("");
+            txtAreaPayload.setText("");
+            txtModifyPayload.setText("");
+            txtVerifyPayload.setText("");
+            lblAuthorization.setText("Authorization"); 
+            
+            return;
+        }
         
         // update api test url
         try{    
@@ -1587,223 +1613,180 @@ public class EditAPITest extends javax.swing.JFrame {
         
         // update api header list
         try{
-            Object getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
             String setHeaders ="";
-            
-            if(getTestId !=null && !getTestId.toString().isEmpty())
-            {
-            	int getRowCnt =tableEditTestFlow.getRowCount();
-            	int rowStart =getCurrRowBeforeKeyPressed;
-            	
-            	for(int rowStart1=rowStart; rowStart1<=getRowCnt;rowStart1++) {
-            		Object getHeaderName =tableEditTestFlow.getValueAt(rowStart1, 3);
-                    if(getHeaderName ==null)
-                    	getHeaderName ="";
-                    
-                    Object getHeaderValue =tableEditTestFlow.getValueAt(rowStart1, 4);
-                    if(getHeaderValue ==null)
-                    	getHeaderValue ="";
-                    
-                    if(!getHeaderName.toString().isEmpty() || !getHeaderValue.toString().isEmpty()) {
-                    	setHeaders = setHeaders + getHeaderName +": "+ getHeaderValue+"\n";
+            int getRowCnt =tableEditTestFlow.getRowCount();
+            int rowStart =getCurrRowBeforeKeyPressed;
+
+            for(int rowStart1=rowStart; rowStart1<=getRowCnt;rowStart1++) {
+                    Object getHeaderName =tableEditTestFlow.getValueAt(rowStart1, 3);
+                if(getHeaderName ==null)
+                    getHeaderName ="";
+
+                Object getHeaderValue =tableEditTestFlow.getValueAt(rowStart1, 4);
+                if(getHeaderValue ==null)
+                    getHeaderValue ="";
+
+                if(!getHeaderName.toString().isEmpty() || !getHeaderValue.toString().isEmpty()) {
+                    setHeaders = setHeaders + getHeaderName +": "+ getHeaderValue+"\n";
+                }
+
+                try {
+                    Object getTestId1 =tableEditTestFlow.getValueAt(rowStart1+1, 0);
+                    if(getTestId1 !=null && !getTestId1.toString().isEmpty()) {
+                            txtAreaHeaders.setText(setHeaders);
+                            break;
                     }
-                    
-                    try {
-                    	Object getTestId1 =tableEditTestFlow.getValueAt(rowStart1+1, 0);
-                        if(getTestId1 !=null && !getTestId1.toString().isEmpty()) {
-                        	txtAreaHeaders.setText(setHeaders);
-                        	break;
-                        }
-                    }catch(ArrayIndexOutOfBoundsException exp) {txtAreaHeaders.setText(setHeaders);break;}
-            	}
-            }else
-            	txtAreaHeaders.setText("");
-            
+                }catch(ArrayIndexOutOfBoundsException exp) {txtAreaHeaders.setText(setHeaders);break;}
+            }
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
         
         // update api param list
         try{
-            Object getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
             String setParams ="";
-            
-            if(getTestId !=null && !getTestId.toString().isEmpty())
-            {
-            	int getRowCnt =tableEditTestFlow.getRowCount();
-            	int rowStart =getCurrRowBeforeKeyPressed;
-            	
-            	for(int rowStart1=rowStart; rowStart1<=getRowCnt;rowStart1++) {
-            		Object getParamName =tableEditTestFlow.getValueAt(rowStart1, 5);
-                    if(getParamName ==null)
-                    	getParamName ="";
-                    
-                    Object getParamValue =tableEditTestFlow.getValueAt(rowStart1, 6);
-                    if(getParamValue ==null)
-                    	getParamValue ="";
-                    
-                    if(!getParamName.toString().isEmpty() || !getParamValue.toString().isEmpty()) {
-                    	setParams = setParams + getParamName +": "+ getParamValue+"\n";
+            int getRowCnt =tableEditTestFlow.getRowCount();
+            int rowStart =getCurrRowBeforeKeyPressed;
+
+            for(int rowStart1=rowStart; rowStart1<=getRowCnt;rowStart1++) {
+                    Object getParamName =tableEditTestFlow.getValueAt(rowStart1, 5);
+                if(getParamName ==null)
+                    getParamName ="";
+
+                Object getParamValue =tableEditTestFlow.getValueAt(rowStart1, 6);
+                if(getParamValue ==null)
+                    getParamValue ="";
+
+                if(!getParamName.toString().isEmpty() || !getParamValue.toString().isEmpty()) {
+                    setParams = setParams + getParamName +": "+ getParamValue+"\n";
+                }
+
+                try {
+                    Object getTestId1 =tableEditTestFlow.getValueAt(rowStart1+1, 0);
+                    if(getTestId1 !=null && !getTestId1.toString().isEmpty()) {
+                            txtAreaParams.setText(setParams);
+                            break;
                     }
-                    
-                    try {
-                    	Object getTestId1 =tableEditTestFlow.getValueAt(rowStart1+1, 0);
-                        if(getTestId1 !=null && !getTestId1.toString().isEmpty()) {
-                        	txtAreaParams.setText(setParams);
-                        	break;
-                        }
-                    }catch(ArrayIndexOutOfBoundsException exp) {txtAreaParams.setText(setParams);break;}
-            	}
-            }else
-            	txtAreaParams.setText("");
-            
+                }catch(ArrayIndexOutOfBoundsException exp) {txtAreaParams.setText(setParams);break;}
+            }
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
         
         // update authentication
         try{
-            Object getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
-            if(getTestId !=null && !getTestId.toString().isEmpty())
-            {
-                Object getAuth =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 11);
-                if(getAuth ==null || getAuth.toString().isEmpty())
-                	getAuth ="";
-                
-                if(getAuth.toString().contentEquals("Basic Auth")){
-                    Object getUsername =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
-                    if(getUsername ==null)
-                    	getUsername ="";
-                    
-                    Object getPassword =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
-                    if(getPassword ==null)
-                    	getPassword ="";
-                    
-                    txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
-                    lblAuthorization.setText("Authorization: Basic Auth");
-                }else if(getAuth.toString().contentEquals("Bearer Token")){
-                    Object getToken =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
-                    if(getToken ==null)
-                    	getToken ="";
-                    
-                    txtAreaAuthorization.setText("Token: "+getToken);
-                    lblAuthorization.setText("Authorization: Bearer Token");
-                }else {
-                	tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
-                	tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
-                	lblAuthorization.setText("Authorization");
-                	txtAreaAuthorization.setText("");
-                }
+            Object getAuth =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 11);
+            if(getAuth ==null || getAuth.toString().isEmpty())
+                    getAuth ="";
+
+            if(getAuth.toString().contentEquals("Basic Auth")){
+                Object getUsername =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                if(getUsername ==null)
+                    getUsername ="";
+
+                Object getPassword =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
+                if(getPassword ==null)
+                    getPassword ="";
+
+                txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
+                lblAuthorization.setText("Authorization: Basic Auth");
+            }else if(getAuth.toString().contentEquals("Bearer Token")){
+                Object getToken =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                if(getToken ==null)
+                    getToken ="";
+
+                txtAreaAuthorization.setText("Token: "+getToken);
+                lblAuthorization.setText("Authorization: Bearer Token");
             }else {
-            	lblAuthorization.setText("Authorization"); 
-                txtAreaAuthorization.setText("");
+                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
+                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+                    lblAuthorization.setText("Authorization");
+                    txtAreaAuthorization.setText("");
             }
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){/*Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, exp);*/}
         
         // update expected status
         try{
-           Object getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
-           if(getTestId !=null && !getTestId.toString().isEmpty()){
-                Object getStatus =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 15);
-                if(getStatus ==null)
-                     getStatus ="";
+            Object getStatus =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 15);
+            if(getStatus ==null)
+                 getStatus ="";
 
-                txtExpStatus.setText(getStatus.toString());
-            }else
-                txtExpStatus.setText("");
+            txtExpStatus.setText(getStatus.toString());
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
         
         // update request type
         try{
-           Object getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
-           if(getTestId !=null && !getTestId.toString().isEmpty()){
-                Object getReqType =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 1);
-                if(getReqType ==null)
-                     getReqType ="";
-                
-                if(getReqType.toString().contentEquals("GET")){
-                    txtRequestType.setForeground(Color.green);
-                }else if(getReqType.toString().contentEquals("POST")){
-                    txtRequestType.setForeground(new java.awt.Color(255,153,0));
-                }else if(getReqType.toString().contentEquals("PUT")){
-                    txtRequestType.setForeground(new java.awt.Color(153,153,255));
-                }else if(getReqType.toString().contentEquals("PATCH")){
-                    txtRequestType.setForeground(new java.awt.Color(255,255,255));
-                }else if(getReqType.toString().contentEquals("DELETE")){
-                    txtRequestType.setForeground(new java.awt.Color(255,102,102));
-                }
-                
-                txtRequestType.setText(getReqType.toString());
-            }else
-               txtRequestType.setText("");
+            Object getReqType =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 1);
+            if(getReqType ==null)
+                 getReqType ="";
+
+            if(getReqType.toString().contentEquals("GET")){
+                txtRequestType.setForeground(Color.green);
+            }else if(getReqType.toString().contentEquals("POST")){
+                txtRequestType.setForeground(new java.awt.Color(255,153,0));
+            }else if(getReqType.toString().contentEquals("PUT")){
+                txtRequestType.setForeground(new java.awt.Color(153,153,255));
+            }else if(getReqType.toString().contentEquals("PATCH")){
+                txtRequestType.setForeground(new java.awt.Color(255,255,255));
+            }else if(getReqType.toString().contentEquals("DELETE")){
+                txtRequestType.setForeground(new java.awt.Color(255,102,102));
+            }
+
+            txtRequestType.setText(getReqType.toString());
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
         
         // update update payload list
         try{
-            Object getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
             String setModifyPayload ="";
-            
-            if(getTestId !=null && !getTestId.toString().isEmpty())
-            {
-            	int getRowCnt =tableEditTestFlow.getRowCount();
-            	int rowStart =getCurrRowBeforeKeyPressed;
-            	
-            	for(int rowStart1=rowStart; rowStart1<=getRowCnt;rowStart1++) {
-            		Object getPayloadKey =tableEditTestFlow.getValueAt(rowStart1, 9);
-                    if(getPayloadKey ==null)
-                    	getPayloadKey ="";
-                    
-                    Object getPayloadVal =tableEditTestFlow.getValueAt(rowStart1, 10);
-                    if(getPayloadVal ==null)
-                    	getPayloadVal ="";
-                    
-                    if(!getPayloadKey.toString().isEmpty() || !getPayloadVal.toString().isEmpty()) {
-                    	setModifyPayload = setModifyPayload + getPayloadKey +": "+ getPayloadVal+"\n";
+            int getRowCnt =tableEditTestFlow.getRowCount();
+            int rowStart =getCurrRowBeforeKeyPressed;
+
+            for(int rowStart1=rowStart; rowStart1<=getRowCnt;rowStart1++) {
+                    Object getPayloadKey =tableEditTestFlow.getValueAt(rowStart1, 9);
+                if(getPayloadKey ==null)
+                    getPayloadKey ="";
+
+                Object getPayloadVal =tableEditTestFlow.getValueAt(rowStart1, 10);
+                if(getPayloadVal ==null)
+                    getPayloadVal ="";
+
+                if(!getPayloadKey.toString().isEmpty() || !getPayloadVal.toString().isEmpty()) {
+                    setModifyPayload = setModifyPayload + getPayloadKey +": "+ getPayloadVal+"\n";
+                }
+
+                try {
+                    Object getTestId1 =tableEditTestFlow.getValueAt(rowStart1+1, 0);
+                    if(getTestId1 !=null && !getTestId1.toString().isEmpty()) {
+                            txtModifyPayload.setText(setModifyPayload);
+                            break;
                     }
-                    
-                    try {
-                    	Object getTestId1 =tableEditTestFlow.getValueAt(rowStart1+1, 0);
-                        if(getTestId1 !=null && !getTestId1.toString().isEmpty()) {
-                        	txtModifyPayload.setText(setModifyPayload);
-                        	break;
-                        }
-                    }catch(ArrayIndexOutOfBoundsException exp) {txtModifyPayload.setText(setModifyPayload);break;}
-            	}
-            }else
-            	txtModifyPayload.setText("");
-            
+                }catch(ArrayIndexOutOfBoundsException exp) {txtModifyPayload.setText(setModifyPayload);break;}
+            }
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
         
         // update verify payload list
         try{
-            Object getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
             String setVerfiyPayload ="";
-            
-            if(getTestId !=null && !getTestId.toString().isEmpty())
-            {
-            	int getRowCnt =tableEditTestFlow.getRowCount();
-            	int rowStart =getCurrRowBeforeKeyPressed;
-            	
-            	for(int rowStart1=rowStart; rowStart1<=getRowCnt;rowStart1++) {
-            		Object getPayloadVerifyKey =tableEditTestFlow.getValueAt(rowStart1, 16);
-                    if(getPayloadVerifyKey ==null)
-                    	getPayloadVerifyKey ="";
-                    
-                    Object getPayloadVerifyVal =tableEditTestFlow.getValueAt(rowStart1, 17);
-                    if(getPayloadVerifyVal ==null)
-                    	getPayloadVerifyVal ="";
-                    
-                    if(!getPayloadVerifyKey.toString().isEmpty() || !getPayloadVerifyVal.toString().isEmpty()) {
-                    	setVerfiyPayload = setVerfiyPayload + getPayloadVerifyKey +": "+ getPayloadVerifyVal+"\n";
+            int getRowCnt =tableEditTestFlow.getRowCount();
+            int rowStart =getCurrRowBeforeKeyPressed;
+
+            for(int rowStart1=rowStart; rowStart1<=getRowCnt;rowStart1++) {
+                    Object getPayloadVerifyKey =tableEditTestFlow.getValueAt(rowStart1, 16);
+                if(getPayloadVerifyKey ==null)
+                    getPayloadVerifyKey ="";
+
+                Object getPayloadVerifyVal =tableEditTestFlow.getValueAt(rowStart1, 17);
+                if(getPayloadVerifyVal ==null)
+                    getPayloadVerifyVal ="";
+
+                if(!getPayloadVerifyKey.toString().isEmpty() || !getPayloadVerifyVal.toString().isEmpty()) {
+                    setVerfiyPayload = setVerfiyPayload + getPayloadVerifyKey +": "+ getPayloadVerifyVal+"\n";
+                }
+
+                try {
+                    Object getTestId1 =tableEditTestFlow.getValueAt(rowStart1+1, 0);
+                    if(getTestId1 !=null && !getTestId1.toString().isEmpty()) {
+                            txtVerifyPayload.setText(setVerfiyPayload);
+                            break;
                     }
-                    
-                    try {
-                    	Object getTestId1 =tableEditTestFlow.getValueAt(rowStart1+1, 0);
-                        if(getTestId1 !=null && !getTestId1.toString().isEmpty()) {
-                        	txtVerifyPayload.setText(setVerfiyPayload);
-                        	break;
-                        }
-                    }catch(ArrayIndexOutOfBoundsException exp) {txtVerifyPayload.setText(setVerfiyPayload);break;}
-            	}
-            }else
-            	txtVerifyPayload.setText("");
-            
+                }catch(ArrayIndexOutOfBoundsException exp) {txtVerifyPayload.setText(setVerfiyPayload);break;}
+            }
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
     }
     
@@ -1834,15 +1817,34 @@ public class EditAPITest extends javax.swing.JFrame {
         }
     }
     
-    public static void apiSSLCertList(JComboBox<String> cBoxTestFlow) {
-        HashMap<Integer, Object> jsonMap =common.uploadSSLCertConfiguration();
+    public static void apiSSLCertList() {
+    	HashMap<Integer, Object> jsonMap =common.uploadSSLCertConfiguration();
+        cBoxApiSSL = new JComboBox<String>();
         
         for (Map.Entry<Integer,Object> entry : jsonMap.entrySet()){
             try{
                 String getCertName =entry.getValue().toString().split("[,]")[0];
-                cBoxTestFlow.addItem(getCertName);
+                if(checkSSLItemExist(cBoxApiSSL, getCertName) ==false) {
+                	cBoxApiSSL.addItem(getCertName);
+                }
+                    
             }catch(ArrayIndexOutOfBoundsException exp){} 
         }
+        
+        testApiSSLCol.setCellEditor(new DefaultCellEditor(cBoxApiSSL));
+    }
+    
+    public static boolean checkSSLItemExist(JComboBox<String> cBoxTestFlow, String item){        
+        boolean itemExist =false;
+        
+        for(int c = 0; c<cBoxTestFlow.getItemCount(); ++c){
+            if(cBoxTestFlow.getItemAt(c).contentEquals(item)){
+                itemExist =true;
+                break;
+            }
+        }
+        
+        return itemExist; 
     }
     
     public static void apiPayloadTypeList(JComboBox<String> cBoxTestFlow) {
