@@ -1378,6 +1378,7 @@ public class EditAPITest extends javax.swing.JFrame {
                 tableEditTestFlow.scrollRectToVisible(tableEditTestFlow.getCellRect(0, 0, true));
                 tableEditTestFlow.requestFocus();
                 
+                updateAPIAttributeData();
                 this.setTitle("Edit API Test: " + excelFileImport.getName(excelFile));
             } catch (FileNotFoundException exp) {
                 if (exp.getMessage().contains("The system cannot find the file specified")) {
@@ -1566,7 +1567,7 @@ public class EditAPITest extends javax.swing.JFrame {
             txtModifyPayload.setText("");
             txtVerifyPayload.setText("");
             lblAuthorization.setText("Authorization"); 
-            
+            lblInvalidBody.setText("");
             return;
         }
         
@@ -1590,7 +1591,7 @@ public class EditAPITest extends javax.swing.JFrame {
                         getPayloadType.toString().isEmpty()){
                     
                     String getJsonBody =common.writeJsonPayloadToTheTextArea(getApiPayload);
-                    if(!getJsonBody.contentEquals("Invalid json body!")){
+                    if(!getJsonBody.contentEquals("{invalid json body}")){
                         lblInvalidBody.setText("");
                         txtAreaPayload.setText(common.writeJsonPayloadToTheTextArea(getApiPayload));
                     }
@@ -1607,6 +1608,7 @@ public class EditAPITest extends javax.swing.JFrame {
                 txtAreaPayload.setCaretPosition(0);
             }
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){
+            lblInvalidBody.setText("");
             txtAreaPayload.setText("");
             txtAreaPayload.setCaretPosition(0);
         }

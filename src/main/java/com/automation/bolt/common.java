@@ -1616,7 +1616,7 @@ public class common extends userDefineTest{
             prettyJson = gson.toJson(jsonElement);
             jsonPayload =prettyJson;
         } catch (JsonParseException ex) {
-            jsonPayload ="Invalid json body!";
+            jsonPayload ="{invalid json body}";
             //JOptionPane.showMessageDialog(null,"Invalid json body!","Alert",JOptionPane.WARNING_MESSAGE);
         }
         

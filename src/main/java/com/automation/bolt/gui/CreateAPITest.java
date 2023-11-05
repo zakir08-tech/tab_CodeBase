@@ -1534,7 +1534,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             textModifyPayload.setText("");
             textVerifyPayload.setText("");
             lblAuthorization.setText("Authorization"); 
-            
+            lblInvalidBody.setText("");
             return;
         }
         
@@ -1558,7 +1558,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                         getPayloadType.toString().isEmpty()){
                     
                     String getJsonBody =common.writeJsonPayloadToTheTextArea(getApiPayload);
-                    if(!getJsonBody.contentEquals("Invalid json body!")){
+                    if(!getJsonBody.contentEquals("{invalid json body}")){
                         lblInvalidBody.setText("");
                         txtAreaPayload.setText(common.writeJsonPayloadToTheTextArea(getApiPayload));
                     }
@@ -1575,6 +1575,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                 txtAreaPayload.setCaretPosition(0);
             }
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){
+            lblInvalidBody.setText("");
             txtAreaPayload.setText("");
             txtAreaPayload.setCaretPosition(0);
         }
