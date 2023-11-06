@@ -1566,8 +1566,7 @@ public class CreateAPITest extends javax.swing.JFrame {
                        lblInvalidBody.setText(getJsonBody);
                        txtAreaPayload.setText(getApiPayload); 
                     } 
-                }
-                else{
+                }else{
                     lblInvalidBody.setText("");
                     txtAreaPayload.setText(getApiPayload);
                 }
@@ -1785,6 +1784,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     public static void apiSSLCertList() {
         HashMap<Integer, Object> jsonMap =common.uploadSSLCertConfiguration();
         cBoxApiSSL = new JComboBox<String>();
+        cBoxApiSSL.addItem("");
         
         for (Map.Entry<Integer,Object> entry : jsonMap.entrySet()){
             try{
