@@ -1822,6 +1822,7 @@ public class EditAPITest extends javax.swing.JFrame {
     public static void apiSSLCertList() {
     	HashMap<Integer, Object> jsonMap =common.uploadSSLCertConfiguration();
         cBoxApiSSL = new JComboBox<String>();
+        cBoxApiSSL.addItem("");
         
         for (Map.Entry<Integer,Object> entry : jsonMap.entrySet()){
             try{

@@ -695,16 +695,14 @@ public class SSLCertificate extends javax.swing.JFrame {
         }
         saveSSLCertConfigFile();
         JOptionPane.showMessageDialog(null, "saved successfully!", "SSL Certificate Configuration", JOptionPane.INFORMATION_MESSAGE);
-        
+       
         int getSelRow =tableCreateApiTest.getSelectedRow();
         if(getSelRow !=-1){
-            //getTestFlowSelectedRow =tableCreateApiTest.getSelectedRow();
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableCreateApiTest, getFlowCellxPoint, getFlowCellyPoint, getSelRow);
         }
         
         getSelRow =tableEditTestFlow.getSelectedRow();
         if(getSelRow !=-1){
-            //getTestFlowSelectedRow =tableEditTestFlow.getSelectedRow();
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableEditTestFlow, getFlowCellxPoint, getFlowCellyPoint, getSelRow);
         }
     }//GEN-LAST:event_bttnSaveSuiteActionPerformed
