@@ -42,7 +42,7 @@ public class boltExecutor extends Thread {
    
     @Override
     public void run() {
-    	PropertyConfigurator.configure(boltExecutor.class.getResourceAsStream("log4j.properties"));
+    	//PropertyConfigurator.configure(boltExecutor.class.getResourceAsStream("log4j.properties"));
         //PropertyConfigurator.configure(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/config/log4j.properties");
         testRunInProgress =true;
         bRunner = new boltRunner();

@@ -95,35 +95,36 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         pnlBolt.setMinimumSize(new java.awt.Dimension(708, 115));
         pnlBolt.setOpaque(false);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 65)); // NOI18N
-        jLabel1.setForeground(java.awt.Color.pink);
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 69)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Bolt");
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 9)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Test Automation Builder");
+        jLabel2.setText("T e s t  A c c e l e r a t o r . . . ");
 
         javax.swing.GroupLayout pnlBoltLayout = new javax.swing.GroupLayout(pnlBolt);
         pnlBolt.setLayout(pnlBoltLayout);
         pnlBoltLayout.setHorizontalGroup(
             pnlBoltLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBoltLayout.createSequentialGroup()
-                .addContainerGap(595, Short.MAX_VALUE)
-                .addGroup(pnlBoltLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+            .addGroup(pnlBoltLayout.createSequentialGroup()
+                .addGap(277, 277, 277)
+                .addGroup(pnlBoltLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBoltLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel2))
                     .addComponent(jLabel1))
-                .addGap(13, 13, 13))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlBoltLayout.setVerticalGroup(
             pnlBoltLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBoltLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addGap(99, 99, 99))
         );
 
         jDesktopPane1.setLayer(pnlBolt, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -134,8 +135,8 @@ public class AutomationTestRunner extends javax.swing.JFrame {
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addGap(1, 1, 1)
-                .addComponent(pnlBolt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(1, 1, 1))
+                .addComponent(pnlBolt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -397,8 +398,7 @@ public class AutomationTestRunner extends javax.swing.JFrame {
                                     .addGap(1, 1, 1)
                                     .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(2, 2, 2)
-                                    .addComponent(jDesktopPane1)
-                                    .addGap(1, 1, 1))
+                                    .addComponent(jDesktopPane1))
                             );
                             layout.setVerticalGroup(
                                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -411,7 +411,7 @@ public class AutomationTestRunner extends javax.swing.JFrame {
                                     .addGap(1, 1, 1))
                             );
 
-                            setSize(new java.awt.Dimension(996, 300));
+                            setSize(new java.awt.Dimension(969, 300));
                             setLocationRelativeTo(null);
                         }// </editor-fold>//GEN-END:initComponents
 

@@ -1,16 +1,16 @@
 [
   {
-    "name": "KongSSL",
-    "keystore": "./cert/keystore1.jks",
-    "keystore-pwd": "password123456",
-    "truststore": "./cert/truststore1.jks",
-    "truststore-pwd": "password123456"
+    "name": "kongSSL",
+    "keystore": "",
+    "keystore-pwd": "",
+    "truststore": "",
+    "truststore-pwd": ""
   },
   {
-    "name": "KingSSL",
-    "keystore": "./cert/keystore2.jks",
-    "keystore-pwd": "password123456",
-    "truststore": "./cert/truststore2.jks",
-    "truststore-pwd": "password123456"
+    "name": "kingSSL",
+    "keystore": "",
+    "keystore-pwd": "",
+    "truststore": "",
+    "truststore-pwd": ""
   }
 ]
