@@ -34,6 +34,7 @@ import com.automation.bolt.constants;
 import static com.automation.bolt.gui.EditRegressionSuite.RegressionSuiteScrollPane;
 import com.automation.bolt.renderer.tableCellRendererAPI;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.IllegalComponentStateException;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -1300,6 +1301,7 @@ public class EditAPITest extends javax.swing.JFrame {
         }
         
         excelFileImport = new JFileChooser(getCurrDir);
+        excelFileImport.setPreferredSize(new Dimension(450,300));
         excelFileImport.setFileSelectionMode(JFileChooser.FILES_ONLY);
         excelFileImport.setDialogTitle("Open Test Suite");
         excelFileImport.addChoosableFileFilter(new FileNameExtensionFilter("EXCEL WORKBOOK", "xlsx"));

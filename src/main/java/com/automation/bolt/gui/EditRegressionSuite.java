@@ -5,13 +5,11 @@
  */
 package com.automation.bolt.gui;
 
-import com.automation.bolt.common;
-import com.automation.bolt.constants;
-import static com.automation.bolt.gui.ObjectRepoFrame.*;
-import com.automation.bolt.renderer.*;
+import static com.automation.bolt.gui.ObjectRepoFrame.RegSuite;
+import static com.automation.bolt.gui.ObjectRepoFrame.updateObjectRepository;
 import static com.automation.bolt.xlsCommonMethods.createObjectRepoDataSheet;
 import static com.automation.bolt.xlsCommonMethods.createTestFlowDataSheet;
-import com.google.common.io.Files;
+
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -39,6 +37,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.DefaultCellEditor;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -62,14 +61,23 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import org.apache.poi.ss.usermodel.*;
+
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFDataFormat;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.automation.bolt.common;
+import com.automation.bolt.constants;
+import com.automation.bolt.renderer.tableCellRenderer;
+import com.google.common.io.Files;
 
 /**
  *
@@ -795,6 +803,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
         }
         
         excelFileImport = new JFileChooser(getCurrDir);
+        excelFileImport.setPreferredSize(new Dimension(450,300));
         excelFileImport.setFileSelectionMode(JFileChooser.FILES_ONLY);
         excelFileImport.setDialogTitle("Open Test Suite");
         excelFileImport.addChoosableFileFilter(new FileNameExtensionFilter("EXCEL WORKBOOK", "xlsx"));
@@ -995,12 +1004,14 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                 }
                 
                 excelFileImportOR = new JFileChooser(getCurrDir);
+                excelFileImportOR.setPreferredSize(new Dimension(450,300));
                 excelFileImportOR.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 excelFileImportOR.setDialogTitle("Open Global Test Repository");
                 excelFileImportOR.addChoosableFileFilter(new FileNameExtensionFilter("EXCEL WORKBOOK", "xlsx"));
                 excelFileImportOR.setAcceptAllFileFilterUsed(false);
 
                 int excelChooser = excelFileImportOR.showOpenDialog(this);
+                //excelFileImport.setPreferredSize(new Dimension(450,300));
                 if (excelChooser == JFileChooser.APPROVE_OPTION) {
                     try {
 
@@ -1097,6 +1108,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
             }
             
             excelFileImportOR = new JFileChooser(getCurrDir);
+            excelFileImport.setPreferredSize(new Dimension(450,300));
             excelFileImportOR.setFileSelectionMode(JFileChooser.FILES_ONLY);
             excelFileImportOR.addChoosableFileFilter(new FileNameExtensionFilter("EXCEL WORKBOOK", "xlsx"));
             excelFileImportOR.setAcceptAllFileFilterUsed(false);
@@ -1271,6 +1283,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
         }
          
         excelFileExport = new JFileChooser(getCurrDir);
+        excelFileExport.setPreferredSize(new Dimension(450,300));
         excelFileExport.setDialogTitle("Save As New Test Suite");
         excelFileExport.setFileSelectionMode(JFileChooser.FILES_ONLY);
 

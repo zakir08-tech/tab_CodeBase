@@ -2,23 +2,40 @@ package com.automation.bolt;
 
 import static com.automation.bolt.boltRunner.getCurrRunId;
 import static com.automation.bolt.boltRunner.trTestCards;
-import static com.automation.bolt.boltRunner.trTestSteps;
 import static com.automation.bolt.boltRunner.trTestCase;
+import static com.automation.bolt.boltRunner.trTestSteps;
 import static com.automation.bolt.common.breakTheExceptionMsg;
 import static com.automation.bolt.common.getCurrentDateAndTime;
 import static com.automation.bolt.common.killProcess;
-import com.automation.bolt.gui.ExecuteRegressionSuite;
-import static com.automation.bolt.gui.ExecuteRegressionSuite.*;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.bttnLoadRegSuite;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.bttnRefreshTestRun;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.bttnStartTestRun;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.bttnStopTestRun;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.chkBoxAssociateObjOR;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.chkBoxFilterFailTest;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.chkBoxRunHeadless;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.chkBoxSelectDeselectAllRun;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.excelFile;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.lblChrome;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.lblEdge;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.rdButtonChrome;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.rdButtonEdge;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.stopExecution;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.tableExecuteRegSuite;
 import static com.automation.bolt.htmlReportCommon.concatenateHashMapDataWithNewLine;
-import io.github.bonigarcia.wdm.config.WebDriverManagerException;
+
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-import org.openqa.selenium.WebDriverException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
+
+import org.apache.log4j.Logger;
+import org.openqa.selenium.WebDriverException;
+
+import com.automation.bolt.gui.ExecuteRegressionSuite;
+
+import io.github.bonigarcia.wdm.config.WebDriverManagerException;
 
 public class boltExecutor extends Thread {
     static Logger log = Logger.getLogger(boltExecutor.class.getName());

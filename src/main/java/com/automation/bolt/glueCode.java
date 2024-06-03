@@ -28,6 +28,7 @@ import javax.imageio.ImageIO;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.InvalidSelectorException;
@@ -50,6 +51,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.Screenshot;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 public class glueCode {
     public static WebDriver boltDriver;
@@ -1160,7 +1164,11 @@ public class glueCode {
                 jse.executeScript("arguments[0].style.border='3px solid red'", elm);
                 Thread.sleep(1000);
             }
-
+            
+            //Screenshot s=new AShot().shootingStrategy(ShootingStrategies.viewportPasting(2000)).takeScreenshot(boltDriver);
+            //screenshotPath = constants.userDir+"/screenShots/screenShot_"+common.getCurrentDateTimeMS()+".png";
+            //ImageIO.write(s.getImage(),"PNG",new File(screenshotPath));
+              
             TakesScreenshot ts = (TakesScreenshot)boltDriver;
             File source = ts.getScreenshotAs(OutputType.FILE);
             screenshotPath = constants.userDir+"/screenShots/screenShot_"+common.getCurrentDateTimeMS()+".png";

@@ -1,13 +1,13 @@
 [
   {
-    "name": "kongSSL",
+    "name": "KongSSL",
     "keystore": "",
     "keystore-pwd": "",
     "truststore": "",
     "truststore-pwd": ""
   },
   {
-    "name": "kingSSL",
+    "name": "KingSSL",
     "keystore": "",
     "keystore-pwd": "",
     "truststore": "",

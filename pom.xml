@@ -19,6 +19,18 @@
   </properties>
 
   <dependencies>
+     <!-- https://mvnrepository.com/artifact/ru.yandex.qatools.ashot/ashot -->
+     <dependency>
+         <groupId>ru.yandex.qatools.ashot</groupId>
+         <artifactId>ashot</artifactId>
+         <version>1.5.4</version>
+     </dependency>
+     <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-remote-driver -->
+	 <dependency>
+	    <groupId>org.seleniumhq.selenium</groupId>
+	    <artifactId>selenium-remote-driver</artifactId>
+	    <version>4.21.0</version>
+	</dependency>
 	<!-- https://mvnrepository.com/artifact/junit/junit -->
 	<dependency>
 	    <groupId>junit</groupId>
@@ -66,7 +78,7 @@
 	<dependency>
 	    <groupId>org.seleniumhq.selenium</groupId>
 	    <artifactId>selenium-java</artifactId>
-	    <version>4.11.0</version>
+	    <version>4.21.0</version>
 	</dependency>
 	<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 	<dependency>

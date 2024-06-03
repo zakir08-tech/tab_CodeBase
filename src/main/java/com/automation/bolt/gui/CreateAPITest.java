@@ -5,10 +5,13 @@
  */
 package com.automation.bolt.gui;
 
+import static com.automation.bolt.common.tabOutFromAnyEditingColumn;
 import static com.automation.bolt.common.tabOutFromEditingColumn;
 import static com.automation.bolt.gui.EditRegressionSuite.RegressionSuiteScrollPane;
 import static com.automation.bolt.xlsCommonMethods.createAPITestFlowDataSheet;
 
+import java.awt.Color;
+import java.awt.IllegalComponentStateException;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
@@ -17,11 +20,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -32,18 +40,10 @@ import javax.swing.table.TableColumn;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.automation.bolt.common;
-import static com.automation.bolt.common.tabOutFromAnyEditingColumn;
 import com.automation.bolt.constants;
 import com.automation.bolt.renderer.tableCellRendererAPI;
 import com.google.common.io.Files;
-import java.awt.Color;
-import java.awt.IllegalComponentStateException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.Dimension;
 
 /**
  *
@@ -1159,6 +1159,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             }
             
             excelFileExport = new JFileChooser(getCurrDir);
+            excelFileExport.setPreferredSize(new Dimension(450,300));
             excelFileExport.setDialogTitle("Save Test Suite");
             excelFileExport.setFileSelectionMode(JFileChooser.FILES_ONLY);
 

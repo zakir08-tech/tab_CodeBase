@@ -314,14 +314,14 @@ public class SettingsAndConfiguration extends javax.swing.JFrame {
                     layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pnlSettingAndConfiguration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1))
+                        .addGap(0, 0, 0))
                 );
                 layout.setVerticalGroup(
                     layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(pnlSettingAndConfiguration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1))
+                        .addGap(0, 0, Short.MAX_VALUE))
                 );
 
                 pack();
@@ -453,19 +453,19 @@ public class SettingsAndConfiguration extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bttnChromeDriver;
+    public static javax.swing.JButton bttnChromeDriver;
     public static javax.swing.JButton bttnClassPath;
-    private javax.swing.JButton bttnEdgeDriver;
-    private javax.swing.JLabel lblChromeDriver;
-    private javax.swing.JLabel lblChromeDriverPath;
+    public static javax.swing.JButton bttnEdgeDriver;
+    public static javax.swing.JLabel lblChromeDriver;
+    public static javax.swing.JLabel lblChromeDriverPath;
     public static javax.swing.JLabel lblClassPath;
-    private javax.swing.JLabel lblEdgeDriver;
-    private javax.swing.JLabel lblEdgeDriverPath;
+    public static javax.swing.JLabel lblEdgeDriver;
+    public static javax.swing.JLabel lblEdgeDriverPath;
     public static javax.swing.JLabel lblSetClassPath;
-    private javax.swing.JLabel lblSetDriverPath;
+    public static javax.swing.JLabel lblSetDriverPath;
     public static javax.swing.JLabel lblSettingsAndConfig;
     public static javax.swing.JPanel pnlClassPath;
-    private javax.swing.JPanel pnlDriverPath;
+    public static javax.swing.JPanel pnlDriverPath;
     public static javax.swing.JPanel pnlSettingAndConfiguration;
     // End of variables declaration//GEN-END:variables
 }

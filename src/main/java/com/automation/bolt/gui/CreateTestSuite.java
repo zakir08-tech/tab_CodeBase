@@ -36,6 +36,8 @@ import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import com.automation.bolt.renderer.*;
+import java.awt.Dimension;
 
 /**
  *
@@ -1073,6 +1075,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
             }
             
             excelFileExport = new JFileChooser(getCurrDir);
+            excelFileExport.setPreferredSize(new Dimension(450,300));
             excelFileExport.setDialogTitle("Save Test Suite");
             excelFileExport.setFileSelectionMode(JFileChooser.FILES_ONLY);
 

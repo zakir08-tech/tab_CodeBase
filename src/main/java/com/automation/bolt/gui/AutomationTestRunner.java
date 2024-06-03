@@ -6,17 +6,15 @@
 package com.automation.bolt.gui;
 
 import static com.automation.bolt.common.killProcess;
+import static com.automation.bolt.gui.CreateAPITest.saveTestFileWhileClosingTheWindow;
+import static com.automation.bolt.gui.EditAPITest.saveTestSuitWhenWindowIsGettingClosed;
 import static com.automation.bolt.gui.TestReporting.treeTestReporting;
 
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 
-import javax.swing.JOptionPane;
-
 import com.automation.bolt.constants;
-import static com.automation.bolt.gui.CreateAPITest.saveTestFileWhileClosingTheWindow;
-import static com.automation.bolt.gui.EditAPITest.saveTestSuitWhenWindowIsGettingClosed;
 import com.automation.bolt.renderer.JTreeCellRenderer;
 
 /**
