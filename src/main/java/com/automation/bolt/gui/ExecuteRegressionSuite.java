@@ -907,6 +907,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
             }
             
             excelFileImportOR = new JFileChooser(getCurrDir);
+            excelFileImportOR.setPreferredSize(new Dimension(450,300));
             excelFileImportOR.setFileSelectionMode(JFileChooser.FILES_ONLY);
             excelFileImportOR.addChoosableFileFilter(new FileNameExtensionFilter("EXCEL WORKBOOK", "xlsx"));
             excelFileImportOR.setAcceptAllFileFilterUsed(false);

@@ -78,6 +78,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.WebDriverException;
 
+import com.api.automation.bolt.boltApiExecutor;
 //import static com.automation.bolt.gui.ObjectRepoFrame.ObjectRepoTable;
 import com.automation.bolt.boltExecutor;
 import com.automation.bolt.constants;
@@ -119,8 +120,8 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     public static String testGlobalORAssociatedFilePath;
     public static FileInputStream excelFIS;
     public static ArrayList<String> arrTestId = new ArrayList<String>();
-    public static boltExecutor bExecutor = new boltExecutor();
-    public static boltExecutor runThread = new boltExecutor();
+    //public static boltExecutor bExecutor = new boltExecutor();
+    public static boltApiExecutor runThread = new boltApiExecutor();
     public static String testRunBrowser =null;
     RunTableColorCellRenderer RunCell_renderer = new RunTableColorCellRenderer();
     public static HashMap<String, String> testResultDocPath =new HashMap<String, String>();
@@ -639,7 +640,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             getCurrDir =FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
         }
         
-	excelFileImport = new JFileChooser(getCurrDir);
+        excelFileImport = new JFileChooser(getCurrDir);
         excelFileImport.setPreferredSize(new Dimension(450,300));
         excelFileImport.setFileSelectionMode(JFileChooser.FILES_ONLY);
         excelFileImport.setDialogTitle("Load API Test");
@@ -855,7 +856,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             if(runThread.isAlive())
                 runThread.interrupt();
             
-            runThread = new boltExecutor();
+            runThread = new boltApiExecutor();
             runThread.start();
         }
     }//GEN-LAST:event_bttnStartTestRunMouseReleased
@@ -867,8 +868,8 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             try {
                 bttnStopTestRun.setEnabled(false);
                 try{
-                    glueCode.boltDriver.close();
-                    glueCode.boltDriver.quit();
+                    //glueCode.boltDriver.close();
+                    //glueCode.boltDriver.quit();
                 }catch(NullPointerException | WebDriverException exp){}
                 runThread.interrupt();
             }catch (Exception exp) {
