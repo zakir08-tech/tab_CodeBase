@@ -315,6 +315,8 @@ public class API_TestRunner extends loadAPITestRunner {
                 if(!testOut_Put.get(Constants.Run_API_Actual_Status).equals(getExpResponseCode))
                 	finalRunStatus =false;
                 
+                verifyAPIHeadersForTestRunStatus();
+                
                 if(finalRunStatus ==false)
                 	ExecuteApiTest.importDataFromExcelModel.setValueAt("FAIL", getCurrRunId, 3);
                 else
@@ -494,7 +496,26 @@ public class API_TestRunner extends loadAPITestRunner {
 
         return strSqlQuery;
     }
-
+    
+    public static void verifyAPIHeadersForTestRunStatus() {
+    	HashMap<Object, List<Object>> storeJsonResponse = new HashMap<>();
+        storeJsonResponse =verifyJsonResponseAttributes.get(getApiTestRunId);
+        
+        if(storeJsonResponse ==null)
+        	return;
+        
+        for (Entry<Object, List<Object>> jsonTagElm: storeJsonResponse.entrySet()) {
+        	String jsonTagExp = jsonTagElm.getValue().get(0).toString().toLowerCase();
+            String jsonTagAct = jsonTagElm.getValue().get(1).toString().toLowerCase();
+            
+            if (!jsonTagExp.toLowerCase().contentEquals(jsonTagAct.toLowerCase()) ||
+            		(jsonTagExp.contentEquals("#.") && jsonTagAct.contentEquals("#."))) {
+            	finalRunStatus =false;
+            	break;
+            }
+        }
+    }
+    
     private static Object updateSqlQueryExpectedOutput(Object strSqlExpOutPut, LinkedHashMap<Object, Object> mapReadTagValue, Entry<Object, HashMap<Object, Object>> testRunnerEntry) {
 	    boolean reqCharFnd = false;
 	    boolean reqPayloadTag = false;

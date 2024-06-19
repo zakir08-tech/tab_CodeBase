@@ -154,7 +154,7 @@ public class VerifyTagValueFromJsonResponse {
             	try {
             		getRunTimeTxt = getRunTimeTxt + responseChars[jChar];
                 } catch (ArrayIndexOutOfBoundsException exp) {
-                	exp.printStackTrace();
+                	//exp.printStackTrace();
                 }
             }
 	 
