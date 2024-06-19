@@ -85,7 +85,7 @@ public class ApiTestReport {
             dbSqlPst = 0;
             String getHeadersDetails = "";
 	 
-            HashMap<Object, Object> headerMapNew = loadAPITestRunner.ApiTestRunnerMap.get(getRunID);
+            HashMap<Object, Object> headerMapNew = loadAPITestRunner.saveHeaderMap.get(getRunID);
             try{
             	for (Entry<Object, Object> jsonTagNotFnd: headerMapNew.entrySet()) {
             		getHeadersDetails = getHeadersDetails + jsonTagNotFnd.getKey() +": "+ jsonTagNotFnd.getValue() + "\r\n";

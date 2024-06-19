@@ -79,10 +79,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.WebDriverException;
 
 import com.api.automation.bolt.boltApiExecutor;
-//import static com.automation.bolt.gui.ObjectRepoFrame.ObjectRepoTable;
-import com.automation.bolt.boltExecutor;
 import com.automation.bolt.constants;
-import com.automation.bolt.glueCode;
 import com.automation.bolt.renderer.RunTableColorCellRenderer;
 
 /**
@@ -95,16 +92,16 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     public static DefaultTableModel importDataFromExcelModelORBackup = new DefaultTableModel();
     public static ExecuteApiTest editTest = new ExecuteApiTest();
     public ObjectRepoFrame objRepo = new ObjectRepoFrame();
-    private static JComboBox<String> comboBoxTestFlow = new JComboBox<>();
+    //private static JComboBox<String> comboBoxTestFlow = new JComboBox<>();
     public JComboBox<String> comboBoxObjectRepository = new JComboBox<>();
-    private TableColumn testFlowColumn;
+    //private TableColumn testFlowColumn;
     public TableColumn testObjectRepoColumn;
     private XSSFSheet excelSheetTestFlow;
     public XSSFSheet excelSheetObjectRepository;
     public XSSFSheet excelSheetObjectRepositorySecodary;
     public XSSFSheet excelSheetObjectRepositoryOR;
     public XSSFSheet excelSheetObjectRepositoryORSecondary;
-    private String objectRepositoryList="";
+    //private String objectRepositoryList="";
     public static JFileChooser excelFileImport;
     public static JFileChooser excelFileImportOR;
     public static File excelFile;
@@ -238,7 +235,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
         });
         tableExecuteRegSuite.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
-                tableExecuteRegSuiteMouseClicked(evt);
+                //tableExecuteRegSuiteMouseClicked(evt);
             }
             public void mouseReleased(MouseEvent evt) {
                 tableExecuteRegSuiteMouseReleased(evt);
@@ -701,7 +698,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                         }
 
                             if(testId.toString().matches("[+-]?\\d*(\\.\\d+)?") && !testId.toString().isEmpty()){
-                                importDataFromExcelModel.addRow(new Object[] {true, getTestRunId, testSummary, "Not Started" });
+                                importDataFromExcelModel.addRow(new Object[] {true, getTestRunId, testSummary, "In Queue" });
                         }
                     }catch(NullPointerException exp){
 
@@ -830,7 +827,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
               boolean run = (boolean) importDataFromExcelModel.getValueAt(i, 0);
               if(run ==true){
                  arrTestId.add(importDataFromExcelModel.getValueAt(i, 1).toString());
-                 importDataFromExcelModel.setValueAt("Not Started", i, 3);
+                 importDataFromExcelModel.setValueAt("In Queue", i, 3);
               }
           }
         }else{
@@ -993,7 +990,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                     }
 
                     if(testId.toString().matches("[+-]?\\d*(\\.\\d+)?") && !testId.toString().isEmpty()){
-                        importDataFromExcelModel.addRow(new Object[] {true, getTestRunId, testSummary, "Not Started" });
+                        importDataFromExcelModel.addRow(new Object[] {true, getTestRunId, testSummary, "In Queue" });
                     }
                 }catch(NullPointerException exp){
 

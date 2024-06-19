@@ -24,6 +24,7 @@ import com.api.automation.util.SaveResponseAsFile;
 import com.api.automation.util.UpdateJsonPayload;
 import com.api.automation.util.VerifyTagValueFromJsonResponse;
 import com.api.automation.util.VerifyValueAPICommon;
+import com.automation.bolt.gui.ExecuteApiTest;
 
 public class API_TestRunner extends loadAPITestRunner {
 
@@ -58,6 +59,8 @@ public class API_TestRunner extends loadAPITestRunner {
     static String getPayloadFilePath;
     static Object getPayloadType;
     public static String executionTime;
+    public static int getCurrRunId;
+    public static boolean finalRunStatus;
 
     public static void runAPItest() throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
     	System.out.println("running api's test!");
@@ -89,21 +92,36 @@ public class API_TestRunner extends loadAPITestRunner {
         verifyJsonResponseAttributes = new LinkedHashMap<> ();
 
         for (Entry<Object, HashMap<Object, Object>> testRunnerEntry: ApiTestRunnerMap.entrySet()) { //for:1
-            blnJSONresponse = false;
-            blnXmlresponse = false;
-            blnNoResponse = false;
-            closeableHttpRespone = null;
-            requestPayload = null;
-            requestPayloadType = null;
-            getSSLCertificationFlag =null;
-            getBasicAuthFlag =null;
+            
+        	finalRunStatus =true;
+			getApiTestRunId = testRunnerEntry.getKey(); //get  test run id
+			getCurrRunId =0;
+			 for(int i=0; i<ExecuteApiTest.importDataFromExcelModel.getRowCount(); i++){
+			     if(ExecuteApiTest.importDataFromExcelModel.getValueAt(i, 1).toString().contentEquals(getApiTestRunId.toString())){
+			         getCurrRunId =i;
+			         break;
+			     }
+			 }
+			
+			ExecuteApiTest.tableExecuteRegSuite.setRowSelectionInterval(getCurrRunId, getCurrRunId);            
+	    	ExecuteApiTest.tableExecuteRegSuite.scrollRectToVisible(ExecuteApiTest.tableExecuteRegSuite.getCellRect(ExecuteApiTest.tableExecuteRegSuite.getSelectedRow(), 0, true));
+	    	ExecuteApiTest.tableExecuteRegSuite.requestFocus();
+	    	ExecuteApiTest.importDataFromExcelModel.setValueAt("Running...", getCurrRunId, 3);
+        	
+	    	blnJSONresponse = false;
+	        blnXmlresponse = false;
+	        blnNoResponse = false;
+	        closeableHttpRespone = null;
+	        requestPayload = null;
+	        requestPayloadType = null;
+	        getSSLCertificationFlag =null;
+	        getBasicAuthFlag =null;
             //getDbColName = "";
 
             HttpClient.httpCloseableResponse = null;
             ReadPayloadFile.readPayload = null;
             ResultSet getQueryRes = null;
 
-            getApiTestRunId = testRunnerEntry.getKey(); //get  test run id
             getApiTestRequest = testRunnerEntry.getValue().get("Request"); //get Request type
             getApiTestRequestUrl = testRunnerEntry.getValue().get("Request URL"); //get service url
             getExpResponseCode = testRunnerEntry.getValue().get("Expected Status"); //get response code
@@ -170,6 +188,7 @@ public class API_TestRunner extends loadAPITestRunner {
 		                    getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
 		                    testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
 		                    testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
+		                    finalRunStatus =false;
                     }
 
                 } else if (getApiTestRequest.toString().trim().toUpperCase().contentEquals("POST")) { //POST call
@@ -197,6 +216,7 @@ public class API_TestRunner extends loadAPITestRunner {
 							getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
 							testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
 							testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
+							finalRunStatus =false;
 	                	}
                 } else if (getApiTestRequest.toString().trim().toUpperCase().contentEquals("PUT")) { //PUT call
                 	if (requestPayload != null){
@@ -220,6 +240,7 @@ public class API_TestRunner extends loadAPITestRunner {
 	                        getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("ErrorDesc");
 	                        testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
 	                        testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
+	                        finalRunStatus =false;
                         }
                 } else{
 	                //testRunMap.put("Request", "NA");
@@ -285,10 +306,19 @@ public class API_TestRunner extends loadAPITestRunner {
 	                    testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
 	                    testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
 	                    testOut_Put.put(Constants.Run_API_JSON_Response, getErrorDesc);
+	                    finalRunStatus =false;
 	                }catch(NullPointerException  exp){
 	                	exp.printStackTrace();
 	                }
                 }
+                
+                if(!testOut_Put.get(Constants.Run_API_Actual_Status).equals(getExpResponseCode))
+                	finalRunStatus =false;
+                
+                if(finalRunStatus ==false)
+                	ExecuteApiTest.importDataFromExcelModel.setValueAt("FAIL", getCurrRunId, 3);
+                else
+                	ExecuteApiTest.importDataFromExcelModel.setValueAt("PASS", getCurrRunId, 3);
 
                 //Database validation
                 /*if (!responseDbValidation.isEmpty()) {

@@ -6,14 +6,15 @@ import static com.automation.bolt.boltRunner.trTestCase;
 import static com.automation.bolt.boltRunner.trTestSteps;
 import static com.automation.bolt.common.breakTheExceptionMsg;
 import static com.automation.bolt.common.getCurrentDateAndTime;
-import static com.automation.bolt.gui.ExecuteRegressionSuite.bttnLoadRegSuite;
+import static com.automation.bolt.gui.ExecuteApiTest.*;
+/*import static com.automation.bolt.gui.ExecuteRegressionSuite.bttnLoadRegSuite;
 import static com.automation.bolt.gui.ExecuteRegressionSuite.bttnRefreshTestRun;
 import static com.automation.bolt.gui.ExecuteRegressionSuite.bttnStartTestRun;
 import static com.automation.bolt.gui.ExecuteRegressionSuite.bttnStopTestRun;
 import static com.automation.bolt.gui.ExecuteRegressionSuite.chkBoxFilterFailTest;
 import static com.automation.bolt.gui.ExecuteRegressionSuite.chkBoxSelectDeselectAllRun;
 import static com.automation.bolt.gui.ExecuteRegressionSuite.stopExecution;
-import static com.automation.bolt.gui.ExecuteRegressionSuite.tableExecuteRegSuite;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.tableExecuteRegSuite;*/
 import static com.automation.bolt.htmlReportCommon.concatenateHashMapDataWithNewLine;
 
 import java.security.KeyManagementException;
