@@ -71,7 +71,7 @@ public class ApiTestReport {
         //APITestResultPath = LoadProperties.prop.getProperty(Constants.APITestResultFilePathPropName);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMMM-yyyy hh:mm a");
  
-        for (Entry<Object, HashMap<Object, Object>> entryReport: loadAPITestRunner.saveTestRunMap.entrySet()) {
+        for (Entry<Object, HashMap<Object, Object>> entryReport: loadAPITestRunner.ApiTestRunnerMap.entrySet()) {
             Object getRunID = entryReport.getValue().get("Run ID");
             Object modifiedRunID =getRunID.toString().replaceAll("[.]","_");
  
@@ -85,7 +85,7 @@ public class ApiTestReport {
             dbSqlPst = 0;
             String getHeadersDetails = "";
 	 
-            HashMap<Object, Object> headerMapNew = loadAPITestRunner.saveHeaderMap.get(getRunID);
+            HashMap<Object, Object> headerMapNew = loadAPITestRunner.ApiTestRunnerMap.get(getRunID);
             try{
             	for (Entry<Object, Object> jsonTagNotFnd: headerMapNew.entrySet()) {
             		getHeadersDetails = getHeadersDetails + jsonTagNotFnd.getKey() +": "+ jsonTagNotFnd.getValue() + "\r\n";
@@ -265,7 +265,7 @@ public class ApiTestReport {
 	                    "                                                                       </tr>";
  
                     htmlSummaryDiv = "                                          <div id=\"demo" + modifiedRunID + "\" class=\"collapse\">\r\n" +
-                    					"                                                           <p style=\"background-color:#C0C0C0;\"><b>Test Run Id:</b><b class=\"text-danger\">" + getRunID + "</b></p>\r\n";
+                    					"                                                           <pre style=\"background-color:#C0C0C0;\">[Test Run:<b class=\"text-danger\">" + getRunID + "</b>] <font class=\"text-success\">" +getAPISummary+ "</font></pre>\r\n";
                                 /*"                                                        <p><b>API Summary:</b></p>\r\n"+
                                 "                                                           <pre class=\"text-danger\">" + getAPISummary + "</pre>\r\n";*/
  
@@ -359,14 +359,14 @@ public class ApiTestReport {
                                         "                       </style>\r\n" +
                                         "                       <style>\r\n" +
                                         "                                   #scrollable {\r\n" +
-                                        "                                   height: 395px;\r\n" +
+                                        "                                   height: 280px;\r\n" +
                                         "                                   width: 100%;\r\n" +
                                         "                                   overflow: scroll;\r\n" +
                                         "                                   }\r\n" +
                                         "                       </style>\r\n" +
                                         "                       <style>\r\n" +
                                         "                                   body {\r\n" +
-                                        "                                   height: 1155px;\r\n" +
+                                        "                                   height: 1030px;\r\n" +
                                         "                                   }\r\n" +
                                         "                       </style>\r\n" +
                                         "                       <style>\r\n" +

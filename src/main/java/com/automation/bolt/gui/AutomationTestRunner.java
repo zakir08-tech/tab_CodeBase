@@ -337,17 +337,11 @@ public class AutomationTestRunner extends javax.swing.JFrame {
                         radioBttnAPI.setFocusPainted(false);
                         radioBttnAPI.setFocusable(false);
                         radioBttnAPI.addMouseListener(new java.awt.event.MouseAdapter() {
-                            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                                radioBttnAPIMouseClicked(evt);
-                            }
                             public void mouseEntered(java.awt.event.MouseEvent evt) {
                                 radioBttnAPIMouseEntered(evt);
                             }
                             public void mouseExited(java.awt.event.MouseEvent evt) {
                                 radioBttnAPIMouseExited(evt);
-                            }
-                            public void mousePressed(java.awt.event.MouseEvent evt) {
-                                radioBttnAPIMousePressed(evt);
                             }
                         });
                         radioBttnAPI.addActionListener(new java.awt.event.ActionListener() {
@@ -533,12 +527,16 @@ public class AutomationTestRunner extends javax.swing.JFrame {
     }//GEN-LAST:event_radioBttnGUIActionPerformed
 
     private void radioBttnAPIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBttnAPIActionPerformed
-        if(radioBttnAPI.isSelected()){
+        if(radioBttnAPI.isEnabled() && radioBttnAPI.isSelected()){
             radioBttnGUI.setSelected(false);
             //JOptionPane.showMessageDialog(null, "Under Construction!", "Alert", JOptionPane.WARNING_MESSAGE);
             lblSettingsAndConfiguration.setEnabled(true);
         }else
             radioBttnAPI.setSelected(true);
+            lblCreateTestSuite.setText("Build API Test");
+            lblEditTestSuite.setText("Edit API Test");
+            lblExecuteTestSuite.setText("Execute API Test");
+            lblAutomationTestReport.setText("API Automation Report");
     }//GEN-LAST:event_radioBttnAPIActionPerformed
 
     private void radioBttnGUIMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioBttnGUIMouseClicked
@@ -548,23 +546,12 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         lblAutomationTestReport.setText("Automation Test Report");
     }//GEN-LAST:event_radioBttnGUIMouseClicked
 
-    private void radioBttnAPIMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioBttnAPIMouseClicked
-        //lblCreateTestSuite.setText("Create API Test");
-    }//GEN-LAST:event_radioBttnAPIMouseClicked
-
     private void radioBttnGUIMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioBttnGUIMousePressed
         //lblCreateTestSuite.setText("Build Test Suite");
         //lblEditTestSuite.setText("Edit Test Suite");
         //lblExecuteTestSuite.setText("Execute Test Suite");
         //lblAutomationTestReport.setText("Automation Test Report");
     }//GEN-LAST:event_radioBttnGUIMousePressed
-
-    private void radioBttnAPIMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioBttnAPIMousePressed
-        lblCreateTestSuite.setText("Build API Test");
-        lblEditTestSuite.setText("Edit API Test");
-        lblExecuteTestSuite.setText("Execute API Test");
-        lblAutomationTestReport.setText("API Automation Report");
-    }//GEN-LAST:event_radioBttnAPIMousePressed
 
     private void lblSettingsAndConfigurationMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSettingsAndConfigurationMousePressed
         if(lblSettingsAndConfiguration.isEnabled() && radioBttnAPI.isSelected()){

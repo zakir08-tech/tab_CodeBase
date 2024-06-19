@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.automation.bolt.gui.ExecuteApiTest;
+import static com.automation.bolt.gui.ExecuteApiTest.arrTestId;
  
 public class loadAPITestRunner {
     public static String APITestRun_FILE_PATH;
@@ -35,6 +36,7 @@ public class loadAPITestRunner {
     public static LinkedHashMap<Object, Object> savePayloadMap = new LinkedHashMap<> ();
     public static LinkedHashMap<Object, Object> testRunMap = new LinkedHashMap<> ();
     public static LinkedHashMap<Object, HashMap<Object, Object>> saveTestRunMap = new LinkedHashMap<> ();
+    public static LinkedHashMap<Object, HashMap<Object, Object>> ApiTestRunnerMap = new LinkedHashMap<> ();
  
     //public static void main(String[] args){
     public void loadApiTest(){
@@ -49,7 +51,8 @@ public class loadAPITestRunner {
         getVerifyResponse = new LinkedHashMap<> ();
         testRunMap = new LinkedHashMap<> ();
         saveTestRunMap = new LinkedHashMap<> ();
- 
+        ApiTestRunnerMap = new LinkedHashMap<> ();
+        
         try {
             testRunnerFile = new FileInputStream(new File(APITestRun_FILE_PATH));
             testRunnerWorkBook = new XSSFWorkbook(testRunnerFile);
@@ -82,7 +85,7 @@ public class loadAPITestRunner {
  
                         // define headers
                         Object headers_key =getCellValue(testRunCurrentRow.getCell(3));
-                       Object headers_value =getCellValue(testRunCurrentRow.getCell(4));
+                        Object headers_value =getCellValue(testRunCurrentRow.getCell(4));
  
                         if(headers_key !=null && !headers_key.toString().isEmpty() &&
                                 headers_value !=null && !headers_value.toString().isEmpty()){
@@ -243,10 +246,14 @@ public class loadAPITestRunner {
                     }
                 }
             }
+            
+            for(int i=0; i<arrTestId.size(); i++){
+                ApiTestRunnerMap.put(arrTestId.get(i), saveTestRunMap.get(arrTestId.get(i)));
+            }
+            
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
- 
     }
  
     public static Object getCellValue(Cell apiCell){

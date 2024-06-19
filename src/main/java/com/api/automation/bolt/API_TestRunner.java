@@ -75,29 +75,29 @@ public class API_TestRunner extends loadAPITestRunner {
         String getErrorDesc = null;
         String getErrorMsg = null;
         String getHtmlResponse = null;
-        String getFileExtension = null;
+        /*String getFileExtension = null;
         Object newSqlQuery = null;
         Object newSqlExpOutPut = null;
         Object getQueryData = null;
         String getKey = null;
         Object expValue = null;
         String getDbColName = null;
-	    String getJsonRespstatusCodeValue = null;
-	    String getJsonRespstatusCode = null;
+        String getJsonRespstatusCodeValue = null;
+        String getJsonRespstatusCode = null;*/
 
         long startTime = System.currentTimeMillis();
         verifyJsonResponseAttributes = new LinkedHashMap<> ();
 
-        for (Entry<Object, HashMap<Object, Object>> testRunnerEntry: saveTestRunMap.entrySet()) { //for:1
-	        blnJSONresponse = false;
-	        blnXmlresponse = false;
-	        blnNoResponse = false;
-	        closeableHttpRespone = null;
-	        requestPayload = null;
-	        requestPayloadType = null;
-	        getSSLCertificationFlag =null;
-	        getBasicAuthFlag =null;
-	        getDbColName = "";
+        for (Entry<Object, HashMap<Object, Object>> testRunnerEntry: ApiTestRunnerMap.entrySet()) { //for:1
+            blnJSONresponse = false;
+            blnXmlresponse = false;
+            blnNoResponse = false;
+            closeableHttpRespone = null;
+            requestPayload = null;
+            requestPayloadType = null;
+            getSSLCertificationFlag =null;
+            getBasicAuthFlag =null;
+            //getDbColName = "";
 
             HttpClient.httpCloseableResponse = null;
             ReadPayloadFile.readPayload = null;
@@ -111,7 +111,7 @@ public class API_TestRunner extends loadAPITestRunner {
             getAuth2 =testRunnerEntry.getValue().get("AuthVal2"); //get auth value 2
 
 
-            testOut_Put = saveTestRunMap.get(getApiTestRunId);
+            testOut_Put = ApiTestRunnerMap.get(getApiTestRunId);
             requestHeaders = loadAPITestRunner.saveHeaderMap.get(getApiTestRunId); //get Headers
             payloadTagElement = loadAPITestRunner.saveTagElmMap.get(getApiTestRunId); //get payload tag/element
             getSSLCertificationFlag = testRunnerEntry.getValue().get("SSL Verification"); //get ssl certification flag
@@ -224,7 +224,7 @@ public class API_TestRunner extends loadAPITestRunner {
                 } else{
 	                //testRunMap.put("Request", "NA");
 	                testOut_Put.put("Request", "NA");
-	                saveTestRunMap.put(getApiTestRunId, testRunMap);
+	                ApiTestRunnerMap.put(getApiTestRunId, testRunMap);
                 }
 
                 //storeRequestPayloadToHasMap
@@ -369,7 +369,7 @@ public class API_TestRunner extends loadAPITestRunner {
 
                 }*/ //Database validation
                 
-	        saveTestRunMap.put(getApiTestRunId, testOut_Put);
+	        ApiTestRunnerMap.put(getApiTestRunId, testOut_Put);
 	        testOut_Put = new HashMap<>();
         } // for:1 ends here
 
@@ -395,7 +395,7 @@ public class API_TestRunner extends loadAPITestRunner {
 	        if(updateHeader.getValue().toString().contains("_RefFnd_")){
 	            String splitTagName = updateHeader.getValue().toString().split("_RefFnd_")[0];
 	            String getTestId = updateHeader.getValue().toString().split("_RefFnd_")[1].replace("#", "");
-	            HashMap<Object, Object> getPrevJsonResponse = saveTestRunMap.get(getTestId);
+	            HashMap<Object, Object> getPrevJsonResponse = ApiTestRunnerMap.get(getTestId);
 	            String getJsonResponse = (String) getPrevJsonResponse.get("JSON Response");
 	            String getRespTagVal = GetTagValueFromJsonResponse.GetJsonTagElement(splitTagName, getJsonResponse);
 
@@ -420,7 +420,7 @@ public class API_TestRunner extends loadAPITestRunner {
 	    if(modifyValue.toString().contains("_RefFnd_")){
 	        String splitTagName = modifyValue.toString().split("_RefFnd_")[0];
 	        Object getTestId = modifyValue.toString().split("_RefFnd_")[1].replace("#", "");
-	        HashMap<Object, Object> getPrevJsonResponse = saveTestRunMap.get(getTestId);
+	        HashMap<Object, Object> getPrevJsonResponse = ApiTestRunnerMap.get(getTestId);
 	        String getJsonResponse = (String) getPrevJsonResponse.get("JSON Response");
 	        Object getRespTagVal = GetTagValueFromJsonResponse.GetJsonTagElement(splitTagName, getJsonResponse);
 
@@ -429,7 +429,7 @@ public class API_TestRunner extends loadAPITestRunner {
             }
             
             testRunMap.put(keyName, getRespTagVal);
-            saveTestRunMap.put(runID, testRunMap);
+            ApiTestRunnerMap.put(runID, testRunMap);
 
 	    }
 
