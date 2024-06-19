@@ -81,6 +81,7 @@ import org.openqa.selenium.WebDriverException;
 import com.api.automation.bolt.boltApiExecutor;
 import com.automation.bolt.constants;
 import com.automation.bolt.renderer.RunTableColorCellRenderer;
+import java.awt.Color;
 
 /**
  *
@@ -152,7 +153,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
         tableExecuteRegSuite = new JTable();
         jDesktopPane1 = new JDesktopPane();
         bttnStartTestRun = new JButton();
-        jTextTestType = new JTextField();
+        txtTestTypeTag = new JTextField();
         bttnRefreshTestRun = new JButton();
         bttnStopTestRun = new JButton();
         bttnLoadRegSuite = new JButton();
@@ -164,7 +165,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Execute API Test");
-        setBackground(java.awt.Color.lightGray);
+        setBackground(Color.lightGray);
         setBounds(new Rectangle(0, 0, 973, 500));
         setIconImages(null);
         setMaximumSize(new Dimension(900, 467));
@@ -186,15 +187,15 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             }
         });
 
-        scrollExecuteRegSuite.setBackground(new java.awt.Color(51, 51, 51));
+        scrollExecuteRegSuite.setBackground(new Color(51, 51, 51));
         scrollExecuteRegSuite.setAutoscrolls(true);
         scrollExecuteRegSuite.setFont(new Font("Calibri", 0, 12)); // NOI18N
         scrollExecuteRegSuite.setMinimumSize(new Dimension(452, 402));
 
-        tableExecuteRegSuite.setBackground(new java.awt.Color(51, 51, 51));
+        tableExecuteRegSuite.setBackground(new Color(51, 51, 51));
         tableExecuteRegSuite.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
         tableExecuteRegSuite.setFont(new Font("Consolas", 0, 14)); // NOI18N
-        tableExecuteRegSuite.setForeground(new java.awt.Color(255, 255, 255));
+        tableExecuteRegSuite.setForeground(new Color(255, 255, 255));
         tableExecuteRegSuite.setModel(new DefaultTableModel(
             new Object [][] {
 
@@ -235,7 +236,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
         });
         tableExecuteRegSuite.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
-                //tableExecuteRegSuiteMouseClicked(evt);
+                tableExecuteRegSuiteMouseClicked(evt);
             }
             public void mouseReleased(MouseEvent evt) {
                 tableExecuteRegSuiteMouseReleased(evt);
@@ -254,9 +255,9 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             tableExecuteRegSuite.getColumnModel().getColumn(1).setPreferredWidth(10);
         }
 
-        bttnStartTestRun.setBackground(new java.awt.Color(0, 0, 0));
+        bttnStartTestRun.setBackground(new Color(0, 0, 0));
         bttnStartTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
-        bttnStartTestRun.setForeground(new java.awt.Color(255, 255, 255));
+        bttnStartTestRun.setForeground(new Color(255, 255, 255));
         bttnStartTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/startTestRun.png"));
             bttnStartTestRun.setToolTipText("start test execution");
             bttnStartTestRun.setBorder(null);
@@ -280,21 +281,21 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                 }
             });
 
-            jTextTestType.setBackground(new java.awt.Color(0, 0, 0));
-            jTextTestType.setFont(new Font("Tahoma", 0, 14)); // NOI18N
-            jTextTestType.setForeground(java.awt.Color.pink);
-            jTextTestType.setBorder(BorderFactory.createEmptyBorder(1, 2, 1, 1));
-            jTextTestType.setCursor(new Cursor(Cursor.TEXT_CURSOR));
-            jTextTestType.setName("SetTestType"); // NOI18N
-            jTextTestType.addFocusListener(new FocusAdapter() {
+            txtTestTypeTag.setBackground(new Color(0, 0, 0));
+            txtTestTypeTag.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+            txtTestTypeTag.setForeground(Color.pink);
+            txtTestTypeTag.setBorder(BorderFactory.createEmptyBorder(1, 2, 1, 1));
+            txtTestTypeTag.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+            txtTestTypeTag.setName("SetTestType"); // NOI18N
+            txtTestTypeTag.addFocusListener(new FocusAdapter() {
                 public void focusLost(FocusEvent evt) {
-                    jTextTestTypeFocusLost(evt);
+                    txtTestTypeTagFocusLost(evt);
                 }
             });
 
-            bttnRefreshTestRun.setBackground(new java.awt.Color(0, 0, 0));
+            bttnRefreshTestRun.setBackground(new Color(0, 0, 0));
             bttnRefreshTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
-            bttnRefreshTestRun.setForeground(new java.awt.Color(255, 255, 255));
+            bttnRefreshTestRun.setForeground(new Color(255, 255, 255));
             bttnRefreshTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/refreshTestRun.png"));
                 bttnRefreshTestRun.setToolTipText("Refresh to reload test run for new changes");
                 bttnRefreshTestRun.setActionCommand("OpenRegressionSuite");
@@ -322,9 +323,9 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                     }
                 });
 
-                bttnStopTestRun.setBackground(new java.awt.Color(0, 0, 0));
+                bttnStopTestRun.setBackground(new Color(0, 0, 0));
                 bttnStopTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
-                bttnStopTestRun.setForeground(new java.awt.Color(255, 255, 255));
+                bttnStopTestRun.setForeground(new Color(255, 255, 255));
                 bttnStopTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/stopTestRun.png"));
                     bttnStopTestRun.setToolTipText("stop test execution");
                     bttnStopTestRun.setBorder(null);
@@ -351,9 +352,9 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                         }
                     });
 
-                    bttnLoadRegSuite.setBackground(new java.awt.Color(0, 0, 0));
+                    bttnLoadRegSuite.setBackground(new Color(0, 0, 0));
                     bttnLoadRegSuite.setFont(new Font("Consolas", 1, 14)); // NOI18N
-                    bttnLoadRegSuite.setForeground(new java.awt.Color(255, 255, 255));
+                    bttnLoadRegSuite.setForeground(new Color(255, 255, 255));
                     bttnLoadRegSuite.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addUploadTestSuite.png"));
                         bttnLoadRegSuite.setToolTipText("open and upload the test suite for execution");
                         bttnLoadRegSuite.setActionCommand("OpenRegressionSuite");
@@ -382,11 +383,11 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                         });
 
                         jLabel1.setFont(new Font("Consolas", 0, 12)); // NOI18N
-                        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+                        jLabel1.setForeground(new Color(255, 255, 255));
                         jLabel1.setText("test type: @<tag_name>");
 
                         jDesktopPane1.setLayer(bttnStartTestRun, JLayeredPane.DEFAULT_LAYER);
-                        jDesktopPane1.setLayer(jTextTestType, JLayeredPane.DEFAULT_LAYER);
+                        jDesktopPane1.setLayer(txtTestTypeTag, JLayeredPane.DEFAULT_LAYER);
                         jDesktopPane1.setLayer(bttnRefreshTestRun, JLayeredPane.DEFAULT_LAYER);
                         jDesktopPane1.setLayer(bttnStopTestRun, JLayeredPane.DEFAULT_LAYER);
                         jDesktopPane1.setLayer(bttnLoadRegSuite, JLayeredPane.DEFAULT_LAYER);
@@ -403,7 +404,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextTestType, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtTestTypeTag, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(bttnStartTestRun, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -418,18 +419,18 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                                     .addComponent(bttnLoadRegSuite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                     .addComponent(bttnRefreshTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jTextTestType, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtTestTypeTag, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel1))
                                     .addComponent(bttnStartTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         );
 
-                        pnlHeader.setBackground(new java.awt.Color(0, 153, 153));
+                        pnlHeader.setBackground(new Color(0, 153, 153));
                         pnlHeader.setMinimumSize(new Dimension(206, 40));
                         pnlHeader.setOpaque(false);
 
                         chkBoxSelectDeselectAllRun.setFont(new Font("Tahoma", 1, 10)); // NOI18N
-                        chkBoxSelectDeselectAllRun.setForeground(new java.awt.Color(255, 255, 255));
+                        chkBoxSelectDeselectAllRun.setForeground(new Color(255, 255, 255));
                         chkBoxSelectDeselectAllRun.setText("Select ALL Run");
                         chkBoxSelectDeselectAllRun.setToolTipText("will select all test(s) for run");
                         chkBoxSelectDeselectAllRun.setBorder(null);
@@ -454,7 +455,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                         });
 
                         chkBoxFilterFailTest.setFont(new Font("Tahoma", 1, 10)); // NOI18N
-                        chkBoxFilterFailTest.setForeground(new java.awt.Color(255, 255, 255));
+                        chkBoxFilterFailTest.setForeground(new Color(255, 255, 255));
                         chkBoxFilterFailTest.setText("Filter FAIL test(s)");
                         chkBoxFilterFailTest.setToolTipText("will select only failed test(s) for re-run");
                         chkBoxFilterFailTest.setBorder(null);
@@ -594,7 +595,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
         //textTestType = ((JTextField) cBoxTestType.getEditor().getEditorComponent());
         //textTestType.setForeground(new java.awt.Color(255,102,102));
         //textTestType.setFont(new Font("Comic Sans MS",0,12));
-        jTextTestType.setEnabled(false);
+        txtTestTypeTag.setEnabled(false);
     }//GEN-LAST:event_formWindowOpened
 
     private void bttnStartTestRunMouseEntered(MouseEvent evt) {//GEN-FIRST:event_bttnStartTestRunMouseEntered
@@ -716,7 +717,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                     objRepo.openObjectRepository(excelSheetObjectRepository);
                 }
                 this.setTitle("Execute Test Suite: "+excelFileImport.getName(excelFile));
-                jTextTestType.setEnabled(true);
+                txtTestTypeTag.setEnabled(true);
             } catch (FileNotFoundException exp) {
                     if(exp.getMessage().contains("The system cannot find the file specified")){
                         JOptionPane.showMessageDialog(null,"No test suite "+"\""+excelFileImport.getName(excelFile)+"\""+" found to upload!","Alert",JOptionPane.WARNING_MESSAGE);
@@ -806,13 +807,13 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowGainedFocus
 
     private void bttnStartTestRunMouseReleased(MouseEvent evt) {//GEN-FIRST:event_bttnStartTestRunMouseReleased
-        if(jTextTestType.getText().trim().contentEquals("@") || !jTextTestType.getText().trim().startsWith("@") && 
-                !jTextTestType.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(scrollExecuteRegSuite,"Tag name is not properly defined ["+jTextTestType.getText()+"]");
+        if(txtTestTypeTag.getText().trim().contentEquals("@") || !txtTestTypeTag.getText().trim().startsWith("@") && 
+                !txtTestTypeTag.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(scrollExecuteRegSuite,"Tag name is not properly defined ["+txtTestTypeTag.getText()+"]");
             return;
         }
         
-        if(!jTextTestType.getText().trim().isEmpty()){
+        if(!txtTestTypeTag.getText().trim().isEmpty()){
             if(selectTestAsPerTestType() ==false){return;}
         }
         
@@ -928,7 +929,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
         
         for(int x=0; x<getRowCnt; x++){
             String getTestStatus =tableExecuteRegSuite.getValueAt(x, 2).toString(); 
-            if(getTestStatus.toLowerCase().contains(jTextTestType.getText().toLowerCase())){
+            if(getTestStatus.toLowerCase().contains(txtTestTypeTag.getText().toLowerCase())){
                 importDataFromExcelModel.setValueAt(true, x, 0);
                 tagFound =true;
             }else
@@ -941,7 +942,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             chkBoxSelectDeselectAllRun.setSelected(true);
         
         if(tagFound ==false){
-            JOptionPane.showMessageDialog(scrollExecuteRegSuite,"No test is marked with the given tag ["+jTextTestType.getText()+"]");
+            JOptionPane.showMessageDialog(scrollExecuteRegSuite,"No test is marked with the given tag ["+txtTestTypeTag.getText()+"]");
         }
         
         return tagFound;
@@ -1000,6 +1001,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             tableExecuteRegSuite.setRowSelectionInterval(0,0);
             tableExecuteRegSuite.scrollRectToVisible(tableExecuteRegSuite.getCellRect(0,0, true));
             tableExecuteRegSuite.requestFocus();
+            txtTestTypeTag.setText("");
         } catch (NullPointerException ex) {
             //Logger.getLogger(ExecuteRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
             return;
@@ -1157,12 +1159,12 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             ExecuteApiTest.importDataFromExcelModel.setValueAt("Stopping...", getCurrRunId, 3);
     }//GEN-LAST:event_bttnStopTestRunMousePressed
 
-    private void jTextTestTypeFocusLost(FocusEvent evt) {//GEN-FIRST:event_jTextTestTypeFocusLost
+    private void txtTestTypeTagFocusLost(FocusEvent evt) {//GEN-FIRST:event_txtTestTypeTagFocusLost
         //if(!jTextTestType.getText().isEmpty() &&
             //jTextTestType.getText().startsWith("@")){
             //selectTestAsPerTestType();
         //}
-    }//GEN-LAST:event_jTextTestTypeFocusLost
+    }//GEN-LAST:event_txtTestTypeTagFocusLost
          
     public void runTestWithChrome(){
         /*if(rdButtonChrome.isSelected() ==true){
@@ -1460,9 +1462,9 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     public JDesktopPane jDesktopPane1;
     public JDesktopPane jDesktopPane2;
     public JLabel jLabel1;
-    public static JTextField jTextTestType;
     public JPanel pnlHeader;
     public static JScrollPane scrollExecuteRegSuite;
     public static JTable tableExecuteRegSuite;
+    public static JTextField txtTestTypeTag;
     // End of variables declaration//GEN-END:variables
 }
