@@ -323,8 +323,6 @@ public class API_TestRunner extends loadAPITestRunner {
                 	ExecuteApiTest.importDataFromExcelModel.setValueAt("FAIL", getCurrRunId, 3);
                 else if(finalRunStatus ==true)
                 	ExecuteApiTest.importDataFromExcelModel.setValueAt("PASS", getCurrRunId, 3);
-                //else
-                	//ExecuteApiTest.importDataFromExcelModel.setValueAt("Interrupted!", getCurrRunId, 3);
 
                 //Database validation
                 /*if (!responseDbValidation.isEmpty()) {
@@ -454,6 +452,14 @@ public class API_TestRunner extends loadAPITestRunner {
 	            String splitTagName = updateHeader.getValue().toString().split("_RefFnd_")[0];
 	            String getTestId = updateHeader.getValue().toString().split("_RefFnd_")[1].replace("#", "");
 	            HashMap<Object, Object> getPrevJsonResponse = ApiTestRunnerMap.get(getTestId);
+	            
+	            if(getPrevJsonResponse ==null) {
+	            	requestHeaders.put(updateHeader.getKey(), "Can not get runtime value [" +splitTagName+"] to update JSON.\n"
+	            			+ "No JSON response available for the given API at [#" +getTestId+"]");
+	            	loadAPITestRunner.saveHeaderMap.put(runID, requestHeaders);
+	            	return;
+	            }
+	            
 	            String getJsonResponse = (String) getPrevJsonResponse.get("JSON Response");
 	            String getRespTagVal = GetTagValueFromJsonResponse.GetJsonTagElement(splitTagName, getJsonResponse);
 
@@ -469,7 +475,6 @@ public class API_TestRunner extends loadAPITestRunner {
                  }
                 	
                 loadAPITestRunner.saveHeaderMap.put(runID, requestHeaders);
-
 	        }
         }
     }
