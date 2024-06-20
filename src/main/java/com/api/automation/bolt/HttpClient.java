@@ -290,6 +290,7 @@ import com.automation.bolt.common;
 			
 				AuthVal2 =(String) API_TestRunner.getAuth2;
                 if(AuthVal2 ==null)
+                	AuthVal2 ="";
                 	
                 if(basicAuthFlag.toString().contentEquals("Basic Auth")){
 	                // user authentication

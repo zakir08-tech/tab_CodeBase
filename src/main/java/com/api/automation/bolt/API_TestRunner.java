@@ -314,7 +314,7 @@ public class API_TestRunner extends loadAPITestRunner {
 	                }
                 }
                 
-                if(!testOut_Put.get(Constants.Run_API_Actual_Status).equals(getExpResponseCode))
+                if(!testOut_Put.get(Constants.Run_API_Actual_Status).toString().equals(getExpResponseCode))
                 	finalRunStatus =false;
                 
                 verifyAPIHeadersForTestRunStatus();
