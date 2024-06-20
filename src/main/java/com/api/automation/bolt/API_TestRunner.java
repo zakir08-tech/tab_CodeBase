@@ -6,6 +6,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -61,6 +62,7 @@ public class API_TestRunner extends loadAPITestRunner {
     public static String executionTime;
     public static int getCurrRunId;
     public static boolean finalRunStatus;
+    public static boolean getThreadStatus;
 
     public static void runAPItest() throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
     	System.out.println("running api's test!");
@@ -319,8 +321,10 @@ public class API_TestRunner extends loadAPITestRunner {
                 
                 if(finalRunStatus ==false)
                 	ExecuteApiTest.importDataFromExcelModel.setValueAt("FAIL", getCurrRunId, 3);
-                else
+                else if(finalRunStatus ==true)
                 	ExecuteApiTest.importDataFromExcelModel.setValueAt("PASS", getCurrRunId, 3);
+                //else
+                	//ExecuteApiTest.importDataFromExcelModel.setValueAt("Interrupted!", getCurrRunId, 3);
 
                 //Database validation
                 /*if (!responseDbValidation.isEmpty()) {
@@ -403,8 +407,30 @@ public class API_TestRunner extends loadAPITestRunner {
                 
 	        ApiTestRunnerMap.put(getApiTestRunId, testOut_Put);
 	        testOut_Put = new HashMap<>();
+	        
+	        getThreadStatus =ExecuteApiTest.runThread.isInterrupted();
+	        if(getThreadStatus ==true) {
+	        	ExecuteApiTest.importDataFromExcelModel.setValueAt("Interrupted!", getCurrRunId, 3);
+	        	break;
+	        }
         } // for:1 ends here
-
+        
+        if(getThreadStatus ==true) {
+	    	boolean keyFound =false;
+	    	Iterator<?> it = ApiTestRunnerMap.entrySet().iterator();
+	    	
+	    	while (it.hasNext()) {
+	    		Entry item = (Entry) it.next();
+	    	    if(item.getKey().equals(getApiTestRunId)) {
+	    			keyFound =true;
+	    		}
+	    	    
+	    	    if(keyFound ==true) {
+	    	    	it.remove();
+	    	    }
+	    	}
+        }
+        
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         long minutes = (totalTime / 1000) / 60;

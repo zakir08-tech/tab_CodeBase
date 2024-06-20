@@ -46,8 +46,8 @@ public class ApiTestReport {
 	    int intFail = 0;
 	    int intPass = 0;
 	    String bttnColor = null;
-	    //String getExecutionRunTime = API_TestRunner.executionTime;
-	    String getExecutionRunTime = common.getTestrunTime(startRunDateTime, endRunDateTime);
+	    String getExecutionRunTime = API_TestRunner.executionTime;
+	    //String getExecutionRunTime = common.getTestrunTime(startRunDateTime, endRunDateTime);
 	    HashMap<Object, List<Object>> storeJsonResponse = new HashMap<>();
 	    LinkedHashMap<Object, Object> getAPiVerifyTags = new LinkedHashMap<>();
 	    Object jsonTagName = null;

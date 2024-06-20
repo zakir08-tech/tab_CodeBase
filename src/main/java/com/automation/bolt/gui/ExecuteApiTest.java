@@ -7,7 +7,7 @@ package com.automation.bolt.gui;
 
 import static com.automation.bolt.boltExecutor.getErrorMessage;
 import static com.automation.bolt.boltExecutor.testRunInProgress;
-import static com.automation.bolt.boltRunner.getCurrRunId;
+import static com.api.automation.bolt.API_TestRunner.getCurrRunId;
 
 import java.awt.Cursor;
 import java.awt.Desktop;
@@ -157,7 +157,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
         bttnRefreshTestRun = new JButton();
         bttnStopTestRun = new JButton();
         bttnLoadRegSuite = new JButton();
-        jLabel1 = new JLabel();
+        lblTestTypeTag = new JLabel();
         jDesktopPane2 = new JDesktopPane();
         pnlHeader = new JPanel();
         chkBoxSelectDeselectAllRun = new JCheckBox();
@@ -382,16 +382,16 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                             }
                         });
 
-                        jLabel1.setFont(new Font("Consolas", 0, 12)); // NOI18N
-                        jLabel1.setForeground(new Color(255, 255, 255));
-                        jLabel1.setText("test type: @<tag_name>");
+                        lblTestTypeTag.setFont(new Font("Consolas", 0, 12)); // NOI18N
+                        lblTestTypeTag.setForeground(new Color(255, 255, 255));
+                        lblTestTypeTag.setText("test type: @<tag_name>");
 
                         jDesktopPane1.setLayer(bttnStartTestRun, JLayeredPane.DEFAULT_LAYER);
                         jDesktopPane1.setLayer(txtTestTypeTag, JLayeredPane.DEFAULT_LAYER);
                         jDesktopPane1.setLayer(bttnRefreshTestRun, JLayeredPane.DEFAULT_LAYER);
                         jDesktopPane1.setLayer(bttnStopTestRun, JLayeredPane.DEFAULT_LAYER);
                         jDesktopPane1.setLayer(bttnLoadRegSuite, JLayeredPane.DEFAULT_LAYER);
-                        jDesktopPane1.setLayer(jLabel1, JLayeredPane.DEFAULT_LAYER);
+                        jDesktopPane1.setLayer(lblTestTypeTag, JLayeredPane.DEFAULT_LAYER);
 
                         GroupLayout jDesktopPane1Layout = new GroupLayout(jDesktopPane1);
                         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -402,7 +402,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(bttnRefreshTestRun, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel1)
+                                .addComponent(lblTestTypeTag)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtTestTypeTag, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
@@ -420,7 +420,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                                     .addComponent(bttnRefreshTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(txtTestTypeTag, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel1))
+                                        .addComponent(lblTestTypeTag))
                                     .addComponent(bttnStartTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         );
@@ -865,10 +865,6 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             getErrorMessage ="This test run was stopped/Interrupted by the user!";
             try {
                 bttnStopTestRun.setEnabled(false);
-                try{
-                    //glueCode.boltDriver.close();
-                    //glueCode.boltDriver.quit();
-                }catch(NullPointerException | WebDriverException exp){}
                 runThread.interrupt();
             }catch (Exception exp) {
                 System.out.println("Caught:" + exp.getMessage());
@@ -1461,7 +1457,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     public static JCheckBox chkBoxSelectDeselectAllRun;
     public JDesktopPane jDesktopPane1;
     public JDesktopPane jDesktopPane2;
-    public JLabel jLabel1;
+    public JLabel lblTestTypeTag;
     public JPanel pnlHeader;
     public static JScrollPane scrollExecuteRegSuite;
     public static JTable tableExecuteRegSuite;
