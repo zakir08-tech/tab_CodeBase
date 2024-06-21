@@ -11,11 +11,11 @@ import com.api.automation.util.databaseOperations;
  
 public class UserDefineExternalSolutions {
 	public static String readExternalMethodName;
-	public static String serverName = LoadProperties.prop.getProperty(Constants.SQLServer_ServerName);
-	public static String serverPort = LoadProperties.prop.getProperty(Constants.SQLServer_Port);
-	public static String dbName = LoadProperties.prop.getProperty(Constants.SQLServer_DatabaseName);
-	public static String dbUserName = LoadProperties.prop.getProperty(Constants.SQLServer_UserName);
-	public static String dbUserPassword = LoadProperties.prop.getProperty(Constants.SQLServer_UserPassword);
+	//public static String serverName = LoadProperties.prop.getProperty(Constants.SQLServer_ServerName);
+	//public static String serverPort = LoadProperties.prop.getProperty(Constants.SQLServer_Port);
+	//public static String dbName = LoadProperties.prop.getProperty(Constants.SQLServer_DatabaseName);
+	//public static String dbUserName = LoadProperties.prop.getProperty(Constants.SQLServer_UserName);
+	//public static String dbUserPassword = LoadProperties.prop.getProperty(Constants.SQLServer_UserPassword);
 	public static SimpleDateFormat timeStamp = new SimpleDateFormat("yyyyMMddHHmmss");
            
     public static Object runExternalMethod(String[] getMethodArgs) {
@@ -23,16 +23,16 @@ public class UserDefineExternalSolutions {
  
         switch (readExternalMethodName) {
 	        case "generateUniqueBankID":
-	            getReturnVal = generateUniqueBankID(getMethodArgs);
+	            //getReturnVal = generateUniqueBankID(getMethodArgs);
 	            break;
 	        case "generateUniqueTransactionID":
-	            getReturnVal = generateUniqueTransactionID(getMethodArgs);
+	            //getReturnVal = generateUniqueTransactionID(getMethodArgs);
 	            break;
 	        case "generateUniqueRefNumber":
-	            getReturnVal = generateUniqueReferenceNumber(getMethodArgs);
+	            //getReturnVal = generateUniqueReferenceNumber(getMethodArgs);
 	            break;         
 	        case "generateUniqueKridNumber":
-	            getReturnVal = generateUniqueKRIDNumber(getMethodArgs);         
+	            //getReturnVal = generateUniqueKRIDNumber(getMethodArgs);         
 	            break;
 	        case "generateUniqueNumberTimeStamp":
 	            getReturnVal = UniqueNumberUsingTimeStamp(getMethodArgs);    
@@ -54,7 +54,7 @@ public class UserDefineExternalSolutions {
         try{
         	timeFormat =getMethodArgs[0];
         }catch(NullPointerException exp){
-        	timeFormat ="yyyyMMddHHmmss";
+        	timeFormat ="YYMMddhhmSS";
         }
                        
         try{
@@ -64,7 +64,7 @@ public class UserDefineExternalSolutions {
         try{
         	timeStamp = new SimpleDateFormat(timeFormat);
         }catch(IllegalArgumentException exp){
-            timeStamp = new SimpleDateFormat("yyyyMMddHHmmss");
+            timeStamp = new SimpleDateFormat("YYMMddhhmSS");
         }
                        
         String uniqueNumberTimeStamp;
@@ -79,7 +79,7 @@ public class UserDefineExternalSolutions {
         return preFix+uniqueNumberTimeStamp;
     }
            
-    public static int generateUniqueBankID(String[] getMethodArgs) {
+    /*public static int generateUniqueBankID(String[] getMethodArgs) {
 	    Connection connectToSqlSrvr = databaseOperations.getSQLServerConnection(serverName, serverPort, dbUserName, dbUserPassword, dbName);
 	    ResultSet getQueryRes;
 	    Boolean empl_idExist = null;
@@ -105,9 +105,9 @@ public class UserDefineExternalSolutions {
         }
                        
         return getRandomNum;
-    }
+    }*/
  
-    public static String generateUniqueTransactionID(String[] getMethodArgs) {
+    /*public static String generateUniqueTransactionID(String[] getMethodArgs) {
 	    Connection connectToSqlSrvr = databaseOperations.getSQLServerConnection(serverName, serverPort, dbUserName, dbUserPassword, dbName);
 	    ResultSet getQueryRes;
 	    Boolean empl_idExist = null;
@@ -133,9 +133,9 @@ public class UserDefineExternalSolutions {
         }
                        
         return "transID_"+getRandomNum;
-    }
+    }*/
            
-    public static String generateUniqueReferenceNumber(String[] getMethodArgs) {
+    /*public static String generateUniqueReferenceNumber(String[] getMethodArgs) {
 	    Connection connectToSqlSrvr = databaseOperations.getSQLServerConnection(serverName, serverPort, dbUserName, dbUserPassword, dbName);
 	    ResultSet getQueryRes;
 	    Boolean empl_idExist = null;
@@ -161,9 +161,9 @@ public class UserDefineExternalSolutions {
         }
                        
         return "refNum_"+getRandomNum;
-    }
+    }*/
            
-    public static int generateUniqueKRIDNumber(String[] getMethodArgs) {
+    /*public static int generateUniqueKRIDNumber(String[] getMethodArgs) {
 	    Connection connectToSqlSrvr = databaseOperations.getSQLServerConnection(serverName, serverPort, dbUserName, dbUserPassword, dbName);
 	    ResultSet getQueryRes;
 	    Boolean empl_idExist = null;
@@ -188,7 +188,7 @@ public class UserDefineExternalSolutions {
             }
         }                
         return getRandomNum;
-    }
+    }*/
            
     public static boolean generateNewHRMSEmplID(ResultSet sqlQueryResult) {
 	    boolean empl_idFnd = false;
