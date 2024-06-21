@@ -246,7 +246,7 @@ public class loadAPITestRunner {
                     }
                 }
             }
-            
+            testRunMap =new LinkedHashMap<>();
             for(int i=0; i<arrTestId.size(); i++){
                 ApiTestRunnerMap.put(arrTestId.get(i), saveTestRunMap.get(arrTestId.get(i)));
             }
