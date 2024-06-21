@@ -34,8 +34,8 @@ public class UserDefineExternalSolutions {
 	        case "generateUniqueKridNumber":
 	            //getReturnVal = generateUniqueKRIDNumber(getMethodArgs);         
 	            break;
-	        case "generateUniqueNumberTimeStamp":
-	            getReturnVal = UniqueNumberUsingTimeStamp(getMethodArgs);    
+	        case "UniqueValueWithPreFix":
+	            getReturnVal = UniqueNumberUsingTimeStampPreFix(getMethodArgs);    
 	            break;
 	        default:
 	        	System.out.println("no method found with this name: " + readExternalMethodName);
@@ -47,7 +47,7 @@ public class UserDefineExternalSolutions {
         return getReturnVal;
     }
            
-    public static String UniqueNumberUsingTimeStamp(String[] getMethodArgs) {
+    public static String UniqueNumberUsingTimeStampPreFix(String[] getMethodArgs) {
 	    String timeFormat ="";
 	    String preFix ="";
                        
