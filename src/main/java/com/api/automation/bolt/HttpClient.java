@@ -27,6 +27,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
@@ -91,6 +92,31 @@ import com.automation.bolt.common;
             }
 
 			return httpCloseableResponse;
+    }
+    
+  //--DELETE method
+    public CloseableHttpResponse deleteClientResponse(Object url, LinkedHashMap < Object, Object > headerMap, Object sslFlag, Object basicAuthFlag) throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
+     
+	    try {
+	        CloseableHttpClient httpClient = getHttpBuilder(sslFlag, basicAuthFlag);
+	        HttpDelete httpdelete = new HttpDelete((String) url);
+	     
+	        try{
+	           for (Map.Entry < Object, Object > headerEntry: headerMap.entrySet()) {
+	              httpdelete.addHeader((String) headerEntry.getKey(), (String) headerEntry.getValue());
+	           }
+	        }catch (NullPointerException exp){}
+	     
+	        httpCloseableResponse = httpClient.execute(httpdelete);
+	     
+	    } catch(ClientProtocolException | NullPointerException | IllegalArgumentException exp) {
+	        System.out.println(exp.getMessage());
+	     
+	    } catch(IOException ex) {
+	        System.out.println(ex.toString());
+	        VerifyValueAPICommon.verifyErrorMessage(ex.toString(), ex.getClass().getName());
+	    }
+	    return httpCloseableResponse;
     }
 
     //--POST method

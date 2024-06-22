@@ -247,11 +247,27 @@ public class API_TestRunner extends loadAPITestRunner {
 	                        testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
 	                        finalRunStatus =false;
                         }
-                } else{
-	                //testRunMap.put("Request", "NA");
-	                testOut_Put.put("Request", "NA");
-	                ApiTestRunnerMap.put(getApiTestRunId, testRunMap);
-                }
+                } else if(getApiTestRequest.toString().trim().toUpperCase().contentEquals("DELETE")){ // DELETE call
+		        	   if (requestHeaders !=null){
+		        		   updateHeaderFromJsonResponse(getApiTestRunId);
+		        	   }
+		        	   
+	        		   closeableHttpRespone = restClient.deleteClientResponse(getApiTestRequestUrl, requestHeaders, getSSLCertificationFlag, getBasicAuthFlag); //DELETE call
+	        		   if (closeableHttpRespone != null) {
+	        		      retrieveResponse = getGetResponse.testGetResponse(closeableHttpRespone, getExpResponseCode);
+	        		      testOut_Put.put(Constants.Run_API_Actual_Status, Integer.toString(ResponseGET.statusCode));
+	        		      testOut_Put.put(Constants.Response_Status_Phrase, ResponseGET.responsePhrase);
+	        		   } else {
+	        		      getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
+	        		      testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
+	        		      testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
+	        		      finalRunStatus =false;
+	        		   }
+		        	}else{
+		                //testRunMap.put("Request", "NA");
+		                testOut_Put.put("Request", "NA");
+		                ApiTestRunnerMap.put(getApiTestRunId, testRunMap);
+		        }
 
                 //storeRequestPayloadToHasMap
                 if (closeableHttpRespone != null) {
