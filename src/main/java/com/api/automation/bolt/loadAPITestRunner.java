@@ -80,6 +80,8 @@ public class loadAPITestRunner {
                         apiTestSteps.put("request",request);
  
                         Object url =getCellValue(testRunCurrentRow.getCell(2));
+                        url =updateApiUrlWithJsonResponseElementReference(url);
+                        
                         testRunMap.put("Request URL", url);
                         apiTestSteps.put("url",url);
  
@@ -268,6 +270,40 @@ public class loadAPITestRunner {
         }catch(NullPointerException exp){}
  
         return getCellData;
+    }
+    
+    public static Object updateApiUrlWithJsonResponseElementReference(Object getUrl){
+        boolean FstRefFnd =false;
+        boolean SndRefFnd =false;
+        String readApiURL ="";
+        String getRefFndVal ="";
+     
+        char[] array = getUrl.toString().toCharArray();
+        for (char ch : array) {
+            if(ch == '}'){
+                SndRefFnd =true;
+                break;
+            }
+     
+            if(FstRefFnd ==true){
+                readApiURL =readApiURL + ch;
+            }
+     
+            if(ch == '{')
+                FstRefFnd =true;
+        }
+     
+        if(readApiURL.contains("|#")){
+            String s = readApiURL.toString().split("[|]")[0];
+            String s1 = readApiURL.toString().split("[|]")[1];
+            getRefFndVal = s +"_RefFnd_"+ s1;
+     
+            if(FstRefFnd ==true && SndRefFnd==true){
+                readApiURL = "{" +readApiURL + "}";
+                getUrl =getUrl.toString().replace(readApiURL,getRefFndVal);
+            }
+        }
+        return getUrl;
     }
 }
 

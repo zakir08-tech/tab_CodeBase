@@ -58,14 +58,14 @@ import com.automation.bolt.common;
     //--Get method without header
     public CloseableHttpResponse getClientResponse(Object url, Object sslFlag, Object basicAuthFlag, Object getBasicAuthFlag) throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
     	CloseableHttpClient httpClient = getHttpBuilder(sslFlag, basicAuthFlag);
-    	
-		HttpGet httpget = new HttpGet((String) url);
-		try {	
-				httpCloseableResponse = httpClient.execute(httpget);
-		    } catch(IOException e) {
-		    	System.out.println(e.toString());
-		    }
-        	return httpCloseableResponse;
+    	try{
+    	   HttpGet httpget = new HttpGet((String) url);
+    	   try {
+    	      httpCloseableResponse = httpClient.execute(httpget);
+    	   } catch(IOException e) {}
+    	}catch(IllegalArgumentException e){}
+    	 
+    	       return httpCloseableResponse;
     }
 
     //--Get method with headers
