@@ -126,12 +126,15 @@ public class API_TestRunner extends loadAPITestRunner {
 
             getApiTestRequest = testRunnerEntry.getValue().get("Request"); //get Request type
             getApiTestRequestUrl = testRunnerEntry.getValue().get("Request URL"); //get service url
+            getApiTestRequestUrl =updateApiUrlWithJsonResponseElementReference(getApiTestRequestUrl);
+            
             getExpResponseCode = testRunnerEntry.getValue().get("Expected Status"); //get response code
             getAuth1 =testRunnerEntry.getValue().get("AuthVal1"); //get auth value 1
             getAuth2 =testRunnerEntry.getValue().get("AuthVal2"); //get auth value 2
 
 
             testOut_Put = ApiTestRunnerMap.get(getApiTestRunId);
+            testOut_Put.put(Constants.Run_API_Request_URL, getApiTestRequestUrl);
             requestHeaders = loadAPITestRunner.saveHeaderMap.get(getApiTestRunId); //get Headers
             payloadTagElement = loadAPITestRunner.saveTagElmMap.get(getApiTestRunId); //get payload tag/element
             getSSLCertificationFlag = testRunnerEntry.getValue().get("SSL Verification"); //get ssl certification flag
@@ -577,4 +580,48 @@ public class API_TestRunner extends loadAPITestRunner {
 
 		return strSqlExpOutPut;
     }
+    
+    public static Object updateApiUrlWithJsonResponseElementReference(Object getUrl){
+	   boolean FstRefFnd =false;
+	   boolean SndRefFnd =false;
+	   String readApiURL ="";
+	   String getRefFndVal ="";
+	 
+	   char[] array = getUrl.toString().toCharArray();
+	   for (char ch : array) {
+	      if(ch == '}'){
+	         SndRefFnd =true;
+	         break;
+	      }
+	 
+	      if(FstRefFnd ==true){
+	         readApiURL =readApiURL + ch;
+	      }
+	 
+	      if(ch == '{')
+	         FstRefFnd =true;
+	   }
+	 
+	   if(readApiURL.contains("|#")){
+	      String splitTagName = readApiURL.toString().split("[|]")[0];
+	      String getTestId = readApiURL.toString().split("[|]")[1];
+	      getTestId = getTestId.replace("#", "");
+	 
+	      HashMap<Object, Object> getPrevJsonResponse = loadAPITestRunner.saveTestRunMap.get(getTestId);
+	      if(getPrevJsonResponse ==null)
+	         return getUrl;
+	 
+	      String getJsonResponse = (String) getPrevJsonResponse.get("JSON Response");
+	      String getRespTagVal = GetTagValueFromJsonResponse.GetJsonTagElement(splitTagName, getJsonResponse);
+	 
+	      if(!getRespTagVal.contentEquals("#.")){
+	         if(FstRefFnd ==true && SndRefFnd==true){
+	            readApiURL = "{" +readApiURL + "}";
+	            getUrl =getUrl.toString().replace(readApiURL,getRespTagVal);
+	         }
+	      }
+	   }
+	   return getUrl;
+    }
+
 }

@@ -131,14 +131,16 @@ import com.automation.bolt.common;
     public CloseableHttpResponse postClientRequest(Object url, LinkedHashMap<Object, Object> headerMap, Object sslFlag, Object basicAuthFlag) throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
     	CloseableHttpClient httpClient = getHttpBuilder(sslFlag, basicAuthFlag);
     	HttpPost httppost = new HttpPost((String) url); //post
-
-        if(headerMap.size() !=0){
-	        //headers
-	        for (Map.Entry<Object, Object> headerEntry: headerMap.entrySet()) {
-	        	httppost.addHeader((String) headerEntry.getKey(), (String) headerEntry.getValue());
-	        }
-        }
-
+    	
+    	if(headerMap !=null) {
+    		if(headerMap.size() !=0){
+    	        //headers
+    	        for (Map.Entry<Object, Object> headerEntry: headerMap.entrySet()) {
+    	        	httppost.addHeader((String) headerEntry.getKey(), (String) headerEntry.getValue());
+    	        }
+            }
+    	}
+        
         try {
         	httpCloseableResponse = httpClient.execute(httppost);
         } catch(IOException e) {
@@ -148,8 +150,6 @@ import com.automation.bolt.common;
 
         return httpCloseableResponse;
     }
-
- 
 
     //--PUT method with payload
     public CloseableHttpResponse putClientRequest(Object url, String entityString, LinkedHashMap<Object, Object> headerMap, Object sslFlag, Object basicAuthFlag) throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
@@ -162,14 +162,16 @@ import com.automation.bolt.common;
         } catch(UnsupportedEncodingException e) {
         	System.out.println(e.getMessage());
         }//pay load
-
-        if(headerMap.size() !=0){
-		    //headers
-		    for (Map.Entry<Object, Object> headerEntry: headerMap.entrySet()) {
-		    	httpput.addHeader((String) headerEntry.getKey(), (String) headerEntry.getValue());
-		    }
+        
+        if(headerMap !=null) {
+        	if(headerMap.size() !=0){
+    		    //headers
+    		    for (Map.Entry<Object, Object> headerEntry: headerMap.entrySet()) {
+    		    	httpput.addHeader((String) headerEntry.getKey(), (String) headerEntry.getValue());
+    		    }
+            }
         }
-
+        
         try {
         	httpCloseableResponse = httpClient.execute(httpput);
         } catch(IOException e) {

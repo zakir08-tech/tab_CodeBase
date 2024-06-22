@@ -41,6 +41,7 @@ public class Constants {
             public static String Run_API_JSON_Request = "JSON Request";
             public static String Run_API_JSON_Response = "JSON Response";
             public static String Response_Status_Phrase = "Status Code Phrase";
+            public static String Run_API_Request_URL = "Request URL";
  
             public static String PROXY_HOST = "one.proxy.att.com";
             public static int PROXY_PORT = 8080;
