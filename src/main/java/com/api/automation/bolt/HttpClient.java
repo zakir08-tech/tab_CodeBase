@@ -65,8 +65,8 @@ import com.automation.bolt.common;
     	      httpCloseableResponse = httpClient.execute(httpget);
     	   } catch(IOException e) {}
     	}catch(IllegalArgumentException e){}
-    	 
-    	       return httpCloseableResponse;
+    	
+    	return httpCloseableResponse;
     }
 
     //--Get method with headers
@@ -111,7 +111,7 @@ import com.automation.bolt.common;
 	     
 	    } catch(ClientProtocolException | NullPointerException | IllegalArgumentException exp) {
 	        System.out.println(exp.getMessage());
-	     
+	        VerifyValueAPICommon.verifyErrorMessage(ex.toString(), ex.getClass().getName());
 	    } catch(IOException ex) {
 	        System.out.println(ex.toString());
 	        VerifyValueAPICommon.verifyErrorMessage(ex.toString(), ex.getClass().getName());
@@ -135,19 +135,16 @@ import com.automation.bolt.common;
 				//headers
 				for (Map.Entry<Object, Object> headerEntry: headerMap.entrySet()) {
 					httppost.addHeader((String) headerEntry.getKey(), (String) headerEntry.getValue());
-					}
+				}
 			}
 		}catch (NullPointerException exp){}
 
-
 		try {
 			httpCloseableResponse = httpClient.execute(httppost);
-		} catch(IOException e) {
-		
+		} catch(IOException e) {		
 			System.out.println(e.toString());
 			//runTimeError =e.toString();
 			VerifyValueAPICommon.verifyErrorMessage(e.toString(), e.getClass().getName());
-
 		}
 
 		return httpCloseableResponse;
@@ -351,6 +348,5 @@ import com.automation.bolt.common;
 	    }
 	    
 	    return httpClient;
-
 	}
 }

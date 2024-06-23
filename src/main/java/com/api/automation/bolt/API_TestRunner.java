@@ -63,7 +63,9 @@ public class API_TestRunner extends loadAPITestRunner {
     public static int getCurrRunId;
     public static boolean finalRunStatus;
     public static boolean getThreadStatus;
-
+    public static boolean stepDefinitionError;
+    public static String stepDefinitionErrorMsg;
+    
     public static void runAPItest() throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
     	System.out.println("running api's test!");
     	
@@ -252,17 +254,24 @@ public class API_TestRunner extends loadAPITestRunner {
 		        		   updateHeaderFromJsonResponse(getApiTestRunId);
 		        	   }
 		        	   
-	        		   closeableHttpRespone = restClient.deleteClientResponse(getApiTestRequestUrl, requestHeaders, getSSLCertificationFlag, getBasicAuthFlag); //DELETE call
-	        		   if (closeableHttpRespone != null) {
-	        		      retrieveResponse = getGetResponse.testGetResponse(closeableHttpRespone, getExpResponseCode);
-	        		      testOut_Put.put(Constants.Run_API_Actual_Status, Integer.toString(ResponseGET.statusCode));
-	        		      testOut_Put.put(Constants.Response_Status_Phrase, ResponseGET.responsePhrase);
-	        		   } else {
-	        		      getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
-	        		      testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
-	        		      testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
-	        		      finalRunStatus =false;
-	        		   }
+		        	   if(stepDefinitionError ==false) {
+		        		   closeableHttpRespone = restClient.deleteClientResponse(getApiTestRequestUrl, requestHeaders, getSSLCertificationFlag, getBasicAuthFlag); //DELETE call
+		        		   if (closeableHttpRespone != null) {
+		        		      retrieveResponse = getGetResponse.testGetResponse(closeableHttpRespone, getExpResponseCode);
+		        		      testOut_Put.put(Constants.Run_API_Actual_Status, Integer.toString(ResponseGET.statusCode));
+		        		      testOut_Put.put(Constants.Response_Status_Phrase, ResponseGET.responsePhrase);
+		        		   } else {
+		        		      getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
+		        		      testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
+		        		      testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
+		        		      finalRunStatus =false;
+		        		   }
+		        	   }else {
+	        		       testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
+	        		       testOut_Put.put(Constants.Response_Status_Phrase, stepDefinitionErrorMsg);
+	        		       finalRunStatus =false;
+		        	   }
+		        	   
 		        	}else{
 		                //testRunMap.put("Request", "NA");
 		                testOut_Put.put("Request", "NA");
@@ -320,6 +329,11 @@ public class API_TestRunner extends loadAPITestRunner {
                     } catch (IOException exp) {
                     	exp.printStackTrace();
                     }
+                } else if(stepDefinitionError ==true) {
+                	testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
+                    testOut_Put.put(Constants.Response_Status_Phrase, stepDefinitionErrorMsg);
+                    testOut_Put.put(Constants.Run_API_JSON_Response, stepDefinitionErrorMsg);
+                    finalRunStatus =false;
                 } else {
 	                try{
 	                    getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
@@ -601,8 +615,8 @@ public class API_TestRunner extends loadAPITestRunner {
 	   boolean FstRefFnd =false;
 	   boolean SndRefFnd =false;
 	   String readApiURL ="";
-	   String getRefFndVal ="";
-	 
+	   stepDefinitionError =false;
+	   
 	   char[] array = getUrl.toString().toCharArray();
 	   for (char ch : array) {
 	      if(ch == '}'){
@@ -624,10 +638,19 @@ public class API_TestRunner extends loadAPITestRunner {
 	      getTestId = getTestId.replace("#", "");
 	 
 	      HashMap<Object, Object> getPrevJsonResponse = loadAPITestRunner.saveTestRunMap.get(getTestId);
-	      if(getPrevJsonResponse ==null)
-	         return getUrl;
-	 
+	      if(getPrevJsonResponse ==null) {
+	    	  stepDefinitionError =true;
+	    	  stepDefinitionErrorMsg ="required JSON response not available at [#" +getTestId+ "] api run";
+	    	  return getUrl; 
+	      }
+	         
 	      String getJsonResponse = (String) getPrevJsonResponse.get("JSON Response");
+	      if(getPrevJsonResponse ==null) {
+	    	  stepDefinitionError =true;
+	    	  stepDefinitionErrorMsg ="required JSON response not available at [#" +getTestId+ "] api run";
+	    	  return getUrl;
+	      }
+	    	  
 	      String getRespTagVal = GetTagValueFromJsonResponse.GetJsonTagElement(splitTagName, getJsonResponse);
 	 
 	      if(!getRespTagVal.contentEquals("#.")){
@@ -635,6 +658,9 @@ public class API_TestRunner extends loadAPITestRunner {
 	            readApiURL = "{" +readApiURL + "}";
 	            getUrl =getUrl.toString().replace(readApiURL,getRespTagVal);
 	         }
+	      }else {
+	    	  stepDefinitionError =true;
+	    	  stepDefinitionErrorMsg ="required JSON tag ["+splitTagName+"] not available at [#" +getTestId+ "] api response";
 	      }
 	   }
 	   return getUrl;
