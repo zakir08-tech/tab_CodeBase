@@ -111,7 +111,7 @@ import com.automation.bolt.common;
 	     
 	    } catch(ClientProtocolException | NullPointerException | IllegalArgumentException exp) {
 	        System.out.println(exp.getMessage());
-	        VerifyValueAPICommon.verifyErrorMessage(ex.toString(), ex.getClass().getName());
+	        VerifyValueAPICommon.verifyErrorMessage(exp.toString(), exp.getClass().getName());
 	    } catch(IOException ex) {
 	        System.out.println(ex.toString());
 	        VerifyValueAPICommon.verifyErrorMessage(ex.toString(), ex.getClass().getName());
