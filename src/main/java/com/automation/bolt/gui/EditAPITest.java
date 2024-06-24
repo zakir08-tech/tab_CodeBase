@@ -1559,7 +1559,7 @@ public class EditAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_txtAreaPayloadFocusGained
 
     private void bttnSaveSuiteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnSaveSuiteMouseReleased
-        if(ExecuteApiTest.tableExecuteRegSuite.isShowing())
+        //if(ExecuteApiTest.tableExecuteRegSuite.isShowing())
             ExecuteApiTest.bttnRefreshTestRun.doClick();
     }//GEN-LAST:event_bttnSaveSuiteMouseReleased
     
