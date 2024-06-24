@@ -1458,7 +1458,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton bttnLoadRegSuite;
-    public javax.swing.JButton bttnRefreshTestRun;
+    public static javax.swing.JButton bttnRefreshTestRun;
     public static javax.swing.JButton bttnStartTestRun;
     public static javax.swing.JButton bttnStopTestRun;
     public static javax.swing.JCheckBox chkBoxFilterFailTest;

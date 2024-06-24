@@ -186,7 +186,7 @@ public class EditAPITest extends javax.swing.JFrame {
         
         etestURLTxt.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent evt) {
-                etestURLTxtKeyReleased(evt, etestURLTxt);
+                testURLTxtKeyReleased(evt, etestURLTxt);
             }
         });
         
@@ -226,7 +226,7 @@ public class EditAPITest extends javax.swing.JFrame {
 
         txtRequestType = new javax.swing.JTextField();
         txtExpStatus = new javax.swing.JTextField();
-        etxtAPIurl = new javax.swing.JTextField();
+        txtAPIurl = new javax.swing.JTextField();
         lblURL = new javax.swing.JLabel();
         lblStatus = new javax.swing.JLabel();
         lblRequest = new javax.swing.JLabel();
@@ -304,13 +304,13 @@ public class EditAPITest extends javax.swing.JFrame {
             }
         });
 
-        etxtAPIurl.setBackground(new java.awt.Color(51, 51, 51));
-        etxtAPIurl.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        etxtAPIurl.setForeground(new java.awt.Color(255, 255, 204));
-        etxtAPIurl.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        etxtAPIurl.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 1));
-        etxtAPIurl.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        etxtAPIurl.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtAPIurl.setBackground(new java.awt.Color(51, 51, 51));
+        txtAPIurl.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtAPIurl.setForeground(new java.awt.Color(255, 255, 204));
+        txtAPIurl.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtAPIurl.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 1));
+        txtAPIurl.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtAPIurl.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtAPIurlFocusGained(evt);
             }
@@ -318,7 +318,7 @@ public class EditAPITest extends javax.swing.JFrame {
                 txtAPIurlFocusLost(evt);
             }
         });
-        etxtAPIurl.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtAPIurl.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtAPIurlKeyReleased(evt);
             }
@@ -652,6 +652,9 @@ public class EditAPITest extends javax.swing.JFrame {
                                     public void mouseExited(java.awt.event.MouseEvent evt) {
                                         bttnSaveSuiteMouseExited(evt);
                                     }
+                                    public void mouseReleased(java.awt.event.MouseEvent evt) {
+                                        bttnSaveSuiteMouseReleased(evt);
+                                    }
                                 });
                                 bttnSaveSuite.addActionListener(new java.awt.event.ActionListener() {
                                     public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -752,7 +755,7 @@ public class EditAPITest extends javax.swing.JFrame {
                                                             .addGroup(layout.createSequentialGroup()
                                                                 .addComponent(lblURL, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(0, 1003, Short.MAX_VALUE))
-                                                            .addComponent(etxtAPIurl)))
+                                                            .addComponent(txtAPIurl)))
                                                     .addComponent(pnlEditApiTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                 .addGap(1, 1, 1)
                                                 .addComponent(dPaneMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -772,7 +775,7 @@ public class EditAPITest extends javax.swing.JFrame {
                                                 .addComponent(lblRequest)))
                                         .addGap(1, 1, 1)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(etxtAPIurl, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtAPIurl, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtExpStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtRequestType, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(4, 4, 4)
@@ -836,9 +839,9 @@ public class EditAPITest extends javax.swing.JFrame {
         bttnAddNewTestStep.setForeground(new java.awt.Color(255,255,255));
     }//GEN-LAST:event_bttnAddNewTestStepMouseExited
     
-     public static void etestURLTxtKeyReleased(KeyEvent evt, JTextField textField) {
+     public static void testURLTxtKeyReleased(KeyEvent evt, JTextField textField) {
         String getURLText =textField.getText();
-        etxtAPIurl.setText(getURLText);
+        txtAPIurl.setText(getURLText);
     }
     
     public static void testExpectedStatusTxtKeyReleased(KeyEvent evt, JTextField textField) {
@@ -976,7 +979,7 @@ public class EditAPITest extends javax.swing.JFrame {
             
             txtRequestType.setText("");
             txtExpStatus.setText("");
-            etxtAPIurl.setText("");
+            txtAPIurl.setText("");
             txtAreaHeaders.setText("");
             txtAreaParams.setText("");
             txtAreaAuthorization.setText("");
@@ -1132,7 +1135,6 @@ public class EditAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_bttnSaveSuiteMouseExited
 
     private void bttnSaveSuiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnSaveSuiteActionPerformed
-        ExecuteApiTest exeApiTest = new ExecuteApiTest();
         
         if(getTestFlowSelectedRow !=-1){
             //getElmRepoSelectedRow =tableAddOR.getSelectedRow();
@@ -1155,7 +1157,6 @@ public class EditAPITest extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(RegressionSuiteScrollPane, "Test suite " + "\"" + excelFileImport.getName(excelFile) + "\"" + " updated and saved!", "Alert", JOptionPane.WARNING_MESSAGE);
                 }
                 bttnSaveSuite.setEnabled(true);
-                exeApiTest.bttnRefreshTestRun.doClick();
             } catch (IOException ex) {
                 Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1493,7 +1494,7 @@ public class EditAPITest extends javax.swing.JFrame {
     }*/
     
     private void txtAPIurlFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAPIurlFocusLost
-        getTheAPIurl =etxtAPIurl.getText();
+        getTheAPIurl =txtAPIurl.getText();
         try {
         	tableEditTestFlow.setValueAt(getTheAPIurl,getCurrRowBeforeKeyPressed, 2);
         }catch(ArrayIndexOutOfBoundsException exp) {}
@@ -1501,7 +1502,7 @@ public class EditAPITest extends javax.swing.JFrame {
 
     private void txtAPIurlKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAPIurlKeyReleased
         try{
-            tableEditTestFlow.setValueAt(etxtAPIurl.getText(),getCurrRowBeforeKeyPressed, 2);
+            tableEditTestFlow.setValueAt(txtAPIurl.getText(),getCurrRowBeforeKeyPressed, 2);
         }catch(ArrayIndexOutOfBoundsException exp){}
         
     }//GEN-LAST:event_txtAPIurlKeyReleased
@@ -1556,6 +1557,11 @@ public class EditAPITest extends javax.swing.JFrame {
             tabOutFromAnyEditingColumn(getTestFlowCellEditorStatus, tableEditTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
     }//GEN-LAST:event_txtAreaPayloadFocusGained
+
+    private void bttnSaveSuiteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnSaveSuiteMouseReleased
+        if(ExecuteApiTest.tableExecuteRegSuite.isShowing())
+            ExecuteApiTest.bttnRefreshTestRun.doClick();
+    }//GEN-LAST:event_bttnSaveSuiteMouseReleased
     
     public static void updateAPIAttributeData(){
         getCurrRowBeforeKeyPressed =tableEditTestFlow.getSelectedRow();
@@ -1564,7 +1570,7 @@ public class EditAPITest extends javax.swing.JFrame {
         if(getTestId ==null || getTestId.toString().isEmpty()){
             txtRequestType.setText("");
             txtExpStatus.setText("");
-            etxtAPIurl.setText("");
+            txtAPIurl.setText("");
             txtAreaHeaders.setText("");
             txtAreaParams.setText("");
             txtAreaAuthorization.setText("");
@@ -1579,11 +1585,11 @@ public class EditAPITest extends javax.swing.JFrame {
         // update api test url
         try{    
             getTheAPIurl =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 2).toString();
-            etxtAPIurl.setText(getTheAPIurl);
-            etxtAPIurl.setCaretPosition(0);
+            txtAPIurl.setText(getTheAPIurl);
+            txtAPIurl.setCaretPosition(0);
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){
-            etxtAPIurl.setText("");
-            etxtAPIurl.setCaretPosition(0);
+            txtAPIurl.setText("");
+            txtAPIurl.setCaretPosition(0);
         }
         
         // update api payload body
@@ -1996,7 +2002,7 @@ public class EditAPITest extends javax.swing.JFrame {
     public javax.swing.JScrollPane scrollModifyPayload;
     public javax.swing.JScrollPane scrollVerifyPayload;
     public static javax.swing.JTable tableEditTestFlow;
-    public static javax.swing.JTextField etxtAPIurl;
+    public static javax.swing.JTextField txtAPIurl;
     public static javax.swing.JTextArea txtAreaAuthorization;
     public static javax.swing.JTextArea txtAreaHeaders;
     public static javax.swing.JTextArea txtAreaParams;
