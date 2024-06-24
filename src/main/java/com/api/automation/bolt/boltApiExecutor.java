@@ -1,13 +1,13 @@
 package com.api.automation.bolt;
  
 //import static com.automation.bolt.common.getCurrentDateAndTime;
-import static com.automation.bolt.gui.ExecuteApiTest.bttnLoadRegSuite;
+import static com.automation.bolt.gui.ExecuteApiTest.*;
 //import static com.automation.bolt.gui.ExecuteApiTest.bttnRefreshTestRun;
-import static com.automation.bolt.gui.ExecuteApiTest.bttnStartTestRun;
-import static com.automation.bolt.gui.ExecuteApiTest.bttnStopTestRun;
-import static com.automation.bolt.gui.ExecuteApiTest.chkBoxFilterFailTest;
-import static com.automation.bolt.gui.ExecuteApiTest.chkBoxSelectDeselectAllRun;
-import static com.automation.bolt.gui.ExecuteApiTest.tableExecuteRegSuite;
+//import static com.automation.bolt.gui.ExecuteApiTest.bttnStartTestRun;
+//import static com.automation.bolt.gui.ExecuteApiTest.bttnStopTestRun;
+//import static com.automation.bolt.gui.ExecuteApiTest.chkBoxFilterFailTest;
+//import static com.automation.bolt.gui.ExecuteApiTest.chkBoxSelectDeselectAllRun;
+//import static com.automation.bolt.gui.ExecuteApiTest.tableExecuteRegSuite;
 
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -70,7 +70,8 @@ public class boltApiExecutor extends Thread {
         }
             
         bttnStartTestRun.setEnabled(true);
-        bttnRefreshTestRun.setEnabled(true);
+        ExecuteApiTest.bttnRefreshTestRun.setEnabled(true);
+        //bttnRefreshTestRun.setEnabled(true);
         chkBoxFilterFailTest.setEnabled(true);
         chkBoxFilterFailTest.setSelected(false);
         chkBoxSelectDeselectAllRun.setEnabled(true);
