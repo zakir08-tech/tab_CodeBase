@@ -162,7 +162,7 @@ public class UpdateJsonPayload {
 	            jsonElement.replace(tagName, "#.");
             } catch (IOException exp) {
             	exp.printStackTrace();
-            }
+            } catch (StringIndexOutOfBoundsException exp) {}
  
 	    	return getNewString;
     }

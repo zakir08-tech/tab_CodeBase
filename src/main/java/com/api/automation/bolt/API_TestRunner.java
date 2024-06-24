@@ -66,7 +66,7 @@ public class API_TestRunner extends loadAPITestRunner {
     public static boolean stepDefinitionError;
     public static String stepDefinitionErrorMsg;
     
-    public static void runAPItest() throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
+    public static void runAPItest() throws NullPointerException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
     	System.out.println("running api's test!");
     	
         restClient = new HttpClient();
@@ -168,7 +168,7 @@ public class API_TestRunner extends loadAPITestRunner {
                 getPayloadType = testRunnerEntry.getValue().get("Payload Type"); //get payload type
 
                 if (payloadTagElement !=null) {
-                    requestPayload =testRunnerEntry.getValue().get("Payload");
+                    //requestPayload =testRunnerEntry.getValue().get("Payload");
                     requestPayload =UpdateJsonPayload.UpdateJsonTagElement(getApiTestRunId, payloadTagElement, requestPayload.toString());
                 }
 
@@ -438,6 +438,7 @@ public class API_TestRunner extends loadAPITestRunner {
                 
 	        ApiTestRunnerMap.put(getApiTestRunId, testOut_Put);
 	        testOut_Put = new HashMap<>();
+	        VerifyValueAPICommon.errorMapping = new LinkedHashMap<>();
 	        
 	        getThreadStatus =ExecuteApiTest.runThread.isInterrupted();
 	        if(getThreadStatus ==true) {

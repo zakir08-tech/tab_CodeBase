@@ -1132,6 +1132,8 @@ public class EditAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_bttnSaveSuiteMouseExited
 
     private void bttnSaveSuiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnSaveSuiteActionPerformed
+        ExecuteApiTest exeApiTest = new ExecuteApiTest();
+        
         if(getTestFlowSelectedRow !=-1){
             //getElmRepoSelectedRow =tableAddOR.getSelectedRow();
             //tabOutFromEditingColumn(getElmRepoCellEditorStatus, tableAddOR, getRepoCellxPoint, getRepoCellyPoint, getElmRepoSelectedRow);
@@ -1153,6 +1155,7 @@ public class EditAPITest extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(RegressionSuiteScrollPane, "Test suite " + "\"" + excelFileImport.getName(excelFile) + "\"" + " updated and saved!", "Alert", JOptionPane.WARNING_MESSAGE);
                 }
                 bttnSaveSuite.setEnabled(true);
+                exeApiTest.bttnRefreshTestRun.doClick();
             } catch (IOException ex) {
                 Logger.getLogger(EditRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
             }

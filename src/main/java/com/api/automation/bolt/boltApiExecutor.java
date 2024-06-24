@@ -1,8 +1,8 @@
 package com.api.automation.bolt;
  
-import static com.automation.bolt.common.getCurrentDateAndTime;
+//import static com.automation.bolt.common.getCurrentDateAndTime;
 import static com.automation.bolt.gui.ExecuteApiTest.bttnLoadRegSuite;
-import static com.automation.bolt.gui.ExecuteApiTest.bttnRefreshTestRun;
+//import static com.automation.bolt.gui.ExecuteApiTest.bttnRefreshTestRun;
 import static com.automation.bolt.gui.ExecuteApiTest.bttnStartTestRun;
 import static com.automation.bolt.gui.ExecuteApiTest.bttnStopTestRun;
 import static com.automation.bolt.gui.ExecuteApiTest.chkBoxFilterFailTest;
@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import com.automation.bolt.boltRunner;
 import com.automation.bolt.gui.ExecuteApiTest;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.bttnRefreshTestRun;
 
  
 public class boltApiExecutor extends Thread {
