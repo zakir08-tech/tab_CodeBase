@@ -423,7 +423,7 @@ public class ObjectRepoFrame extends javax.swing.JFrame {
                         RegSuite.getObjectListFromObjectRepository(getCurrSheet);
                         RegSuite.ObjectRepositoryList();
                         
-                        RegSuite.testObjectRepoColumn = EditRegressionSuite.RegressionSuiteTable.getColumnModel().getColumn(3);
+                        RegSuite.testObjectRepoColumn = EditRegressionSuite.RegSuiteTable.getColumnModel().getColumn(3);
                         RegSuite.testObjectRepoColumn.setCellEditor(new DefaultCellEditor(RegSuite.comboBoxObjectRepository));
                     }
                     JOptionPane.showMessageDialog(EditRegressionSuite.RegressionSuiteScrollPane,"Test suite "+"\""+EditRegressionSuite.excelFileImport.getName(EditRegressionSuite.excelFile)+"\""+" local repository updated and saved!","Alert",JOptionPane.WARNING_MESSAGE);
@@ -445,7 +445,7 @@ public class ObjectRepoFrame extends javax.swing.JFrame {
                         RegSuite.getObjectListFromObjectRepository(getCurrSheet);
                         RegSuite.ObjectRepositoryList();
                         
-                        RegSuite.testObjectRepoColumn = EditRegressionSuite.RegressionSuiteTable.getColumnModel().getColumn(4);
+                        RegSuite.testObjectRepoColumn = EditRegressionSuite.RegSuiteTable.getColumnModel().getColumn(4);
                         RegSuite.testObjectRepoColumn.setCellEditor(new DefaultCellEditor(RegSuite.comboBoxObjectRepository));
                     }
                 }

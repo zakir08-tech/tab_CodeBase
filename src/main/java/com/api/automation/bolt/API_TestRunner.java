@@ -107,9 +107,9 @@ public class API_TestRunner extends loadAPITestRunner {
 			     }
 			 }
 			
-			ExecuteApiTest.tableExecuteRegSuite.setRowSelectionInterval(getCurrRunId, getCurrRunId);            
-	    	ExecuteApiTest.tableExecuteRegSuite.scrollRectToVisible(ExecuteApiTest.tableExecuteRegSuite.getCellRect(ExecuteApiTest.tableExecuteRegSuite.getSelectedRow(), 0, true));
-	    	ExecuteApiTest.tableExecuteRegSuite.requestFocus();
+			ExecuteApiTest.tabExecuteRegSuite.setRowSelectionInterval(getCurrRunId, getCurrRunId);            
+	    	ExecuteApiTest.tabExecuteRegSuite.scrollRectToVisible(ExecuteApiTest.tabExecuteRegSuite.getCellRect(ExecuteApiTest.tabExecuteRegSuite.getSelectedRow(), 0, true));
+	    	ExecuteApiTest.tabExecuteRegSuite.requestFocus();
 	    	ExecuteApiTest.importDataFromExcelModel.setValueAt("Running...", getCurrRunId, 3);
         	
 	    	blnJSONresponse = false;

@@ -32,6 +32,7 @@ import com.automation.bolt.common;
 import static com.automation.bolt.common.tabOutFromAnyEditingColumn;
 import com.automation.bolt.constants;
 import static com.automation.bolt.gui.EditRegressionSuite.RegressionSuiteScrollPane;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.bttnRefreshTestRun;
 import com.automation.bolt.renderer.tableCellRendererAPI;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -249,7 +250,7 @@ public class EditAPITest extends javax.swing.JFrame {
         scrollVerifyPayload = new javax.swing.JScrollPane();
         txtVerifyPayload = new javax.swing.JTextArea();
         pnlEditApiTest = new javax.swing.JPanel();
-        scrollEditApiTest = new javax.swing.JScrollPane();
+        scrlEditApiTest = new javax.swing.JScrollPane();
         tableEditTestFlow = new javax.swing.JTable();
         dPaneMenu = new javax.swing.JDesktopPane();
         bttnLoadApiTest = new javax.swing.JButton();
@@ -473,21 +474,21 @@ public class EditAPITest extends javax.swing.JFrame {
                 tableEditTestFlowKeyReleased(evt);
             }
         });
-        scrollEditApiTest.setViewportView(tableEditTestFlow);
+        scrlEditApiTest.setViewportView(tableEditTestFlow);
 
         javax.swing.GroupLayout pnlEditApiTestLayout = new javax.swing.GroupLayout(pnlEditApiTest);
         pnlEditApiTest.setLayout(pnlEditApiTestLayout);
         pnlEditApiTestLayout.setHorizontalGroup(
             pnlEditApiTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEditApiTestLayout.createSequentialGroup()
-                .addComponent(scrollEditApiTest)
+                .addComponent(scrlEditApiTest)
                 .addGap(1, 1, 1))
         );
         pnlEditApiTestLayout.setVerticalGroup(
             pnlEditApiTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEditApiTestLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(scrollEditApiTest, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
+                .addComponent(scrlEditApiTest, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -1061,7 +1062,7 @@ public class EditAPITest extends javax.swing.JFrame {
                 tableEditTestFlow.setColumnSelectionInterval(0, 0);
                 tableEditTestFlow.scrollRectToVisible(tableEditTestFlow.getCellRect(rowIndex, 0, true));
             }else
-                  JOptionPane.showMessageDialog(scrollEditApiTest,"Select row to add test step!","Alert",JOptionPane.WARNING_MESSAGE);
+                  JOptionPane.showMessageDialog(scrlEditApiTest,"Select row to add test step!","Alert",JOptionPane.WARNING_MESSAGE);
         }//else
             //JOptionPane.showMessageDialog(scrollEditApiTest,"No test step(s) available to add a new step up!","Alert",JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_bttnAddStepUpActionPerformed
@@ -1994,11 +1995,11 @@ public class EditAPITest extends javax.swing.JFrame {
     public static javax.swing.JLabel lblURL;
     public javax.swing.JLabel lblVerifyPayload;
     public javax.swing.JPanel pnlEditApiTest;
+    public static javax.swing.JScrollPane scrlEditApiTest;
     public static javax.swing.JScrollPane scrlPnlAuthorization;
     public javax.swing.JScrollPane scrlPnlHeaders;
     public javax.swing.JScrollPane scrlPnlParams;
     public static javax.swing.JScrollPane scrlPnlPayload;
-    public static javax.swing.JScrollPane scrollEditApiTest;
     public javax.swing.JScrollPane scrollModifyPayload;
     public javax.swing.JScrollPane scrollVerifyPayload;
     public static javax.swing.JTable tableEditTestFlow;

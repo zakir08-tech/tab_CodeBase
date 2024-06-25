@@ -10,7 +10,6 @@ import static com.automation.bolt.common.checkValueExistInColumn;
 import com.automation.bolt.constants;
 import static com.automation.bolt.gui.EditRegressionSuite.AssociateObjORJCheckBox;
 import static com.automation.bolt.gui.EditRegressionSuite.GlobalORJRadioButton;
-import static com.automation.bolt.gui.EditRegressionSuite.RegressionSuiteTable;
 import static com.automation.bolt.gui.EditRegressionSuite.SaveSuite;
 import static com.automation.bolt.gui.EditRegressionSuite.importDataFromExcelModel;
 import static com.automation.bolt.gui.EditRegressionSuite.testIdTxt;
@@ -71,6 +70,7 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.automation.bolt.renderer.*;
+import static com.automation.bolt.gui.EditRegressionSuite.RegSuiteTable;
 
 /**
  *
@@ -541,12 +541,12 @@ public class TestElementRepository extends javax.swing.JFrame {
         }
         
         if(EditRegressionSuite.checkEditorIsShowing() ==true)
-                tabOutFromEditingColumn(false, RegressionSuiteTable, 
+                tabOutFromEditingColumn(false, RegSuiteTable, 
                 getFlowCellxPoint, 
                 getFlowCellyPoint, 
-                RegressionSuiteTable.getSelectedRow());
+                RegSuiteTable.getSelectedRow());
         
-        if(common.checkForDuplicateTestId(importDataFromExcelModel, RegressionSuiteTable, RegressionSuiteTable.getSelectedRow(), testIdTxt) ==true){
+        if(common.checkForDuplicateTestId(importDataFromExcelModel, RegSuiteTable, RegSuiteTable.getSelectedRow(), testIdTxt) ==true){
             return;
         }
         
@@ -565,7 +565,7 @@ public class TestElementRepository extends javax.swing.JFrame {
                         RegSuite.getObjectListFromObjectRepository(getCurrSheet);
                         RegSuite.ObjectRepositoryList();
                         
-                        RegSuite.testObjectRepoColumn = EditRegressionSuite.RegressionSuiteTable.getColumnModel().getColumn(3);
+                        RegSuite.testObjectRepoColumn = EditRegressionSuite.RegSuiteTable.getColumnModel().getColumn(3);
                         RegSuite.testObjectRepoColumn.setCellEditor(new DefaultCellEditor(RegSuite.comboBoxObjectRepository));
                     }
                     JOptionPane.showMessageDialog(null,"Test suite "+"\""+EditRegressionSuite.excelFileImport.getName(EditRegressionSuite.excelFile)+"\""+" local repository updated and saved!","Alert",JOptionPane.WARNING_MESSAGE);
@@ -573,10 +573,10 @@ public class TestElementRepository extends javax.swing.JFrame {
                     try{
                         for (Map.Entry<Integer,String> entry : newTestElmList.entrySet()){
                             if(!testElmList.get(entry.getKey()).toString().contentEquals(entry.getValue())){
-                                for(int i=0; i<RegressionSuiteTable.getRowCount(); i++){
-                                    String getElm =RegressionSuiteTable.getValueAt(i, 3).toString();
+                                for(int i=0; i<RegSuiteTable.getRowCount(); i++){
+                                    String getElm =RegSuiteTable.getValueAt(i, 3).toString();
                                     if(testElmList.get(entry.getKey()).toString().contentEquals(getElm)){
-                                        RegressionSuiteTable.setValueAt(entry.getValue(), i, 3);
+                                        RegSuiteTable.setValueAt(entry.getValue(), i, 3);
                                     }
                                 }
                             }    
@@ -610,7 +610,7 @@ public class TestElementRepository extends javax.swing.JFrame {
                         RegSuite.getObjectListFromObjectRepository(getCurrSheet);
                         RegSuite.ObjectRepositoryList();
                         
-                        RegSuite.testObjectRepoColumn = EditRegressionSuite.RegressionSuiteTable.getColumnModel().getColumn(3);
+                        RegSuite.testObjectRepoColumn = EditRegressionSuite.RegSuiteTable.getColumnModel().getColumn(3);
                         RegSuite.testObjectRepoColumn.setCellEditor(new DefaultCellEditor(RegSuite.comboBoxObjectRepository));
                     }
                 }
@@ -619,10 +619,10 @@ public class TestElementRepository extends javax.swing.JFrame {
                     try{
                         for (Map.Entry<Integer,String> entry : newTestElmList.entrySet()){
                             if(!testElmList.get(entry.getKey()).toString().contentEquals(entry.getValue())){
-                                for(int i=0; i<RegressionSuiteTable.getRowCount(); i++){
-                                    String getElm =RegressionSuiteTable.getValueAt(i, 3).toString();
+                                for(int i=0; i<RegSuiteTable.getRowCount(); i++){
+                                    String getElm =RegSuiteTable.getValueAt(i, 3).toString();
                                     if(testElmList.get(entry.getKey()).toString().contentEquals(getElm)){
-                                        RegressionSuiteTable.setValueAt(entry.getValue(), i, 3);
+                                        RegSuiteTable.setValueAt(entry.getValue(), i, 3);
                                     }
                                 }
                             }    
@@ -709,7 +709,7 @@ public class TestElementRepository extends javax.swing.JFrame {
             if(!getValAt.isEmpty() && (EditRegressionSuite.LocalORJRadioButton.isSelected() || 
                 EditRegressionSuite.AssociateObjORJCheckBox.isSelected())){
                 
-                boolean fndElementExist =checkValueExistInColumn(RegressionSuiteTable,"TestElement",getValAt);
+                boolean fndElementExist =checkValueExistInColumn(RegSuiteTable,"TestElement",getValAt);
 
                 if(fndElementExist){
                     int response = JOptionPane.showConfirmDialog(null, //

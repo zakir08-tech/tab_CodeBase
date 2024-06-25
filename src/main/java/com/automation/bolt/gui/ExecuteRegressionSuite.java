@@ -88,6 +88,7 @@ import com.automation.bolt.boltExecutor;
 import com.automation.bolt.constants;
 import com.automation.bolt.glueCode;
 import com.automation.bolt.renderer.RunTableColorCellRenderer;
+import java.awt.Color;
 
 /**
  *
@@ -177,7 +178,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
         bttnRefreshTestRun = new JButton();
         rdBttnTimeouts = new JRadioButton();
         lblTestType = new JLabel();
-        jTextTestType = new JTextField();
+        txtTestType = new JTextField();
         jDesktopPane2 = new JDesktopPane();
         pnlHeader = new JPanel();
         chkBoxSelectDeselectAllRun = new JCheckBox();
@@ -186,7 +187,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Execute Test Suite");
-        setBackground(java.awt.Color.lightGray);
+        setBackground(Color.lightGray);
         setBounds(new Rectangle(0, 0, 973, 500));
         setIconImages(null);
         setMaximumSize(new Dimension(900, 467));
@@ -208,15 +209,15 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
             }
         });
 
-        scrollExecuteRegSuite.setBackground(new java.awt.Color(51, 51, 51));
+        scrollExecuteRegSuite.setBackground(new Color(51, 51, 51));
         scrollExecuteRegSuite.setAutoscrolls(true);
         scrollExecuteRegSuite.setFont(new Font("Calibri", 0, 12)); // NOI18N
         scrollExecuteRegSuite.setMinimumSize(new Dimension(452, 402));
 
-        tableExecuteRegSuite.setBackground(new java.awt.Color(51, 51, 51));
+        tableExecuteRegSuite.setBackground(new Color(51, 51, 51));
         tableExecuteRegSuite.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
         tableExecuteRegSuite.setFont(new Font("Consolas", 0, 14)); // NOI18N
-        tableExecuteRegSuite.setForeground(new java.awt.Color(255, 255, 255));
+        tableExecuteRegSuite.setForeground(new Color(255, 255, 255));
         tableExecuteRegSuite.setModel(new DefaultTableModel(
             new Object [][] {
 
@@ -276,14 +277,14 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
             tableExecuteRegSuite.getColumnModel().getColumn(1).setPreferredWidth(10);
         }
 
-        pnlRunMenuBar.setBackground(new java.awt.Color(0, 153, 153));
+        pnlRunMenuBar.setBackground(new Color(0, 153, 153));
         pnlRunMenuBar.setMaximumSize(new Dimension(214, 455));
         pnlRunMenuBar.setMinimumSize(new Dimension(214, 455));
         pnlRunMenuBar.setOpaque(false);
 
-        chkBoxAssociateObjOR.setBackground(new java.awt.Color(0, 153, 153));
+        chkBoxAssociateObjOR.setBackground(new Color(0, 153, 153));
         chkBoxAssociateObjOR.setFont(new Font("Consolas", 1, 12)); // NOI18N
-        chkBoxAssociateObjOR.setForeground(new java.awt.Color(255, 255, 255));
+        chkBoxAssociateObjOR.setForeground(new Color(255, 255, 255));
         chkBoxAssociateObjOR.setText("Associate Global OR");
         chkBoxAssociateObjOR.setToolTipText("select to use global repository for execution");
         chkBoxAssociateObjOR.setEnabled(false);
@@ -302,9 +303,9 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
             }
         });
 
-        bttnLoadRegSuite.setBackground(new java.awt.Color(0, 0, 0));
+        bttnLoadRegSuite.setBackground(new Color(0, 0, 0));
         bttnLoadRegSuite.setFont(new Font("Consolas", 1, 14)); // NOI18N
-        bttnLoadRegSuite.setForeground(new java.awt.Color(255, 255, 255));
+        bttnLoadRegSuite.setForeground(new Color(255, 255, 255));
         bttnLoadRegSuite.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addUploadTestSuite.png"));
             bttnLoadRegSuite.setText("Upload Test Suite ");
             bttnLoadRegSuite.setToolTipText("open and upload the test suite for execution");
@@ -333,9 +334,9 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                 }
             });
 
-            chkBoxRunHeadless.setBackground(new java.awt.Color(0, 153, 153));
+            chkBoxRunHeadless.setBackground(new Color(0, 153, 153));
             chkBoxRunHeadless.setFont(new Font("Consolas", 1, 12)); // NOI18N
-            chkBoxRunHeadless.setForeground(new java.awt.Color(255, 255, 255));
+            chkBoxRunHeadless.setForeground(new Color(255, 255, 255));
             chkBoxRunHeadless.setText("Run Headless");
             chkBoxRunHeadless.setToolTipText("select to execute headless");
             chkBoxRunHeadless.setEnabled(false);
@@ -354,9 +355,9 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                 }
             });
 
-            bttnStartTestRun.setBackground(new java.awt.Color(0, 0, 0));
+            bttnStartTestRun.setBackground(new Color(0, 0, 0));
             bttnStartTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
-            bttnStartTestRun.setForeground(new java.awt.Color(255, 255, 255));
+            bttnStartTestRun.setForeground(new Color(255, 255, 255));
             bttnStartTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/startTestRun.png"));
                 bttnStartTestRun.setText("Start Test Run");
                 bttnStartTestRun.setToolTipText("start test execution");
@@ -383,14 +384,14 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                     }
                 });
 
-                pnlTimeOuts.setBackground(new java.awt.Color(0, 153, 153));
+                pnlTimeOuts.setBackground(new Color(0, 153, 153));
                 pnlTimeOuts.setOpaque(false);
 
-                lblImplicitWait.setForeground(new java.awt.Color(204, 204, 204));
+                lblImplicitWait.setForeground(new Color(204, 204, 204));
                 lblImplicitWait.setText("Implicit Wait");
 
-                txtImplicitWait.setBackground(new java.awt.Color(0, 0, 0));
-                txtImplicitWait.setForeground(new java.awt.Color(255, 255, 0));
+                txtImplicitWait.setBackground(new Color(0, 0, 0));
+                txtImplicitWait.setForeground(new Color(255, 255, 0));
                 txtImplicitWait.setHorizontalAlignment(JTextField.CENTER);
                 txtImplicitWait.setText("60");
                 txtImplicitWait.setBorder(null);
@@ -411,11 +412,11 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                     }
                 });
 
-                lblPageLoadTimeout.setForeground(new java.awt.Color(204, 204, 204));
+                lblPageLoadTimeout.setForeground(new Color(204, 204, 204));
                 lblPageLoadTimeout.setText("Page Load Timeout");
 
-                txtPageLoadTimeout.setBackground(new java.awt.Color(0, 0, 0));
-                txtPageLoadTimeout.setForeground(new java.awt.Color(255, 255, 0));
+                txtPageLoadTimeout.setBackground(new Color(0, 0, 0));
+                txtPageLoadTimeout.setForeground(new Color(255, 255, 0));
                 txtPageLoadTimeout.setHorizontalAlignment(JTextField.CENTER);
                 txtPageLoadTimeout.setText("60");
                 txtPageLoadTimeout.setBorder(null);
@@ -464,9 +465,9 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                         .addContainerGap())
                 );
 
-                bttnStopTestRun.setBackground(new java.awt.Color(0, 0, 0));
+                bttnStopTestRun.setBackground(new Color(0, 0, 0));
                 bttnStopTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
-                bttnStopTestRun.setForeground(new java.awt.Color(255, 255, 255));
+                bttnStopTestRun.setForeground(new Color(255, 255, 255));
                 bttnStopTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/stopTestRun.png"));
                     bttnStopTestRun.setText("Stop Test Run");
                     bttnStopTestRun.setToolTipText("stop test execution");
@@ -496,8 +497,8 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                         }
                     });
 
-                    rdButtonChrome.setBackground(new java.awt.Color(0, 153, 153));
-                    rdButtonChrome.setForeground(new java.awt.Color(51, 51, 51));
+                    rdButtonChrome.setBackground(new Color(0, 153, 153));
+                    rdButtonChrome.setForeground(new Color(51, 51, 51));
                     rdButtonChrome.setSelected(true);
                     rdButtonChrome.setHorizontalAlignment(SwingConstants.LEFT);
                     rdButtonChrome.addMouseListener(new MouseAdapter() {
@@ -533,8 +534,8 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                             }
                         });
 
-                        rdButtonEdge.setBackground(new java.awt.Color(0, 153, 153));
-                        rdButtonEdge.setForeground(new java.awt.Color(51, 51, 51));
+                        rdButtonEdge.setBackground(new Color(0, 153, 153));
+                        rdButtonEdge.setForeground(new Color(51, 51, 51));
                         rdButtonEdge.addMouseListener(new MouseAdapter() {
                             public void mouseEntered(MouseEvent evt) {
                                 rdButtonEdgeMouseEntered(evt);
@@ -564,12 +565,12 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                             });
 
                             lblRunwith.setFont(new Font("Consolas", 1, 12)); // NOI18N
-                            lblRunwith.setForeground(new java.awt.Color(255, 255, 255));
+                            lblRunwith.setForeground(new Color(255, 255, 255));
                             lblRunwith.setText("Run With:");
 
-                            bttnRefreshTestRun.setBackground(new java.awt.Color(0, 0, 0));
+                            bttnRefreshTestRun.setBackground(new Color(0, 0, 0));
                             bttnRefreshTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
-                            bttnRefreshTestRun.setForeground(new java.awt.Color(255, 255, 255));
+                            bttnRefreshTestRun.setForeground(new Color(255, 255, 255));
                             bttnRefreshTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/refreshTestRun.png"));
                                 bttnRefreshTestRun.setText("Refresh Test run");
                                 bttnRefreshTestRun.setToolTipText("Refresh to reload test run for new changes");
@@ -598,9 +599,9 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                     }
                                 });
 
-                                rdBttnTimeouts.setBackground(new java.awt.Color(0, 153, 153));
+                                rdBttnTimeouts.setBackground(new Color(0, 153, 153));
                                 rdBttnTimeouts.setFont(new Font("Consolas", 1, 12)); // NOI18N
-                                rdBttnTimeouts.setForeground(new java.awt.Color(255, 255, 255));
+                                rdBttnTimeouts.setForeground(new Color(255, 255, 255));
                                 rdBttnTimeouts.setText("Timeouts (in seconds):");
                                 rdBttnTimeouts.setToolTipText("set wait");
                                 rdBttnTimeouts.addMouseListener(new MouseAdapter() {
@@ -618,7 +619,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                 });
 
                                 lblTestType.setFont(new Font("Consolas", 1, 12)); // NOI18N
-                                lblTestType.setForeground(new java.awt.Color(255, 255, 255));
+                                lblTestType.setForeground(new Color(255, 255, 255));
                                 lblTestType.setText("Test Type: @Tag");
                                 lblTestType.addMouseListener(new MouseAdapter() {
                                     public void mouseEntered(MouseEvent evt) {
@@ -629,16 +630,16 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                     }
                                 });
 
-                                jTextTestType.setBackground(new java.awt.Color(0, 0, 0));
-                                jTextTestType.setFont(new Font("Arial", 0, 14)); // NOI18N
-                                jTextTestType.setForeground(java.awt.Color.pink);
-                                jTextTestType.setHorizontalAlignment(JTextField.LEFT);
-                                jTextTestType.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
-                                jTextTestType.setCursor(new Cursor(Cursor.TEXT_CURSOR));
-                                jTextTestType.setName("SetTestType"); // NOI18N
-                                jTextTestType.addFocusListener(new FocusAdapter() {
+                                txtTestType.setBackground(new Color(0, 0, 0));
+                                txtTestType.setFont(new Font("Arial", 0, 14)); // NOI18N
+                                txtTestType.setForeground(Color.pink);
+                                txtTestType.setHorizontalAlignment(JTextField.LEFT);
+                                txtTestType.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+                                txtTestType.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+                                txtTestType.setName("SetTestType"); // NOI18N
+                                txtTestType.addFocusListener(new FocusAdapter() {
                                     public void focusLost(FocusEvent evt) {
-                                        jTextTestTypeFocusLost(evt);
+                                        txtTestTypeFocusLost(evt);
                                     }
                                 });
 
@@ -675,7 +676,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                                             .addComponent(lblRunwith, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
                                                             .addComponent(lblTestType, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE))))
                                                 .addGap(0, 0, Short.MAX_VALUE))
-                                            .addComponent(jTextTestType))
+                                            .addComponent(txtTestType))
                                         .addContainerGap())
                                 );
                                 pnlRunMenuBarLayout.setVerticalGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -697,7 +698,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(lblTestType)
                                         .addGap(0, 0, 0)
-                                        .addComponent(jTextTestType, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtTestType, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(chkBoxAssociateObjOR, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -736,12 +737,12 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                         .addGap(1, 1, 1))
                                 );
 
-                                pnlHeader.setBackground(new java.awt.Color(0, 153, 153));
+                                pnlHeader.setBackground(new Color(0, 153, 153));
                                 pnlHeader.setMinimumSize(new Dimension(206, 40));
                                 pnlHeader.setOpaque(false);
 
                                 chkBoxSelectDeselectAllRun.setFont(new Font("Calibri", 1, 10)); // NOI18N
-                                chkBoxSelectDeselectAllRun.setForeground(new java.awt.Color(255, 255, 255));
+                                chkBoxSelectDeselectAllRun.setForeground(new Color(255, 255, 255));
                                 chkBoxSelectDeselectAllRun.setText("Select ALL Run");
                                 chkBoxSelectDeselectAllRun.setToolTipText("will select all test(s) for run");
                                 chkBoxSelectDeselectAllRun.setBorder(null);
@@ -763,7 +764,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                 });
 
                                 chkBoxFilterFailTest.setFont(new Font("Calibri", 1, 10)); // NOI18N
-                                chkBoxFilterFailTest.setForeground(new java.awt.Color(255, 255, 255));
+                                chkBoxFilterFailTest.setForeground(new Color(255, 255, 255));
                                 chkBoxFilterFailTest.setText("Filter FAIL test(s)");
                                 chkBoxFilterFailTest.setToolTipText("will select only failed test(s) for re-run");
                                 chkBoxFilterFailTest.setBorder(null);
@@ -787,7 +788,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                 });
 
                                 lblTestResultView.setFont(new Font("Calibri", 1, 10)); // NOI18N
-                                lblTestResultView.setForeground(new java.awt.Color(0, 51, 51));
+                                lblTestResultView.setForeground(new Color(0, 51, 51));
                                 lblTestResultView.setHorizontalAlignment(SwingConstants.RIGHT);
                                 lblTestResultView.setText(" * Double click Test Status to view test result");
                                 lblTestResultView.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -945,7 +946,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
         //textTestType = ((JTextField) cBoxTestType.getEditor().getEditorComponent());
         //textTestType.setForeground(new java.awt.Color(255,102,102));
         //textTestType.setFont(new Font("Comic Sans MS",0,12));
-        jTextTestType.setEnabled(false);
+        txtTestType.setEnabled(false);
     }//GEN-LAST:event_formWindowOpened
 
     private void bttnStartTestRunMouseEntered(MouseEvent evt) {//GEN-FIRST:event_bttnStartTestRunMouseEntered
@@ -1080,7 +1081,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                     objRepo.openObjectRepository(excelSheetObjectRepository);
                 }
                 this.setTitle("Execute Test Suite: "+excelFileImport.getName(excelFile));
-                jTextTestType.setEnabled(true);
+                txtTestType.setEnabled(true);
             } catch (FileNotFoundException exp) {
                     if(exp.getMessage().contains("The system cannot find the file specified")){
                         JOptionPane.showMessageDialog(scrollExecuteRegSuite,"No test suite "+"\""+excelFileImport.getName(excelFile)+"\""+" found to upload!","Alert",JOptionPane.WARNING_MESSAGE);
@@ -1249,13 +1250,13 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowGainedFocus
 
     private void bttnStartTestRunMouseReleased(MouseEvent evt) {//GEN-FIRST:event_bttnStartTestRunMouseReleased
-        if(jTextTestType.getText().trim().contentEquals("@") || !jTextTestType.getText().trim().startsWith("@") && 
-                !jTextTestType.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(scrollExecuteRegSuite,"Tag name is not properly defined ["+jTextTestType.getText()+"]");
+        if(txtTestType.getText().trim().contentEquals("@") || !txtTestType.getText().trim().startsWith("@") && 
+                !txtTestType.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(scrollExecuteRegSuite,"Tag name is not properly defined ["+txtTestType.getText()+"]");
             return;
         }
         
-        if(!jTextTestType.getText().trim().isEmpty()){
+        if(!txtTestType.getText().trim().isEmpty()){
             if(selectTestAsPerTestType() ==false){return;}
         }
         
@@ -1397,7 +1398,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
         
         for(int x=0; x<getRowCnt; x++){
             String getTestStatus =tableExecuteRegSuite.getValueAt(x, 2).toString(); 
-            if(getTestStatus.toLowerCase().contains(jTextTestType.getText().toLowerCase())){
+            if(getTestStatus.toLowerCase().contains(txtTestType.getText().toLowerCase())){
                 importDataFromExcelModel.setValueAt(true, x, 0);
                 tagFound =true;
             }else
@@ -1410,7 +1411,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
             chkBoxSelectDeselectAllRun.setSelected(true);
         
         if(tagFound ==false){
-            JOptionPane.showMessageDialog(scrollExecuteRegSuite,"No test is marked with the given tag ["+jTextTestType.getText()+"]");
+            JOptionPane.showMessageDialog(scrollExecuteRegSuite,"No test is marked with the given tag ["+txtTestType.getText()+"]");
         }
         
         return tagFound;
@@ -1676,12 +1677,12 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
         lblTestType.setForeground(new java.awt.Color(255,255,255)); 
     }//GEN-LAST:event_lblTestTypeMouseExited
 
-    private void jTextTestTypeFocusLost(FocusEvent evt) {//GEN-FIRST:event_jTextTestTypeFocusLost
+    private void txtTestTypeFocusLost(FocusEvent evt) {//GEN-FIRST:event_txtTestTypeFocusLost
         //if(!jTextTestType.getText().isEmpty() &&
             //jTextTestType.getText().startsWith("@")){
             //selectTestAsPerTestType();
         //}
-    }//GEN-LAST:event_jTextTestTypeFocusLost
+    }//GEN-LAST:event_txtTestTypeFocusLost
          
     public void runTestWithChrome(){
         if(rdButtonChrome.isSelected() ==true){
@@ -1980,7 +1981,6 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
     public static JCheckBox chkBoxSelectDeselectAllRun;
     public JDesktopPane jDesktopPane1;
     public JDesktopPane jDesktopPane2;
-    public static JTextField jTextTestType;
     public static JLabel lblChrome;
     public static JLabel lblEdge;
     public JLabel lblImplicitWait;
@@ -1998,5 +1998,6 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
     public static JTable tableExecuteRegSuite;
     public static JTextField txtImplicitWait;
     public JTextField txtPageLoadTimeout;
+    public static JTextField txtTestType;
     // End of variables declaration//GEN-END:variables
 }

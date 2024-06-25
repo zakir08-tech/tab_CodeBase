@@ -122,7 +122,7 @@ public class SSLCertificate extends javax.swing.JFrame {
         
         initComponents();
         //setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-        createSuiteTabModel =(DefaultTableModel) tableSSLCertConfig.getModel();
+        createSuiteTabModel =(DefaultTableModel) tabSSLCertConfig.getModel();
         
         //testIdCol =tableSSLCertConfig.getColumnModel().getColumn(0);
         //testIdCol.setCellEditor(new DefaultCellEditor(testIdTxt));
@@ -193,7 +193,7 @@ public class SSLCertificate extends javax.swing.JFrame {
         bttnAddStepDown = new javax.swing.JButton();
         bttnSaveSuite = new javax.swing.JButton();
         scrollPaneTestFlow = new javax.swing.JScrollPane();
-        tableSSLCertConfig = new javax.swing.JTable();
+        tabSSLCertConfig = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SSL Certificate Configuration");
@@ -393,10 +393,10 @@ public class SSLCertificate extends javax.swing.JFrame {
 
                             scrollPaneTestFlow.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-                            tableSSLCertConfig.setBackground(new java.awt.Color(51, 51, 51));
-                            tableSSLCertConfig.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
-                            tableSSLCertConfig.setForeground(new java.awt.Color(255, 255, 255));
-                            tableSSLCertConfig.setModel(new javax.swing.table.DefaultTableModel(
+                            tabSSLCertConfig.setBackground(new java.awt.Color(51, 51, 51));
+                            tabSSLCertConfig.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+                            tabSSLCertConfig.setForeground(new java.awt.Color(255, 255, 255));
+                            tabSSLCertConfig.setModel(new javax.swing.table.DefaultTableModel(
                                 new Object [][] {
 
                                 },
@@ -404,34 +404,34 @@ public class SSLCertificate extends javax.swing.JFrame {
                                     "SSL Name", "KeyStore", "KeyStore Password", "TrustStore", "TrustStore Password"
                                 }
                             ));
-                            tableSSLCertConfig.setName("tableSSLCertConfig"); // NOI18N
-                            tableSSLCertConfig.setRowHeight(30);
-                            tableSSLCertConfig.setRowMargin(2);
-                            tableSSLCertConfig.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-                            tableSSLCertConfig.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-                            tableSSLCertConfig.setShowGrid(true);
-                            tableSSLCertConfig.getTableHeader().setReorderingAllowed(false);
-                            tableSSLCertConfig.setUpdateSelectionOnSort(false);
-                            tableSSLCertConfig.setVerifyInputWhenFocusTarget(false);
-                            tableSSLCertConfig.addFocusListener(new java.awt.event.FocusAdapter() {
+                            tabSSLCertConfig.setName("tabSSLCertConfig"); // NOI18N
+                            tabSSLCertConfig.setRowHeight(30);
+                            tabSSLCertConfig.setRowMargin(2);
+                            tabSSLCertConfig.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+                            tabSSLCertConfig.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+                            tabSSLCertConfig.setShowGrid(true);
+                            tabSSLCertConfig.getTableHeader().setReorderingAllowed(false);
+                            tabSSLCertConfig.setUpdateSelectionOnSort(false);
+                            tabSSLCertConfig.setVerifyInputWhenFocusTarget(false);
+                            tabSSLCertConfig.addFocusListener(new java.awt.event.FocusAdapter() {
                                 public void focusLost(java.awt.event.FocusEvent evt) {
-                                    tableSSLCertConfigFocusLost(evt);
+                                    tabSSLCertConfigFocusLost(evt);
                                 }
                             });
-                            tableSSLCertConfig.addMouseListener(new java.awt.event.MouseAdapter() {
+                            tabSSLCertConfig.addMouseListener(new java.awt.event.MouseAdapter() {
                                 public void mousePressed(java.awt.event.MouseEvent evt) {
-                                    tableSSLCertConfigMousePressed(evt);
+                                    tabSSLCertConfigMousePressed(evt);
                                 }
                                 public void mouseReleased(java.awt.event.MouseEvent evt) {
-                                    tableSSLCertConfigMouseReleased(evt);
+                                    tabSSLCertConfigMouseReleased(evt);
                                 }
                             });
-                            tableSSLCertConfig.addKeyListener(new java.awt.event.KeyAdapter() {
+                            tabSSLCertConfig.addKeyListener(new java.awt.event.KeyAdapter() {
                                 public void keyReleased(java.awt.event.KeyEvent evt) {
-                                    tableSSLCertConfigKeyReleased(evt);
+                                    tabSSLCertConfigKeyReleased(evt);
                                 }
                             });
-                            scrollPaneTestFlow.setViewportView(tableSSLCertConfig);
+                            scrollPaneTestFlow.setViewportView(tabSSLCertConfig);
 
                             javax.swing.GroupLayout pnlCreateTestSuiteLayout = new javax.swing.GroupLayout(pnlCreateTestSuite);
                             pnlCreateTestSuite.setLayout(pnlCreateTestSuiteLayout);
@@ -471,7 +471,7 @@ public class SSLCertificate extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         tableSSLCertConfig renderer = new tableSSLCertConfig();
-        tableSSLCertConfig.setDefaultRenderer(Object.class, renderer);
+        tabSSLCertConfig.setDefaultRenderer(Object.class, renderer);
     }//GEN-LAST:event_formWindowActivated
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -485,8 +485,8 @@ public class SSLCertificate extends javax.swing.JFrame {
         });
         
         try{
-            tableSSLCertConfig.setColumnSelectionInterval(0, 0);
-            tableSSLCertConfig.setRowSelectionInterval(0, 0);
+            tabSSLCertConfig.setColumnSelectionInterval(0, 0);
+            tabSSLCertConfig.setRowSelectionInterval(0, 0);
         }catch (IllegalArgumentException exp){}
         
         fileSaved =false;
@@ -504,25 +504,25 @@ public class SSLCertificate extends javax.swing.JFrame {
 
     private void bttnAddNewTestStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnAddNewTestStepActionPerformed
         if(getTestFlowSelectedRow !=-1){
-            getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
-            tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableSSLCertConfig, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
+            getTestFlowSelectedRow =tabSSLCertConfig.getSelectedRow();
+            tabOutFromEditingColumn(getTestFlowCellEditorStatus, tabSSLCertConfig, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
                 
         Object getPreviosTestStepNo =null;
-        if(tableSSLCertConfig.getRowCount() ==0)
+        if(tabSSLCertConfig.getRowCount() ==0)
             getPreviosTestStepNo ="0";
         else
-            getPreviosTestStepNo = tableSSLCertConfig.getValueAt(tableSSLCertConfig.getRowCount()-1, 1);
+            getPreviosTestStepNo = tabSSLCertConfig.getValueAt(tabSSLCertConfig.getRowCount()-1, 1);
         
         createSuiteTabModel.addRow(new Object[] {null,null,null,null,null,null});
-        tableSSLCertConfig.setColumnSelectionInterval(0, 0);
+        tabSSLCertConfig.setColumnSelectionInterval(0, 0);
         //tableAddTestFlow.setValueAt(Integer.valueOf(getPreviosTestStepNo.toString())+1, tableAddTestFlow.getRowCount()-1, 1);
-        tableSSLCertConfig.setRowSelectionInterval(tableSSLCertConfig.getRowCount()-1, tableSSLCertConfig.getRowCount()-1);
-        tableSSLCertConfig.scrollRectToVisible(tableSSLCertConfig.getCellRect(tableSSLCertConfig.getRowCount()-1,0, true));
-        tableSSLCertConfig.requestFocus();
-        getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
+        tabSSLCertConfig.setRowSelectionInterval(tabSSLCertConfig.getRowCount()-1, tabSSLCertConfig.getRowCount()-1);
+        tabSSLCertConfig.scrollRectToVisible(tabSSLCertConfig.getCellRect(tabSSLCertConfig.getRowCount()-1,0, true));
+        tabSSLCertConfig.requestFocus();
+        getTestFlowSelectedRow =tabSSLCertConfig.getSelectedRow();
         
-        getCurrRowBeforeKeyPressed =tableSSLCertConfig.getSelectedRow();
+        getCurrRowBeforeKeyPressed =tabSSLCertConfig.getSelectedRow();
         //updateAPIAttributeData();
     }//GEN-LAST:event_bttnAddNewTestStepActionPerformed
 
@@ -538,18 +538,18 @@ public class SSLCertificate extends javax.swing.JFrame {
 
     private void bttnDeleteTestStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnDeleteTestStepActionPerformed
         if(getTestFlowSelectedRow !=-1){
-            getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
-            tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableSSLCertConfig, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
+            getTestFlowSelectedRow =tabSSLCertConfig.getSelectedRow();
+            tabOutFromEditingColumn(getTestFlowCellEditorStatus, tabSSLCertConfig, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
         String getTestId ="";
             
-        if (tableSSLCertConfig.getRowCount() > 0) {
-            getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
-            int rowIndex =tableSSLCertConfig.getSelectedRow();
+        if (tabSSLCertConfig.getRowCount() > 0) {
+            getTestFlowSelectedRow =tabSSLCertConfig.getSelectedRow();
+            int rowIndex =tabSSLCertConfig.getSelectedRow();
             
             try {
-                getTestId =tableSSLCertConfig.getValueAt(rowIndex, 0).toString();
+                getTestId =tabSSLCertConfig.getValueAt(rowIndex, 0).toString();
             } catch (NullPointerException exp) {
                 getTestId ="";
             }
@@ -557,23 +557,23 @@ public class SSLCertificate extends javax.swing.JFrame {
             createSuiteTabModel.removeRow(rowIndex);
             
             try {
-                tableSSLCertConfig.setRowSelectionInterval(rowIndex-1, rowIndex-1);
-                tableSSLCertConfig.setColumnSelectionInterval(0, 0);
-                tableSSLCertConfig.requestFocus();
+                tabSSLCertConfig.setRowSelectionInterval(rowIndex-1, rowIndex-1);
+                tabSSLCertConfig.setColumnSelectionInterval(0, 0);
+                tabSSLCertConfig.requestFocus();
             }catch(IllegalArgumentException exp) {
-            	rowIndex =tableSSLCertConfig.getSelectedRow();
-            	if(rowIndex ==-1 && tableSSLCertConfig.getRowCount() ==0)
+            	rowIndex =tabSSLCertConfig.getSelectedRow();
+            	if(rowIndex ==-1 && tabSSLCertConfig.getRowCount() ==0)
             		{return;}
             	
-            	rowIndex =tableSSLCertConfig.getSelectedRow();
+            	rowIndex =tabSSLCertConfig.getSelectedRow();
             	if(rowIndex ==-1)
             		rowIndex =0;
-            	else if(tableSSLCertConfig.getRowCount() ==-1)
+            	else if(tabSSLCertConfig.getRowCount() ==-1)
             		return;
             	
-            	tableSSLCertConfig.setRowSelectionInterval(rowIndex, rowIndex);
-                tableSSLCertConfig.setColumnSelectionInterval(0, 0);
-                tableSSLCertConfig.requestFocus();
+            	tabSSLCertConfig.setRowSelectionInterval(rowIndex, rowIndex);
+                tabSSLCertConfig.setColumnSelectionInterval(0, 0);
+                tabSSLCertConfig.requestFocus();
             }
     
         }else {
@@ -593,35 +593,35 @@ public class SSLCertificate extends javax.swing.JFrame {
 
     private void bttnAddStepUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnAddStepUpActionPerformed
         if(getTestFlowSelectedRow !=-1){
-            getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
-            tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableSSLCertConfig, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
+            getTestFlowSelectedRow =tabSSLCertConfig.getSelectedRow();
+            tabOutFromEditingColumn(getTestFlowCellEditorStatus, tabSSLCertConfig, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
-        if(tableSSLCertConfig.getRowCount()>0){
-            getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
-            int rowIndex =tableSSLCertConfig.getSelectedRow();
+        if(tabSSLCertConfig.getRowCount()>0){
+            getTestFlowSelectedRow =tabSSLCertConfig.getSelectedRow();
+            int rowIndex =tabSSLCertConfig.getSelectedRow();
             
             if(rowIndex ==0) {
             	try {
-                    tableSSLCertConfig.setColumnSelectionInterval(rowIndex, 0);
+                    tabSSLCertConfig.setColumnSelectionInterval(rowIndex, 0);
                     return;
             	}catch(IllegalArgumentException exp) {return;}
             }
             	
             if(rowIndex !=-1){
-                rowIndex =tableSSLCertConfig.getSelectedRow();
+                rowIndex =tabSSLCertConfig.getSelectedRow();
                 String getTestId = null;
                     
                 try{
-                    getTestId =tableSSLCertConfig.getValueAt(rowIndex, 0).toString();
+                    getTestId =tabSSLCertConfig.getValueAt(rowIndex, 0).toString();
                 }catch(NullPointerException exp){
                     getTestId ="";
                 }
                                     
                 createSuiteTabModel.insertRow(rowIndex, new Object[] {null,null,null,null,null,null });
-                tableSSLCertConfig.setRowSelectionInterval(rowIndex, rowIndex);
-                tableSSLCertConfig.setColumnSelectionInterval(0, 0);
-                tableSSLCertConfig.scrollRectToVisible(tableSSLCertConfig.getCellRect(rowIndex, 0, true));
+                tabSSLCertConfig.setRowSelectionInterval(rowIndex, rowIndex);
+                tabSSLCertConfig.setColumnSelectionInterval(0, 0);
+                tabSSLCertConfig.scrollRectToVisible(tabSSLCertConfig.getCellRect(rowIndex, 0, true));
             }else
                   JOptionPane.showMessageDialog(scrollPaneTestFlow,"Select row to add test step!","Alert",JOptionPane.WARNING_MESSAGE);
         }else
@@ -640,38 +640,38 @@ public class SSLCertificate extends javax.swing.JFrame {
 
     private void bttnAddStepDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnAddStepDownActionPerformed
         if(getTestFlowSelectedRow !=-1){
-            getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
-            tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableSSLCertConfig, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
+            getTestFlowSelectedRow =tabSSLCertConfig.getSelectedRow();
+            tabOutFromEditingColumn(getTestFlowCellEditorStatus, tabSSLCertConfig, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         
-        if(tableSSLCertConfig.getRowCount()>0){
-            getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
-            int rowIndex = tableSSLCertConfig.getSelectedRow();
+        if(tabSSLCertConfig.getRowCount()>0){
+            getTestFlowSelectedRow =tabSSLCertConfig.getSelectedRow();
+            int rowIndex = tabSSLCertConfig.getSelectedRow();
             if (rowIndex != -1) {
                 try {
                     try {
                         //String getTestID = tableAddTestFlow.getValueAt(tableAddTestFlow.getSelectedRow(), 0).toString();
                         createSuiteTabModel.insertRow(rowIndex + 1, new Object[]{null, null, null, null, null, null});
-                        rowIndex = tableSSLCertConfig.getSelectedRow();
-                        tableSSLCertConfig.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
-                        tableSSLCertConfig.setColumnSelectionInterval(0, 0);
-                        tableSSLCertConfig.scrollRectToVisible(tableSSLCertConfig.getCellRect(rowIndex+1, 0, true));
+                        rowIndex = tabSSLCertConfig.getSelectedRow();
+                        tabSSLCertConfig.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
+                        tabSSLCertConfig.setColumnSelectionInterval(0, 0);
+                        tabSSLCertConfig.scrollRectToVisible(tabSSLCertConfig.getCellRect(rowIndex+1, 0, true));
                     } catch (NullPointerException exp) {
                         createSuiteTabModel.insertRow(rowIndex + 1, new Object[]{null, null, null, null, null, null});
-                        rowIndex = tableSSLCertConfig.getSelectedRow();
-                        tableSSLCertConfig.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
-                        tableSSLCertConfig.setColumnSelectionInterval(0, 0);
-                        tableSSLCertConfig.scrollRectToVisible(tableSSLCertConfig.getCellRect(rowIndex+1, 0, true));
+                        rowIndex = tabSSLCertConfig.getSelectedRow();
+                        tabSSLCertConfig.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
+                        tabSSLCertConfig.setColumnSelectionInterval(0, 0);
+                        tabSSLCertConfig.scrollRectToVisible(tabSSLCertConfig.getCellRect(rowIndex+1, 0, true));
                     }
                 } catch (NullPointerException exp) {
                     createSuiteTabModel.insertRow(rowIndex + 1, new Object[]{null, null, null, null, null, null});
-                    rowIndex = tableSSLCertConfig.getSelectedRow();
-                    tableSSLCertConfig.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
-                    tableSSLCertConfig.setColumnSelectionInterval(0, 0);
-                    tableSSLCertConfig.scrollRectToVisible(tableSSLCertConfig.getCellRect(rowIndex+1, 0, true));
+                    rowIndex = tabSSLCertConfig.getSelectedRow();
+                    tabSSLCertConfig.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
+                    tabSSLCertConfig.setColumnSelectionInterval(0, 0);
+                    tabSSLCertConfig.scrollRectToVisible(tabSSLCertConfig.getCellRect(rowIndex+1, 0, true));
                 }
             } else {
-                JOptionPane.showMessageDialog(tableSSLCertConfig, "Select row to add test step!", "Alert", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(tabSSLCertConfig, "Select row to add test step!", "Alert", JOptionPane.WARNING_MESSAGE);
                 return;
             }
         }else
@@ -690,8 +690,8 @@ public class SSLCertificate extends javax.swing.JFrame {
 
     private void bttnSaveSuiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnSaveSuiteActionPerformed
         if(getTestFlowSelectedRow !=-1){
-            getTestFlowSelectedRow =tableSSLCertConfig.getSelectedRow();
-            tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableSSLCertConfig, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
+            getTestFlowSelectedRow =tabSSLCertConfig.getSelectedRow();
+            tabOutFromEditingColumn(getTestFlowCellEditorStatus, tabSSLCertConfig, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
         saveSSLCertConfigFile();
         JOptionPane.showMessageDialog(null, "saved successfully!", "SSL Certificate Configuration", JOptionPane.INFORMATION_MESSAGE);
@@ -711,26 +711,26 @@ public class SSLCertificate extends javax.swing.JFrame {
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
         
-        if(tableSSLCertConfig.getRowCount() > 0){
-            for(int i =0; i<tableSSLCertConfig.getRowCount(); i++){
+        if(tabSSLCertConfig.getRowCount() > 0){
+            for(int i =0; i<tabSSLCertConfig.getRowCount(); i++){
                 
-                Object getName =tableSSLCertConfig.getValueAt(i, 0);
+                Object getName =tabSSLCertConfig.getValueAt(i, 0);
                 if(getName ==null)
                     getName ="";
 
-                Object getKeyStore =tableSSLCertConfig.getValueAt(i, 1);
+                Object getKeyStore =tabSSLCertConfig.getValueAt(i, 1);
                 if(getKeyStore ==null)
                     getKeyStore ="";
 
-                Object getKeyStorePwd =tableSSLCertConfig.getValueAt(i, 2);
+                Object getKeyStorePwd =tabSSLCertConfig.getValueAt(i, 2);
                 if(getKeyStorePwd ==null)
                     getKeyStorePwd ="";
 
-                Object getTrustStore =tableSSLCertConfig.getValueAt(i, 3);
+                Object getTrustStore =tabSSLCertConfig.getValueAt(i, 3);
                 if(getTrustStore ==null)
                     getTrustStore ="";
 
-                Object getTrustStorePwd =tableSSLCertConfig.getValueAt(i, 4);
+                Object getTrustStorePwd =tabSSLCertConfig.getValueAt(i, 4);
                 if(getTrustStorePwd ==null)
                     getTrustStorePwd ="";
                 
@@ -782,19 +782,19 @@ public class SSLCertificate extends javax.swing.JFrame {
         }
     }
     
-    private void tableSSLCertConfigMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSSLCertConfigMousePressed
-        int getCurRow = tableSSLCertConfig.convertRowIndexToModel(tableSSLCertConfig.rowAtPoint(evt.getPoint()));
-        int gerCurrCol = tableSSLCertConfig.convertColumnIndexToModel(tableSSLCertConfig.columnAtPoint(evt.getPoint()));
+    private void tabSSLCertConfigMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabSSLCertConfigMousePressed
+        int getCurRow = tabSSLCertConfig.convertRowIndexToModel(tabSSLCertConfig.rowAtPoint(evt.getPoint()));
+        int gerCurrCol = tabSSLCertConfig.convertColumnIndexToModel(tabSSLCertConfig.columnAtPoint(evt.getPoint()));
         
         getTestFlowSelectedRow =getCurRow;
-        getFlowCellxPoint =tableSSLCertConfig.rowAtPoint(evt.getPoint());
-        getFlowCellyPoint =tableSSLCertConfig.columnAtPoint(evt.getPoint());
+        getFlowCellxPoint =tabSSLCertConfig.rowAtPoint(evt.getPoint());
+        getFlowCellyPoint =tabSSLCertConfig.columnAtPoint(evt.getPoint());
         
         
-         testComCol =tableSSLCertConfig.getColumnModel().getColumn(gerCurrCol);
+         testComCol =tabSSLCertConfig.getColumnModel().getColumn(gerCurrCol);
         testComCol.setCellEditor(new DefaultCellEditor(testComTxt));
 
-        tableSSLCertConfig.editCellAt(getCurRow, gerCurrCol);
+        tabSSLCertConfig.editCellAt(getCurRow, gerCurrCol);
         testComTxt.requestFocusInWindow();
         
         /*if(duplicateTestId ==false){
@@ -824,40 +824,40 @@ public class SSLCertificate extends javax.swing.JFrame {
                     break;
             }
         }*/
-    }//GEN-LAST:event_tableSSLCertConfigMousePressed
+    }//GEN-LAST:event_tabSSLCertConfigMousePressed
 
-    private void tableSSLCertConfigKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableSSLCertConfigKeyReleased
+    private void tabSSLCertConfigKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabSSLCertConfigKeyReleased
         //updateAPIAttributeData();
         //common.checkForDuplicateTestId(createSuiteTabModel, tableAddTestFlow, editableRow, testIdTxt);
-    }//GEN-LAST:event_tableSSLCertConfigKeyReleased
+    }//GEN-LAST:event_tabSSLCertConfigKeyReleased
     
-    private void tableSSLCertConfigMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSSLCertConfigMouseReleased
+    private void tabSSLCertConfigMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabSSLCertConfigMouseReleased
       //updateAPIAttributeData();
-    }//GEN-LAST:event_tableSSLCertConfigMouseReleased
+    }//GEN-LAST:event_tabSSLCertConfigMouseReleased
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
        saveSSLCertConfigFile();
     }//GEN-LAST:event_formWindowClosed
 
-    private void tableSSLCertConfigFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tableSSLCertConfigFocusLost
+    private void tabSSLCertConfigFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabSSLCertConfigFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_tableSSLCertConfigFocusLost
+    }//GEN-LAST:event_tabSSLCertConfigFocusLost
      
     public static void setTableColWidthForCreateRegSuiteTable(){
         //tableAddTestFlow.getColumnModel().getColumn(0).setMaxWidth(50);
-        tableSSLCertConfig.getColumnModel().getColumn(0).setMinWidth(100);
+        tabSSLCertConfig.getColumnModel().getColumn(0).setMinWidth(100);
         
         //tableAddTestFlow.getColumnModel().getColumn(1).setMaxWidth(72);
-        tableSSLCertConfig.getColumnModel().getColumn(1).setMinWidth(255);
+        tabSSLCertConfig.getColumnModel().getColumn(1).setMinWidth(255);
         
         //tableAddTestFlow.getColumnModel().getColumn(2).setMaxWidth(350);
-          tableSSLCertConfig.getColumnModel().getColumn(2).setMinWidth(125);
+          tabSSLCertConfig.getColumnModel().getColumn(2).setMinWidth(125);
         
         //tableAddTestFlow.getColumnModel().getColumn(3).setMaxWidth(120);
-        tableSSLCertConfig.getColumnModel().getColumn(3).setMinWidth(255);
+        tabSSLCertConfig.getColumnModel().getColumn(3).setMinWidth(255);
         
         //tableAddTestFlow.getColumnModel().getColumn(4).setMaxWidth(120);
-        tableSSLCertConfig.getColumnModel().getColumn(4).setMinWidth(125);
+        tabSSLCertConfig.getColumnModel().getColumn(4).setMinWidth(125);
     }
     
     /**
@@ -901,6 +901,6 @@ public class SSLCertificate extends javax.swing.JFrame {
     public javax.swing.JDesktopPane dPanelMenu;
     public javax.swing.JPanel pnlCreateTestSuite;
     public static javax.swing.JScrollPane scrollPaneTestFlow;
-    public static javax.swing.JTable tableSSLCertConfig;
+    public static javax.swing.JTable tabSSLCertConfig;
     // End of variables declaration//GEN-END:variables
 }

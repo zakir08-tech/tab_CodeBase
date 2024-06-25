@@ -268,7 +268,7 @@
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jTextTestType" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtTestType" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -296,7 +296,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblTestType" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="jTextTestType" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="txtTestType" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="chkBoxAssociateObjOR" linkSize="6" min="-2" pref="15" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -779,7 +779,7 @@
                 <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblTestTypeMouseExited"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextTestType">
+            <Component class="javax.swing.JTextField" name="txtTestType">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="0" type="rgb"/>
@@ -802,7 +802,7 @@
                 <Property name="name" type="java.lang.String" value="SetTestType" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextTestTypeFocusLost"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTestTypeFocusLost"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>

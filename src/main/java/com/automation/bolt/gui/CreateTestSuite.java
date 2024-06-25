@@ -173,7 +173,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
         lblObjectRepository = new javax.swing.JLabel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         pnlCreateSuiteMenu = new javax.swing.JPanel();
-        bttnAddTestElm = new javax.swing.JButton();
+        bttnAddTestElement = new javax.swing.JButton();
         bttnAddNewTestStep = new javax.swing.JButton();
         bttnDeleteTestElm = new javax.swing.JButton();
         bttnDeleteTestStep = new javax.swing.JButton();
@@ -310,31 +310,31 @@ public class CreateTestSuite extends javax.swing.JFrame {
         pnlCreateSuiteMenu.setBackground(new java.awt.Color(0, 153, 153));
         pnlCreateSuiteMenu.setOpaque(false);
 
-        bttnAddTestElm.setBackground(new java.awt.Color(0, 0, 0));
-        bttnAddTestElm.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        bttnAddTestElm.setForeground(new java.awt.Color(255, 255, 255));
-        bttnAddTestElm.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addTestStep_Element.png"));
-            bttnAddTestElm.setText("Add Test Element");
-            bttnAddTestElm.setToolTipText("will a new test element");
-            bttnAddTestElm.setActionCommand("OpenRegressionSuite");
-            bttnAddTestElm.setBorder(null);
-            bttnAddTestElm.setBorderPainted(false);
-            bttnAddTestElm.setContentAreaFilled(false);
-            bttnAddTestElm.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-            bttnAddTestElm.setOpaque(true);
-            bttnAddTestElm.setRequestFocusEnabled(false);
-            bttnAddTestElm.setRolloverEnabled(false);
-            bttnAddTestElm.addMouseListener(new java.awt.event.MouseAdapter() {
+        bttnAddTestElement.setBackground(new java.awt.Color(0, 0, 0));
+        bttnAddTestElement.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        bttnAddTestElement.setForeground(new java.awt.Color(255, 255, 255));
+        bttnAddTestElement.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addTestStep_Element.png"));
+            bttnAddTestElement.setText("Add Test Element");
+            bttnAddTestElement.setToolTipText("will a new test element");
+            bttnAddTestElement.setActionCommand("OpenRegressionSuite");
+            bttnAddTestElement.setBorder(null);
+            bttnAddTestElement.setBorderPainted(false);
+            bttnAddTestElement.setContentAreaFilled(false);
+            bttnAddTestElement.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            bttnAddTestElement.setOpaque(true);
+            bttnAddTestElement.setRequestFocusEnabled(false);
+            bttnAddTestElement.setRolloverEnabled(false);
+            bttnAddTestElement.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseEntered(java.awt.event.MouseEvent evt) {
-                    bttnAddTestElmMouseEntered(evt);
+                    bttnAddTestElementMouseEntered(evt);
                 }
                 public void mouseExited(java.awt.event.MouseEvent evt) {
-                    bttnAddTestElmMouseExited(evt);
+                    bttnAddTestElementMouseExited(evt);
                 }
             });
-            bttnAddTestElm.addActionListener(new java.awt.event.ActionListener() {
+            bttnAddTestElement.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    bttnAddTestElmActionPerformed(evt);
+                    bttnAddTestElementActionPerformed(evt);
                 }
             });
 
@@ -544,7 +544,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
                                         pnlCreateSuiteMenu.setLayout(pnlCreateSuiteMenuLayout);
                                         pnlCreateSuiteMenuLayout.setHorizontalGroup(
                                             pnlCreateSuiteMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(bttnAddTestElm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(bttnAddTestElement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(bttnDeleteTestElm, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
                                             .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(bttnAddStepUp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -569,7 +569,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(bttnAddTestElm, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(bttnAddTestElement, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(bttnDeleteTestElm, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(104, 104, 104))
@@ -618,17 +618,17 @@ public class CreateTestSuite extends javax.swing.JFrame {
                                         setLocationRelativeTo(null);
                                     }// </editor-fold>//GEN-END:initComponents
 
-    private void bttnAddTestElmMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddTestElmMouseEntered
-        bttnAddTestElm.setBackground(new java.awt.Color(250, 128, 114));
-        bttnAddTestElm.setForeground(new java.awt.Color(0,0,0));
-    }//GEN-LAST:event_bttnAddTestElmMouseEntered
+    private void bttnAddTestElementMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddTestElementMouseEntered
+        bttnAddTestElement.setBackground(new java.awt.Color(250, 128, 114));
+        bttnAddTestElement.setForeground(new java.awt.Color(0,0,0));
+    }//GEN-LAST:event_bttnAddTestElementMouseEntered
 
-    private void bttnAddTestElmMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddTestElmMouseExited
-        bttnAddTestElm.setBackground(new java.awt.Color(0,0,0));
-        bttnAddTestElm.setForeground(new java.awt.Color(255,255,255));
-    }//GEN-LAST:event_bttnAddTestElmMouseExited
+    private void bttnAddTestElementMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddTestElementMouseExited
+        bttnAddTestElement.setBackground(new java.awt.Color(0,0,0));
+        bttnAddTestElement.setForeground(new java.awt.Color(255,255,255));
+    }//GEN-LAST:event_bttnAddTestElementMouseExited
 
-    private void bttnAddTestElmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnAddTestElmActionPerformed
+    private void bttnAddTestElementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnAddTestElementActionPerformed
         if(getTestFlowSelectedRow !=-1){
             getTestFlowSelectedRow =tableAddTestFlow.getSelectedRow();
             tabOutFromEditingColumn(getTestFlowCellEditorStatus, tableAddTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
@@ -648,7 +648,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
         tableAddOR.scrollRectToVisible(tableAddOR.getCellRect(tableAddOR.getRowCount()-1,-1, true));
         tableAddOR.requestFocus();
         getElmRepoSelectedRow =tableAddOR.getSelectedRow();
-    }//GEN-LAST:event_bttnAddTestElmActionPerformed
+    }//GEN-LAST:event_bttnAddTestElementActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
        tableCellRenderer renderer = new tableCellRenderer();
@@ -1448,7 +1448,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
     public static javax.swing.JButton bttnAddNewTestSuite;
     public static javax.swing.JButton bttnAddStepDown;
     public static javax.swing.JButton bttnAddStepUp;
-    public javax.swing.JButton bttnAddTestElm;
+    public javax.swing.JButton bttnAddTestElement;
     public javax.swing.JButton bttnDeleteTestElm;
     public javax.swing.JButton bttnDeleteTestStep;
     public static javax.swing.JButton bttnSaveSuite;

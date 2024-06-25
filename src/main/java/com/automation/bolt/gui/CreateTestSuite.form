@@ -314,7 +314,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="bttnAddTestElm" max="32767" attributes="0"/>
+                  <Component id="bttnAddTestElement" max="32767" attributes="0"/>
                   <Component id="bttnDeleteTestElm" alignment="0" pref="162" max="32767" attributes="0"/>
                   <Component id="bttnDeleteTestStep" alignment="0" max="32767" attributes="0"/>
                   <Component id="bttnAddStepUp" alignment="0" max="32767" attributes="0"/>
@@ -340,7 +340,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="bttnAddNewTestSuite" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="bttnAddTestElm" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="bttnAddTestElement" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="bttnDeleteTestElm" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
@@ -349,7 +349,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="bttnAddTestElm">
+            <Component class="javax.swing.JButton" name="bttnAddTestElement">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="0" type="rgb"/>
@@ -377,9 +377,9 @@
                 <Property name="rolloverEnabled" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bttnAddTestElmMouseEntered"/>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bttnAddTestElmMouseExited"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bttnAddTestElmActionPerformed"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bttnAddTestElementMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bttnAddTestElementMouseExited"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bttnAddTestElementActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

@@ -149,54 +149,54 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        scrollExecuteRegSuite = new javax.swing.JScrollPane();
-        tableExecuteRegSuite = new javax.swing.JTable();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
-        bttnStartTestRun = new javax.swing.JButton();
-        txtTestTypeTag = new javax.swing.JTextField();
-        bttnRefreshTestRun = new javax.swing.JButton();
-        bttnStopTestRun = new javax.swing.JButton();
-        bttnLoadRegSuite = new javax.swing.JButton();
-        lblTestTypeTag = new javax.swing.JLabel();
-        jDesktopPane2 = new javax.swing.JDesktopPane();
-        pnlHeader = new javax.swing.JPanel();
-        chkBoxSelectDeselectAllRun = new javax.swing.JCheckBox();
-        chkBoxFilterFailTest = new javax.swing.JCheckBox();
+        scrollExecuteRegSuite = new JScrollPane();
+        tabExecuteRegSuite = new JTable();
+        jDesktopPane1 = new JDesktopPane();
+        bttnStartTestRun = new JButton();
+        txtTestTypeTag = new JTextField();
+        bttnRefreshTestRun = new JButton();
+        bttnStopTestRun = new JButton();
+        bttnLoadRegSuite = new JButton();
+        lblTestTypeTag = new JLabel();
+        jDesktopPane2 = new JDesktopPane();
+        pnlHeader = new JPanel();
+        chkBoxSelectDeselectAllRun = new JCheckBox();
+        chkBoxFilterFailTest = new JCheckBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Execute API Test");
-        setBackground(java.awt.Color.lightGray);
-        setBounds(new java.awt.Rectangle(0, 0, 973, 500));
+        setBackground(Color.lightGray);
+        setBounds(new Rectangle(0, 0, 973, 500));
         setIconImages(null);
-        setMaximumSize(new java.awt.Dimension(900, 467));
-        setMinimumSize(new java.awt.Dimension(900, 467));
-        setSize(new java.awt.Dimension(900, 467));
-        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
-            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+        setMaximumSize(new Dimension(900, 467));
+        setMinimumSize(new Dimension(900, 467));
+        setSize(new Dimension(900, 467));
+        addWindowFocusListener(new WindowFocusListener() {
+            public void windowGainedFocus(WindowEvent evt) {
                 formWindowGainedFocus(evt);
             }
-            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            public void windowLostFocus(WindowEvent evt) {
             }
         });
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
+        addWindowListener(new WindowAdapter() {
+            public void windowActivated(WindowEvent evt) {
                 formWindowActivated(evt);
             }
-            public void windowOpened(java.awt.event.WindowEvent evt) {
+            public void windowOpened(WindowEvent evt) {
                 formWindowOpened(evt);
             }
         });
 
-        scrollExecuteRegSuite.setBackground(new java.awt.Color(51, 51, 51));
+        scrollExecuteRegSuite.setBackground(new Color(51, 51, 51));
         scrollExecuteRegSuite.setAutoscrolls(true);
-        scrollExecuteRegSuite.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
-        scrollExecuteRegSuite.setMinimumSize(new java.awt.Dimension(452, 402));
+        scrollExecuteRegSuite.setFont(new Font("Calibri", 0, 12)); // NOI18N
+        scrollExecuteRegSuite.setMinimumSize(new Dimension(452, 402));
 
-        tableExecuteRegSuite.setBackground(new java.awt.Color(51, 51, 51));
-        tableExecuteRegSuite.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        tableExecuteRegSuite.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
-        tableExecuteRegSuite.setForeground(new java.awt.Color(255, 255, 255));
-        tableExecuteRegSuite.setModel(new javax.swing.table.DefaultTableModel(
+        tabExecuteRegSuite.setBackground(new Color(51, 51, 51));
+        tabExecuteRegSuite.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        tabExecuteRegSuite.setFont(new Font("Consolas", 0, 14)); // NOI18N
+        tabExecuteRegSuite.setForeground(new Color(255, 255, 255));
+        tabExecuteRegSuite.setModel(new DefaultTableModel(
             new Object [][] {
 
             },
@@ -205,7 +205,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                Boolean.class, Object.class, Object.class, Object.class
             };
             boolean[] canEdit = new boolean [] {
                 true, false, false, false
@@ -219,337 +219,329 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tableExecuteRegSuite.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        tableExecuteRegSuite.setMinimumSize(new java.awt.Dimension(180, 0));
-        tableExecuteRegSuite.setName(""); // NOI18N
-        tableExecuteRegSuite.setRowHeight(22);
-        tableExecuteRegSuite.setRowMargin(4);
-        tableExecuteRegSuite.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tableExecuteRegSuite.setShowGrid(true);
-        tableExecuteRegSuite.getTableHeader().setReorderingAllowed(false);
-        tableExecuteRegSuite.setUpdateSelectionOnSort(false);
-        tableExecuteRegSuite.setVerifyInputWhenFocusTarget(false);
-        tableExecuteRegSuite.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                tableExecuteRegSuiteFocusGained(evt);
+        tabExecuteRegSuite.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        tabExecuteRegSuite.setMinimumSize(new Dimension(180, 0));
+        tabExecuteRegSuite.setName(""); // NOI18N
+        tabExecuteRegSuite.setRowHeight(22);
+        tabExecuteRegSuite.setRowMargin(4);
+        tabExecuteRegSuite.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tabExecuteRegSuite.setShowGrid(true);
+        tabExecuteRegSuite.getTableHeader().setReorderingAllowed(false);
+        tabExecuteRegSuite.setUpdateSelectionOnSort(false);
+        tabExecuteRegSuite.setVerifyInputWhenFocusTarget(false);
+        tabExecuteRegSuite.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent evt) {
+                tabExecuteRegSuiteFocusGained(evt);
             }
         });
-        tableExecuteRegSuite.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableExecuteRegSuiteMouseClicked(evt);
+        tabExecuteRegSuite.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                tabExecuteRegSuiteMouseClicked(evt);
             }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tableExecuteRegSuiteMouseReleased(evt);
-            }
-        });
-        tableExecuteRegSuite.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                tableExecuteRegSuiteInputMethodTextChanged(evt);
+            public void mouseReleased(MouseEvent evt) {
+                tabExecuteRegSuiteMouseReleased(evt);
             }
         });
-        scrollExecuteRegSuite.setViewportView(tableExecuteRegSuite);
-        if (tableExecuteRegSuite.getColumnModel().getColumnCount() > 0) {
-            tableExecuteRegSuite.getColumnModel().getColumn(0).setPreferredWidth(5);
-            tableExecuteRegSuite.getColumnModel().getColumn(1).setPreferredWidth(10);
+        tabExecuteRegSuite.addInputMethodListener(new InputMethodListener() {
+            public void caretPositionChanged(InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(InputMethodEvent evt) {
+                tabExecuteRegSuiteInputMethodTextChanged(evt);
+            }
+        });
+        scrollExecuteRegSuite.setViewportView(tabExecuteRegSuite);
+        if (tabExecuteRegSuite.getColumnModel().getColumnCount() > 0) {
+            tabExecuteRegSuite.getColumnModel().getColumn(0).setPreferredWidth(5);
+            tabExecuteRegSuite.getColumnModel().getColumn(1).setPreferredWidth(10);
         }
 
-        bttnStartTestRun.setBackground(new java.awt.Color(0, 0, 0));
-        bttnStartTestRun.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        bttnStartTestRun.setForeground(new java.awt.Color(255, 255, 255));
-        bttnStartTestRun.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/startTestRun.png"));
+        bttnStartTestRun.setBackground(new Color(0, 0, 0));
+        bttnStartTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
+        bttnStartTestRun.setForeground(new Color(255, 255, 255));
+        bttnStartTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/startTestRun.png"));
             bttnStartTestRun.setToolTipText("start test execution");
             bttnStartTestRun.setBorder(null);
             bttnStartTestRun.setBorderPainted(false);
             bttnStartTestRun.setContentAreaFilled(false);
             bttnStartTestRun.setEnabled(false);
-            bttnStartTestRun.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-            bttnStartTestRun.setMaximumSize(new java.awt.Dimension(121, 33));
-            bttnStartTestRun.setMinimumSize(new java.awt.Dimension(121, 33));
+            bttnStartTestRun.setHorizontalTextPosition(SwingConstants.CENTER);
+            bttnStartTestRun.setMaximumSize(new Dimension(121, 33));
+            bttnStartTestRun.setMinimumSize(new Dimension(121, 33));
             bttnStartTestRun.setOpaque(true);
-            bttnStartTestRun.setPreferredSize(new java.awt.Dimension(121, 33));
-            bttnStartTestRun.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseEntered(java.awt.event.MouseEvent evt) {
+            bttnStartTestRun.setPreferredSize(new Dimension(121, 33));
+            bttnStartTestRun.addMouseListener(new MouseAdapter() {
+                public void mouseEntered(MouseEvent evt) {
                     bttnStartTestRunMouseEntered(evt);
                 }
-                public void mouseExited(java.awt.event.MouseEvent evt) {
+                public void mouseExited(MouseEvent evt) {
                     bttnStartTestRunMouseExited(evt);
                 }
-                public void mouseReleased(java.awt.event.MouseEvent evt) {
+                public void mouseReleased(MouseEvent evt) {
                     bttnStartTestRunMouseReleased(evt);
                 }
             });
 
-            txtTestTypeTag.setBackground(new java.awt.Color(0, 0, 0));
-            txtTestTypeTag.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-            txtTestTypeTag.setForeground(java.awt.Color.pink);
-            txtTestTypeTag.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 2, 1, 1));
-            txtTestTypeTag.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+            txtTestTypeTag.setBackground(new Color(0, 0, 0));
+            txtTestTypeTag.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+            txtTestTypeTag.setForeground(Color.pink);
+            txtTestTypeTag.setBorder(BorderFactory.createEmptyBorder(1, 2, 1, 1));
+            txtTestTypeTag.setCursor(new Cursor(Cursor.TEXT_CURSOR));
             txtTestTypeTag.setName("SetTestType"); // NOI18N
-            txtTestTypeTag.addFocusListener(new java.awt.event.FocusAdapter() {
-                public void focusLost(java.awt.event.FocusEvent evt) {
+            txtTestTypeTag.addFocusListener(new FocusAdapter() {
+                public void focusLost(FocusEvent evt) {
                     txtTestTypeTagFocusLost(evt);
                 }
             });
 
-            bttnRefreshTestRun.setBackground(new java.awt.Color(0, 0, 0));
-            bttnRefreshTestRun.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-            bttnRefreshTestRun.setForeground(new java.awt.Color(255, 255, 255));
-            bttnRefreshTestRun.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/refreshTestRun.png"));
+            bttnRefreshTestRun.setBackground(new Color(0, 0, 0));
+            bttnRefreshTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
+            bttnRefreshTestRun.setForeground(new Color(255, 255, 255));
+            bttnRefreshTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/refreshTestRun.png"));
                 bttnRefreshTestRun.setToolTipText("Refresh to reload test run for new changes");
                 bttnRefreshTestRun.setActionCommand("OpenRegressionSuite");
                 bttnRefreshTestRun.setBorder(null);
                 bttnRefreshTestRun.setBorderPainted(false);
                 bttnRefreshTestRun.setContentAreaFilled(false);
-                bttnRefreshTestRun.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-                bttnRefreshTestRun.setMaximumSize(new java.awt.Dimension(121, 33));
-                bttnRefreshTestRun.setMinimumSize(new java.awt.Dimension(121, 33));
+                bttnRefreshTestRun.setHorizontalTextPosition(SwingConstants.CENTER);
+                bttnRefreshTestRun.setMaximumSize(new Dimension(121, 33));
+                bttnRefreshTestRun.setMinimumSize(new Dimension(121, 33));
                 bttnRefreshTestRun.setOpaque(true);
-                bttnRefreshTestRun.setPreferredSize(new java.awt.Dimension(121, 33));
+                bttnRefreshTestRun.setPreferredSize(new Dimension(121, 33));
                 bttnRefreshTestRun.setRequestFocusEnabled(false);
                 bttnRefreshTestRun.setRolloverEnabled(false);
-                bttnRefreshTestRun.addMouseListener(new java.awt.event.MouseAdapter() {
-                    public void mouseEntered(java.awt.event.MouseEvent evt) {
+                bttnRefreshTestRun.addMouseListener(new MouseAdapter() {
+                    public void mouseEntered(MouseEvent evt) {
                         bttnRefreshTestRunMouseEntered(evt);
                     }
-                    public void mouseExited(java.awt.event.MouseEvent evt) {
+                    public void mouseExited(MouseEvent evt) {
                         bttnRefreshTestRunMouseExited(evt);
                     }
                 });
-                bttnRefreshTestRun.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttnRefreshTestRun.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
                         bttnRefreshTestRunActionPerformed(evt);
                     }
                 });
 
-                bttnStopTestRun.setBackground(new java.awt.Color(0, 0, 0));
-                bttnStopTestRun.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-                bttnStopTestRun.setForeground(new java.awt.Color(255, 255, 255));
-                bttnStopTestRun.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/stopTestRun.png"));
+                bttnStopTestRun.setBackground(new Color(0, 0, 0));
+                bttnStopTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
+                bttnStopTestRun.setForeground(new Color(255, 255, 255));
+                bttnStopTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/stopTestRun.png"));
                     bttnStopTestRun.setToolTipText("stop test execution");
                     bttnStopTestRun.setBorder(null);
                     bttnStopTestRun.setBorderPainted(false);
                     bttnStopTestRun.setContentAreaFilled(false);
                     bttnStopTestRun.setEnabled(false);
-                    bttnStopTestRun.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-                    bttnStopTestRun.setMaximumSize(new java.awt.Dimension(121, 33));
-                    bttnStopTestRun.setMinimumSize(new java.awt.Dimension(121, 33));
+                    bttnStopTestRun.setHorizontalTextPosition(SwingConstants.CENTER);
+                    bttnStopTestRun.setMaximumSize(new Dimension(121, 33));
+                    bttnStopTestRun.setMinimumSize(new Dimension(121, 33));
                     bttnStopTestRun.setOpaque(true);
-                    bttnStopTestRun.setPreferredSize(new java.awt.Dimension(121, 33));
-                    bttnStopTestRun.addMouseListener(new java.awt.event.MouseAdapter() {
-                        public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    bttnStopTestRun.setPreferredSize(new Dimension(121, 33));
+                    bttnStopTestRun.addMouseListener(new MouseAdapter() {
+                        public void mouseEntered(MouseEvent evt) {
                             bttnStopTestRunMouseEntered(evt);
                         }
-                        public void mouseExited(java.awt.event.MouseEvent evt) {
+                        public void mouseExited(MouseEvent evt) {
                             bttnStopTestRunMouseExited(evt);
                         }
-                        public void mousePressed(java.awt.event.MouseEvent evt) {
+                        public void mousePressed(MouseEvent evt) {
                             bttnStopTestRunMousePressed(evt);
                         }
-                        public void mouseReleased(java.awt.event.MouseEvent evt) {
+                        public void mouseReleased(MouseEvent evt) {
                             bttnStopTestRunMouseReleased(evt);
                         }
                     });
 
-                    bttnLoadRegSuite.setBackground(new java.awt.Color(0, 0, 0));
-                    bttnLoadRegSuite.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-                    bttnLoadRegSuite.setForeground(new java.awt.Color(255, 255, 255));
-                    bttnLoadRegSuite.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addUploadTestSuite.png"));
+                    bttnLoadRegSuite.setBackground(new Color(0, 0, 0));
+                    bttnLoadRegSuite.setFont(new Font("Consolas", 1, 14)); // NOI18N
+                    bttnLoadRegSuite.setForeground(new Color(255, 255, 255));
+                    bttnLoadRegSuite.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addUploadTestSuite.png"));
                         bttnLoadRegSuite.setToolTipText("open and upload the test suite for execution");
                         bttnLoadRegSuite.setActionCommand("OpenRegressionSuite");
                         bttnLoadRegSuite.setBorder(null);
                         bttnLoadRegSuite.setBorderPainted(false);
                         bttnLoadRegSuite.setContentAreaFilled(false);
-                        bttnLoadRegSuite.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-                        bttnLoadRegSuite.setMaximumSize(new java.awt.Dimension(121, 33));
-                        bttnLoadRegSuite.setMinimumSize(new java.awt.Dimension(121, 33));
+                        bttnLoadRegSuite.setHorizontalTextPosition(SwingConstants.CENTER);
+                        bttnLoadRegSuite.setMaximumSize(new Dimension(121, 33));
+                        bttnLoadRegSuite.setMinimumSize(new Dimension(121, 33));
                         bttnLoadRegSuite.setOpaque(true);
-                        bttnLoadRegSuite.setPreferredSize(new java.awt.Dimension(121, 33));
+                        bttnLoadRegSuite.setPreferredSize(new Dimension(121, 33));
                         bttnLoadRegSuite.setRequestFocusEnabled(false);
                         bttnLoadRegSuite.setRolloverEnabled(false);
-                        bttnLoadRegSuite.addMouseListener(new java.awt.event.MouseAdapter() {
-                            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                        bttnLoadRegSuite.addMouseListener(new MouseAdapter() {
+                            public void mouseEntered(MouseEvent evt) {
                                 bttnLoadRegSuiteMouseEntered(evt);
                             }
-                            public void mouseExited(java.awt.event.MouseEvent evt) {
+                            public void mouseExited(MouseEvent evt) {
                                 bttnLoadRegSuiteMouseExited(evt);
                             }
                         });
-                        bttnLoadRegSuite.addActionListener(new java.awt.event.ActionListener() {
-                            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        bttnLoadRegSuite.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent evt) {
                                 bttnLoadRegSuiteActionPerformed(evt);
                             }
                         });
 
-                        lblTestTypeTag.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
-                        lblTestTypeTag.setForeground(new java.awt.Color(255, 255, 255));
+                        lblTestTypeTag.setFont(new Font("Consolas", 0, 12)); // NOI18N
+                        lblTestTypeTag.setForeground(new Color(255, 255, 255));
                         lblTestTypeTag.setText("test type: @<tag_name>");
 
-                        jDesktopPane1.setLayer(bttnStartTestRun, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                        jDesktopPane1.setLayer(txtTestTypeTag, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                        jDesktopPane1.setLayer(bttnRefreshTestRun, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                        jDesktopPane1.setLayer(bttnStopTestRun, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                        jDesktopPane1.setLayer(bttnLoadRegSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                        jDesktopPane1.setLayer(lblTestTypeTag, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                        jDesktopPane1.setLayer(bttnStartTestRun, JLayeredPane.DEFAULT_LAYER);
+                        jDesktopPane1.setLayer(txtTestTypeTag, JLayeredPane.DEFAULT_LAYER);
+                        jDesktopPane1.setLayer(bttnRefreshTestRun, JLayeredPane.DEFAULT_LAYER);
+                        jDesktopPane1.setLayer(bttnStopTestRun, JLayeredPane.DEFAULT_LAYER);
+                        jDesktopPane1.setLayer(bttnLoadRegSuite, JLayeredPane.DEFAULT_LAYER);
+                        jDesktopPane1.setLayer(lblTestTypeTag, JLayeredPane.DEFAULT_LAYER);
 
-                        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+                        GroupLayout jDesktopPane1Layout = new GroupLayout(jDesktopPane1);
                         jDesktopPane1.setLayout(jDesktopPane1Layout);
-                        jDesktopPane1Layout.setHorizontalGroup(
-                            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        jDesktopPane1Layout.setHorizontalGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(bttnLoadRegSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bttnRefreshTestRun, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(bttnLoadRegSuite, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bttnRefreshTestRun, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(lblTestTypeTag)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTestTypeTag, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(bttnStartTestRun, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bttnStopTestRun, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtTestTypeTag, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(bttnStartTestRun, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bttnStopTestRun, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(394, Short.MAX_VALUE))
                         );
-                        jDesktopPane1Layout.setVerticalGroup(
-                            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        jDesktopPane1Layout.setVerticalGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(bttnStopTestRun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(bttnLoadRegSuite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(bttnRefreshTestRun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(txtTestTypeTag, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                    .addComponent(bttnStopTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(bttnLoadRegSuite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(bttnRefreshTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtTestTypeTag, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(lblTestTypeTag))
-                                    .addComponent(bttnStartTestRun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(bttnStartTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         );
 
-                        pnlHeader.setBackground(new java.awt.Color(0, 153, 153));
-                        pnlHeader.setMinimumSize(new java.awt.Dimension(206, 40));
+                        pnlHeader.setBackground(new Color(0, 153, 153));
+                        pnlHeader.setMinimumSize(new Dimension(206, 40));
                         pnlHeader.setOpaque(false);
 
-                        chkBoxSelectDeselectAllRun.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-                        chkBoxSelectDeselectAllRun.setForeground(new java.awt.Color(255, 255, 255));
+                        chkBoxSelectDeselectAllRun.setFont(new Font("Tahoma", 1, 10)); // NOI18N
+                        chkBoxSelectDeselectAllRun.setForeground(new Color(255, 255, 255));
                         chkBoxSelectDeselectAllRun.setText("Select ALL Run");
                         chkBoxSelectDeselectAllRun.setToolTipText("will select all test(s) for run");
                         chkBoxSelectDeselectAllRun.setBorder(null);
                         chkBoxSelectDeselectAllRun.setEnabled(false);
-                        chkBoxSelectDeselectAllRun.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                        chkBoxSelectDeselectAllRun.setHorizontalAlignment(SwingConstants.LEFT);
                         chkBoxSelectDeselectAllRun.setIconTextGap(2);
                         chkBoxSelectDeselectAllRun.setName(""); // NOI18N
-                        chkBoxSelectDeselectAllRun.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-                        chkBoxSelectDeselectAllRun.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-                        chkBoxSelectDeselectAllRun.addMouseListener(new java.awt.event.MouseAdapter() {
-                            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                        chkBoxSelectDeselectAllRun.setVerticalAlignment(SwingConstants.BOTTOM);
+                        chkBoxSelectDeselectAllRun.setVerticalTextPosition(SwingConstants.BOTTOM);
+                        chkBoxSelectDeselectAllRun.addMouseListener(new MouseAdapter() {
+                            public void mouseEntered(MouseEvent evt) {
                                 chkBoxSelectDeselectAllRunMouseEntered(evt);
                             }
-                            public void mouseExited(java.awt.event.MouseEvent evt) {
+                            public void mouseExited(MouseEvent evt) {
                                 chkBoxSelectDeselectAllRunMouseExited(evt);
                             }
                         });
-                        chkBoxSelectDeselectAllRun.addActionListener(new java.awt.event.ActionListener() {
-                            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        chkBoxSelectDeselectAllRun.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent evt) {
                                 chkBoxSelectDeselectAllRunActionPerformed(evt);
                             }
                         });
 
-                        chkBoxFilterFailTest.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-                        chkBoxFilterFailTest.setForeground(new java.awt.Color(255, 255, 255));
+                        chkBoxFilterFailTest.setFont(new Font("Tahoma", 1, 10)); // NOI18N
+                        chkBoxFilterFailTest.setForeground(new Color(255, 255, 255));
                         chkBoxFilterFailTest.setText("Filter FAIL test(s)");
                         chkBoxFilterFailTest.setToolTipText("will select only failed test(s) for re-run");
                         chkBoxFilterFailTest.setBorder(null);
                         chkBoxFilterFailTest.setEnabled(false);
-                        chkBoxFilterFailTest.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                        chkBoxFilterFailTest.setHorizontalAlignment(SwingConstants.LEFT);
                         chkBoxFilterFailTest.setIconTextGap(2);
-                        chkBoxFilterFailTest.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-                        chkBoxFilterFailTest.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-                        chkBoxFilterFailTest.addMouseListener(new java.awt.event.MouseAdapter() {
-                            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                        chkBoxFilterFailTest.setVerticalAlignment(SwingConstants.BOTTOM);
+                        chkBoxFilterFailTest.setVerticalTextPosition(SwingConstants.BOTTOM);
+                        chkBoxFilterFailTest.addMouseListener(new MouseAdapter() {
+                            public void mouseEntered(MouseEvent evt) {
                                 chkBoxFilterFailTestMouseEntered(evt);
                             }
-                            public void mouseExited(java.awt.event.MouseEvent evt) {
+                            public void mouseExited(MouseEvent evt) {
                                 chkBoxFilterFailTestMouseExited(evt);
                             }
-                            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                            public void mouseReleased(MouseEvent evt) {
                                 chkBoxFilterFailTestMouseReleased(evt);
                             }
                         });
-                        chkBoxFilterFailTest.addActionListener(new java.awt.event.ActionListener() {
-                            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        chkBoxFilterFailTest.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent evt) {
                                 chkBoxFilterFailTestActionPerformed(evt);
                             }
                         });
 
-                        javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
+                        GroupLayout pnlHeaderLayout = new GroupLayout(pnlHeader);
                         pnlHeader.setLayout(pnlHeaderLayout);
-                        pnlHeaderLayout.setHorizontalGroup(
-                            pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
+                        pnlHeaderLayout.setHorizontalGroup(pnlHeaderLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addGroup(GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(chkBoxSelectDeselectAllRun)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(chkBoxFilterFailTest)
                                 .addContainerGap())
                         );
-                        pnlHeaderLayout.setVerticalGroup(
-                            pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
+                        pnlHeaderLayout.setVerticalGroup(pnlHeaderLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addGroup(GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(chkBoxSelectDeselectAllRun, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                                    .addComponent(chkBoxFilterFailTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(pnlHeaderLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(chkBoxSelectDeselectAllRun, GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                                    .addComponent(chkBoxFilterFailTest, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap())
                         );
 
-                        jDesktopPane2.setLayer(pnlHeader, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                        jDesktopPane2.setLayer(pnlHeader, JLayeredPane.DEFAULT_LAYER);
 
-                        javax.swing.GroupLayout jDesktopPane2Layout = new javax.swing.GroupLayout(jDesktopPane2);
+                        GroupLayout jDesktopPane2Layout = new GroupLayout(jDesktopPane2);
                         jDesktopPane2.setLayout(jDesktopPane2Layout);
-                        jDesktopPane2Layout.setHorizontalGroup(
-                            jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        jDesktopPane2Layout.setHorizontalGroup(jDesktopPane2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(jDesktopPane2Layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(pnlHeader, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(1, 1, 1))
                         );
-                        jDesktopPane2Layout.setVerticalGroup(
-                            jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        jDesktopPane2Layout.setVerticalGroup(jDesktopPane2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(jDesktopPane2Layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(pnlHeader, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         );
 
-                        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                        GroupLayout layout = new GroupLayout(getContentPane());
                         getContentPane().setLayout(layout);
-                        layout.setHorizontalGroup(
-                            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                     .addComponent(jDesktopPane1)
-                                    .addComponent(scrollExecuteRegSuite, javax.swing.GroupLayout.DEFAULT_SIZE, 897, Short.MAX_VALUE)
+                                    .addComponent(scrollExecuteRegSuite, GroupLayout.DEFAULT_SIZE, 897, Short.MAX_VALUE)
                                     .addComponent(jDesktopPane2))
                                 .addGap(1, 1, 1))
                         );
-                        layout.setVerticalGroup(
-                            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jDesktopPane2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(1, 1, 1)
-                                .addComponent(scrollExecuteRegSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 396, Short.MAX_VALUE)
+                                .addComponent(scrollExecuteRegSuite, GroupLayout.PREFERRED_SIZE, 396, Short.MAX_VALUE)
                                 .addGap(1, 1, 1)
-                                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jDesktopPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(1, 1, 1))
                         );
 
                         getAccessibleContext().setAccessibleParent(this);
 
-                        setSize(new java.awt.Dimension(913, 529));
+                        setSize(new Dimension(913, 529));
                         setLocationRelativeTo(null);
                     }// </editor-fold>//GEN-END:initComponents
     
@@ -576,7 +568,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     }*/
                 
     private void formWindowActivated(WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-       tableExecuteRegSuite.requestFocus();
+       tabExecuteRegSuite.requestFocus();
        setTableColWidthForExeRegSuiteTable();
     }//GEN-LAST:event_formWindowActivated
     
@@ -598,7 +590,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     private void formWindowOpened(WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         Image titleIcon = Toolkit.getDefaultToolkit().getImage(constants.userDir+"\\icons\\bolt.jpg");
         this.setIconImage(titleIcon);
-        tableExecuteRegSuite.setDefaultRenderer(Object.class, RunCell_renderer);
+        tabExecuteRegSuite.setDefaultRenderer(Object.class, RunCell_renderer);
         
         //textTestType = ((JTextField) cBoxTestType.getEditor().getEditorComponent());
         //textTestType.setForeground(new java.awt.Color(255,102,102));
@@ -661,7 +653,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
         if(excelChooser == JFileChooser.APPROVE_OPTION) {
             importDataFromExcelModel = new DefaultTableModel();
             comboBoxObjectRepository = new JComboBox<>();
-            importDataFromExcelModel = (DefaultTableModel) tableExecuteRegSuite.getModel();
+            importDataFromExcelModel = (DefaultTableModel) tabExecuteRegSuite.getModel();
             noRepoFound = true;
             testSuiteUploaded = false;
             excelSheetObjectRepository = null;
@@ -714,9 +706,9 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                     }
                 }
                     
-                tableExecuteRegSuite.setRowSelectionInterval(0,0);
-                tableExecuteRegSuite.scrollRectToVisible(tableExecuteRegSuite.getCellRect(0,0, true));
-                tableExecuteRegSuite.requestFocus();
+                tabExecuteRegSuite.setRowSelectionInterval(0,0);
+                tabExecuteRegSuite.scrollRectToVisible(tabExecuteRegSuite.getCellRect(0,0, true));
+                tabExecuteRegSuite.requestFocus();
 
                 if(objRepo.isVisible()){
                     ObjectRepoFrame.importObjectRepoData.getDataVector().removeAllElements();
@@ -808,7 +800,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                     bttnStartTestRun.setEnabled(true);
                 }
                 chkBoxSelectDeselectAllRun.setEnabled(true);
-                tableExecuteRegSuite.setEnabled(true);
+                tabExecuteRegSuite.setEnabled(true);
                 bttnLoadRegSuite.setEnabled(true);
             } 
         }
@@ -825,7 +817,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             if(selectTestAsPerTestType() ==false){return;}
         }
         
-        if(tableExecuteRegSuite.getRowCount() >0){
+        if(tabExecuteRegSuite.getRowCount() >0){
           if(checkRunIsAvailable() ==false){
               JOptionPane.showMessageDialog(null, "No test is selected to execute!", "Alert", JOptionPane.WARNING_MESSAGE);
               return;
@@ -844,7 +836,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
           return;
         }
         
-        if(tableExecuteRegSuite.getRowCount() >0 && bttnStartTestRun.isEnabled() ==true){
+        if(tabExecuteRegSuite.getRowCount() >0 && bttnStartTestRun.isEnabled() ==true){
            if(checkRunIsAvailable() ==false)
                return;
            
@@ -852,7 +844,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             bttnStartTestRun.setEnabled(false);
             chkBoxFilterFailTest.setEnabled(false);
             chkBoxSelectDeselectAllRun.setEnabled(false);
-            tableExecuteRegSuite.setEnabled(false);
+            tabExecuteRegSuite.setEnabled(false);
             bttnLoadRegSuite.setEnabled(false);
             bttnStopTestRun.setEnabled(true);
             bttnRefreshTestRun.setEnabled(false);
@@ -885,7 +877,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     }//GEN-LAST:event_chkBoxFilterFailTestActionPerformed
 
     private void chkBoxFilterFailTestMouseReleased(MouseEvent evt) {//GEN-FIRST:event_chkBoxFilterFailTestMouseReleased
-        int getRowCnt =tableExecuteRegSuite.getRowCount();
+        int getRowCnt =tabExecuteRegSuite.getRowCount();
         boolean setStatus =false;
         
         if(!chkBoxFilterFailTest.isEnabled())
@@ -893,8 +885,8 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                 
         if(chkBoxFilterFailTest.isSelected()){
             for(int x=0; x<getRowCnt; x++){
-                Boolean run=(Boolean) tableExecuteRegSuite.getValueAt(x, 0);
-                String testId =tableExecuteRegSuite.getValueAt(x, 1).toString();
+                Boolean run=(Boolean) tabExecuteRegSuite.getValueAt(x, 0);
+                String testId =tabExecuteRegSuite.getValueAt(x, 1).toString();
                 getRunId.put(testId, run);
             }
         }
@@ -908,7 +900,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
         if(chkBoxFilterFailTest.isSelected() ==true){
             setStatus =true;
             for(int x=0; x<getRowCnt; x++){
-                String getTestStatus =tableExecuteRegSuite.getValueAt(x, 3).toString(); 
+                String getTestStatus =tabExecuteRegSuite.getValueAt(x, 3).toString(); 
                 if(getTestStatus.toLowerCase().contentEquals("fail")){
                     importDataFromExcelModel.setValueAt(setStatus, x, 0);
                 }else
@@ -928,11 +920,11 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     }//GEN-LAST:event_chkBoxFilterFailTestMouseReleased
     
     public static boolean selectTestAsPerTestType(){
-        int getRowCnt =tableExecuteRegSuite.getRowCount();
+        int getRowCnt =tabExecuteRegSuite.getRowCount();
         boolean tagFound =false;
         
         for(int x=0; x<getRowCnt; x++){
-            String getTestStatus =tableExecuteRegSuite.getValueAt(x, 2).toString(); 
+            String getTestStatus =tabExecuteRegSuite.getValueAt(x, 2).toString(); 
             if(getTestStatus.toLowerCase().contains(txtTestTypeTag.getText().toLowerCase())){
                 importDataFromExcelModel.setValueAt(true, x, 0);
                 tagFound =true;
@@ -1002,9 +994,9 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                 }
             }
 
-            tableExecuteRegSuite.setRowSelectionInterval(0,0);
-            tableExecuteRegSuite.scrollRectToVisible(tableExecuteRegSuite.getCellRect(0,0, true));
-            tableExecuteRegSuite.requestFocus();
+            tabExecuteRegSuite.setRowSelectionInterval(0,0);
+            tabExecuteRegSuite.scrollRectToVisible(tabExecuteRegSuite.getCellRect(0,0, true));
+            tabExecuteRegSuite.requestFocus();
             txtTestTypeTag.setText("");
         } catch (NullPointerException ex) {
             //Logger.getLogger(ExecuteRegressionSuite.class.getName()).log(Level.SEVERE, null, ex);
@@ -1046,7 +1038,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                     bttnStartTestRun.setEnabled(true);
                 }
                 chkBoxSelectDeselectAllRun.setEnabled(true);
-                tableExecuteRegSuite.setEnabled(true);
+                tabExecuteRegSuite.setEnabled(true);
                 bttnLoadRegSuite.setEnabled(true);
             } 
         }
@@ -1076,11 +1068,11 @@ public class ExecuteApiTest extends javax.swing.JFrame {
         chkBoxFilterFailTest.setForeground(java.awt.Color.WHITE);
     }//GEN-LAST:event_chkBoxFilterFailTestMouseExited
 
-    private void tableExecuteRegSuiteInputMethodTextChanged(InputMethodEvent evt) {//GEN-FIRST:event_tableExecuteRegSuiteInputMethodTextChanged
+    private void tabExecuteRegSuiteInputMethodTextChanged(InputMethodEvent evt) {//GEN-FIRST:event_tabExecuteRegSuiteInputMethodTextChanged
 
-    }//GEN-LAST:event_tableExecuteRegSuiteInputMethodTextChanged
+    }//GEN-LAST:event_tabExecuteRegSuiteInputMethodTextChanged
 
-    private void tableExecuteRegSuiteMouseReleased(MouseEvent evt) {//GEN-FIRST:event_tableExecuteRegSuiteMouseReleased
+    private void tabExecuteRegSuiteMouseReleased(MouseEvent evt) {//GEN-FIRST:event_tabExecuteRegSuiteMouseReleased
         boolean checkBoxTicked = true;
 
         for(int i=0; i<importDataFromExcelModel.getRowCount(); i++){
@@ -1091,11 +1083,11 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             }
         }
 
-        int gerCurrCol = tableExecuteRegSuite.convertColumnIndexToModel(tableExecuteRegSuite.columnAtPoint(evt.getPoint()));
-        int gerCurrRow = tableExecuteRegSuite.convertRowIndexToModel(tableExecuteRegSuite.rowAtPoint(evt.getPoint()));
+        int gerCurrCol = tabExecuteRegSuite.convertColumnIndexToModel(tabExecuteRegSuite.columnAtPoint(evt.getPoint()));
+        int gerCurrRow = tabExecuteRegSuite.convertRowIndexToModel(tabExecuteRegSuite.rowAtPoint(evt.getPoint()));
 
         if(gerCurrCol ==0){
-            if(!tableExecuteRegSuite.getValueAt(gerCurrRow, 0).toString().contentEquals("FAIL"))
+            if(!tabExecuteRegSuite.getValueAt(gerCurrRow, 0).toString().contentEquals("FAIL"))
             chkBoxFilterFailTest.setSelected(false);
         }
 
@@ -1104,19 +1096,19 @@ public class ExecuteApiTest extends javax.swing.JFrame {
 
         if(chkBoxSelectDeselectAllRun.isSelected() ==false && checkBoxTicked ==true)
             chkBoxSelectDeselectAllRun.setSelected(true);
-    }//GEN-LAST:event_tableExecuteRegSuiteMouseReleased
+    }//GEN-LAST:event_tabExecuteRegSuiteMouseReleased
 
-    private void tableExecuteRegSuiteMouseClicked(MouseEvent evt) {//GEN-FIRST:event_tableExecuteRegSuiteMouseClicked
+    private void tabExecuteRegSuiteMouseClicked(MouseEvent evt) {//GEN-FIRST:event_tabExecuteRegSuiteMouseClicked
         if (evt.getClickCount() ==2) {
             JTable target =(JTable)evt.getSource();
             int row =target.getSelectedRow();
             int column =target.getSelectedColumn();
             if(column ==3){
-                String getCellTxt =tableExecuteRegSuite.getValueAt(row, column).toString();
+                String getCellTxt =tabExecuteRegSuite.getValueAt(row, column).toString();
                 if(!getCellTxt.toLowerCase().contentEquals("not started") &&
                     !getCellTxt.toLowerCase().contentEquals("running...") &&
                     !getCellTxt.toLowerCase().contentEquals("interrupted!")){
-                    String getRunId =tableExecuteRegSuite.getValueAt(row, 1).toString();
+                    String getRunId =tabExecuteRegSuite.getValueAt(row, 1).toString();
                     try {
                         File file = new File(testResultDocPath.get(getRunId));
                         if(!file.exists()){
@@ -1139,10 +1131,10 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                 }
             }
         }
-    }//GEN-LAST:event_tableExecuteRegSuiteMouseClicked
+    }//GEN-LAST:event_tabExecuteRegSuiteMouseClicked
 
-    private void tableExecuteRegSuiteFocusGained(FocusEvent evt) {//GEN-FIRST:event_tableExecuteRegSuiteFocusGained
-        if(tableExecuteRegSuite.getRowCount() >0){
+    private void tabExecuteRegSuiteFocusGained(FocusEvent evt) {//GEN-FIRST:event_tabExecuteRegSuiteFocusGained
+        if(tabExecuteRegSuite.getRowCount() >0){
             //if(bttnStartTestRun.isEnabled()){
                 //chkBoxRunHeadless.setEnabled(true);
                 //chkBoxAssociateObjOR.setEnabled(true);
@@ -1150,13 +1142,13 @@ public class ExecuteApiTest extends javax.swing.JFrame {
 
             //chkBoxFilterFailTest.setEnabled(true);
             //chkBoxSelectDeselectAllRun.setEnabled(true);
-        }else if(tableExecuteRegSuite.getRowCount() ==0){
+        }else if(tabExecuteRegSuite.getRowCount() ==0){
             //chkBoxRunHeadless.setEnabled(false);
             //chkBoxAssociateObjOR.setEnabled(false);
             chkBoxFilterFailTest.setEnabled(false);
             chkBoxSelectDeselectAllRun.setEnabled(false);
         }
-    }//GEN-LAST:event_tableExecuteRegSuiteFocusGained
+    }//GEN-LAST:event_tabExecuteRegSuiteFocusGained
 
     private void bttnStopTestRunMousePressed(MouseEvent evt) {//GEN-FIRST:event_bttnStopTestRunMousePressed
         if(bttnStopTestRun.isEnabled())
@@ -1407,17 +1399,17 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     }*/
     
     public static void setTableColWidthForExeRegSuiteTable(){
-        tableExecuteRegSuite.getColumnModel().getColumn(0).setMaxWidth(35);
-        tableExecuteRegSuite.getColumnModel().getColumn(0).setMinWidth(35);
+        tabExecuteRegSuite.getColumnModel().getColumn(0).setMaxWidth(35);
+        tabExecuteRegSuite.getColumnModel().getColumn(0).setMinWidth(35);
         
-        tableExecuteRegSuite.getColumnModel().getColumn(1).setMaxWidth(55);
-        tableExecuteRegSuite.getColumnModel().getColumn(1).setMinWidth(55);
+        tabExecuteRegSuite.getColumnModel().getColumn(1).setMaxWidth(55);
+        tabExecuteRegSuite.getColumnModel().getColumn(1).setMinWidth(55);
         
         //tableExecuteRegSuite.getColumnModel().getColumn(2).setMaxWidth(570);
         //tableExecuteRegSuite.getColumnModel().getColumn(2).setMinWidth(570);
         
-        tableExecuteRegSuite.getColumnModel().getColumn(3).setMaxWidth(137);
-        tableExecuteRegSuite.getColumnModel().getColumn(3).setMinWidth(137);
+        tabExecuteRegSuite.getColumnModel().getColumn(3).setMaxWidth(137);
+        tabExecuteRegSuite.getColumnModel().getColumn(3).setMinWidth(137);
     }
     /**
      * @param args the command line arguments
@@ -1457,18 +1449,18 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JButton bttnLoadRegSuite;
-    public static javax.swing.JButton bttnRefreshTestRun;
-    public static javax.swing.JButton bttnStartTestRun;
-    public static javax.swing.JButton bttnStopTestRun;
-    public static javax.swing.JCheckBox chkBoxFilterFailTest;
-    public static javax.swing.JCheckBox chkBoxSelectDeselectAllRun;
-    public javax.swing.JDesktopPane jDesktopPane1;
-    public javax.swing.JDesktopPane jDesktopPane2;
-    public javax.swing.JLabel lblTestTypeTag;
-    public javax.swing.JPanel pnlHeader;
-    public static javax.swing.JScrollPane scrollExecuteRegSuite;
-    public static javax.swing.JTable tableExecuteRegSuite;
-    public static javax.swing.JTextField txtTestTypeTag;
+    public static JButton bttnLoadRegSuite;
+    public static JButton bttnRefreshTestRun;
+    public static JButton bttnStartTestRun;
+    public static JButton bttnStopTestRun;
+    public static JCheckBox chkBoxFilterFailTest;
+    public static JCheckBox chkBoxSelectDeselectAllRun;
+    public JDesktopPane jDesktopPane1;
+    public JDesktopPane jDesktopPane2;
+    public JLabel lblTestTypeTag;
+    public JPanel pnlHeader;
+    public static JScrollPane scrollExecuteRegSuite;
+    public static JTable tabExecuteRegSuite;
+    public static JTextField txtTestTypeTag;
     // End of variables declaration//GEN-END:variables
 }

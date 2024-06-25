@@ -229,7 +229,7 @@ public class CreateAPITest extends javax.swing.JFrame {
         scrlPnlPayload = new javax.swing.JScrollPane();
         txtAreaPayload = new javax.swing.JTextArea();
         scrollModifyPayload = new javax.swing.JScrollPane();
-        textModifyPayload = new javax.swing.JTextArea();
+        txtModifyPayload = new javax.swing.JTextArea();
         scrollVerifyPayload = new javax.swing.JScrollPane();
         textVerifyPayload = new javax.swing.JTextArea();
         pnlCreateApiTest = new javax.swing.JPanel();
@@ -403,13 +403,13 @@ public class CreateAPITest extends javax.swing.JFrame {
         scrollModifyPayload.setBackground(new java.awt.Color(51, 51, 51));
         scrollModifyPayload.setBorder(null);
 
-        textModifyPayload.setEditable(false);
-        textModifyPayload.setBackground(new java.awt.Color(51, 51, 51));
-        textModifyPayload.setColumns(20);
-        textModifyPayload.setForeground(new java.awt.Color(255, 255, 204));
-        textModifyPayload.setLineWrap(true);
-        textModifyPayload.setRows(5);
-        scrollModifyPayload.setViewportView(textModifyPayload);
+        txtModifyPayload.setEditable(false);
+        txtModifyPayload.setBackground(new java.awt.Color(51, 51, 51));
+        txtModifyPayload.setColumns(20);
+        txtModifyPayload.setForeground(new java.awt.Color(255, 255, 204));
+        txtModifyPayload.setLineWrap(true);
+        txtModifyPayload.setRows(5);
+        scrollModifyPayload.setViewportView(txtModifyPayload);
 
         scrollVerifyPayload.setBorder(null);
         scrollVerifyPayload.setForeground(new java.awt.Color(51, 51, 51));
@@ -980,7 +980,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             txtAreaParams.setText("");
             txtAreaAuthorization.setText("");
             txtAreaPayload.setText("");
-            textModifyPayload.setText("");
+            txtModifyPayload.setText("");
             textVerifyPayload.setText("");
             lblAuthorization.setText("Authorization"); 
             
@@ -1532,7 +1532,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             txtAreaParams.setText("");
             txtAreaAuthorization.setText("");
             txtAreaPayload.setText("");
-            textModifyPayload.setText("");
+            txtModifyPayload.setText("");
             textVerifyPayload.setText("");
             lblAuthorization.setText("Authorization"); 
             lblInvalidBody.setText("");
@@ -1718,10 +1718,10 @@ public class CreateAPITest extends javax.swing.JFrame {
                 try {
                     Object getTestId1 =tableCreateApiTest.getValueAt(rowStart1+1, 0);
                     if(getTestId1 !=null && !getTestId1.toString().isEmpty()) {
-                            textModifyPayload.setText(setModifyPayload);
+                            txtModifyPayload.setText(setModifyPayload);
                             break;
                     }
-                }catch(ArrayIndexOutOfBoundsException exp) {textModifyPayload.setText(setModifyPayload);break;}
+                }catch(ArrayIndexOutOfBoundsException exp) {txtModifyPayload.setText(setModifyPayload);break;}
             }
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){}
         
@@ -1952,7 +1952,6 @@ public class CreateAPITest extends javax.swing.JFrame {
     public javax.swing.JScrollPane scrollModifyPayload;
     public javax.swing.JScrollPane scrollVerifyPayload;
     public static javax.swing.JTable tableCreateApiTest;
-    public static javax.swing.JTextArea textModifyPayload;
     public static javax.swing.JTextArea textVerifyPayload;
     public static javax.swing.JTextField txtAPIurl;
     public static javax.swing.JTextArea txtAreaAuthorization;
@@ -1960,6 +1959,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     public static javax.swing.JTextArea txtAreaParams;
     public static javax.swing.JTextArea txtAreaPayload;
     public static javax.swing.JTextField txtExpStatus;
+    public static javax.swing.JTextArea txtModifyPayload;
     public static javax.swing.JTextField txtRequestType;
     // End of variables declaration//GEN-END:variables
 }

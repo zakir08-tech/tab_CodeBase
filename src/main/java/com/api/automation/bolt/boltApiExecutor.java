@@ -61,21 +61,17 @@ public class boltApiExecutor extends Thread {
             
             //testRunEndDateAndTime =getCurrentDateAndTime();
             //endRunDateTime =dateFormatter.parse(testRunEndDateAndTime);
-        } catch (KeyManagementException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (KeyStoreException e) {
+        } catch (KeyManagementException | NoSuchAlgorithmException | KeyStoreException e) {
             throw new RuntimeException(e);
         }
-            
+
         bttnStartTestRun.setEnabled(true);
         ExecuteApiTest.bttnRefreshTestRun.setEnabled(true);
-        //bttnRefreshTestRun.setEnabled(true);
+        bttnRefreshTestRun.setEnabled(true);
         chkBoxFilterFailTest.setEnabled(true);
         chkBoxFilterFailTest.setSelected(false);
         chkBoxSelectDeselectAllRun.setEnabled(true);
-        tableExecuteRegSuite.setEnabled(true);
+        tabExecuteRegSuite.setEnabled(true);
         bttnLoadRegSuite.setEnabled(true);
         bttnStopTestRun.setEnabled(false);
         testRunInProgress =false;
