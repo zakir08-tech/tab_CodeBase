@@ -297,7 +297,8 @@ public class API_TestRunner extends loadAPITestRunner {
 	                    jsonResponse = new JSONArray("[" + jsonXmlResponse + "]");
 	                    blnXmlresponse = true;
 	                } else {
-	                    getHtmlResponse = retrieveResponse.toString().replaceAll("[\\\r\\\n]+", "");
+	                    //getHtmlResponse = retrieveResponse.toString().replaceAll("[\\\r\\\n]+", "");
+						getHtmlResponse = retrieveResponse.toString();
 	                    blnNoResponse = true;
 	                }
 

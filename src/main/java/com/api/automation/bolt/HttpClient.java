@@ -73,24 +73,24 @@ import com.automation.bolt.common;
     public CloseableHttpResponse getClientResponse(Object url, LinkedHashMap < Object, Object > headerMap, Object sslFlag, Object basicAuthFlag) throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
 
 		try {
-		
-			CloseableHttpClient httpClient = getHttpBuilder(sslFlag, basicAuthFlag);			
+
+			CloseableHttpClient httpClient = getHttpBuilder(sslFlag, basicAuthFlag);
 			HttpGet httpget = new HttpGet((String) url);
 
-            for (Map.Entry < Object, Object > headerEntry: headerMap.entrySet()) {
-            	httpget.addHeader((String) headerEntry.getKey(), (String) headerEntry.getValue());
-            }
+			for (Map.Entry<Object, Object> headerEntry : headerMap.entrySet()) {
+				httpget.addHeader((String) headerEntry.getKey(), (String) headerEntry.getValue());
+			}
 
-            httpCloseableResponse = httpClient.execute(httpget);
-            
-			} catch(ClientProtocolException | NullPointerException | IllegalArgumentException exp) {
-				System.out.println(exp.getMessage());
-
-			} catch(IOException ex) {
-				System.out.println(ex.toString());
-				VerifyValueAPICommon.verifyErrorMessage(ex.toString(), ex.getClass().getName());
-            }
-
+			httpCloseableResponse = httpClient.execute(httpget);
+		} catch(ClientProtocolException |
+				NullPointerException |
+				IllegalArgumentException |
+				ArrayIndexOutOfBoundsException exp) {
+			System.out.println(exp.getMessage());
+		} catch(IOException ex) {
+			System.out.println(ex.toString());
+			VerifyValueAPICommon.verifyErrorMessage(ex.toString(), ex.getClass().getName());
+		}
 			return httpCloseableResponse;
     }
     
@@ -121,12 +121,15 @@ import com.automation.bolt.common;
 
     //--POST method
     public CloseableHttpResponse postClientRequest(Object url, String entityString, LinkedHashMap<Object, Object> headerMap, Object sslFlag, Object basicAuthFlag) throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
-    	CloseableHttpClient httpClient = getHttpBuilder(sslFlag, basicAuthFlag);
-    	HttpPost httppost = new HttpPost((String) url); //post
+    	CloseableHttpClient httpClient =null;
+    	HttpPost httppost =null; //post
 
 		try {
+			httpClient = getHttpBuilder(sslFlag, basicAuthFlag);
+	    	httppost = new HttpPost((String) url); //post
+
 			httppost.setEntity(new StringEntity(entityString));
-		} catch(UnsupportedEncodingException e) {
+		} catch(UnsupportedEncodingException | ArrayIndexOutOfBoundsException e) {
 			System.out.println(e.getMessage());
 		} //pay load
 
@@ -141,7 +144,7 @@ import com.automation.bolt.common;
 
 		try {
 			httpCloseableResponse = httpClient.execute(httppost);
-		} catch(IOException e) {		
+		} catch(IOException | NullPointerException e) {		
 			System.out.println(e.toString());
 			//runTimeError =e.toString();
 			VerifyValueAPICommon.verifyErrorMessage(e.toString(), e.getClass().getName());

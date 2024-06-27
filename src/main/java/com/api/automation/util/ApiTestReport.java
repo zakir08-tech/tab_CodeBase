@@ -327,6 +327,7 @@ public class ApiTestReport {
                                                         "                                               </div>";
                     } else if (getReqType.contentEquals("POST") ||
 	                    getReqType.contentEquals("GET") ||
+                        getReqType.contentEquals("DELETE") ||
 	                    getReqType.contentEquals("PUT") ||
 	                    getReqType.contentEquals("NA")) {
                         	htmlDiv = htmlDiv + "                                         </div>";

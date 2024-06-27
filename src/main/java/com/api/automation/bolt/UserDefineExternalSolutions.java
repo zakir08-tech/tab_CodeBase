@@ -17,7 +17,8 @@ public class UserDefineExternalSolutions {
 	//public static String dbUserName = LoadProperties.prop.getProperty(Constants.SQLServer_UserName);
 	//public static String dbUserPassword = LoadProperties.prop.getProperty(Constants.SQLServer_UserPassword);
 	public static SimpleDateFormat timeStamp = new SimpleDateFormat("yyyyMMddHHmmss");
-           
+    public static String UniqueValueWithPreFix =null;
+
     public static Object runExternalMethod(String[] getMethodArgs) {
     	Object getReturnVal = null;
  
@@ -35,8 +36,11 @@ public class UserDefineExternalSolutions {
 	            //getReturnVal = generateUniqueKRIDNumber(getMethodArgs);         
 	            break;
 	        case "UniqueValueWithPreFix":
-	            getReturnVal = UniqueNumberUsingTimeStampPreFix(getMethodArgs);    
+	            getReturnVal = UniqueNumberUsingTimeStampPreFix(getMethodArgs);
 	            break;
+            case "LastUniqueValueWithPreFix":
+                getReturnVal = LastUniqueNumberUsingTimeStampPreFix();
+                break;
 	        default:
 	        	System.out.println("no method found with this name: " + readExternalMethodName);
         }
@@ -77,6 +81,10 @@ public class UserDefineExternalSolutions {
         }
  
         return preFix+uniqueNumberTimeStamp;
+    }
+
+    public static String LastUniqueNumberUsingTimeStampPreFix() {
+        return UniqueValueWithPreFix;
     }
            
     /*public static int generateUniqueBankID(String[] getMethodArgs) {
