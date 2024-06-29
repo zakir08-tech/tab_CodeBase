@@ -23,23 +23,37 @@ public class UpdateJsonPayload {
 	    int k = 0;
 	    String tagName="";
 	    Object getMthdReturnValue;
-                       
+
+		String splitTagName =null;
+		String getTestId =null;
+		HashMap<Object, Object> getPrevJsonResponse =null;
+		String getJsonResponse =null;
+		String getRespTagVal =null;
+		String[] getMethAttributes =null;
+		String getMethodName =null;
+		String[] getMethodArgs =null;
+
 	    for (Map.Entry<Object, Object> getTagElm : jsonElement.entrySet()) {
 	    	if(getTagElm.getValue().toString().contains("_RefFnd_")){
-	            String splitTagName = getTagElm.getValue().toString().split("_RefFnd_")[0];
-	            String getTestId = getTagElm.getValue().toString().split("_RefFnd_")[1].replace("#", "");
-	            HashMap<Object, Object> getPrevJsonResponse = loadAPITestRunner.saveTestRunMap.get(getTestId);
-	            String getJsonResponse = (String) getPrevJsonResponse.get("JSON Response");
-	            String getRespTagVal = GetTagValueFromJsonResponse.GetJsonTagElement(splitTagName, getJsonResponse);
-                if(getRespTagVal.contentEquals("#.")){
-                	System.out.println("required tag [" +splitTagName+ "] not found in the json response");
-                }else
-                	jsonElement.replace(getTagElm.getKey(), getRespTagVal);
+
+				try{
+					splitTagName =getTagElm.getValue().toString().split("_RefFnd_")[0];
+					getTestId =getTagElm.getValue().toString().split("_RefFnd_")[1].replace("#", "");
+
+					getPrevJsonResponse = loadAPITestRunner.saveTestRunMap.get(getTestId);
+					getJsonResponse =(String) getPrevJsonResponse.get("JSON Response");
+
+					getRespTagVal =GetTagValueFromJsonResponse.GetJsonTagElement(splitTagName, getJsonResponse);
+					if(getRespTagVal.contentEquals("#.")){
+						System.out.println("required tag [" +splitTagName+ "] not found in the json response");
+					}else
+						jsonElement.replace(getTagElm.getKey(), getRespTagVal);
+				} catch(NullPointerException ignored){}
+
 	    	}else if(getTagElm.getValue().toString().contains("|")){                        
-	            String[] getMethAttributes = getTagElm.getValue().toString().split("[|]");
-	            String getMethodName =getMethAttributes[1];
-	            String[] getMethodArgs =null;
-                                               
+	            getMethAttributes =getTagElm.getValue().toString().split("[|]");
+	            getMethodName =getMethAttributes[1];
+
 	            try{
 	            	getMethodArgs =getMethAttributes[2].split(",");
 	            }catch(ArrayIndexOutOfBoundsException exp){}

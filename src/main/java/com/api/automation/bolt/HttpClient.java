@@ -180,27 +180,31 @@ import com.automation.bolt.common;
     //--PUT method with payload
     public CloseableHttpResponse putClientRequest(Object url, String entityString, LinkedHashMap<Object, Object> headerMap, Object sslFlag, Object basicAuthFlag) throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
 
-	    CloseableHttpClient httpClient = getHttpBuilder(sslFlag, basicAuthFlag);
-	    HttpPut httpput = new HttpPut((String) url); //put
+	    CloseableHttpClient httpClient =null;
+	    HttpPut httpput =null; //put
 
         try {
-        	httpput.setEntity(new StringEntity(entityString));
-        } catch(UnsupportedEncodingException e) {
+			httpClient = getHttpBuilder(sslFlag, basicAuthFlag);
+			httpput = new HttpPut((String) url); //put
+			httpput.setEntity(new StringEntity(entityString));
+
+			if(headerMap !=null) {
+				if(headerMap.size() !=0){
+					//headers
+					for (Map.Entry<Object, Object> headerEntry: headerMap.entrySet()) {
+						httpput.addHeader((String) headerEntry.getKey(), (String) headerEntry.getValue());
+					}
+				}
+			}
+        } catch(UnsupportedEncodingException |
+				IllegalArgumentException |
+				NullPointerException e) {
         	System.out.println(e.getMessage());
         }//pay load
-        
-        if(headerMap !=null) {
-        	if(headerMap.size() !=0){
-    		    //headers
-    		    for (Map.Entry<Object, Object> headerEntry: headerMap.entrySet()) {
-    		    	httpput.addHeader((String) headerEntry.getKey(), (String) headerEntry.getValue());
-    		    }
-            }
-        }
-        
+
         try {
         	httpCloseableResponse = httpClient.execute(httpput);
-        } catch(IOException e) {
+        } catch(IOException | IllegalArgumentException e) {
         	System.out.println(e.toString());
         	VerifyValueAPICommon.verifyErrorMessage(e.toString(), e.getClass().getName());
         }
