@@ -110,7 +110,7 @@ public class API_TestRunner extends loadAPITestRunner {
 			ExecuteApiTest.tabExecuteRegSuite.setRowSelectionInterval(getCurrRunId, getCurrRunId);            
 	    	ExecuteApiTest.tabExecuteRegSuite.scrollRectToVisible(ExecuteApiTest.tabExecuteRegSuite.getCellRect(ExecuteApiTest.tabExecuteRegSuite.getSelectedRow(), 0, true));
 	    	ExecuteApiTest.tabExecuteRegSuite.requestFocus();
-	    	ExecuteApiTest.importDataFromExcelModel.setValueAt("Running...", getCurrRunId, 3);
+	    	ExecuteApiTest.importDataFromExcelModel.setValueAt("Requesting...", getCurrRunId, 3);
         	
 	    	blnJSONresponse = false;
 	        blnXmlresponse = false;

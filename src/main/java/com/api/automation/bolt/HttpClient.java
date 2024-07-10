@@ -250,14 +250,17 @@ import com.automation.bolt.common;
 
 	    if(sslFlag !=null && !sslFlag.toString().isEmpty()){
 	    	jsonMap =common.uploadSSLCertConfiguration();
-	
+	    	String getSSLName =null;
+	    	
 	        for (Map.Entry<Integer,Object> entry : jsonMap.entrySet()){
-	            String getSSLName =entry.getValue().toString().split(",")[0];
-	            keyStoreFilePath =entry.getValue().toString().split(",")[1];
-	            keyStorePwd =entry.getValue().toString().split(",")[2];
-	            trustStoreFilePath =entry.getValue().toString().split(",")[3];
-	            trustStorePwd =entry.getValue().toString().split(",")[4];
-	
+	            try {            	
+	            	getSSLName =entry.getValue().toString().split(",")[0];
+		            keyStoreFilePath =entry.getValue().toString().split(",")[1];
+		            keyStorePwd =entry.getValue().toString().split(",")[2];
+		            trustStoreFilePath =entry.getValue().toString().split(",")[3];
+		            trustStorePwd =entry.getValue().toString().split(",")[4];
+	            }catch(ArrayIndexOutOfBoundsException | NullPointerException exp) {}
+	        	
 	            if(getSSLName.contentEquals(sslFlag.toString()))
 	            	break;
 	        }

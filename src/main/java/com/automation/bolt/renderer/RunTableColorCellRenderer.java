@@ -31,6 +31,8 @@ public class RunTableColorCellRenderer implements TableCellRenderer{
                     c.setForeground(Color.orange);
                 else if(table.getModel().getValueAt(row, 3).toString().contentEquals("Running..."))
                     c.setForeground(Color.yellow);
+                else if(table.getModel().getValueAt(row, 3).toString().contentEquals("Requesting..."))
+                    c.setForeground(Color.yellow);
                 else if(table.getModel().getValueAt(row, 3).toString().contentEquals("Interrupted!"))
                     c.setForeground(Color.yellow);
                 else if(table.getModel().getValueAt(row, 3).toString().contentEquals("Stopping..."))

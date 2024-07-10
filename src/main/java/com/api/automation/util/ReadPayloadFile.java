@@ -33,9 +33,16 @@ public class ReadPayloadFile {
     public static String readEncodedPayloadFromFile(String payload){
     	String getLoadTxt ="";
         String[] pload =payload.split("\n");
+        String getKey ="";
+        String getValue ="";
+        String getNewLoad ="";
         
         for(String load: pload){
-        	getLoadTxt = getLoadTxt + load + "&";
+        	getKey =load.split(":")[0];
+        	getValue =load.split(":")[1];
+        	getNewLoad =getKey +"="+ getValue;
+        	
+        	getLoadTxt = getLoadTxt + getNewLoad + "&";
         }
  
         readPayload = getLoadTxt.substring(0, getLoadTxt.length() - 1);
