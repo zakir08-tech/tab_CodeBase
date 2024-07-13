@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.http.ParseException;
@@ -141,10 +142,10 @@ public class API_TestRunner extends loadAPITestRunner {
             payloadTagElement = loadAPITestRunner.saveTagElmMap.get(getApiTestRunId); //get payload tag/element
             getSSLCertificationFlag = testRunnerEntry.getValue().get("SSL Verification"); //get ssl certification flag
 
-            if(getSSLCertificationFlag ==null)
-            	getSSLCertificationFlag ="";
+            if(getSSLCertificationFlag ==null) {
+            	getSSLCertificationFlag ="";}
 
-            getBasicAuthFlag = testRunnerEntry.getValue().get("Authorization"); //get ssl certification flag
+            getBasicAuthFlag = testRunnerEntry.getValue().get("Authorization"); //get authorization
             if(getBasicAuthFlag.toString().contentEquals("Bearer Token")){
 	            updateValueFromJsonResponse(getApiTestRunId, getAuth1,"AuthVal1");
 	            getAuth1 =testRunnerEntry.getValue().get("AuthVal1");
@@ -155,287 +156,288 @@ public class API_TestRunner extends loadAPITestRunner {
 					loadAPITestRunner.saveHeaderMap.put(getApiTestRunId, requestHeaders);
                 }else
                 	requestHeaders.put("Authorization","Bearer "+getAuth1);
+            }
+
+            if(getBasicAuthFlag ==null) {
+            	getBasicAuthFlag ="";}
+
+            verifyResponseTagElement = loadAPITestRunner.saveVerifyRespTagElmMap.get(getApiTestRunId); //get payload tag/element
+            //responseDbValidation = loadAPITestRunner.saveDbValidationMap.get(getApiTestRunId); //get database validation items
+
+            System.out.println("\nExecuting Test Run: " + getApiTestRunId);
+            requestPayload =testRunnerEntry.getValue().get("Payload");
+            getPayloadType = testRunnerEntry.getValue().get("Payload Type"); //get payload type
+
+            if (payloadTagElement !=null) {
+                //requestPayload =testRunnerEntry.getValue().get("Payload");
+                requestPayload =UpdateJsonPayload.UpdateJsonTagElement(getApiTestRunId, payloadTagElement, requestPayload.toString());
+            }
+
+            if (requestPayload != null){
+            	if(getPayloadType.toString().toLowerCase().contains("urlencoded"))
+            		requestPayload = ReadPayloadFile.readEncodedPayloadFromFile((String) requestPayload);
+            }
+
+            if (getApiTestRequest.toString().trim().toUpperCase().contentEquals("GET")) { //if:1; GET call
+            	if (requestHeaders ==null)
+            		closeableHttpRespone = restClient.getClientResponse(getApiTestRequestUrl, getSSLCertificationFlag, getBasicAuthFlag, getBasicAuthFlag);
+            	else {
+            		// update header value from previous json response
+            		updateHeaderFromJsonResponse(getApiTestRunId);
+            		closeableHttpRespone = restClient.getClientResponse(getApiTestRequestUrl, requestHeaders, getSSLCertificationFlag, getBasicAuthFlag); //GET call with headers
             	}
 
-                if(getBasicAuthFlag ==null)
-                	getBasicAuthFlag ="";
-
-                verifyResponseTagElement = loadAPITestRunner.saveVerifyRespTagElmMap.get(getApiTestRunId); //get payload tag/element
-                //responseDbValidation = loadAPITestRunner.saveDbValidationMap.get(getApiTestRunId); //get database validation items
-
-                System.out.println("\nExecuting Test Run: " + getApiTestRunId);
-                requestPayload =testRunnerEntry.getValue().get("Payload");
-                getPayloadType = testRunnerEntry.getValue().get("Payload Type"); //get payload type
-
-                if (payloadTagElement !=null) {
-                    //requestPayload =testRunnerEntry.getValue().get("Payload");
-                    requestPayload =UpdateJsonPayload.UpdateJsonTagElement(getApiTestRunId, payloadTagElement, requestPayload.toString());
-                }
-
-                if (requestPayload != null){
-                	if(getPayloadType.toString().toLowerCase().contains("urlencoded"))
-                		requestPayload = ReadPayloadFile.readEncodedPayloadFromFile((String) requestPayload);
-                }
-
-                if (getApiTestRequest.toString().trim().toUpperCase().contentEquals("GET")) { //if:1; GET call
-                	if (requestHeaders ==null)
-                		closeableHttpRespone = restClient.getClientResponse(getApiTestRequestUrl, getSSLCertificationFlag, getBasicAuthFlag, getBasicAuthFlag);
-                	else {
-                		// update header value from previous json response
-                		updateHeaderFromJsonResponse(getApiTestRunId);
-                		closeableHttpRespone = restClient.getClientResponse(getApiTestRequestUrl, requestHeaders, getSSLCertificationFlag, getBasicAuthFlag); //GET call with headers
-                	}
-
-                    if (closeableHttpRespone != null) {
-	                    retrieveResponse = getGetResponse.testGetResponse(closeableHttpRespone, getExpResponseCode);
-	                    testOut_Put.put(Constants.Run_API_Actual_Status, Integer.toString(ResponseGET.statusCode));
-	                    testOut_Put.put(Constants.Response_Status_Phrase, ResponseGET.responsePhrase);
-
-                    } else {
-		                    getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
-		                    testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
-		                    testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
-		                    finalRunStatus =false;
-                    }
-
-                } else if (getApiTestRequest.toString().trim().toUpperCase().contentEquals("POST")) { //POST call
-                	if (requestPayload != null) {
-	                    try{
-                            if (requestHeaders.size() != 0){
-                            	updateHeaderFromJsonResponse(getApiTestRunId);
-                            }
-	                    }catch(NullPointerException exp){}
-
-	                    closeableHttpRespone = restClient.postClientRequest(getApiTestRequestUrl, requestPayload.toString(), requestHeaders, getSSLCertificationFlag, getBasicAuthFlag);
-	                }else
-	                	closeableHttpRespone = restClient.postClientRequest(getApiTestRequestUrl, requestHeaders, getSSLCertificationFlag, getBasicAuthFlag);
-	                	if (closeableHttpRespone != null) {
-	                		try {
-	                			retrieveResponse = getPostResponse.testPostResponse(closeableHttpRespone, getExpResponseCode);
-	                        } catch (ParseException exp) {
-	                        	exp.printStackTrace();
-	                        }
-	
-	                        testOut_Put.put(Constants.Run_API_Actual_Status, ResponsePOST.statusCode);
-	                        testOut_Put.put(Constants.Response_Status_Phrase, ResponsePOST.responsePhrase);
-	
-	                	} else {
-							getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
-							testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
-							testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
-							finalRunStatus =false;
-	                	}
-                } else if (getApiTestRequest.toString().trim().toUpperCase().contentEquals("PUT")) { //PUT call
-                	if (requestPayload != null){
-                		if (requestHeaders.size() != 0){
-                			updateHeaderFromJsonResponse(getApiTestRunId);
-                		}
-                		closeableHttpRespone = restClient.putClientRequest(getApiTestRequestUrl, requestPayload.toString(), requestHeaders, getSSLCertificationFlag, getBasicAuthFlag);
-                	}
-                	else closeableHttpRespone = restClient.putClientRequest(getApiTestRequestUrl, requestHeaders, getSSLCertificationFlag, getBasicAuthFlag);
-                		if (closeableHttpRespone != null) {
-                			try {
-                				retrieveResponse = getPutResponse.testPutResponse(closeableHttpRespone, getExpResponseCode);
-                            } catch (ParseException exp) {
-                            	exp.printStackTrace();
-                            }
-
-                            testOut_Put.put(Constants.Run_API_Actual_Status, Integer.toString(ResponsePUT.statusCode));
-                            testOut_Put.put(Constants.Response_Status_Phrase, ResponsePUT.responsePhrase);
-
-                        } else {
-	                        getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("ErrorDesc");
-	                        testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
-	                        testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
-	                        finalRunStatus =false;
-                        }
-                } else if(getApiTestRequest.toString().trim().toUpperCase().contentEquals("DELETE")){ // DELETE call
-		        	   if (requestHeaders !=null){
-		        		   updateHeaderFromJsonResponse(getApiTestRunId);
-		        	   }
-		        	   
-		        	   if(stepDefinitionError ==false) {
-		        		   closeableHttpRespone = restClient.deleteClientResponse(getApiTestRequestUrl, requestHeaders, getSSLCertificationFlag, getBasicAuthFlag); //DELETE call
-		        		   if (closeableHttpRespone != null) {
-		        		      retrieveResponse = getGetResponse.testGetResponse(closeableHttpRespone, getExpResponseCode);
-		        		      testOut_Put.put(Constants.Run_API_Actual_Status, Integer.toString(ResponseGET.statusCode));
-		        		      testOut_Put.put(Constants.Response_Status_Phrase, ResponseGET.responsePhrase);
-		        		   } else {
-		        		      getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
-		        		      testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
-		        		      testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
-		        		      finalRunStatus =false;
-		        		   }
-		        	   }else {
-	        		       testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
-	        		       testOut_Put.put(Constants.Response_Status_Phrase, stepDefinitionErrorMsg);
-	        		       finalRunStatus =false;
-		        	   }
-		        	   
-		        	}else{
-		                //testRunMap.put("Request", "NA");
-		                testOut_Put.put("Request", "NA");
-		                ApiTestRunnerMap.put(getApiTestRunId, testRunMap);
-		        }
-
-                //storeRequestPayloadToHasMap
                 if (closeableHttpRespone != null) {
-	                //retrieveResponse = RemoveBracketsFromJSONString.removeBrackets(retrieveResponse);
-	                if (VerifyValueAPICommon.isJSONValid(retrieveResponse.toString()) == true) {
-	                    try {
-	                    	jsonResponse = new JSONArray(retrieveResponse.toString());
-	                    } catch (JSONException exp) {
-							//exp.printStackTrace();
-							if (retrieveResponse.toString().charAt(0) != '[')
-								jsonResponse = new JSONArray("[" + retrieveResponse.toString() + "]");
-							else jsonResponse = new JSONArray(retrieveResponse.toString());
-	                    }
+                    retrieveResponse = getGetResponse.testGetResponse(closeableHttpRespone, getExpResponseCode);
+                    testOut_Put.put(Constants.Run_API_Actual_Status, Integer.toString(ResponseGET.statusCode));
+                    testOut_Put.put(Constants.Response_Status_Phrase, ResponseGET.responsePhrase);
 
-	                    blnJSONresponse = true;
-	                } else if (VerifyValueAPICommon.isXMLValid(retrieveResponse.toString()) == true) {
-	                    jsonXmlResponse = ConvertXmlToJson.XMLtoJSON(retrieveResponse.toString());
-	                    jsonResponse = new JSONArray("[" + jsonXmlResponse + "]");
-	                    blnXmlresponse = true;
-	                } else {
-	                    //getHtmlResponse = retrieveResponse.toString().replaceAll("[\\\r\\\n]+", "");
-						getHtmlResponse = retrieveResponse.toString();
-	                    blnNoResponse = true;
-	                }
-
-                    if (requestPayload != null) {
-                    	testOut_Put.put("Payload", requestPayload);
-                    }
+                } else {
+	                    getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
+	                    testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
+	                    testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
+	                    finalRunStatus =false;
                 }
 
-                // save the json response to the hash-map
-                if (closeableHttpRespone != null && (blnJSONresponse || blnXmlresponse)) {
-                	try {
+            } else if (getApiTestRequest.toString().trim().toUpperCase().contentEquals("POST")) { //POST call
+            	try{
+                    if (requestHeaders.size() != 0){
+                    	updateHeaderFromJsonResponse(getApiTestRunId);
+                    }
+                }catch(NullPointerException exp){}
+            	
+            	if (requestPayload != null) {
+                    closeableHttpRespone = restClient.postClientRequest(getApiTestRequestUrl, requestPayload.toString(), requestHeaders, getSSLCertificationFlag, getBasicAuthFlag);
+                }else
+                	closeableHttpRespone = restClient.postClientRequest(getApiTestRequestUrl, requestHeaders, getSSLCertificationFlag, getBasicAuthFlag);
+                	if (closeableHttpRespone != null) {
                 		try {
-                			saveResponse.savingResponseToFile(jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR), getApiTestRequest, String.valueOf(getApiTestRunId));
-                			if (verifyResponseTagElement !=null) {
-                				VerifyTagValueFromJsonResponse.VerifyJsonTagElement(getApiTestRunId, verifyResponseTagElement, jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR));
-                			}
-                        } catch (IOException exp) {
+                			retrieveResponse = getPostResponse.testPostResponse(closeableHttpRespone, getExpResponseCode);
+                        } catch (ParseException exp) {
                         	exp.printStackTrace();
                         }
-	                } catch (JSONException exp) {
-	                	exp.printStackTrace();
-	                }
-                	
-                	testOut_Put.put(Constants.Run_API_JSON_Response, jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR));
-                } else if (closeableHttpRespone != null && blnNoResponse) {
-                	testOut_Put.put(Constants.Run_API_JSON_Response, getHtmlResponse);
+
+                        testOut_Put.put(Constants.Run_API_Actual_Status, ResponsePOST.statusCode);
+                        testOut_Put.put(Constants.Response_Status_Phrase, ResponsePOST.responsePhrase);
+
+                	} else {
+						getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
+						testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
+						testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
+						finalRunStatus =false;
+                	}
+            } else if (getApiTestRequest.toString().trim().toUpperCase().contentEquals("PUT")) { //PUT call
+            	if (requestHeaders.size() != 0){
+        			updateHeaderFromJsonResponse(getApiTestRunId);
+        		}
+            	
+            	if (requestPayload != null){	
+            		closeableHttpRespone = restClient.putClientRequest(getApiTestRequestUrl, requestPayload.toString(), requestHeaders, getSSLCertificationFlag, getBasicAuthFlag);
+            	}
+            	else closeableHttpRespone = restClient.putClientRequest(getApiTestRequestUrl, requestHeaders, getSSLCertificationFlag, getBasicAuthFlag);
+            		if (closeableHttpRespone != null) {
+            			try {
+            				retrieveResponse = getPutResponse.testPutResponse(closeableHttpRespone, getExpResponseCode);
+                        } catch (ParseException exp) {
+                        	exp.printStackTrace();
+                        }
+
+                        testOut_Put.put(Constants.Run_API_Actual_Status, Integer.toString(ResponsePUT.statusCode));
+                        testOut_Put.put(Constants.Response_Status_Phrase, ResponsePUT.responsePhrase);
+
+                    } else {
+                        getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("ErrorDesc");
+                        testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
+                        testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
+                        finalRunStatus =false;
+                    }
+            } else if(getApiTestRequest.toString().trim().toUpperCase().contentEquals("DELETE")){ // DELETE call
+	        	   if (requestHeaders !=null){
+	        		   updateHeaderFromJsonResponse(getApiTestRunId);
+	        	   }
+	        	   
+	        	   if(stepDefinitionError ==false) {
+	        		   closeableHttpRespone = restClient.deleteClientResponse(getApiTestRequestUrl, requestHeaders, getSSLCertificationFlag, getBasicAuthFlag); //DELETE call
+	        		   if (closeableHttpRespone != null) {
+	        		      retrieveResponse = getGetResponse.testGetResponse(closeableHttpRespone, getExpResponseCode);
+	        		      testOut_Put.put(Constants.Run_API_Actual_Status, Integer.toString(ResponseGET.statusCode));
+	        		      testOut_Put.put(Constants.Response_Status_Phrase, ResponseGET.responsePhrase);
+	        		   } else {
+	        		      getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
+	        		      testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
+	        		      testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
+	        		      finalRunStatus =false;
+	        		   }
+	        	   }else {
+        		       testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
+        		       testOut_Put.put(Constants.Response_Status_Phrase, stepDefinitionErrorMsg);
+        		       finalRunStatus =false;
+	        	   }
+	        	   
+	        	}else{
+	                //testRunMap.put("Request", "NA");
+	                testOut_Put.put("Request", "NA");
+	                ApiTestRunnerMap.put(getApiTestRunId, testRunMap);
+	        }
+
+            //storeRequestPayloadToHasMap
+            if (closeableHttpRespone != null) {
+                //retrieveResponse = RemoveBracketsFromJSONString.removeBrackets(retrieveResponse);
+                if (VerifyValueAPICommon.isJSONValid(retrieveResponse.toString()) == true) {
                     try {
-                    	saveResponse.savingResponseToFile(getHtmlResponse, getApiTestRequest, String.valueOf(getApiTestRunId));
+                    	jsonResponse = new JSONArray(retrieveResponse.toString());
+                    } catch (JSONException exp) {
+						//exp.printStackTrace();
+						if (retrieveResponse.toString().charAt(0) != '[')
+							jsonResponse = new JSONArray("[" + retrieveResponse.toString() + "]");
+						else jsonResponse = new JSONArray(retrieveResponse.toString());
+                    }
+
+                    blnJSONresponse = true;
+                } else if (VerifyValueAPICommon.isXMLValid(retrieveResponse.toString()) == true) {
+                    jsonXmlResponse = ConvertXmlToJson.XMLtoJSON(retrieveResponse.toString());
+                    jsonResponse = new JSONArray("[" + jsonXmlResponse + "]");
+                    blnXmlresponse = true;
+                } else {
+                    //getHtmlResponse = retrieveResponse.toString().replaceAll("[\\\r\\\n]+", "");
+					getHtmlResponse = retrieveResponse.toString();
+                    blnNoResponse = true;
+                }
+
+                if (requestPayload != null) {
+                	testOut_Put.put("Payload", requestPayload);
+                }
+            }
+
+            // save the json response to the hash-map
+            if (closeableHttpRespone != null && (blnJSONresponse || blnXmlresponse)) {
+            	try {
+            		try {
+            			saveResponse.savingResponseToFile(jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR), getApiTestRequest, String.valueOf(getApiTestRunId));
+            			if (verifyResponseTagElement !=null) {
+            				VerifyTagValueFromJsonResponse.VerifyJsonTagElement(getApiTestRunId, verifyResponseTagElement, jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR));
+            			}
                     } catch (IOException exp) {
                     	exp.printStackTrace();
                     }
-                } else if(stepDefinitionError ==true) {
-                	testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
-                    testOut_Put.put(Constants.Response_Status_Phrase, stepDefinitionErrorMsg);
-                    testOut_Put.put(Constants.Run_API_JSON_Response, stepDefinitionErrorMsg);
-                    finalRunStatus =false;
-                } else {
-	                try{
-	                    getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
-	                    getErrorDesc = (String) VerifyValueAPICommon.errorMapping.get("ErrorDesc");
-	                    testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
-	                    testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
-	                    testOut_Put.put(Constants.Run_API_JSON_Response, getErrorDesc);
-	                    finalRunStatus =false;
-	                }catch(NullPointerException  exp){
-	                	exp.printStackTrace();
-	                }
+                } catch (JSONException exp) {
+                	exp.printStackTrace();
                 }
+            	
+            	testOut_Put.put(Constants.Run_API_JSON_Response, jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR));
+            } else if (closeableHttpRespone != null && blnNoResponse) {
+            	testOut_Put.put(Constants.Run_API_JSON_Response, getHtmlResponse);
+                try {
+                	saveResponse.savingResponseToFile(getHtmlResponse, getApiTestRequest, String.valueOf(getApiTestRunId));
+                } catch (IOException exp) {
+                	exp.printStackTrace();
+                }
+            } else if(stepDefinitionError ==true) {
+            	testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
+                testOut_Put.put(Constants.Response_Status_Phrase, stepDefinitionErrorMsg);
+                testOut_Put.put(Constants.Run_API_JSON_Response, stepDefinitionErrorMsg);
+                finalRunStatus =false;
+            } else {
+                try{
+                    getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
+                    getErrorDesc = (String) VerifyValueAPICommon.errorMapping.get("ErrorDesc");
+                    testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
+                    testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
+                    testOut_Put.put(Constants.Run_API_JSON_Response, getErrorDesc);
+                    finalRunStatus =false;
+                }catch(NullPointerException  exp){
+                	exp.printStackTrace();
+                }
+            }
                 
-                if(!testOut_Put.get(Constants.Run_API_Actual_Status).toString().equals(getExpResponseCode))
-                	finalRunStatus =false;
-                
-                verifyAPIHeadersForTestRunStatus();
-                
-                if(finalRunStatus ==false)
-                	ExecuteApiTest.importDataFromExcelModel.setValueAt("FAIL", getCurrRunId, 3);
-                else if(finalRunStatus ==true)
-                	ExecuteApiTest.importDataFromExcelModel.setValueAt("PASS", getCurrRunId, 3);
+            if(!testOut_Put.get(Constants.Run_API_Actual_Status).toString().equals(getExpResponseCode))
+            	{finalRunStatus =false;}
+            
+            verifyAPIHeadersForTestRunStatus();
+            
+            if(finalRunStatus ==false) {
+            	ExecuteApiTest.importDataFromExcelModel.setValueAt("FAIL", getCurrRunId, 3);}
+            else if(finalRunStatus ==true) {
+            	ExecuteApiTest.importDataFromExcelModel.setValueAt("PASS", getCurrRunId, 3);}
 
-                //Database validation
-                /*if (!responseDbValidation.isEmpty()) {
-                	for (Entry<Object, Object> entry: responseDbValidation.entrySet()) {
-	                    getKey = (String) entry.getKey();
-	                    expValue = entry.getValue();
-
-                            if (getKey.contains(Constants.SqlQuery_COLUMN_NAME)) {
-                                newSqlQuery = updateSqlQuery(expValue, payloadTagElement);
-                                responseDbValidation.replace(getKey, (String) newSqlQuery);
-                            }
-
-                            if (getKey.contains(Constants.ExpOutPut_COLUMN_NAME)) {
-	                            if(expValue.toString().charAt(0) == '.'){
-									testOut_Put.put("Json Request Tag_"+getKey.toString().split("_")[1], expValue.toString().substring(1));
-	                            }
-
-	                            newSqlExpOutPut = updateSqlQueryExpectedOutput(expValue, payloadTagElement, testRunnerEntry);
-	                            responseDbValidation.replace(getKey, (String) newSqlExpOutPut);
-                            }
-				  }
-
-                Connection connectToSqlSrvr = databaseOperations.getSQLServerConnection(
-                                        serverName,
-                                        serverPort,
-                                        dbUserName,
-                                        dbUserPassword,
-                                        dbName);
-
-                for (Entry<Object, Object> entry: responseDbValidation.entrySet()) {
+            //Database validation
+            /*if (!responseDbValidation.isEmpty()) {
+            	for (Entry<Object, Object> entry: responseDbValidation.entrySet()) {
                     getKey = (String) entry.getKey();
                     expValue = entry.getValue();
 
-                    if (getKey.contains(Constants.SqlQuery_COLUMN_NAME)) {
-                    	String getTagPst = getKey.split("_")[1];
-						if (connectToSqlSrvr != null) {
-							getQueryRes = databaseOperations.executeSQLQuery(connectToSqlSrvr, responseDbValidation.get(getKey));
+                        if (getKey.contains(Constants.SqlQuery_COLUMN_NAME)) {
+                            newSqlQuery = updateSqlQuery(expValue, payloadTagElement);
+                            responseDbValidation.replace(getKey, (String) newSqlQuery);
+                        }
 
-	                            if (getQueryRes != null) {
-	                            	try {
-	                                    ResultSetMetaData rsmd = getQueryRes.getMetaData();
-	                                    getDbColName = rsmd.getColumnName(1);
-	
-	                                    if (!getQueryRes.isBeforeFirst()) {
+                        if (getKey.contains(Constants.ExpOutPut_COLUMN_NAME)) {
+                            if(expValue.toString().charAt(0) == '.'){
+								testOut_Put.put("Json Request Tag_"+getKey.toString().split("_")[1], expValue.toString().substring(1));
+                            }
+
+                            newSqlExpOutPut = updateSqlQueryExpectedOutput(expValue, payloadTagElement, testRunnerEntry);
+                            responseDbValidation.replace(getKey, (String) newSqlExpOutPut);
+                        }
+			  }
+
+            Connection connectToSqlSrvr = databaseOperations.getSQLServerConnection(
+                                    serverName,
+                                    serverPort,
+                                    dbUserName,
+                                    dbUserPassword,
+                                    dbName);
+
+            for (Entry<Object, Object> entry: responseDbValidation.entrySet()) {
+                getKey = (String) entry.getKey();
+                expValue = entry.getValue();
+
+                if (getKey.contains(Constants.SqlQuery_COLUMN_NAME)) {
+                	String getTagPst = getKey.split("_")[1];
+					if (connectToSqlSrvr != null) {
+						getQueryRes = databaseOperations.executeSQLQuery(connectToSqlSrvr, responseDbValidation.get(getKey));
+
+                            if (getQueryRes != null) {
+                            	try {
+                                    ResultSetMetaData rsmd = getQueryRes.getMetaData();
+                                    getDbColName = rsmd.getColumnName(1);
+
+                                    if (!getQueryRes.isBeforeFirst()) {
+										getQueryData = "Null";
+                                    }
+
+                                    while (getQueryRes.next()) {
+                                    	getQueryData = getQueryRes.getObject(1);
+										if(getQueryData == null)
 											getQueryData = "Null";
-	                                    }
-	
-	                                    while (getQueryRes.next()) {
-	                                    	getQueryData = getQueryRes.getObject(1);
-											if(getQueryData == null)
-												getQueryData = "Null";
-	                                    }
-	                                } catch (SQLException | NullPointerException expMsg) {
-										System.out.println(expMsg.toString());
-	                                }
-	
-								}
-			        }
+                                    }
+                                } catch (SQLException | NullPointerException expMsg) {
+									System.out.println(expMsg.toString());
+                                }
 
-	                    if (connectToSqlSrvr != null && getQueryRes != null) {
-	                        testOut_Put.put("Db Column Name_" +getTagPst,getDbColName);
-	                        testOut_Put.put("dbActualData" + "_" + getTagPst, getQueryData.toString());
-	                        testOut_Put.put("dbExpectedData" + "_" + getTagPst, (String) responseDbValidation.get(Constants.ExpOutPut_COLUMN_NAME + "_" + getTagPst));
-	                    } else if (connectToSqlSrvr == null || getQueryRes == null) {
-	                        testOut_Put.put("dbActualData" + "_" + getTagPst, null);
-	                        testOut_Put.put("dbExpectedData" + "_" + getTagPst, (String) responseDbValidation.get(Constants.ExpOutPut_COLUMN_NAME + "_" + getTagPst));
-	                    }
+							}
+		        }
 
-				    }
+                    if (connectToSqlSrvr != null && getQueryRes != null) {
+                        testOut_Put.put("Db Column Name_" +getTagPst,getDbColName);
+                        testOut_Put.put("dbActualData" + "_" + getTagPst, getQueryData.toString());
+                        testOut_Put.put("dbExpectedData" + "_" + getTagPst, (String) responseDbValidation.get(Constants.ExpOutPut_COLUMN_NAME + "_" + getTagPst));
+                    } else if (connectToSqlSrvr == null || getQueryRes == null) {
+                        testOut_Put.put("dbActualData" + "_" + getTagPst, null);
+                        testOut_Put.put("dbExpectedData" + "_" + getTagPst, (String) responseDbValidation.get(Constants.ExpOutPut_COLUMN_NAME + "_" + getTagPst));
+                    }
+
+			    }
+            }
+
+                try {
+                    getQueryRes.close();
+                    connectToSqlSrvr.close();
+                } catch (SQLException | NullPointerException expMsg) {
+					System.out.println(expMsg.toString());
                 }
 
-	                try {
-	                    getQueryRes.close();
-	                    connectToSqlSrvr.close();
-	                } catch (SQLException | NullPointerException expMsg) {
-						System.out.println(expMsg.toString());
-	                }
-
-                }*/ //Database validation
+            }*/ //Database validation
                 
 	        ApiTestRunnerMap.put(getApiTestRunId, testOut_Put);
 	        testOut_Put = new HashMap<>();
@@ -514,21 +516,44 @@ public class API_TestRunner extends loadAPITestRunner {
         }
     }
 
-    public static void updateValueFromJsonResponse(Object runID, Object modifyValue, Object keyName){
+    @SuppressWarnings("unused")
+	public static void updateValueFromJsonResponse(Object runID, Object modifyValue, Object keyName){
 	    if(modifyValue.toString().contains("_RefFnd_")){
-	        String splitTagName = modifyValue.toString().split("_RefFnd_")[0];
-	        Object getTestId = modifyValue.toString().split("_RefFnd_")[1].replace("#", "");
-	        HashMap<Object, Object> getPrevJsonResponse = ApiTestRunnerMap.get(getTestId);
-	        String getJsonResponse = (String) getPrevJsonResponse.get("JSON Response");
-	        Object getRespTagVal = GetTagValueFromJsonResponse.GetJsonTagElement(splitTagName, getJsonResponse);
+	    	stepDefinitionError =false;
+	    	try {
+	    		String splitTagName = modifyValue.toString().split("_RefFnd_")[0];
+		        Object getTestId = modifyValue.toString().split("_RefFnd_")[1].replace("#", "");
+		        HashMap<Object, Object> getPrevJsonResponse = ApiTestRunnerMap.get(getTestId);
+		        if(getPrevJsonResponse ==null) {
+			    	  stepDefinitionError =true;
+			    	  stepDefinitionErrorMsg ="required JSON response not available at [#" +getTestId+ "] api run";
+			    	  testOut_Put.put(keyName, "{" +stepDefinitionErrorMsg+ "}");
+			    	  return; 
+			      }
+		        
+		        String getJsonResponse = (String) getPrevJsonResponse.get("JSON Response");
+		        if(getPrevJsonResponse ==null) {
+			    	  stepDefinitionError =true;
+			    	  stepDefinitionErrorMsg ="required JSON response not available at [#" +getTestId+ "] api run";
+			    	  testOut_Put.put(keyName, "{" +stepDefinitionErrorMsg+ "}");
+			    	  return;
+			      }
+		        
+		        Object getRespTagVal = GetTagValueFromJsonResponse.GetJsonTagElement(splitTagName, getJsonResponse);
 
-            if(getRespTagVal.toString().contentEquals("#.")){
-            	System.out.println("required tag [" +splitTagName+ "] not found in the json response");
-            }
-            
-            testRunMap.put(keyName, getRespTagVal);
-            ApiTestRunnerMap.put(runID, testRunMap);
+	            if(getRespTagVal.toString().contentEquals("#.")){
+	            	System.out.println("required tag [" +splitTagName+ "] not found in the json response");
+	            	stepDefinitionError =true;
+	            	stepDefinitionErrorMsg ="required JSON tag [" +splitTagName+ "] not available at [#" +getTestId+ "] api response";
+	            	testOut_Put.put(keyName, "{" +stepDefinitionErrorMsg+ "}");
+	            	return;
+	            }
+	            
+	            testOut_Put.put(keyName, getRespTagVal);
+	            //testRunMap.put(keyName, getRespTagVal);
+	            //ApiTestRunnerMap.put(runID, testRunMap);
 
+	    	}catch(NullPointerException exp) {}	        
 	    }
 
     }
@@ -613,7 +638,8 @@ public class API_TestRunner extends loadAPITestRunner {
 		return strSqlExpOutPut;
     }
     
-    public static Object updateApiUrlWithJsonResponseElementReference(Object getUrl){
+    @SuppressWarnings("unused")
+	public static Object updateApiUrlWithJsonResponseElementReference(Object getUrl){
 	   boolean FstRefFnd =false;
 	   boolean SndRefFnd =false;
 	   String readApiURL ="";
@@ -667,5 +693,32 @@ public class API_TestRunner extends loadAPITestRunner {
 	   }
 	   return getUrl;
     }
+    
+    /*public static void updateHeaderForJsonResponse(Object getApiTestRunId2){
+        HashMap<String, String> newMap = new HashMap<String, String>();
+        String attachText = null;
+        for (Entry<Object, Object> updateHeader : requestHeaders.entrySet()) {
+        	if(updateHeader.getValue().toString().contains("_RefFnd_")){
+        		String splitTagName = updateHeader.getValue().toString().split("_RefFnd_")[0];
+                if(splitTagName.contains(":")){
+                    attachText = splitTagName.split(":")[0];
+                    splitTagName = splitTagName.split(":")[1];
+                }
+                String getTestId = updateHeader.getValue().toString().split("_RefFnd_")[1].replace("#", "");
+                HashMap<Object, Object> getPrevJsonResponse = loadAPITestRunner.saveTestRunMap.get(Integer.parseInt(getTestId));
+                String getJsonResponse = getPrevJsonResponse.get("JSON Response").toString();
+                String getRespTagVal = GetTagValueFromJsonResponse.GetJsonTagElement(splitTagName, getJsonResponse);
+                if(getRespTagVal.contentEquals("#."))
+                	System.out.println("required tag [" +splitTagName+ "] not found in the json response");
+                else
+	                if(attachText == null)
+	                	requestHeaders.put(updateHeader.getKey(), getRespTagVal.toString());
+	                else
+	                	requestHeaders.put(updateHeader.getKey(), attachText+getRespTagVal.toString());
+	                                                       
+                loadAPITestRunner.saveHeaderMap.put(getApiTestRunId2, requestHeaders);
+            }
+        }
+    }*/
 
 }

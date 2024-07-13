@@ -38,14 +38,21 @@ public class ReadPayloadFile {
         String getNewLoad ="";
         
         for(String load: pload){
-        	getKey =load.split(":")[0];
-        	getValue =load.split(":")[1];
-        	getNewLoad =getKey +"="+ getValue;
-        	
-        	getLoadTxt = getLoadTxt + getNewLoad + "&";
+        	try {
+        		getKey =load.split(":")[0];
+            	getValue =load.split(":")[1];
+            	getNewLoad =getKey +"="+ getValue;
+            	
+            	getLoadTxt = getLoadTxt + getNewLoad + "&";
+        	}catch(ArrayIndexOutOfBoundsException exp) {
+        		getLoadTxt = getLoadTxt + load + "&";
+        	}
         }
- 
-        readPayload = getLoadTxt.substring(0, getLoadTxt.length() - 1);
+        
+        try {
+        	readPayload = getLoadTxt.substring(0, getLoadTxt.length() - 1);
+        }catch(StringIndexOutOfBoundsException exp) {}
+        
         return readPayload;
     }
  

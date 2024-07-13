@@ -103,8 +103,22 @@ public class ApiTestReport {
             } catch (NullPointerException exp) {
             	//exp.printStackTrace();
             }
- 
+            
+            Object getJsonPayloadType =entryReport.getValue().get("Payload Type");
             Object getJSONPayload = entryReport.getValue().get("Payload");
+            
+            if(getJsonPayloadType.toString().contains("x-www-form-urlencoded")) {
+            	try {
+            		String[] getItemList = getJSONPayload.toString().split("&");
+                	String getNewItem ="";
+                	
+                	for(String x:getItemList) {
+                		getNewItem = getNewItem + x + "\n";
+                	}
+                	getJSONPayload =getNewItem;
+            	}catch(NullPointerException exp) {}
+            }
+            
             Object httpStatusCodeDes = entryReport.getValue().get("Status Code Phrase");
             storeJsonResponse = API_TestRunner.verifyJsonResponseAttributes.get(getRunID);
             getAPiVerifyTags = loadAPITestRunner.saveVerifyRespTagElmMap.get(getRunID);
@@ -280,7 +294,7 @@ public class ApiTestReport {
                                 			"                                                           <pre class=\"text-danger\">" + getHeadersDetails + "</pre>\r\n";
  
                     if(getJSONPayload !=null && !getJSONPayload.toString().isEmpty()){
-                    	htmlDiv = htmlDiv+ "                                                      <p><b>JSON payload:</b></p>\r\n" +
+                    	htmlDiv = htmlDiv+ "                                                      <p><b>JSON payload:</b>" +getJsonPayloadType+ "</p>\r\n" +
                     						"                                                           <pre class=\"text-danger\">" + getJSONPayload + "</pre>\r\n";
                     }
  

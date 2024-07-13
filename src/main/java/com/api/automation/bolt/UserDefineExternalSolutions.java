@@ -79,7 +79,8 @@ public class UserDefineExternalSolutions {
         } catch(InterruptedException e) {
         	System.out.println(e.toString());
         }
- 
+        
+        UniqueValueWithPreFix =preFix+uniqueNumberTimeStamp;
         return preFix+uniqueNumberTimeStamp;
     }
 
