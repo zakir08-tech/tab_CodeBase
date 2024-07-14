@@ -5,7 +5,6 @@
  */
 package com.automation.bolt.gui;
 
-import static com.automation.bolt.common.tabOutFromEditingColumn;
 
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -20,18 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import com.automation.bolt.common;
 import static com.automation.bolt.common.tabOutFromEditingColumn;
 import com.automation.bolt.constants;
-import static com.automation.bolt.gui.CreateAPITest.apiSSLCertList;
-import static com.automation.bolt.gui.CreateAPITest.cBoxApiSSL;
-import static com.automation.bolt.gui.CreateAPITest.getFlowCellxPoint;
-import static com.automation.bolt.gui.CreateAPITest.getFlowCellyPoint;
-import static com.automation.bolt.gui.CreateAPITest.getTestFlowCellEditorStatus;
-import static com.automation.bolt.gui.CreateAPITest.getTestFlowSelectedRow;
 import static com.automation.bolt.gui.CreateAPITest.tableCreateApiTest;
-import static com.automation.bolt.gui.CreateAPITest.testApiSSLCol;
-import static com.automation.bolt.gui.EditAPITest.getFlowCellxPoint;
-import static com.automation.bolt.gui.EditAPITest.getFlowCellyPoint;
-import static com.automation.bolt.gui.EditAPITest.getTestFlowCellEditorStatus;
-import static com.automation.bolt.gui.EditAPITest.getTestFlowSelectedRow;
 import static com.automation.bolt.gui.EditAPITest.tableEditTestFlow;
 import com.automation.bolt.renderer.tableSSLCertConfig;
 import com.google.gson.Gson;
@@ -43,7 +31,6 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.table.TableColumn;
 import org.json.simple.JSONArray;

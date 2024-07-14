@@ -12,5 +12,12 @@
     "keystore-pwd": "",
     "truststore": "",
     "truststore-pwd": ""
+  },
+  {
+    "name": "",
+    "keystore": "",
+    "keystore-pwd": "",
+    "truststore": "",
+    "truststore-pwd": ""
   }
 ]

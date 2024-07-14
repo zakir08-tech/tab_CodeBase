@@ -5,20 +5,12 @@
  */
 package com.automation.bolt.renderer;
 
-import com.automation.bolt.common;
-import static com.automation.bolt.gui.CreateAPITest.apiSSLCertList;
-import static com.automation.bolt.gui.CreateAPITest.cBoxApiSSL;
-import static com.automation.bolt.gui.CreateAPITest.testApiSSLCol;
-import static com.automation.bolt.gui.EditAPITest.tableEditTestFlow;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
-import static com.automation.bolt.gui.CreateAPITest.tableCreateApiTest;
 
 /**
  *

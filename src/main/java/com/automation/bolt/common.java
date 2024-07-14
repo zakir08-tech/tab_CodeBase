@@ -76,6 +76,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class common extends userDefineTest{
     public static Workbook testRunnerWorkbook =null;
@@ -1666,6 +1668,87 @@ public class common extends userDefineTest{
 
                         jsonMap.put(i+1, getJsonObj);
                 }
+                reader.close();
+            } catch (IOException | ParseException e) {}
+
+        } catch (FileNotFoundException e) {}
+
+        return jsonMap;
+    }
+    
+    public static boolean checkForDuplicateEnvVariable(DefaultTableModel tableModel, JTextField testElmNameTxt,
+            javax.swing.JTable JTable,
+            boolean testElmNameVisible,
+            int getFlowCellxPoint,
+            int getFlowCellyPoint,
+            int getEditingRow){
+        
+        String getElmName ="";
+        String getNewElmName ="";
+        int elmIndex =0;
+        boolean duplicateElmName =false;
+        
+        if(testElmNameTxt !=null){
+            if(testElmNameTxt.isShowing()){
+                tabOutFromEditingColumn(true, JTable,getFlowCellxPoint, getFlowCellyPoint, getEditingRow);
+                getNewElmName =testElmNameTxt.getText();
+            }
+        }
+        
+        if(testElmNameVisible ==true){
+            getNewElmName =testElmNameTxt.getText();
+            for(int i=0; i<JTable.getRowCount(); i++){
+                try{
+                    getElmName =JTable.getValueAt(i, 0).toString().toLowerCase();
+                }catch (NullPointerException exp){
+                    getElmName ="";
+                }
+                
+                if(!getElmName.isEmpty()){
+                    if(getElmName.toLowerCase().contentEquals(getNewElmName.toLowerCase())){
+                        elmIndex++;
+                        if(elmIndex ==2){
+                            JTable.editCellAt(getEditingRow, 0);
+                            JTable.getEditorComponent().requestFocus();
+                            JTable.changeSelection(getEditingRow, 0, false, true);
+                            testElmNameTxt.selectAll();
+                            duplicateElmName =true;
+                            JOptionPane.showMessageDialog(null, "Environment variable ["+getNewElmName+"] already exist!", "Alert", JOptionPane.WARNING_MESSAGE);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return duplicateElmName;
+    }
+    
+    public static HashMap<Object, Object> uploadEnvVariableList() {
+        JSONParser parser =new JSONParser();
+        FileReader reader;
+        HashMap<Object, Object> jsonMap =new HashMap<>();
+        int i=1;
+        
+        try {
+            reader =new FileReader("./env-var/env-var-list.json");
+            Object objJson;
+            try {
+                objJson =parser.parse(reader);
+                JSONArray certList =(JSONArray) objJson;
+                JSONObject certObject = (JSONObject) certList.get(0);
+                
+                Set<Entry<String, String>> entrySet = certObject.entrySet();
+                for(Map.Entry<String,String> entry : entrySet){
+                    String envVarName=entry.getKey();
+                    String envVarValue=entry.getValue();
+                    
+                    Object getJsonObj =envVarName +","+ 
+                    envVarValue;
+
+                    jsonMap.put(i+1, getJsonObj);
+                    i++;
+                }
+                
                 reader.close();
             } catch (IOException | ParseException e) {}
 
