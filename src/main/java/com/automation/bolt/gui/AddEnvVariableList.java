@@ -40,7 +40,7 @@ import org.json.simple.JSONObject;
  *
  * @author zakir
  */
-public class AddEnvVariable extends javax.swing.JFrame {
+public class AddEnvVariableList extends javax.swing.JFrame {
         
     public static DefaultTableModel addEnvVariableTabModel = new DefaultTableModel();
     
@@ -110,7 +110,7 @@ public class AddEnvVariable extends javax.swing.JFrame {
     /**
      * Creates new form AddEnvVariable
      */
-    public AddEnvVariable() {
+    public AddEnvVariableList() {
         initComponents();
         addEnvVariableTabModel =(DefaultTableModel) tableEnvVariable.getModel();
         
@@ -149,6 +149,7 @@ public class AddEnvVariable extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Environment Variable List");
+        setName("envVarFrame"); // NOI18N
         setResizable(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -394,6 +395,8 @@ public class AddEnvVariable extends javax.swing.JFrame {
                     .addComponent(dPnlMenu))
                 .addGap(0, 0, 0))
         );
+
+        getAccessibleContext().setAccessibleParent(this);
 
         pack();
         setLocationRelativeTo(null);
@@ -757,20 +760,23 @@ public class AddEnvVariable extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddEnvVariable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddEnvVariableList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddEnvVariable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddEnvVariableList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddEnvVariable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddEnvVariableList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddEnvVariable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddEnvVariableList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddEnvVariable().setVisible(true);
+                new AddEnvVariableList().setVisible(true);
             }
         });
     }
