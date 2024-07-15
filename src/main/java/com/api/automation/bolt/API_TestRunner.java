@@ -147,13 +147,13 @@ public class API_TestRunner extends loadAPITestRunner {
 
             getBasicAuthFlag = testRunnerEntry.getValue().get("Authorization"); //get authorization
             if(getBasicAuthFlag.toString().contentEquals("Bearer Token")){
-	            updateValueFromJsonResponse(getApiTestRunId, getAuth1,"AuthVal1");
-	            getAuth1 =testRunnerEntry.getValue().get("AuthVal1");
+                updateValueFromJsonResponse(getApiTestRunId, getAuth1,"AuthVal1");
+                getAuth1 =testRunnerEntry.getValue().get("AuthVal1");
 
                 if(requestHeaders ==null){
-					requestHeaders =new LinkedHashMap<> ();
-					requestHeaders.put("Authorization","Bearer "+getAuth1);
-					loadAPITestRunner.saveHeaderMap.put(getApiTestRunId, requestHeaders);
+                    requestHeaders =new LinkedHashMap<> ();
+                    requestHeaders.put("Authorization","Bearer "+getAuth1);
+                    loadAPITestRunner.saveHeaderMap.put(getApiTestRunId, requestHeaders);
                 }else
                 	requestHeaders.put("Authorization","Bearer "+getAuth1);
             }
@@ -175,7 +175,7 @@ public class API_TestRunner extends loadAPITestRunner {
 
             if (requestPayload != null){
             	if(getPayloadType.toString().toLowerCase().contains("urlencoded"))
-            		requestPayload = ReadPayloadFile.readEncodedPayloadFromFile((String) requestPayload);
+                    requestPayload = ReadPayloadFile.readEncodedPayloadFromFile((String) requestPayload);
             }
 
             if (getApiTestRequest.toString().trim().toUpperCase().contentEquals("GET")) { //if:1; GET call
@@ -193,10 +193,10 @@ public class API_TestRunner extends loadAPITestRunner {
                     testOut_Put.put(Constants.Response_Status_Phrase, ResponseGET.responsePhrase);
 
                 } else {
-	                    getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
-	                    testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
-	                    testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
-	                    finalRunStatus =false;
+                    getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
+                    testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
+                    testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
+                    finalRunStatus =false;
                 }
 
             } else if (getApiTestRequest.toString().trim().toUpperCase().contentEquals("POST")) { //POST call
@@ -221,10 +221,10 @@ public class API_TestRunner extends loadAPITestRunner {
                         testOut_Put.put(Constants.Response_Status_Phrase, ResponsePOST.responsePhrase);
 
                 	} else {
-						getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
-						testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
-						testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
-						finalRunStatus =false;
+                            getErrorMsg = (String) VerifyValueAPICommon.errorMapping.get("Error");
+                            testOut_Put.put(Constants.Run_API_Actual_Status, "Error");
+                            testOut_Put.put(Constants.Response_Status_Phrase, getErrorMsg);
+                            finalRunStatus =false;
                 	}
             } else if (getApiTestRequest.toString().trim().toUpperCase().contentEquals("PUT")) { //PUT call
             	if (requestHeaders.size() != 0){

@@ -1,9 +1,7 @@
 [
   {
-    "access_token": "gsghsdgBGHH1122kakak",
-    "my_token": "",
-    "joker_token": "",
-    "safeUID": "",
+    "base_url": "//https:servicenow:1819",
+    "kong_user_name": "kong.user.name",
     "safeName": ""
   }
 ]

@@ -131,7 +131,7 @@ public class CreateAPITest extends javax.swing.JFrame {
         testURLCol =tableCreateApiTest.getColumnModel().getColumn(2);
         testURLCol.setCellEditor(new DefaultCellEditor(testURLTxt));
         
-        testExpectedStatusCol =tableCreateApiTest.getColumnModel().getColumn(15);
+        testExpectedStatusCol =tableCreateApiTest.getColumnModel().getColumn(17);
         testExpectedStatusCol.setCellEditor(new DefaultCellEditor(testExpectedStatusTxt));
         
         testPayloadCol =tableCreateApiTest.getColumnModel().getColumn(7);
@@ -143,7 +143,7 @@ public class CreateAPITest extends javax.swing.JFrame {
         testApiTypeCol.setCellEditor(new DefaultCellEditor(cBoxApiRequest));
         //cBoxApiRequest.setEditable(true);
         
-        testApiSSLCol = tableCreateApiTest.getColumnModel().getColumn(14);
+        testApiSSLCol = tableCreateApiTest.getColumnModel().getColumn(16);
         cBoxApiSSL = new JComboBox<String>();
         apiSSLCertList();
         testApiSSLCol.setCellEditor(new DefaultCellEditor(cBoxApiSSL));
@@ -155,7 +155,7 @@ public class CreateAPITest extends javax.swing.JFrame {
         testPayloadTypeCol.setCellEditor(new DefaultCellEditor(coBoxPayloadType));
         //coBoxPayloadType.setEditable(true);
         
-        testAuthCol = tableCreateApiTest.getColumnModel().getColumn(11);
+        testAuthCol = tableCreateApiTest.getColumnModel().getColumn(13);
         coBoxAuth = new JComboBox<String>();
         apiAuthList(coBoxAuth);
         testAuthCol.setCellEditor(new DefaultCellEditor(coBoxAuth));
@@ -170,7 +170,7 @@ public class CreateAPITest extends javax.swing.JFrame {
         tableCreateApiTest.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
                 int getCol =tableCreateApiTest.getSelectedColumn();
-                if(getCol ==0 || getCol==15)
+                if(getCol ==0 || getCol==17)
                     common.testIdTxtKeyTyped(evt, null);
             }
         });
@@ -437,7 +437,7 @@ public class CreateAPITest extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Test ID", "Request", "URL", "Headers (key)", "Headers (value)", "Params (key)", "Params (value)", "Payload", "Payload Type", "Modify Payload (key)", "Modify Payload (value)", "Authorization", "", "", "SSL Validation", "Expected Status", "Verify Payload (key)", "Verfiy Payload (value)", "Test Description"
+                "Test ID", "Request", "URL", "Headers (key)", "Headers (value)", "Params (key)", "Params (value)", "Payload", "Payload Type", "Modify Payload (key)", "Modify Payload (value)", "Response Tag Name (value)", "Capture Tag Value (env var)", "Authorization", "", "", "SSL Validation", "Expected Status", "Verify Payload (key)", "Verfiy Payload (value)", "Test Description"
             }
         ));
         tableCreateApiTest.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
@@ -866,27 +866,27 @@ public class CreateAPITest extends javax.swing.JFrame {
             Object getTestId =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 0);
             
             if(getTestId !=null && !getTestId.toString().isEmpty()){
-                Object getAuth =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 11);
+                Object getAuth =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 13);
                 if(getAuth.toString().contentEquals("Basic Auth")){
-                    Object getUsername =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                    Object getUsername =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 14);
                     if(getUsername ==null)
                     	getUsername ="";
-                    Object getPassword =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 13);
+                    Object getPassword =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 15);
                     if(getPassword ==null)
                     	getPassword ="";
                     
                     txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
                     lblAuthorization.setText("Authorization: Basic Auth");
                 }else if(getAuth.toString().contentEquals("Bearer Token")){
-                    Object getToken =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                    Object getToken =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 13);
                     if(getToken ==null)
                     	getToken ="";
-                    tableCreateApiTest.setValueAt("",getCurrRowBeforeKeyPressed, 13);
+                    tableCreateApiTest.setValueAt("",getCurrRowBeforeKeyPressed, 15);
                     txtAreaAuthorization.setText("Token: "+getToken);
                     lblAuthorization.setText("Authorization: Bearer Token");
                 }else {
-                    tableCreateApiTest.setValueAt("", getCurrRowBeforeKeyPressed, 12);
-                    tableCreateApiTest.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+                    tableCreateApiTest.setValueAt("", getCurrRowBeforeKeyPressed, 14);
+                    tableCreateApiTest.setValueAt("", getCurrRowBeforeKeyPressed, 15);
                     lblAuthorization.setText("Authorization");
                     txtAreaAuthorization.setText("");
                 }
@@ -1384,14 +1384,14 @@ public class CreateAPITest extends javax.swing.JFrame {
                     coBoxPayloadType.setFocusable(true);
                     coBoxPayloadType.showPopup();
                     break;
-                case 11:
+                case 13:
                     coBoxAuth.setFocusable(true);
                     coBoxAuth.showPopup();
                     break;
-                case 14:
+                case 16:
                 	apiSSLCertList();    
                     try{
-                    	tableCreateApiTest.editCellAt(getCurRow, 14);
+                    	tableCreateApiTest.editCellAt(getCurRow, 16);
                     	cBoxApiSSL.setFocusable(true);
                         cBoxApiSSL.showPopup();
                     }catch(IllegalComponentStateException exp){
@@ -1641,27 +1641,27 @@ public class CreateAPITest extends javax.swing.JFrame {
         
         // update authentication
         try{
-            Object getAuth =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 11);
+            Object getAuth =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 13);
             if(getAuth.toString().contentEquals("Basic Auth")){
-                Object getUsername =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                Object getUsername =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 14);
                 if(getUsername ==null)
                     getUsername ="";
-                Object getPassword =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 13);
+                Object getPassword =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 15);
                 if(getPassword ==null)
                     getPassword ="";
 
                 txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
                 lblAuthorization.setText("Authorization: Basic Auth");
             }else if(getAuth.toString().contentEquals("Bearer Token")){
-                Object getToken =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                Object getToken =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 14);
                 if(getToken ==null)
                     getToken ="";
 
                 txtAreaAuthorization.setText("Token: "+getToken);
                 lblAuthorization.setText("Authorization: Bearer Token");
             }else {
-                    tableCreateApiTest.setValueAt("", getCurrRowBeforeKeyPressed, 12);
-                    tableCreateApiTest.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+                    tableCreateApiTest.setValueAt("", getCurrRowBeforeKeyPressed, 14);
+                    tableCreateApiTest.setValueAt("", getCurrRowBeforeKeyPressed, 15);
                     lblAuthorization.setText("Authorization");
                     txtAreaAuthorization.setText("");
             }
@@ -1669,7 +1669,7 @@ public class CreateAPITest extends javax.swing.JFrame {
         
         // update expected status
         try{
-            Object getStatus =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 15);
+            Object getStatus =tableCreateApiTest.getValueAt(getCurrRowBeforeKeyPressed, 17);
             if(getStatus ==null)
                  getStatus ="";
 
@@ -1733,11 +1733,11 @@ public class CreateAPITest extends javax.swing.JFrame {
             int rowStart =getCurrRowBeforeKeyPressed;
 
             for(int rowStart1=rowStart; rowStart1<=getRowCnt;rowStart1++) {
-                    Object getPayloadVerifyKey =tableCreateApiTest.getValueAt(rowStart1, 16);
+                    Object getPayloadVerifyKey =tableCreateApiTest.getValueAt(rowStart1, 18);
                 if(getPayloadVerifyKey ==null)
                     getPayloadVerifyKey ="";
 
-                Object getPayloadVerifyVal =tableCreateApiTest.getValueAt(rowStart1, 17);
+                Object getPayloadVerifyVal =tableCreateApiTest.getValueAt(rowStart1, 19);
                 if(getPayloadVerifyVal ==null)
                     getPayloadVerifyVal ="";
 
@@ -1872,28 +1872,35 @@ public class CreateAPITest extends javax.swing.JFrame {
         tableCreateApiTest.getColumnModel().getColumn(10).setMinWidth(150);
         
         //tableAddTestFlow.getColumnModel().getColumn(11).setMaxWidth(150);
-        tableCreateApiTest.getColumnModel().getColumn(11).setMinWidth(100);
+        tableCreateApiTest.getColumnModel().getColumn(11).setMinWidth(165);
         
         //tableAddTestFlow.getColumnModel().getColumn(12).setMaxWidth(150);
-        tableCreateApiTest.getColumnModel().getColumn(12).setMinWidth(150);
+        tableCreateApiTest.getColumnModel().getColumn(12).setMinWidth(165);
         
         //tableAddTestFlow.getColumnModel().getColumn(13).setMaxWidth(150);
-        tableCreateApiTest.getColumnModel().getColumn(13).setMinWidth(150);
+        tableCreateApiTest.getColumnModel().getColumn(13).setMinWidth(100);
         
-        //tableAddTestFlow.getColumnModel().getColumn(14).setMaxWidth(200);
-        tableCreateApiTest.getColumnModel().getColumn(14).setMinWidth(120);
+        //tableAddTestFlow.getColumnModel().getColumn(14).setMaxWidth(150);
+        tableCreateApiTest.getColumnModel().getColumn(14).setMinWidth(150);
         
-        //tableAddTestFlow.getColumnModel().getColumn(15).setMaxWidth(100);
-        tableCreateApiTest.getColumnModel().getColumn(15).setMinWidth(100);
         
-        //tableAddTestFlow.getColumnModel().getColumn(16).setMaxWidth(150);
-        tableCreateApiTest.getColumnModel().getColumn(16).setMinWidth(150);
+        //tableAddTestFlow.getColumnModel().getColumn(15).setMaxWidth(150);
+        tableCreateApiTest.getColumnModel().getColumn(15).setMinWidth(150);
         
-        //tableAddTestFlow.getColumnModel().getColumn(17).setMaxWidth(150);
-        tableCreateApiTest.getColumnModel().getColumn(17).setMinWidth(150);
+        //tableAddTestFlow.getColumnModel().getColumn(16).setMaxWidth(200);
+        tableCreateApiTest.getColumnModel().getColumn(16).setMinWidth(120);
         
-        //tableAddTestFlow.getColumnModel().getColumn(18).setMaxWidth(200);
-        tableCreateApiTest.getColumnModel().getColumn(18).setMinWidth(200);
+        //tableAddTestFlow.getColumnModel().getColumn(17).setMaxWidth(100);
+        tableCreateApiTest.getColumnModel().getColumn(17).setMinWidth(100);
+        
+        //tableAddTestFlow.getColumnModel().getColumn(18).setMaxWidth(150);
+        tableCreateApiTest.getColumnModel().getColumn(18).setMinWidth(150);
+        
+        //tableAddTestFlow.getColumnModel().getColumn(19).setMaxWidth(150);
+        tableCreateApiTest.getColumnModel().getColumn(19).setMinWidth(150);
+        
+        //tableAddTestFlow.getColumnModel().getColumn(20).setMaxWidth(200);
+        tableCreateApiTest.getColumnModel().getColumn(20).setMinWidth(200);
     }
     
     /**

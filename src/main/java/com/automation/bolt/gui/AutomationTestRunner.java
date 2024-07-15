@@ -449,6 +449,8 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         }else if(lblExecuteTestSuite.getText().contentEquals("Execute API Test")){
             //runApiTest.setLocationRelativeTo(null);
             runApiTest.setVisible(true);
+            if(addEnvVariableList.isVisible())
+                addEnvVariableList.dispose();
         }
     }//GEN-LAST:event_lblExecuteTestSuiteMousePressed
 
@@ -477,6 +479,8 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         }else if(lblEditTestSuite.getText().contentEquals("Edit API Test")){
             //createApiTestSuite.setLocationRelativeTo(null);
             editApiTest.setVisible(true);
+            if(addEnvVariableList.isVisible())
+                addEnvVariableList.dispose();
         }
     }//GEN-LAST:event_lblEditTestSuiteMousePressed
 
@@ -501,6 +505,8 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         }else if(lblCreateTestSuite.getText().contentEquals("Build API Test")){
             //createApiTestSuite.setLocationRelativeTo(null);
             createApiTestSuite.setVisible(true);
+            if(addEnvVariableList.isVisible())
+                addEnvVariableList.dispose();
         }
     }//GEN-LAST:event_lblCreateTestSuiteMousePressed
 

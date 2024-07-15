@@ -142,7 +142,7 @@ public class EditAPITest extends javax.swing.JFrame {
         etestURLCol =tableEditTestFlow.getColumnModel().getColumn(2);
         etestURLCol.setCellEditor(new DefaultCellEditor(etestURLTxt));
         
-        testExpectedStatusCol =tableEditTestFlow.getColumnModel().getColumn(15);
+        testExpectedStatusCol =tableEditTestFlow.getColumnModel().getColumn(17);
         testExpectedStatusCol.setCellEditor(new DefaultCellEditor(testExpectedStatusTxt));
         
         testPayloadCol =tableEditTestFlow.getColumnModel().getColumn(7);
@@ -154,7 +154,7 @@ public class EditAPITest extends javax.swing.JFrame {
         testApiTypeCol.setCellEditor(new DefaultCellEditor(cBoxApiRequest));
         //cBoxApiRequest.setEditable(true);
         
-        testApiSSLCol = tableEditTestFlow.getColumnModel().getColumn(14);
+        testApiSSLCol = tableEditTestFlow.getColumnModel().getColumn(16);
         cBoxApiSSL = new JComboBox<String>();
         apiSSLCertList();
         testApiSSLCol.setCellEditor(new DefaultCellEditor(cBoxApiSSL));
@@ -166,7 +166,7 @@ public class EditAPITest extends javax.swing.JFrame {
         testPayloadTypeCol.setCellEditor(new DefaultCellEditor(coBoxPayloadType));
         //coBoxPayloadType.setEditable(true);
         
-        testAuthCol = tableEditTestFlow.getColumnModel().getColumn(11);
+        testAuthCol = tableEditTestFlow.getColumnModel().getColumn(13);
         coBoxAuth = new JComboBox<String>();
         apiAuthList(coBoxAuth);
         testAuthCol.setCellEditor(new DefaultCellEditor(coBoxAuth));
@@ -181,7 +181,7 @@ public class EditAPITest extends javax.swing.JFrame {
         tableEditTestFlow.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
                 int getCol =tableEditTestFlow.getSelectedColumn();
-                if(getCol ==0 || getCol==15)
+                if(getCol ==0 || getCol==17)
                     common.testIdTxtKeyTyped(evt, null);
             }
         });
@@ -444,7 +444,7 @@ public class EditAPITest extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Test ID", "Request", "URL", "Headers (key)", "Headers (value)", "Params (key)", "Params (value)", "Payload", "Payload Type", "Modify Payload (key)", "Modify Payload (value)", "Authorization", "", "", "SSL Validation", "Expected Status", "Verify Payload (key)", "Verify Payload (value)", "Test Description"
+                "Test ID", "Request", "URL", "Headers (key)", "Headers (value)", "Params (key)", "Params (value)", "Payload", "Payload Type", "Modify Payload (key)", "Modify Payload (value)", "Response Tag Name (value)", "Capture Tag Value (env var)", "Authorization", "", "", "SSL Validation", "Expected Status", "Verify Payload (key)", "Verify Payload (value)", "Test Description"
             }
         ));
         tableEditTestFlow.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
@@ -867,27 +867,27 @@ public class EditAPITest extends javax.swing.JFrame {
             Object getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
             
             if(getTestId !=null && !getTestId.toString().isEmpty()){
-                Object getAuth =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 11);
+                Object getAuth =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
                 if(getAuth.toString().contentEquals("Basic Auth")){
-                    Object getUsername =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                    Object getUsername =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 14);
                     if(getUsername ==null)
                     	getUsername ="";
-                    Object getPassword =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
+                    Object getPassword =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 15);
                     if(getPassword ==null)
                     	getPassword ="";
                     
                     txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
                     lblAuthorization.setText("Authorization: Basic Auth");
                 }else if(getAuth.toString().contentEquals("Bearer Token")){
-                    Object getToken =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                    Object getToken =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 14);
                     if(getToken ==null)
                     	getToken ="";
-                    tableEditTestFlow.setValueAt("",getCurrRowBeforeKeyPressed, 13);
+                    tableEditTestFlow.setValueAt("",getCurrRowBeforeKeyPressed, 15);
                     txtAreaAuthorization.setText("Token: "+getToken);
                     lblAuthorization.setText("Authorization: Bearer Token");
                 }else {
-                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
-                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 14);
+                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 15);
                     lblAuthorization.setText("Authorization");
                     txtAreaAuthorization.setText("");
                 }
@@ -1356,17 +1356,19 @@ public class EditAPITest extends javax.swing.JFrame {
                         XSSFCell testPayloadType = excelRow.getCell(8);
                         XSSFCell testModifyPayloadKey = excelRow.getCell(9);
                         XSSFCell testModifyPayloadValue = excelRow.getCell(10);
-                        XSSFCell testAuthorizationType = excelRow.getCell(11);
-                        XSSFCell testAuthVal1 = excelRow.getCell(12);
-                        XSSFCell testAuthVal2 = excelRow.getCell(13);
-                        XSSFCell testSSLValidation = excelRow.getCell(14);
-                        XSSFCell testExpStatus = excelRow.getCell(15);
-                        XSSFCell testVerifyPayloadKey = excelRow.getCell(16);
-                        XSSFCell testVerifyPayloadValue = excelRow.getCell(17);
-                        XSSFCell testTestDesc = excelRow.getCell(18);
+                        XSSFCell responseTagName = excelRow.getCell(11);
+                        XSSFCell captureTagVaue = excelRow.getCell(12);
+                        XSSFCell testAuthorizationType = excelRow.getCell(13);
+                        XSSFCell testAuthVal1 = excelRow.getCell(14);
+                        XSSFCell testAuthVal2 = excelRow.getCell(15);
+                        XSSFCell testSSLValidation = excelRow.getCell(16);
+                        XSSFCell testExpStatus = excelRow.getCell(17);
+                        XSSFCell testVerifyPayloadKey = excelRow.getCell(18);
+                        XSSFCell testVerifyPayloadValue = excelRow.getCell(19);
+                        XSSFCell testTestDesc = excelRow.getCell(20);
 
                         editSuiteTabModel.addRow(new Object[]{testId, testRequest, testURL, testHeaderKey, testHeaderValue, testParamKey,
-                            testParamValue, testPayload, testPayloadType, testModifyPayloadKey, testModifyPayloadValue, testAuthorizationType,
+                            testParamValue, testPayload, testPayloadType, testModifyPayloadKey, testModifyPayloadValue, responseTagName, captureTagVaue, testAuthorizationType,
                             testAuthVal1, testAuthVal2, testSSLValidation, testExpStatus, testVerifyPayloadKey, testVerifyPayloadValue, testTestDesc  
                         });
                     } catch (NullPointerException exp) {
@@ -1377,7 +1379,7 @@ public class EditAPITest extends javax.swing.JFrame {
                 if(tableEditTestFlow.getRowCount() <=0){
                     editSuiteTabModel.addRow(new Object[]{null, null, null, null, null, null,
                             null, null, null, null, null, null,
-                            null, null, null, null, null, null, null  
+                            null, null, null, null, null, null, null, null, null  
                         });
                 }
                 
@@ -1448,14 +1450,14 @@ public class EditAPITest extends javax.swing.JFrame {
                     coBoxPayloadType.setFocusable(true);
                     coBoxPayloadType.showPopup();
                     break;
-                case 11:
+                case 13:
                     coBoxAuth.setFocusable(true);
                     coBoxAuth.showPopup();
                     break;
-                case 14:
+                case 16:
                     apiSSLCertList();
                     try{
-                    	tableEditTestFlow.editCellAt(getCurRow, 14);
+                    	tableEditTestFlow.editCellAt(getCurRow, 16);
                         cBoxApiSSL.setFocusable(true);
                         cBoxApiSSL.showPopup();
                     }catch(IllegalComponentStateException exp){}
@@ -1686,31 +1688,31 @@ public class EditAPITest extends javax.swing.JFrame {
         
         // update authentication
         try{
-            Object getAuth =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 11);
+            Object getAuth =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
             if(getAuth ==null || getAuth.toString().isEmpty())
                     getAuth ="";
 
             if(getAuth.toString().contentEquals("Basic Auth")){
-                Object getUsername =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                Object getUsername =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 14);
                 if(getUsername ==null)
                     getUsername ="";
 
-                Object getPassword =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
+                Object getPassword =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 15);
                 if(getPassword ==null)
                     getPassword ="";
 
                 txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
                 lblAuthorization.setText("Authorization: Basic Auth");
             }else if(getAuth.toString().contentEquals("Bearer Token")){
-                Object getToken =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                Object getToken =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 14);
                 if(getToken ==null)
                     getToken ="";
 
                 txtAreaAuthorization.setText("Token: "+getToken);
                 lblAuthorization.setText("Authorization: Bearer Token");
             }else {
-                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
-                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 14);
+                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 15);
                     lblAuthorization.setText("Authorization");
                     txtAreaAuthorization.setText("");
             }
@@ -1718,7 +1720,7 @@ public class EditAPITest extends javax.swing.JFrame {
         
         // update expected status
         try{
-            Object getStatus =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 15);
+            Object getStatus =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 17);
             if(getStatus ==null)
                  getStatus ="";
 
@@ -1782,11 +1784,11 @@ public class EditAPITest extends javax.swing.JFrame {
             int rowStart =getCurrRowBeforeKeyPressed;
 
             for(int rowStart1=rowStart; rowStart1<=getRowCnt;rowStart1++) {
-                    Object getPayloadVerifyKey =tableEditTestFlow.getValueAt(rowStart1, 16);
+                    Object getPayloadVerifyKey =tableEditTestFlow.getValueAt(rowStart1, 18);
                 if(getPayloadVerifyKey ==null)
                     getPayloadVerifyKey ="";
 
-                Object getPayloadVerifyVal =tableEditTestFlow.getValueAt(rowStart1, 17);
+                Object getPayloadVerifyVal =tableEditTestFlow.getValueAt(rowStart1, 19);
                 if(getPayloadVerifyVal ==null)
                     getPayloadVerifyVal ="";
 
@@ -1920,29 +1922,35 @@ public class EditAPITest extends javax.swing.JFrame {
         //tableAddTestFlow.getColumnModel().getColumn(10).setMaxWidth(150);
         tableEditTestFlow.getColumnModel().getColumn(10).setMinWidth(150);
         
-        //tableAddTestFlow.getColumnModel().getColumn(11).setMaxWidth(150);
-        tableEditTestFlow.getColumnModel().getColumn(11).setMinWidth(100);
+        //tableAddTestFlow.getColumnModel().getColumn(11).setMaxWidth(165);
+        tableEditTestFlow.getColumnModel().getColumn(11).setMinWidth(165);
         
-        //tableAddTestFlow.getColumnModel().getColumn(12).setMaxWidth(150);
-        tableEditTestFlow.getColumnModel().getColumn(12).setMinWidth(150);
+        //tableAddTestFlow.getColumnModel().getColumn(12).setMaxWidth(165);
+        tableEditTestFlow.getColumnModel().getColumn(12).setMinWidth(165);
         
         //tableAddTestFlow.getColumnModel().getColumn(13).setMaxWidth(150);
-        tableEditTestFlow.getColumnModel().getColumn(13).setMinWidth(150);
+        tableEditTestFlow.getColumnModel().getColumn(13).setMinWidth(100);
         
-        //tableAddTestFlow.getColumnModel().getColumn(14).setMaxWidth(200);
-        tableEditTestFlow.getColumnModel().getColumn(14).setMinWidth(120);
+        //tableAddTestFlow.getColumnModel().getColumn(14).setMaxWidth(150);
+        tableEditTestFlow.getColumnModel().getColumn(14).setMinWidth(150);
         
-        //tableAddTestFlow.getColumnModel().getColumn(15).setMaxWidth(100);
-        tableEditTestFlow.getColumnModel().getColumn(15).setMinWidth(100);
+        //tableAddTestFlow.getColumnModel().getColumn(15).setMaxWidth(150);
+        tableEditTestFlow.getColumnModel().getColumn(15).setMinWidth(150);
         
-        //tableAddTestFlow.getColumnModel().getColumn(16).setMaxWidth(150);
-        tableEditTestFlow.getColumnModel().getColumn(16).setMinWidth(150);
+        //tableAddTestFlow.getColumnModel().getColumn(16).setMaxWidth(200);
+        tableEditTestFlow.getColumnModel().getColumn(16).setMinWidth(120);
         
-        //tableAddTestFlow.getColumnModel().getColumn(17).setMaxWidth(150);
-        tableEditTestFlow.getColumnModel().getColumn(17).setMinWidth(150);
+        //tableAddTestFlow.getColumnModel().getColumn(17).setMaxWidth(100);
+        tableEditTestFlow.getColumnModel().getColumn(17).setMinWidth(100);
         
-        //tableAddTestFlow.getColumnModel().getColumn(18).setMaxWidth(200);
-        tableEditTestFlow.getColumnModel().getColumn(18).setMinWidth(200);
+        //tableAddTestFlow.getColumnModel().getColumn(18).setMaxWidth(150);
+        tableEditTestFlow.getColumnModel().getColumn(18).setMinWidth(150);
+        
+        //tableAddTestFlow.getColumnModel().getColumn(19).setMaxWidth(150);
+        tableEditTestFlow.getColumnModel().getColumn(19).setMinWidth(150);
+        
+        //tableAddTestFlow.getColumnModel().getColumn(20).setMaxWidth(200);
+        tableEditTestFlow.getColumnModel().getColumn(20).setMinWidth(200);
     }
     
     /**

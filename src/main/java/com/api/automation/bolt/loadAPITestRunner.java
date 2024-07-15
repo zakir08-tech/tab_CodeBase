@@ -132,11 +132,11 @@ public class loadAPITestRunner {
                             saveTagElmMap.put(getTestId, getModifyPayloadMap);
                         }
  
-                        Object authorization_type =getCellValue(testRunCurrentRow.getCell(11));
+                        Object authorization_type =getCellValue(testRunCurrentRow.getCell(13));
                         testRunMap.put("Authorization", authorization_type);
                         apiTestSteps.put("authorization_type",authorization_type);
  
-                        Object auth_value1 =getCellValue(testRunCurrentRow.getCell(12));
+                        Object auth_value1 =getCellValue(testRunCurrentRow.getCell(14));
                         if(auth_value1.toString().contains("|#")){
                             String s = auth_value1.toString().split("[|]")[0];
                             String s1 = auth_value1.toString().split("[|]")[1];
@@ -145,21 +145,21 @@ public class loadAPITestRunner {
                         testRunMap.put("AuthVal1", auth_value1);
                         apiTestSteps.put("auth_value1",auth_value1);
  
-                        Object auth_value2 =getCellValue(testRunCurrentRow.getCell(13));
+                        Object auth_value2 =getCellValue(testRunCurrentRow.getCell(15));
                         testRunMap.put("AuthVal2", auth_value2);
                         apiTestSteps.put("auth_value2",auth_value2);
  
-                        Object ssl =getCellValue(testRunCurrentRow.getCell(14));
+                        Object ssl =getCellValue(testRunCurrentRow.getCell(16));
                         testRunMap.put("SSL Verification", ssl);
                         apiTestSteps.put("ssl",ssl);
  
-                        Object status =getCellValue(testRunCurrentRow.getCell(15));
+                        Object status =getCellValue(testRunCurrentRow.getCell(17));
                         testRunMap.put("Expected Status", status);
                         apiTestSteps.put("status",status);
  
                         // define verify payload
-                        Object verify_payload_key =getCellValue(testRunCurrentRow.getCell(16));
-                        Object verify_payload_value =getCellValue(testRunCurrentRow.getCell(17));
+                        Object verify_payload_key =getCellValue(testRunCurrentRow.getCell(18));
+                        Object verify_payload_value =getCellValue(testRunCurrentRow.getCell(19));
  
                         if(verify_payload_key !=null && !verify_payload_key.toString().isEmpty() &&
                                 verify_payload_value !=null && !verify_payload_value.toString().isEmpty()){
@@ -173,7 +173,7 @@ public class loadAPITestRunner {
                             saveVerifyRespTagElmMap.put(getTestId, getVerifyResponse);
                         }
  
-                        Object test_desc =getCellValue(testRunCurrentRow.getCell(18));
+                        Object test_desc =getCellValue(testRunCurrentRow.getCell(20));
                         testRunMap.put("Test Summary", test_desc);
                         apiTestSteps.put("test_desc",test_desc);
  
@@ -229,8 +229,8 @@ public class loadAPITestRunner {
                         }
  
                         // define verify payload
-                        Object vPayloadKey =getCellValue(testRunCurrentRow.getCell(16));
-                        Object vPayloadVal =getCellValue(testRunCurrentRow.getCell(17));
+                        Object vPayloadKey =getCellValue(testRunCurrentRow.getCell(18));
+                        Object vPayloadVal =getCellValue(testRunCurrentRow.getCell(19));
  
                         if(vPayloadKey !=null && !vPayloadKey.toString().isEmpty() &&
                                 vPayloadVal !=null && !vPayloadVal.toString().isEmpty()){
