@@ -686,7 +686,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
 
                     try{
                          XSSFCell testId = excelRow.getCell(0);
-                         XSSFCell testSummary = excelRow.getCell(18);
+                         XSSFCell testSummary = excelRow.getCell(20);
 
                         String getTestRunId =null;
                         if(testId.getCellType().toString().contentEquals("NUMERIC")){
