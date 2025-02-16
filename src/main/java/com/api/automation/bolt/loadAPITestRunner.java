@@ -27,12 +27,19 @@ public class loadAPITestRunner {
     public static Row testRunCurrentRow;
     public static LinkedHashMap<Object, Object> apiTestSteps = new LinkedHashMap<>();
     public static LinkedHashMap<Object, LinkedHashMap<Object, Object>> apiTestSuite = new LinkedHashMap<>();
+    
     public static LinkedHashMap<Object, Object> readHeaderMap = new LinkedHashMap<> ();
     public static LinkedHashMap<Object, LinkedHashMap<Object, Object>> saveHeaderMap = new LinkedHashMap<> ();
+    
+    public static LinkedHashMap<Object, Object> readJsonElm_val = new LinkedHashMap<> ();
+    public static LinkedHashMap<Object, LinkedHashMap<Object, Object>> saveJsonElm_val = new LinkedHashMap<> ();
+    
     public static LinkedHashMap<Object, Object> getModifyPayloadMap = new LinkedHashMap<> ();
     public static LinkedHashMap<Object, LinkedHashMap<Object, Object>> saveTagElmMap = new LinkedHashMap<> ();
+    
     public static LinkedHashMap<Object, Object> getVerifyResponse = new LinkedHashMap<> ();
     public static LinkedHashMap<Object, LinkedHashMap<Object, Object>> saveVerifyRespTagElmMap = new LinkedHashMap<> ();
+    
     public static LinkedHashMap<Object, Object> savePayloadMap = new LinkedHashMap<> ();
     public static LinkedHashMap<Object, Object> testRunMap = new LinkedHashMap<> ();
     public static LinkedHashMap<Object, HashMap<Object, Object>> saveTestRunMap = new LinkedHashMap<> ();
@@ -46,6 +53,8 @@ public class loadAPITestRunner {
         apiTestSuite = new LinkedHashMap<>();
         readHeaderMap = new LinkedHashMap<> ();
         saveHeaderMap = new LinkedHashMap<> ();
+        readJsonElm_val = new LinkedHashMap<> ();
+        saveJsonElm_val = new LinkedHashMap<> ();
         getModifyPayloadMap = new LinkedHashMap<> ();
         saveTagElmMap = new LinkedHashMap<> ();
         getVerifyResponse = new LinkedHashMap<> ();
@@ -69,6 +78,7 @@ public class loadAPITestRunner {
                         getLastTestId =getTestId;
                         apiTestSteps =new LinkedHashMap<>();
                         readHeaderMap =new LinkedHashMap<> ();
+                        readJsonElm_val = new LinkedHashMap<> ();
                         getModifyPayloadMap =new LinkedHashMap<>();
                         getVerifyResponse =new LinkedHashMap<>();
                         testRunMap =new LinkedHashMap<>();
@@ -131,7 +141,23 @@ public class loadAPITestRunner {
                             getModifyPayloadMap.put(modify_payload_key, modify_payload_value);
                             saveTagElmMap.put(getTestId, getModifyPayloadMap);
                         }
- 
+                        
+                        Object reponseElmName = getCellValue(testRunCurrentRow.getCell(11));
+                        Object captureRepElmVal = getCellValue(testRunCurrentRow.getCell(12));
+                        
+                        if(reponseElmName !=null && !reponseElmName.toString().isEmpty() &&
+                        		captureRepElmVal !=null && !captureRepElmVal.toString().isEmpty()){
+                        	readJsonElm_val.put(reponseElmName, captureRepElmVal);
+                        	saveJsonElm_val.put(getTestId, readJsonElm_val);
+                        }
+                        
+                        //testRunMap.put("ResponseTagName", reponseElmName);
+                        //apiTestSteps.put("response_tagname",reponseElmName);
+                        
+                        
+                        //testRunMap.put("CaptureTagValue", captureRepElmVal);
+                        //apiTestSteps.put("capture_tagvalue",captureRepElmVal);
+                        
                         Object authorization_type =getCellValue(testRunCurrentRow.getCell(13));
                         testRunMap.put("Authorization", authorization_type);
                         apiTestSteps.put("authorization_type",authorization_type);
@@ -198,8 +224,19 @@ public class loadAPITestRunner {
                             if(saveHeaderMap.get(getLastTestId) ==null)
                                 saveHeaderMap.put(getLastTestId, readHeaderMap);
                         }
+                        
+                        Object reponseElmName =getCellValue(testRunCurrentRow.getCell(11));
+                        Object captureRepElmVal =getCellValue(testRunCurrentRow.getCell(12));
  
-                        // define params
+                        if(reponseElmName !=null && !reponseElmName.toString().isEmpty() &&
+                        		captureRepElmVal !=null && !captureRepElmVal.toString().isEmpty()){
+ 
+                        	readJsonElm_val.put(reponseElmName, captureRepElmVal);
+                            if(saveJsonElm_val.get(getLastTestId) ==null)
+                            	saveJsonElm_val.put(getLastTestId, readJsonElm_val);
+                        }
+  
+                       // define params
                         Object getParamsKey =getCellValue(testRunCurrentRow.getCell(5));
                         if(getParamsKey !=null && !getParamsKey.toString().isEmpty()){
                             getParamsKey =apiTestSteps.get("params_key") +"|"+ getParamsKey;

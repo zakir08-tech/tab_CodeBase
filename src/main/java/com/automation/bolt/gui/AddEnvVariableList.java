@@ -42,7 +42,7 @@ import org.json.simple.JSONObject;
  */
 public class AddEnvVariableList extends javax.swing.JFrame {
         
-    public static DefaultTableModel addEnvVariableTabModel = new DefaultTableModel();
+    public DefaultTableModel addEnvVariableTabModel = new DefaultTableModel();
     
     public static TableColumn envVarNameCol =null;
     public static TableColumn envVarValueCol =null;
@@ -689,7 +689,7 @@ public class AddEnvVariableList extends javax.swing.JFrame {
     public static void saveEnvVarList(){
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
-        
+         
         if(tableEnvVariable.getRowCount() > 0){
             for(int i =0; i<tableEnvVariable.getRowCount(); i++){
                 

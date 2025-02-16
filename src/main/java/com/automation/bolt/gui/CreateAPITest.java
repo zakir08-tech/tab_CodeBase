@@ -64,6 +64,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     //public static JTextField elmXpathTxt =new JTextField();
     
     public static JTextField testIdTxt =new JTextField();
+    public static JTextField testEnvVarTxt =new JTextField();
     public static JTextField testURLTxt =new JTextField();
     public static JTextField testExpectedStatusTxt =new JTextField();
     public static JTextField testPayloadTxt =new JTextField();
@@ -91,6 +92,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     public static TableColumn testPayloadTypeCol =null;
     public static TableColumn testAuthCol =null;
     public static TableColumn testComCol =null;
+    public static TableColumn testEnvVarCol =null;
     
     public static boolean getTestFlowCellEditorStatus;
     public static int getTestFlowSelectedRow =0;
@@ -128,6 +130,9 @@ public class CreateAPITest extends javax.swing.JFrame {
         testIdCol =tableCreateApiTest.getColumnModel().getColumn(0);
         testIdCol.setCellEditor(new DefaultCellEditor(testIdTxt));
         
+        testEnvVarCol =tableCreateApiTest.getColumnModel().getColumn(12);
+        testEnvVarCol.setCellEditor(new DefaultCellEditor(testEnvVarTxt));
+        
         testURLCol =tableCreateApiTest.getColumnModel().getColumn(2);
         testURLCol.setCellEditor(new DefaultCellEditor(testURLTxt));
         
@@ -164,6 +169,12 @@ public class CreateAPITest extends javax.swing.JFrame {
         testIdTxt.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
                 common.testIdTxtKeyTyped(evt, testIdTxt);
+            }
+        });
+        
+        testEnvVarTxt.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent evt) {
+                common.testEnvVarTxtKeyTyped(evt, testEnvVarTxt);
             }
         });
         
@@ -439,7 +450,15 @@ public class CreateAPITest extends javax.swing.JFrame {
             new String [] {
                 "Test ID", "Request", "URL", "Headers (key)", "Headers (value)", "Params (key)", "Params (value)", "Payload", "Payload Type", "Modify Payload (key)", "Modify Payload (value)", "Response Tag Name (value)", "Capture Tag Value (env var)", "Authorization", "", "", "SSL Validation", "Expected Status", "Verify Payload (key)", "Verfiy Payload (value)", "Test Description"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tableCreateApiTest.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tableCreateApiTest.setName("tableCreateApiTest"); // NOI18N
         tableCreateApiTest.setRowHeight(30);
@@ -502,6 +521,7 @@ public class CreateAPITest extends javax.swing.JFrame {
             bttnAddNewTestStep.setBorderPainted(false);
             bttnAddNewTestStep.setContentAreaFilled(false);
             bttnAddNewTestStep.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            bttnAddNewTestStep.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
             bttnAddNewTestStep.setOpaque(true);
             bttnAddNewTestStep.setRequestFocusEnabled(false);
             bttnAddNewTestStep.setRolloverEnabled(false);
@@ -1360,6 +1380,12 @@ public class CreateAPITest extends javax.swing.JFrame {
         
         if(duplicateTestId ==false){
             switch (gerCurrCol) {
+                case 12:
+                    tableCreateApiTest.editCellAt(getCurRow, 12);
+                    editableRow =tableCreateApiTest.getEditingRow();
+                    testEnvVarTxt.requestFocusInWindow();
+                    testEnvVarTxt.setCaretPosition(0);
+                    break;
                 case 0:
                     tableCreateApiTest.editCellAt(getCurRow, 0);
                     editableRow =tableCreateApiTest.getEditingRow();

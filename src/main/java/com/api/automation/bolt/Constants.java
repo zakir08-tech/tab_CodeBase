@@ -10,6 +10,8 @@ public class Constants {
  
             /*to run from system directory [to run using executable jar]*/
             public static String PROPERTY_FILE_NAME = SysDir+"/config/config.properties";
+            
+            public static String ENV_VAR_JSON_FILE = SysDir+"/env-var/env-var-list.json";
  
             public static String testRunnerSheet = "API Test";
             public static String requestHeaderSheet = "Request Headers";

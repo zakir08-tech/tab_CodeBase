@@ -28,7 +28,6 @@ import javax.imageio.ImageIO;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.InvalidSelectorException;
@@ -46,14 +45,14 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import ru.yandex.qatools.ashot.AShot;
-import ru.yandex.qatools.ashot.Screenshot;
-import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
+
 
 public class glueCode {
     public static WebDriver boltDriver;
@@ -126,7 +125,7 @@ public class glueCode {
             boltExecutor.log.error(exp);
         }
     }
-	
+    
     public static void keySet(WebElement elm, String setValue) {
         stepSuccess = true;
 
@@ -146,6 +145,60 @@ public class glueCode {
                 StaleElementReferenceException exp) {
             stepSuccess = false;
             boltRunner.logError = exp.getMessage();
+            boltExecutor.log.error(exp);
+        }catch(WebDriverException exp){
+            stepSuccess = false;
+            boltRunner.logError = exp.getMessage();
+            boltExecutor.log.error(exp);
+        }
+    }
+    
+    public static void keySelectSalaryRange(WebElement elm, String setValue) {
+        stepSuccess = true;
+
+        if(elm ==null) {
+            stepSuccess = false;
+            boltRunner.logError = "No test element defined for "+"\""+"SELECT_SAL_RANGE"+"\"";
+            return;
+        }
+
+        try {
+        	String rangeMax = elm.getAttribute("max");
+        	String rangeStep = elm.getAttribute("step");
+        	
+        	if(setValue.isEmpty()) {
+        		setValue ="0";
+        	}
+        	
+        	if(rangeStep ==null) {
+        		rangeStep = "0.5";
+        	}
+        	
+        	if(rangeMax !=null) {
+        		if(Double.valueOf(setValue)>Double.valueOf(rangeMax)) {
+            		setValue = rangeMax;
+            	}
+        	}
+        	
+            double barMovement =Double.parseDouble(setValue)/Float.valueOf(rangeStep);
+            
+            JavascriptExecutor executor = (JavascriptExecutor)glueCode.boltDriver;
+            executor.executeScript("arguments[0].click();", elm);
+            
+            //elm.click();
+            elm.sendKeys(Keys.HOME);
+            
+            for(int i=1; i<=barMovement;i++) {
+                elm.sendKeys(Keys.ARROW_RIGHT);
+            }
+        }catch (IllegalArgumentException|
+                NullPointerException|
+                NoSuchElementException|
+                ElementNotInteractableException|
+                TimeoutException|
+                StaleElementReferenceException exp) {
+            stepSuccess = false;
+            boltRunner.logError = exp.toString();
             boltExecutor.log.error(exp);
         }catch(WebDriverException exp){
             stepSuccess = false;
@@ -577,8 +630,9 @@ public class glueCode {
 		try {
 			URL[] dependencyUrls = {new URL("file:/"+System.getProperty("user.dir").replaceAll("\\\\", "/")+"/target/tab.jar")};
 			classLoader = new URLClassLoader(dependencyUrls);
-			Class<?> loadedClass = classLoader.loadClass("test.automation.tab.userDefine");
-
+			Class<?> loadedClass = classLoader.loadClass("com.automation.bolt.userDefineTest");
+			//Class<?> loadedClass = classLoader.loadClass("test.automation.tab.userDefine");
+		
 			Object obj = loadedClass.getDeclaredConstructor().newInstance();
 			Method method = loadedClass.getMethod(getMethodName, String[].class);
 			String[] args =methodArgs.split(",");

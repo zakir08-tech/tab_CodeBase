@@ -28,6 +28,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -217,6 +218,12 @@ public class common extends userDefineTest{
                 saveStepResult = "User define test " +"\""+getTestELm+"\"";
 
                 getFormatter2(getKey, "User define test ", getTestELm);
+                break;
+            case "SELECT_SAL_RANGE":
+                testStepResult = "Step "+getKey+": Select salary range "+"\""+getTestData+"\" from "+"\""+getTestELm+"\"";
+                saveStepResult = "Select salary range "+"\""+getTestData+"\" from "+"\""+getTestELm+"\"";
+
+                getFormatter1(getKey, "Select salary range ", getTestData, " from ", getTestELm);
                 break;    
             case "SWITCH_DEFAULT":
                 testStepResult = "Step "+getKey+": Switch to default iframe";
@@ -947,23 +954,45 @@ public class common extends userDefineTest{
     public static void testIdTxtKeyTyped(KeyEvent evt, JTextField textField) {
         boolean result = false;
         boolean result1 = false;
-       
-        Pattern pattern = Pattern.compile("^(\\d*\\.?\\d*)$");
+                
+        Pattern pattern = Pattern.compile("^(\\d*\\d*)$");
         Pattern pattern1 = Pattern.compile("[#]");
         
         char keyText = evt.getKeyChar();
         String textId = Character.toString(keyText);
         
         result =pattern.matcher(textId).matches();
-        result1 =pattern.matcher(textId).matches();
+        result1 =pattern1.matcher(textId).matches();
         
+        if(result1){
+            if(textField.getText().contains("#")){
+                evt.consume();
+            } else if(!textField.getText().isBlank() && textId.contains("#")){
+                evt.consume();
+            }
+            return;
+        }
+            
         if(!result){
             result =pattern1.matcher(textId).matches();
             if(!result){
                 evt.consume();
-            }else
-                if(textField.getText().length()>0)
-                    evt.consume();
+            }
+        }else if(textField.getText().contains("#")){
+            evt.consume();
+        }
+    }
+    
+    public static void testEnvVarTxtKeyTyped(KeyEvent evt, JTextField textField) {
+        boolean result = false;
+        Pattern pattern = Pattern.compile("^([a-zA-Z_-]*)$");
+        
+        char keyText = evt.getKeyChar();
+        String textId = Character.toString(keyText);
+        result =pattern.matcher(textId).matches();
+        
+        if(!result){
+            evt.consume();
         }
     }
      
@@ -1332,6 +1361,9 @@ public class common extends userDefineTest{
                 break;    
             case "MOVE_TO_ELEMENT":
                 glueCode.keyMoveToElement(getElement);
+                break;
+            case "SELECT_SAL_RANGE":
+            	glueCode.keySelectSalaryRange(getElement, testData);
                 break;
             case "ASSERT_CLICKABLE":
                 glueCode.keyAssertClickable(getElement);
@@ -1733,11 +1765,11 @@ public class common extends userDefineTest{
             reader =new FileReader("./env-var/env-var-list.json");
             Object objJson;
             try {
-                objJson =parser.parse(reader);
-                JSONArray certList =(JSONArray) objJson;
-                JSONObject certObject = (JSONObject) certList.get(0);
+    			parser = new JSONParser();
+    	        JSONObject data = (JSONObject) parser.parse(reader);
+        
+                Set<Entry<String, String>> entrySet = data.entrySet();
                 
-                Set<Entry<String, String>> entrySet = certObject.entrySet();
                 for(Map.Entry<String,String> entry : entrySet){
                     String envVarName=entry.getKey();
                     String envVarValue=entry.getValue();
@@ -1750,7 +1782,7 @@ public class common extends userDefineTest{
                 }
                 
                 reader.close();
-            } catch (IOException | ParseException e) {}
+            } catch (IOException | ParseException | IndexOutOfBoundsException e) {}
 
         } catch (FileNotFoundException e) {}
 

@@ -286,7 +286,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
         chkBoxAssociateObjOR.setFont(new Font("Consolas", 1, 12)); // NOI18N
         chkBoxAssociateObjOR.setForeground(new Color(255, 255, 255));
         chkBoxAssociateObjOR.setText("Associate Global OR");
-        chkBoxAssociateObjOR.setToolTipText("select to use global repository for execution");
+        chkBoxAssociateObjOR.setToolTipText("associate global repository");
         chkBoxAssociateObjOR.setEnabled(false);
         chkBoxAssociateObjOR.setHorizontalAlignment(SwingConstants.LEFT);
         chkBoxAssociateObjOR.addMouseListener(new MouseAdapter() {
@@ -307,13 +307,11 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
         bttnLoadRegSuite.setFont(new Font("Consolas", 1, 14)); // NOI18N
         bttnLoadRegSuite.setForeground(new Color(255, 255, 255));
         bttnLoadRegSuite.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addUploadTestSuite.png"));
-            bttnLoadRegSuite.setText("Upload Test Suite ");
-            bttnLoadRegSuite.setToolTipText("open and upload the test suite for execution");
+            bttnLoadRegSuite.setToolTipText("upload test suite");
             bttnLoadRegSuite.setActionCommand("OpenRegressionSuite");
             bttnLoadRegSuite.setBorder(null);
             bttnLoadRegSuite.setBorderPainted(false);
             bttnLoadRegSuite.setContentAreaFilled(false);
-            bttnLoadRegSuite.setHorizontalAlignment(SwingConstants.LEFT);
             bttnLoadRegSuite.setMaximumSize(new Dimension(121, 33));
             bttnLoadRegSuite.setMinimumSize(new Dimension(121, 33));
             bttnLoadRegSuite.setOpaque(true);
@@ -338,7 +336,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
             chkBoxRunHeadless.setFont(new Font("Consolas", 1, 12)); // NOI18N
             chkBoxRunHeadless.setForeground(new Color(255, 255, 255));
             chkBoxRunHeadless.setText("Run Headless");
-            chkBoxRunHeadless.setToolTipText("select to execute headless");
+            chkBoxRunHeadless.setToolTipText("headless test run");
             chkBoxRunHeadless.setEnabled(false);
             chkBoxRunHeadless.setHorizontalAlignment(SwingConstants.LEFT);
             chkBoxRunHeadless.addMouseListener(new MouseAdapter() {
@@ -359,14 +357,11 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
             bttnStartTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
             bttnStartTestRun.setForeground(new Color(255, 255, 255));
             bttnStartTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/startTestRun.png"));
-                bttnStartTestRun.setText("Start Test Run");
                 bttnStartTestRun.setToolTipText("start test execution");
-                bttnStartTestRun.setActionCommand("");
                 bttnStartTestRun.setBorder(null);
                 bttnStartTestRun.setBorderPainted(false);
                 bttnStartTestRun.setContentAreaFilled(false);
                 bttnStartTestRun.setEnabled(false);
-                bttnStartTestRun.setHorizontalAlignment(SwingConstants.LEFT);
                 bttnStartTestRun.setMaximumSize(new Dimension(121, 33));
                 bttnStartTestRun.setMinimumSize(new Dimension(121, 33));
                 bttnStartTestRun.setNextFocusableComponent(chkBoxRunHeadless);
@@ -413,7 +408,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                 });
 
                 lblPageLoadTimeout.setForeground(new Color(204, 204, 204));
-                lblPageLoadTimeout.setText("Page Load Timeout");
+                lblPageLoadTimeout.setText("Page Load");
 
                 txtPageLoadTimeout.setBackground(new Color(0, 0, 0));
                 txtPageLoadTimeout.setForeground(new Color(255, 255, 0));
@@ -440,43 +435,33 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                 GroupLayout pnlTimeOutsLayout = new GroupLayout(pnlTimeOuts);
                 pnlTimeOuts.setLayout(pnlTimeOutsLayout);
                 pnlTimeOutsLayout.setHorizontalGroup(pnlTimeOutsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlTimeOutsLayout.createSequentialGroup()
-                        .addGroup(pnlTimeOutsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlTimeOutsLayout.createSequentialGroup()
-                                .addComponent(lblImplicitWait, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                                .addComponent(txtImplicitWait, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlTimeOutsLayout.createSequentialGroup()
-                                .addComponent(lblPageLoadTimeout)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtPageLoadTimeout, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())
+                    .addComponent(txtImplicitWait, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblImplicitWait, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPageLoadTimeout)
+                    .addComponent(txtPageLoadTimeout, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
                 );
                 pnlTimeOutsLayout.setVerticalGroup(pnlTimeOutsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTimeOutsLayout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addGroup(pnlTimeOutsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblImplicitWait)
-                            .addComponent(txtImplicitWait, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblImplicitWait)
                         .addGap(1, 1, 1)
-                        .addGroup(pnlTimeOutsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblPageLoadTimeout)
-                            .addComponent(txtPageLoadTimeout, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
+                        .addComponent(txtImplicitWait, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPageLoadTimeout)
+                        .addGap(0, 0, 0)
+                        .addComponent(txtPageLoadTimeout, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
 
                 bttnStopTestRun.setBackground(new Color(0, 0, 0));
                 bttnStopTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
                 bttnStopTestRun.setForeground(new Color(255, 255, 255));
                 bttnStopTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/stopTestRun.png"));
-                    bttnStopTestRun.setText("Stop Test Run");
                     bttnStopTestRun.setToolTipText("stop test execution");
-                    bttnStopTestRun.setActionCommand("");
                     bttnStopTestRun.setBorder(null);
                     bttnStopTestRun.setBorderPainted(false);
                     bttnStopTestRun.setContentAreaFilled(false);
                     bttnStopTestRun.setEnabled(false);
-                    bttnStopTestRun.setHorizontalAlignment(SwingConstants.LEFT);
                     bttnStopTestRun.setMaximumSize(new Dimension(121, 33));
                     bttnStopTestRun.setMinimumSize(new Dimension(121, 33));
                     bttnStopTestRun.setNextFocusableComponent(chkBoxRunHeadless);
@@ -572,13 +557,11 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                             bttnRefreshTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
                             bttnRefreshTestRun.setForeground(new Color(255, 255, 255));
                             bttnRefreshTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/refreshTestRun.png"));
-                                bttnRefreshTestRun.setText("Refresh Test run");
-                                bttnRefreshTestRun.setToolTipText("Refresh to reload test run for new changes");
+                                bttnRefreshTestRun.setToolTipText("refresh run for new changes");
                                 bttnRefreshTestRun.setActionCommand("OpenRegressionSuite");
                                 bttnRefreshTestRun.setBorder(null);
                                 bttnRefreshTestRun.setBorderPainted(false);
                                 bttnRefreshTestRun.setContentAreaFilled(false);
-                                bttnRefreshTestRun.setHorizontalAlignment(SwingConstants.LEFT);
                                 bttnRefreshTestRun.setMaximumSize(new Dimension(121, 33));
                                 bttnRefreshTestRun.setMinimumSize(new Dimension(121, 33));
                                 bttnRefreshTestRun.setOpaque(true);
@@ -602,7 +585,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                 rdBttnTimeouts.setBackground(new Color(0, 153, 153));
                                 rdBttnTimeouts.setFont(new Font("Consolas", 1, 12)); // NOI18N
                                 rdBttnTimeouts.setForeground(new Color(255, 255, 255));
-                                rdBttnTimeouts.setText("Timeouts (in seconds):");
+                                rdBttnTimeouts.setText("Timeouts (seconds):");
                                 rdBttnTimeouts.setToolTipText("set wait");
                                 rdBttnTimeouts.addMouseListener(new MouseAdapter() {
                                     public void mouseEntered(MouseEvent evt) {
@@ -634,6 +617,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                 txtTestType.setFont(new Font("Arial", 0, 14)); // NOI18N
                                 txtTestType.setForeground(Color.pink);
                                 txtTestType.setHorizontalAlignment(JTextField.LEFT);
+                                txtTestType.setToolTipText("test type run (@smoke/@reg/@sanity)");
                                 txtTestType.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
                                 txtTestType.setCursor(new Cursor(Cursor.TEXT_CURSOR));
                                 txtTestType.setName("SetTestType"); // NOI18N
@@ -646,46 +630,41 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                 GroupLayout pnlRunMenuBarLayout = new GroupLayout(pnlRunMenuBar);
                                 pnlRunMenuBar.setLayout(pnlRunMenuBarLayout);
                                 pnlRunMenuBarLayout.setHorizontalGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                    .addComponent(bttnStartTestRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(bttnStopTestRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(pnlRunMenuBarLayout.createSequentialGroup()
-                                        .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                            .addComponent(pnlTimeOuts, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(rdBttnTimeouts, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))
+                                        .addComponent(bttnLoadRegSuite, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(bttnRefreshTestRun, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
                                     .addGroup(pnlRunMenuBarLayout.createSequentialGroup()
+                                        .addComponent(bttnStartTestRun, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(bttnStopTestRun, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pnlRunMenuBarLayout.createSequentialGroup()
+                                        .addContainerGap()
                                         .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblRunwith, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblTestType, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(rdBttnTimeouts, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(pnlTimeOuts, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                             .addGroup(pnlRunMenuBarLayout.createSequentialGroup()
-                                                .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                                    .addComponent(chkBoxRunHeadless, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE)
-                                                    .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                                                        .addComponent(bttnRefreshTestRun, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(bttnLoadRegSuite, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                                                        .addGroup(GroupLayout.Alignment.LEADING, pnlRunMenuBarLayout.createSequentialGroup()
-                                                            .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                                                .addComponent(rdButtonEdge, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(rdButtonChrome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                            .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                                                .addComponent(lblEdge, GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                                                                .addComponent(lblChrome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                                    .addComponent(chkBoxAssociateObjOR, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE)
-                                                    .addGroup(pnlRunMenuBarLayout.createSequentialGroup()
-                                                        .addContainerGap()
-                                                        .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                                            .addComponent(lblRunwith, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(lblTestType, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE))))
-                                                .addGap(0, 0, Short.MAX_VALUE))
-                                            .addComponent(txtTestType))
-                                        .addContainerGap())
+                                                .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(rdButtonEdge, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(rdButtonChrome))
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(lblChrome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(lblEdge, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(chkBoxRunHeadless, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(chkBoxAssociateObjOR, GroupLayout.Alignment.LEADING))
+                                            .addComponent(txtTestType, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)))
                                 );
                                 pnlRunMenuBarLayout.setVerticalGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlRunMenuBarLayout.createSequentialGroup()
                                         .addGap(45, 45, 45)
-                                        .addComponent(bttnLoadRegSuite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addGap(8, 8, 8)
-                                        .addComponent(bttnRefreshTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                            .addComponent(bttnLoadRegSuite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(bttnRefreshTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
                                         .addComponent(lblRunwith)
                                         .addGap(1, 1, 1)
                                         .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -704,14 +683,14 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(chkBoxRunHeadless, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(bttnStartTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addGap(12, 12, 12)
-                                        .addComponent(bttnStopTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addGap(12, 12, 12)
+                                        .addGroup(pnlRunMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                            .addComponent(bttnStartTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(bttnStopTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
                                         .addComponent(rdBttnTimeouts)
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(pnlTimeOuts, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(25, Short.MAX_VALUE))
+                                        .addGap(0, 0, 0)
+                                        .addComponent(pnlTimeOuts, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 );
 
                                 pnlRunMenuBarLayout.linkSize(SwingConstants.VERTICAL, new Component[] {lblChrome, rdButtonChrome});
@@ -727,8 +706,8 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                 jDesktopPane1Layout.setHorizontalGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                                         .addGap(1, 1, 1)
-                                        .addComponent(pnlRunMenuBar, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE)
-                                        .addGap(1, 1, 1))
+                                        .addComponent(pnlRunMenuBar, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, 0))
                                 );
                                 jDesktopPane1Layout.setVerticalGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
@@ -788,7 +767,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                 });
 
                                 lblTestResultView.setFont(new Font("Calibri", 1, 10)); // NOI18N
-                                lblTestResultView.setForeground(new Color(0, 51, 51));
+                                lblTestResultView.setForeground(new Color(255, 204, 204));
                                 lblTestResultView.setHorizontalAlignment(SwingConstants.RIGHT);
                                 lblTestResultView.setText(" * Double click Test Status to view test result");
                                 lblTestResultView.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -843,7 +822,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                         .addGap(1, 1, 1)
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(scrollExecuteRegSuite, GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE)
+                                                .addComponent(scrollExecuteRegSuite, GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
                                                 .addGap(2, 2, 2))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jDesktopPane2)
@@ -859,7 +838,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jDesktopPane2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(1, 1, 1)
-                                                .addComponent(scrollExecuteRegSuite, GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)))
+                                                .addComponent(scrollExecuteRegSuite, GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)))
                                         .addGap(1, 1, 1))
                                 );
 

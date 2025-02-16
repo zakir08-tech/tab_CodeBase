@@ -584,7 +584,7 @@
                     <Column editable="true" title="Headers (value)" type="java.lang.Object"/>
                     <Column editable="true" title="Params (key)" type="java.lang.Object"/>
                     <Column editable="true" title="Params (value)" type="java.lang.Object"/>
-                    <Column editable="true" title="Payload" type="java.lang.Object"/>
+                    <Column editable="false" title="Payload" type="java.lang.Object"/>
                     <Column editable="true" title="Payload Type" type="java.lang.Object"/>
                     <Column editable="true" title="Modify Payload (key)" type="java.lang.Object"/>
                     <Column editable="true" title="Modify Payload (value)" type="java.lang.Object"/>
@@ -744,15 +744,19 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="bttnLoadApiTest" alignment="1" max="32767" attributes="0"/>
                       <Component id="bttnSaveSuite" alignment="1" max="32767" attributes="0"/>
                       <Component id="bttnAddStepDown" alignment="1" max="32767" attributes="0"/>
                       <Component id="bttnAddStepUp" alignment="1" max="32767" attributes="0"/>
                       <Component id="bttnDeleteTestStep" alignment="1" max="32767" attributes="0"/>
-                      <Component id="bttnAddNewTestStep" alignment="1" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="bttnAddNewTestStep" min="-2" pref="35" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="bttnEnvVarList" alignment="1" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -771,6 +775,8 @@
                   <Component id="bttnAddStepDown" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="bttnSaveSuite" min="-2" pref="30" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="bttnEnvVarList" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -989,6 +995,43 @@
             <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bttnSaveSuiteMouseExited"/>
             <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bttnSaveSuiteMouseReleased"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bttnSaveSuiteActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="bttnEnvVarList">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="0" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Consolas" size="14" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(System.getProperty(&quot;user.dir&quot;).replaceAll(&quot;\\\\&quot;, &quot;/&quot;)+&quot;/icons/addEnvVariable.png&quot;)" type="code"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="will save the test suite"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
+            </Property>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="contentAreaFilled" type="boolean" value="false"/>
+            <Property name="focusPainted" type="boolean" value="false"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="opaque" type="boolean" value="true"/>
+            <Property name="requestFocusEnabled" type="boolean" value="false"/>
+            <Property name="rolloverEnabled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bttnEnvVarListMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bttnEnvVarListMouseExited"/>
+            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bttnEnvVarListMouseReleased"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bttnEnvVarListActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>

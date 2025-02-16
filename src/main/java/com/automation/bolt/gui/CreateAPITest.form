@@ -586,7 +586,7 @@
                     <Column editable="true" title="Headers (value)" type="java.lang.Object"/>
                     <Column editable="true" title="Params (key)" type="java.lang.Object"/>
                     <Column editable="true" title="Params (value)" type="java.lang.Object"/>
-                    <Column editable="true" title="Payload" type="java.lang.Object"/>
+                    <Column editable="false" title="Payload" type="java.lang.Object"/>
                     <Column editable="true" title="Payload Type" type="java.lang.Object"/>
                     <Column editable="true" title="Modify Payload (key)" type="java.lang.Object"/>
                     <Column editable="true" title="Modify Payload (value)" type="java.lang.Object"/>
@@ -803,6 +803,7 @@
             <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
             <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="horizontalTextPosition" type="int" value="2"/>
             <Property name="opaque" type="boolean" value="true"/>
             <Property name="requestFocusEnabled" type="boolean" value="false"/>
             <Property name="rolloverEnabled" type="boolean" value="false"/>

@@ -292,7 +292,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
         GroupLayout pnlRegSuiteTableLayout = new GroupLayout(pnlRegSuiteTable);
         pnlRegSuiteTable.setLayout(pnlRegSuiteTableLayout);
         pnlRegSuiteTableLayout.setHorizontalGroup(pnlRegSuiteTableLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(RegressionSuiteScrollPane, GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
+            .addComponent(RegressionSuiteScrollPane, GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
         );
         pnlRegSuiteTableLayout.setVerticalGroup(pnlRegSuiteTableLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addComponent(RegressionSuiteScrollPane, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
@@ -307,8 +307,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
         RegressionSuite.setFont(new Font("Consolas", 1, 14)); // NOI18N
         RegressionSuite.setForeground(new Color(255, 255, 255));
         RegressionSuite.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addUploadTestSuite.png"));
-            RegressionSuite.setText("Open Test Suite");
-            RegressionSuite.setToolTipText("will upload the test suite for modifications");
+            RegressionSuite.setToolTipText("upload test suite");
             RegressionSuite.setActionCommand("OpenRegressionSuite");
             RegressionSuite.setBorder(null);
             RegressionSuite.setBorderPainted(false);
@@ -334,7 +333,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
             GroupLayout pnlOpenTestSuiteLayout = new GroupLayout(pnlOpenTestSuite);
             pnlOpenTestSuite.setLayout(pnlOpenTestSuiteLayout);
             pnlOpenTestSuiteLayout.setHorizontalGroup(pnlOpenTestSuiteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(RegressionSuite, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(RegressionSuite, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
             );
             pnlOpenTestSuiteLayout.setVerticalGroup(pnlOpenTestSuiteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                 .addGroup(GroupLayout.Alignment.TRAILING, pnlOpenTestSuiteLayout.createSequentialGroup()
@@ -345,8 +344,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
             AssociateObjORJCheckBox.setBackground(new Color(0, 153, 153));
             AssociateObjORJCheckBox.setFont(new Font("Consolas", 1, 12)); // NOI18N
             AssociateObjORJCheckBox.setForeground(new Color(255, 255, 255));
-            AssociateObjORJCheckBox.setText("Associate Global OR");
-            AssociateObjORJCheckBox.setToolTipText("if checked, will give option to associate a global object repository");
+            AssociateObjORJCheckBox.setToolTipText("associate global object repository");
             AssociateObjORJCheckBox.setEnabled(false);
             AssociateObjORJCheckBox.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent evt) {
@@ -368,8 +366,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
             DeleteStep.setFont(new Font("Consolas", 1, 14)); // NOI18N
             DeleteStep.setForeground(new Color(255, 255, 255));
             DeleteStep.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/deleteTestStep_Element.png"));
-                DeleteStep.setText("Delete Test Step");
-                DeleteStep.setToolTipText("will delete the selected test step");
+                DeleteStep.setToolTipText("delete test step");
                 DeleteStep.setBorder(null);
                 DeleteStep.setBorderPainted(false);
                 DeleteStep.setContentAreaFilled(false);
@@ -409,8 +406,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                 AddStepUp.setFont(new Font("Consolas", 1, 14)); // NOI18N
                 AddStepUp.setForeground(new Color(255, 255, 255));
                 AddStepUp.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addTestStepUp.png"));
-                    AddStepUp.setText("Add Test Step Up");
-                    AddStepUp.setToolTipText("will add a new test step above the selected step");
+                    AddStepUp.setToolTipText("add test step above the selected step");
                     AddStepUp.setActionCommand("AddNewStep");
                     AddStepUp.setBorder(null);
                     AddStepUp.setBorderPainted(false);
@@ -452,8 +448,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                     SaveSuite1.setFont(new Font("Consolas", 1, 14)); // NOI18N
                     SaveSuite1.setForeground(new Color(255, 255, 255));
                     SaveSuite1.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/saveAsNewTestSuite.png"));
-                        SaveSuite1.setText("Save As New Suite");
-                        SaveSuite1.setToolTipText("will save the opened test suite as a new test suite");
+                        SaveSuite1.setToolTipText("save as new test suite");
                         SaveSuite1.setBorder(null);
                         SaveSuite1.setBorderPainted(false);
                         SaveSuite1.setContentAreaFilled(false);
@@ -479,9 +474,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                         GroupLayout pnlSaveAsNewTestSuiteLayout = new GroupLayout(pnlSaveAsNewTestSuite);
                         pnlSaveAsNewTestSuite.setLayout(pnlSaveAsNewTestSuiteLayout);
                         pnlSaveAsNewTestSuiteLayout.setHorizontalGroup(pnlSaveAsNewTestSuiteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlSaveAsNewTestSuiteLayout.createSequentialGroup()
-                                .addComponent(SaveSuite1, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(SaveSuite1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         );
                         pnlSaveAsNewTestSuiteLayout.setVerticalGroup(pnlSaveAsNewTestSuiteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(GroupLayout.Alignment.TRAILING, pnlSaveAsNewTestSuiteLayout.createSequentialGroup()
@@ -494,7 +487,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                         LocalORJRadioButton.setForeground(new Color(255, 255, 255));
                         LocalORJRadioButton.setSelected(true);
                         LocalORJRadioButton.setText("Local");
-                        LocalORJRadioButton.setToolTipText("select to open currrent test suite default associated object repository");
+                        LocalORJRadioButton.setToolTipText("select to open default associated object repository");
                         LocalORJRadioButton.addMouseListener(new MouseAdapter() {
                             public void mouseEntered(MouseEvent evt) {
                                 LocalORJRadioButtonMouseEntered(evt);
@@ -534,8 +527,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                         AddStepDown.setFont(new Font("Consolas", 1, 14)); // NOI18N
                         AddStepDown.setForeground(new Color(255, 255, 255));
                         AddStepDown.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addStepUpDown.png"));
-                            AddStepDown.setText("Add Test Step Down");
-                            AddStepDown.setToolTipText("will add a new test step below the selected step");
+                            AddStepDown.setToolTipText("add test step below the selected step");
                             AddStepDown.setBorder(null);
                             AddStepDown.setBorderPainted(false);
                             AddStepDown.setContentAreaFilled(false);
@@ -575,8 +567,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                             SaveSuite.setFont(new Font("Consolas", 1, 14)); // NOI18N
                             SaveSuite.setForeground(new Color(255, 255, 255));
                             SaveSuite.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/saveTestSuite.png"));
-                                SaveSuite.setText("Save Suite");
-                                SaveSuite.setToolTipText("will save the updated test suite");
+                                SaveSuite.setToolTipText("save test suite");
                                 SaveSuite.setBorder(null);
                                 SaveSuite.setBorderPainted(false);
                                 SaveSuite.setContentAreaFilled(false);
@@ -616,8 +607,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                                 AddNewStep.setFont(new Font("Consolas", 1, 14)); // NOI18N
                                 AddNewStep.setForeground(new Color(255, 255, 255));
                                 AddNewStep.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addTestStep_Element.png"));
-                                    AddNewStep.setText("Add New Test Step");
-                                    AddNewStep.setToolTipText("will add a new test step at the bottom");
+                                    AddNewStep.setToolTipText("add test step");
                                     AddNewStep.setBorder(null);
                                     AddNewStep.setBorderPainted(false);
                                     AddNewStep.setContentAreaFilled(false);
@@ -657,8 +647,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                                     OpenObjectRepository.setFont(new Font("Consolas", 1, 14)); // NOI18N
                                     OpenObjectRepository.setForeground(new Color(255, 255, 255));
                                     OpenObjectRepository.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/editObjectRepository.png"));
-                                        OpenObjectRepository.setText("Edit OR");
-                                        OpenObjectRepository.setToolTipText("will open the requested local or global object repositroy");
+                                        OpenObjectRepository.setToolTipText("open requested object repositroy");
                                         OpenObjectRepository.setBorder(null);
                                         OpenObjectRepository.setBorderPainted(false);
                                         OpenObjectRepository.setContentAreaFilled(false);
@@ -687,7 +676,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                                         GroupLayout pnlOpenORLayout = new GroupLayout(pnlOpenOR);
                                         pnlOpenOR.setLayout(pnlOpenORLayout);
                                         pnlOpenORLayout.setHorizontalGroup(pnlOpenORLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                            .addComponent(OpenObjectRepository, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(OpenObjectRepository, GroupLayout.PREFERRED_SIZE, 35, Short.MAX_VALUE)
                                         );
                                         pnlOpenORLayout.setVerticalGroup(pnlOpenORLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addGroup(GroupLayout.Alignment.TRAILING, pnlOpenORLayout.createSequentialGroup()
@@ -698,45 +687,40 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                                         GroupLayout pnlMenuBarLayout = new GroupLayout(pnlMenuBar);
                                         pnlMenuBar.setLayout(pnlMenuBarLayout);
                                         pnlMenuBarLayout.setHorizontalGroup(pnlMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                            .addGroup(pnlMenuBarLayout.createSequentialGroup()
-                                                .addComponent(LocalORJRadioButton, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(GlobalORJRadioButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                            .addGroup(pnlMenuBarLayout.createSequentialGroup()
-                                                .addGroup(pnlMenuBarLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                                                    .addComponent(AssociateObjORJCheckBox, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(pnlOpenTestSuite, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(pnlAddTestStepUp, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(pnlAddTestStepDown, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(pnlDeleteTestStep, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(pnlSaveTestSuite, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(pnlAddNewTestStep, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(pnlSaveAsNewTestSuite, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(pnlOpenOR, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(0, 0, Short.MAX_VALUE))
+                                            .addComponent(AssociateObjORJCheckBox)
+                                            .addGroup(pnlMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(pnlSaveAsNewTestSuite, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pnlSaveTestSuite, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pnlAddNewTestStep, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pnlDeleteTestStep, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pnlAddTestStepDown, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pnlAddTestStepUp, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pnlOpenTestSuite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(LocalORJRadioButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(GlobalORJRadioButton)
+                                            .addComponent(pnlOpenOR, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                         );
                                         pnlMenuBarLayout.setVerticalGroup(pnlMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addGroup(pnlMenuBarLayout.createSequentialGroup()
-                                                .addGap(27, 27, 27)
-                                                .addComponent(AssociateObjORJCheckBox, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(AssociateObjORJCheckBox, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(pnlOpenTestSuite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(pnlAddTestStepUp, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(pnlAddTestStepDown, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(13, 13, 13)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(pnlDeleteTestStep, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(pnlAddNewTestStep, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(11, 11, 11)
+                                                .addGap(5, 5, 5)
                                                 .addComponent(pnlSaveTestSuite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(pnlSaveAsNewTestSuite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
-                                                .addGroup(pnlMenuBarLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                    .addComponent(GlobalORJRadioButton)
-                                                    .addComponent(LocalORJRadioButton))
+                                                .addComponent(LocalORJRadioButton)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(GlobalORJRadioButton)
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(pnlOpenOR, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -748,7 +732,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                                         jDesktopPane1.setLayout(jDesktopPane1Layout);
                                         jDesktopPane1Layout.setHorizontalGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                                                .addGap(1, 1, 1)
+                                                .addGap(0, 0, 0)
                                                 .addComponent(pnlMenuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(1, 1, 1))
                                         );
@@ -778,7 +762,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
 
                                         getAccessibleContext().setAccessibleParent(this);
 
-                                        setSize(new Dimension(893, 505));
+                                        setSize(new Dimension(898, 505));
                                         setLocationRelativeTo(null);
                                     }// </editor-fold>//GEN-END:initComponents
 
@@ -1959,6 +1943,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                 + "ROBOT_SCREENSHOT,"
                 + "MOUSE_HOVER,"
                 + "UPLOAD_FILE,"
+                + "SELECT_SAL_RANGE,"
                 + "USER_DEFINE,"
                 + ":START,:GET,:IF,:THEN,:STOP,";
               

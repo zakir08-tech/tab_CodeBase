@@ -26,6 +26,7 @@ import com.api.automation.util.SaveResponseAsFile;
 import com.api.automation.util.UpdateJsonPayload;
 import com.api.automation.util.VerifyTagValueFromJsonResponse;
 import com.api.automation.util.VerifyValueAPICommon;
+import com.api.automation.util.common;
 import com.automation.bolt.gui.ExecuteApiTest;
 
 public class API_TestRunner extends loadAPITestRunner {
@@ -55,6 +56,8 @@ public class API_TestRunner extends loadAPITestRunner {
     static LinkedHashMap<Object, Object> payloadTagElement = new LinkedHashMap<> ();
     static LinkedHashMap<Object, Object> responseDbValidation = new LinkedHashMap<> ();
     static LinkedHashMap<Object, Object> verifyResponseTagElement = new LinkedHashMap<> ();
+    //static LinkedHashMap<Object, Object> getResponseElementVal = new LinkedHashMap<> ();
+    static LinkedHashMap<Object, Object> getResponseElementValue = new LinkedHashMap<> ();
 
     public static LinkedHashMap<Object, HashMap<Object, List<Object>>> verifyJsonResponseAttributes = new LinkedHashMap<> ();
     public static LinkedHashMap<Object, HashMap<Object, List<Object>>> modifyJsonResponseAttributes = new LinkedHashMap<> ();
@@ -138,7 +141,20 @@ public class API_TestRunner extends loadAPITestRunner {
 
             testOut_Put = ApiTestRunnerMap.get(getApiTestRunId);
             testOut_Put.put(Constants.Run_API_Request_URL, getApiTestRequestUrl);
+            
             requestHeaders = loadAPITestRunner.saveHeaderMap.get(getApiTestRunId); //get Headers
+            requestHeaders.forEach((key,value) -> {
+				if(value.toString().startsWith("{") && value.toString().endsWith("}")) {
+					value = value.toString().replaceAll("[{]", "");
+					value = value.toString().replaceAll("[}]", "");
+					
+					Object envVal = common.readEnvVarFromJson(value.toString());
+					
+					requestHeaders.put(key, envVal);
+				}
+			});
+            
+            
             payloadTagElement = loadAPITestRunner.saveTagElmMap.get(getApiTestRunId); //get payload tag/element
             getSSLCertificationFlag = testRunnerEntry.getValue().get("SSL Verification"); //get ssl certification flag
 
@@ -162,6 +178,7 @@ public class API_TestRunner extends loadAPITestRunner {
             	getBasicAuthFlag ="";}
 
             verifyResponseTagElement = loadAPITestRunner.saveVerifyRespTagElmMap.get(getApiTestRunId); //get payload tag/element
+            getResponseElementValue = loadAPITestRunner.saveJsonElm_val.get(getApiTestRunId);
             //responseDbValidation = loadAPITestRunner.saveDbValidationMap.get(getApiTestRunId); //get database validation items
 
             System.out.println("\nExecuting Test Run: " + getApiTestRunId);
@@ -307,6 +324,9 @@ public class API_TestRunner extends loadAPITestRunner {
                 if (requestPayload != null) {
                 	testOut_Put.put("Payload", requestPayload);
                 }
+                
+                if(getResponseElementValue !=null)
+                	common.getJsonElementValue(getApiTestRunId, getResponseElementValue, jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR));
             }
 
             // save the json response to the hash-map
@@ -315,7 +335,7 @@ public class API_TestRunner extends loadAPITestRunner {
             		try {
             			saveResponse.savingResponseToFile(jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR), getApiTestRequest, String.valueOf(getApiTestRunId));
             			if (verifyResponseTagElement !=null) {
-            				VerifyTagValueFromJsonResponse.VerifyJsonTagElement(getApiTestRunId, verifyResponseTagElement, jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR));
+            				common.VerifyJsonTagElement(getApiTestRunId, verifyResponseTagElement, jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR));
             			}
                     } catch (IOException exp) {
                     	exp.printStackTrace();

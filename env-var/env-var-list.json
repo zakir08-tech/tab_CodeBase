@@ -1,7 +1,4 @@
-[
-  {
-    "base_url": "//https:servicenow:1819",
-    "kong_user_name": "kong.user.name",
-    "safeName": ""
-  }
-]
+{
+  "model_price": "1849",
+  "user_id": "ff808181932badb601950fb2c0b839a9"
+}

@@ -68,6 +68,7 @@ public class EditAPITest extends javax.swing.JFrame {
     //public static JTextField elmXpathTxt =new JTextField();
     
     public static JTextField testIdTxt =new JTextField();
+    public static JTextField testEnvVarTxt =new JTextField();
     public static JTextField etestURLTxt =new JTextField();
     public static JTextField testExpectedStatusTxt =new JTextField();
     public static JTextField testPayloadTxt =new JTextField();
@@ -87,6 +88,7 @@ public class EditAPITest extends javax.swing.JFrame {
     //public static TableColumn elmXpathCol =null;
     
     public static TableColumn testIdCol =null;
+    public static TableColumn testEnvVarCol =null;
     public static TableColumn etestURLCol =null;
     public static TableColumn testExpectedStatusCol =null;
     public static TableColumn testApiTypeCol =null;
@@ -126,6 +128,7 @@ public class EditAPITest extends javax.swing.JFrame {
     public static FileInputStream excelFIS;
     public static File excelFile;
     private XSSFSheet excelSheetTestFlow;
+    public AddEnvVariableList envVarListFrame = new AddEnvVariableList();
     
     /**
      * Creates new form CreateTestSuite
@@ -138,6 +141,9 @@ public class EditAPITest extends javax.swing.JFrame {
 
         testIdCol =tableEditTestFlow.getColumnModel().getColumn(0);
         testIdCol.setCellEditor(new DefaultCellEditor(testIdTxt));
+        
+        testEnvVarCol =tableEditTestFlow.getColumnModel().getColumn(12);
+        testEnvVarCol.setCellEditor(new DefaultCellEditor(testEnvVarTxt));
         
         etestURLCol =tableEditTestFlow.getColumnModel().getColumn(2);
         etestURLCol.setCellEditor(new DefaultCellEditor(etestURLTxt));
@@ -175,6 +181,12 @@ public class EditAPITest extends javax.swing.JFrame {
         testIdTxt.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
                 common.testIdTxtKeyTyped(evt, testIdTxt);
+            }
+        });
+        
+        testEnvVarTxt.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent evt) {
+                common.testEnvVarTxtKeyTyped(evt, testEnvVarTxt);
             }
         });
         
@@ -260,6 +272,7 @@ public class EditAPITest extends javax.swing.JFrame {
         bttnAddStepUp = new javax.swing.JButton();
         bttnAddStepDown = new javax.swing.JButton();
         bttnSaveSuite = new javax.swing.JButton();
+        bttnEnvVarList = new javax.swing.JButton();
         lblInvalidBody = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -446,7 +459,15 @@ public class EditAPITest extends javax.swing.JFrame {
             new String [] {
                 "Test ID", "Request", "URL", "Headers (key)", "Headers (value)", "Params (key)", "Params (value)", "Payload", "Payload Type", "Modify Payload (key)", "Modify Payload (value)", "Response Tag Name (value)", "Capture Tag Value (env var)", "Authorization", "", "", "SSL Validation", "Expected Status", "Verify Payload (key)", "Verify Payload (value)", "Test Description"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tableEditTestFlow.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tableEditTestFlow.setName("tableEditTestFlow"); // NOI18N
         tableEditTestFlow.setRowHeight(30);
@@ -664,157 +685,194 @@ public class EditAPITest extends javax.swing.JFrame {
                                     }
                                 });
 
-                                dPaneMenu.setLayer(bttnLoadApiTest, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                dPaneMenu.setLayer(bttnAddNewTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                dPaneMenu.setLayer(bttnDeleteTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                dPaneMenu.setLayer(bttnAddStepUp, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                dPaneMenu.setLayer(bttnAddStepDown, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                dPaneMenu.setLayer(bttnSaveSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                bttnEnvVarList.setBackground(new java.awt.Color(0, 0, 0));
+                                bttnEnvVarList.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+                                bttnEnvVarList.setForeground(new java.awt.Color(255, 255, 255));
+                                bttnEnvVarList.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addEnvVariable.png"));
+                                    bttnEnvVarList.setToolTipText("will save the test suite");
+                                    bttnEnvVarList.setBorder(null);
+                                    bttnEnvVarList.setBorderPainted(false);
+                                    bttnEnvVarList.setContentAreaFilled(false);
+                                    bttnEnvVarList.setFocusPainted(false);
+                                    bttnEnvVarList.setFocusable(false);
+                                    bttnEnvVarList.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                                    bttnEnvVarList.setOpaque(true);
+                                    bttnEnvVarList.setRequestFocusEnabled(false);
+                                    bttnEnvVarList.setRolloverEnabled(false);
+                                    bttnEnvVarList.addMouseListener(new java.awt.event.MouseAdapter() {
+                                        public void mouseEntered(java.awt.event.MouseEvent evt) {
+                                            bttnEnvVarListMouseEntered(evt);
+                                        }
+                                        public void mouseExited(java.awt.event.MouseEvent evt) {
+                                            bttnEnvVarListMouseExited(evt);
+                                        }
+                                        public void mouseReleased(java.awt.event.MouseEvent evt) {
+                                            bttnEnvVarListMouseReleased(evt);
+                                        }
+                                    });
+                                    bttnEnvVarList.addActionListener(new java.awt.event.ActionListener() {
+                                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                            bttnEnvVarListActionPerformed(evt);
+                                        }
+                                    });
 
-                                javax.swing.GroupLayout dPaneMenuLayout = new javax.swing.GroupLayout(dPaneMenu);
-                                dPaneMenu.setLayout(dPaneMenuLayout);
-                                dPaneMenuLayout.setHorizontalGroup(
-                                    dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(dPaneMenuLayout.createSequentialGroup()
-                                        .addGroup(dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(bttnLoadApiTest, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(bttnSaveSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(bttnAddStepDown, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(bttnAddStepUp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, 0))
-                                );
-                                dPaneMenuLayout.setVerticalGroup(
-                                    dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(dPaneMenuLayout.createSequentialGroup()
-                                        .addGap(28, 28, 28)
-                                        .addComponent(bttnLoadApiTest, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(bttnAddStepUp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(bttnAddStepDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(bttnSaveSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                );
+                                    dPaneMenu.setLayer(bttnLoadApiTest, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                    dPaneMenu.setLayer(bttnAddNewTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                    dPaneMenu.setLayer(bttnDeleteTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                    dPaneMenu.setLayer(bttnAddStepUp, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                    dPaneMenu.setLayer(bttnAddStepDown, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                    dPaneMenu.setLayer(bttnSaveSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                    dPaneMenu.setLayer(bttnEnvVarList, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-                                lblInvalidBody.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-                                lblInvalidBody.setForeground(new java.awt.Color(255, 51, 51));
+                                    javax.swing.GroupLayout dPaneMenuLayout = new javax.swing.GroupLayout(dPaneMenu);
+                                    dPaneMenu.setLayout(dPaneMenuLayout);
+                                    dPaneMenuLayout.setHorizontalGroup(
+                                        dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(dPaneMenuLayout.createSequentialGroup()
+                                            .addGroup(dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(bttnLoadApiTest, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(bttnSaveSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(bttnAddStepDown, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(bttnAddStepUp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dPaneMenuLayout.createSequentialGroup()
+                                                    .addGap(0, 0, Short.MAX_VALUE)
+                                                    .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(bttnEnvVarList, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addGap(0, 0, 0))
+                                    );
+                                    dPaneMenuLayout.setVerticalGroup(
+                                        dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(dPaneMenuLayout.createSequentialGroup()
+                                            .addGap(28, 28, 28)
+                                            .addComponent(bttnLoadApiTest, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(bttnAddStepUp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(bttnAddStepDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(bttnSaveSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(bttnEnvVarList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    );
 
-                                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-                                getContentPane().setLayout(layout);
-                                layout.setHorizontalGroup(
-                                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(1, 1, 1)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(lblHeaders)
-                                                    .addComponent(scrlPnlHeaders, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(4, 4, 4)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(lblAuthorization))
-                                                    .addComponent(lblParams)
-                                                    .addComponent(scrlPnlAuthorization)
-                                                    .addComponent(scrlPnlParams))
-                                                .addGap(4, 4, 4)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(scrlPnlPayload)
-                                                        .addGap(4, 4, 4))
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(lblPayload)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(lblInvalidBody, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(scrollModifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(lblModifyPayload))
-                                                .addGap(4, 4, 4)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(lblVerifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(scrollVerifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(txtRequestType, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(lblRequest))
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(txtExpStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(lblURL, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(0, 1003, Short.MAX_VALUE))
-                                                            .addComponent(txtAPIurl)))
-                                                    .addComponent(pnlEditApiTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(1, 1, 1)
-                                                .addComponent(dPaneMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(1, 1, 1))
-                                );
-                                layout.setVerticalGroup(
-                                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(pnlEditApiTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(dPaneMenu))
-                                        .addGap(1, 1, 1)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblURL)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(lblStatus)
-                                                .addComponent(lblRequest)))
-                                        .addGap(1, 1, 1)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(txtAPIurl, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtExpStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtRequestType, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(4, 4, 4)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblHeaders, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, 0)
-                                                .addComponent(scrlPnlHeaders, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                    .addComponent(lblPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(lblInvalidBody, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(0, 0, 0)
-                                                .addComponent(scrlPnlPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblParams, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, 0)
-                                                .addComponent(scrlPnlParams, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(2, 2, 2)
-                                                .addComponent(lblAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, 0)
-                                                .addComponent(scrlPnlAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(lblModifyPayload, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(lblVerifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(scrollVerifyPayload, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(scrollModifyPayload, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))))
-                                        .addGap(1, 1, 1))
-                                );
+                                    lblInvalidBody.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+                                    lblInvalidBody.setForeground(new java.awt.Color(255, 51, 51));
 
-                                getAccessibleContext().setAccessibleParent(this);
+                                    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                                    getContentPane().setLayout(layout);
+                                    layout.setHorizontalGroup(
+                                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addGap(1, 1, 1)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(lblHeaders)
+                                                        .addComponent(scrlPnlHeaders, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGap(4, 4, 4)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(lblAuthorization))
+                                                        .addComponent(lblParams)
+                                                        .addComponent(scrlPnlAuthorization)
+                                                        .addComponent(scrlPnlParams))
+                                                    .addGap(4, 4, 4)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                            .addComponent(scrlPnlPayload)
+                                                            .addGap(4, 4, 4))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                            .addComponent(lblPayload)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                            .addComponent(lblInvalidBody, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(scrollModifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(lblModifyPayload))
+                                                    .addGap(4, 4, 4)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(lblVerifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(scrollVerifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addComponent(txtRequestType, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(lblRequest))
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addComponent(txtExpStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addGroup(layout.createSequentialGroup()
+                                                                    .addComponent(lblURL, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                    .addGap(0, 1003, Short.MAX_VALUE))
+                                                                .addComponent(txtAPIurl)))
+                                                        .addComponent(pnlEditApiTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                    .addGap(1, 1, 1)
+                                                    .addComponent(dPaneMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGap(1, 1, 1))
+                                    );
+                                    layout.setVerticalGroup(
+                                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(pnlEditApiTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(dPaneMenu))
+                                            .addGap(1, 1, 1)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(lblURL)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                    .addComponent(lblStatus)
+                                                    .addComponent(lblRequest)))
+                                            .addGap(1, 1, 1)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(txtAPIurl, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(txtExpStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(txtRequestType, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(4, 4, 4)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(lblHeaders, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(0, 0, 0)
+                                                    .addComponent(scrlPnlHeaders, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(lblPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(lblInvalidBody, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGap(0, 0, 0)
+                                                    .addComponent(scrlPnlPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(lblParams, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(0, 0, 0)
+                                                    .addComponent(scrlPnlParams, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(2, 2, 2)
+                                                    .addComponent(lblAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(0, 0, 0)
+                                                    .addComponent(scrlPnlAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(lblModifyPayload, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(lblVerifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(scrollVerifyPayload, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(scrollModifyPayload, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))))
+                                            .addGap(1, 1, 1))
+                                    );
 
-                                setSize(new java.awt.Dimension(1246, 803));
-                                setLocationRelativeTo(null);
-                            }// </editor-fold>//GEN-END:initComponents
+                                    getAccessibleContext().setAccessibleParent(this);
+
+                                    setSize(new java.awt.Dimension(1246, 803));
+                                    setLocationRelativeTo(null);
+                                }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
        tableCellRendererAPI renderer = new tableCellRendererAPI();
@@ -1426,6 +1484,12 @@ public class EditAPITest extends javax.swing.JFrame {
         
         if(duplicateTestId ==false){
             switch (gerCurrCol) {
+                case 12:
+                    tableEditTestFlow.editCellAt(getCurRow, 12);
+                    editableRow =tableEditTestFlow.getEditingRow();
+                    testEnvVarTxt.requestFocusInWindow();
+                    testEnvVarTxt.setCaretPosition(0);
+                    break;
                 case 0:
                     tableEditTestFlow.editCellAt(getCurRow, 0);
                     editableRow =tableEditTestFlow.getEditingRow();
@@ -1566,6 +1630,23 @@ public class EditAPITest extends javax.swing.JFrame {
         //if(ExecuteApiTest.tableExecuteRegSuite.isShowing())
             ExecuteApiTest.bttnRefreshTestRun.doClick();
     }//GEN-LAST:event_bttnSaveSuiteMouseReleased
+
+    private void bttnEnvVarListMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnEnvVarListMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bttnEnvVarListMouseEntered
+
+    private void bttnEnvVarListMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnEnvVarListMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bttnEnvVarListMouseExited
+
+    private void bttnEnvVarListMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnEnvVarListMouseReleased
+        envVarListFrame.setLocationRelativeTo(null);
+        envVarListFrame.setVisible(true);
+    }//GEN-LAST:event_bttnEnvVarListMouseReleased
+
+    private void bttnEnvVarListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnEnvVarListActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bttnEnvVarListActionPerformed
     
     public static void updateAPIAttributeData(){
         getCurrRowBeforeKeyPressed =tableEditTestFlow.getSelectedRow();
@@ -1990,6 +2071,7 @@ public class EditAPITest extends javax.swing.JFrame {
     public static javax.swing.JButton bttnAddStepDown;
     public static javax.swing.JButton bttnAddStepUp;
     public javax.swing.JButton bttnDeleteTestStep;
+    public static javax.swing.JButton bttnEnvVarList;
     public static javax.swing.JButton bttnLoadApiTest;
     public static javax.swing.JButton bttnSaveSuite;
     public javax.swing.JDesktopPane dPaneMenu;

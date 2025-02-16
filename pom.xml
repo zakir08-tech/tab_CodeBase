@@ -19,7 +19,6 @@
   </properties>
 
   <dependencies>
-      <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-api -->
      <!-- https://mvnrepository.com/artifact/ru.yandex.qatools.ashot/ashot -->
      <dependency>
          <groupId>ru.yandex.qatools.ashot</groupId>

@@ -172,7 +172,6 @@ public class CreateTestSuite extends javax.swing.JFrame {
         lblTestSuite = new javax.swing.JLabel();
         lblObjectRepository = new javax.swing.JLabel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
-        pnlCreateSuiteMenu = new javax.swing.JPanel();
         bttnAddTestElement = new javax.swing.JButton();
         bttnAddNewTestStep = new javax.swing.JButton();
         bttnDeleteTestElm = new javax.swing.JButton();
@@ -288,7 +287,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
             pnlCreateTestSuiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCreateTestSuiteLayout.createSequentialGroup()
                 .addGroup(pnlCreateTestSuiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(scrollPaneTestFlow, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
+                    .addComponent(scrollPaneTestFlow, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 967, Short.MAX_VALUE)
                     .addComponent(scrollPaneobjectRepository, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(1, 1, 1))
             .addComponent(lblTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -307,15 +306,11 @@ public class CreateTestSuite extends javax.swing.JFrame {
                 .addGap(1, 1, 1))
         );
 
-        pnlCreateSuiteMenu.setBackground(new java.awt.Color(0, 153, 153));
-        pnlCreateSuiteMenu.setOpaque(false);
-
         bttnAddTestElement.setBackground(new java.awt.Color(0, 0, 0));
         bttnAddTestElement.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         bttnAddTestElement.setForeground(new java.awt.Color(255, 255, 255));
         bttnAddTestElement.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addTestStep_Element.png"));
-            bttnAddTestElement.setText("Add Test Element");
-            bttnAddTestElement.setToolTipText("will a new test element");
+            bttnAddTestElement.setToolTipText("add test element");
             bttnAddTestElement.setActionCommand("OpenRegressionSuite");
             bttnAddTestElement.setBorder(null);
             bttnAddTestElement.setBorderPainted(false);
@@ -342,13 +337,13 @@ public class CreateTestSuite extends javax.swing.JFrame {
             bttnAddNewTestStep.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
             bttnAddNewTestStep.setForeground(new java.awt.Color(255, 255, 255));
             bttnAddNewTestStep.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addTestStep_Element.png"));
-                bttnAddNewTestStep.setText("Add New Test Step");
-                bttnAddNewTestStep.setToolTipText("will add a blank test step");
+                bttnAddNewTestStep.setToolTipText("add test step");
                 bttnAddNewTestStep.setActionCommand("OpenRegressionSuite");
                 bttnAddNewTestStep.setBorder(null);
                 bttnAddNewTestStep.setBorderPainted(false);
                 bttnAddNewTestStep.setContentAreaFilled(false);
                 bttnAddNewTestStep.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                bttnAddNewTestStep.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
                 bttnAddNewTestStep.setOpaque(true);
                 bttnAddNewTestStep.setRequestFocusEnabled(false);
                 bttnAddNewTestStep.setRolloverEnabled(false);
@@ -370,8 +365,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
                 bttnDeleteTestElm.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
                 bttnDeleteTestElm.setForeground(new java.awt.Color(255, 255, 255));
                 bttnDeleteTestElm.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/deleteTestStep_Element.png"));
-                    bttnDeleteTestElm.setText("Delete Test Element");
-                    bttnDeleteTestElm.setToolTipText("will delete the selected test element");
+                    bttnDeleteTestElm.setToolTipText("delete test element");
                     bttnDeleteTestElm.setActionCommand("OpenRegressionSuite");
                     bttnDeleteTestElm.setBorder(null);
                     bttnDeleteTestElm.setBorderPainted(false);
@@ -398,8 +392,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
                     bttnDeleteTestStep.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
                     bttnDeleteTestStep.setForeground(new java.awt.Color(255, 255, 255));
                     bttnDeleteTestStep.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/deleteTestStep_Element.png"));
-                        bttnDeleteTestStep.setText("Delete Test Step");
-                        bttnDeleteTestStep.setToolTipText("will delete the selected test step");
+                        bttnDeleteTestStep.setToolTipText("delete test step");
                         bttnDeleteTestStep.setActionCommand("OpenRegressionSuite");
                         bttnDeleteTestStep.setBorder(null);
                         bttnDeleteTestStep.setBorderPainted(false);
@@ -426,8 +419,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
                         bttnAddStepUp.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
                         bttnAddStepUp.setForeground(new java.awt.Color(255, 255, 255));
                         bttnAddStepUp.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addTestStepUp.png"));
-                            bttnAddStepUp.setText("Add Test Step Up");
-                            bttnAddStepUp.setToolTipText("will add a new test step above the selected step");
+                            bttnAddStepUp.setToolTipText("add test step above the selected step");
                             bttnAddStepUp.setActionCommand("AddNewStep");
                             bttnAddStepUp.setBorder(null);
                             bttnAddStepUp.setBorderPainted(false);
@@ -457,8 +449,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
                             bttnAddStepDown.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
                             bttnAddStepDown.setForeground(new java.awt.Color(255, 255, 255));
                             bttnAddStepDown.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addStepUpDown.png"));
-                                bttnAddStepDown.setText("Add Test Step Down");
-                                bttnAddStepDown.setToolTipText("will add a new test step below the selected step");
+                                bttnAddStepDown.setToolTipText("add test step below the selected step");
                                 bttnAddStepDown.setBorder(null);
                                 bttnAddStepDown.setBorderPainted(false);
                                 bttnAddStepDown.setContentAreaFilled(false);
@@ -486,8 +477,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
                                 bttnSaveSuite.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
                                 bttnSaveSuite.setForeground(new java.awt.Color(255, 255, 255));
                                 bttnSaveSuite.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/saveTestSuite.png"));
-                                    bttnSaveSuite.setText("Save Test Suite");
-                                    bttnSaveSuite.setToolTipText("will save the test suite");
+                                    bttnSaveSuite.setToolTipText("save test suite");
                                     bttnSaveSuite.setBorder(null);
                                     bttnSaveSuite.setBorderPainted(false);
                                     bttnSaveSuite.setContentAreaFilled(false);
@@ -515,8 +505,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
                                     bttnAddNewTestSuite.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
                                     bttnAddNewTestSuite.setForeground(new java.awt.Color(255, 255, 255));
                                     bttnAddNewTestSuite.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addUploadTestSuite.png"));
-                                        bttnAddNewTestSuite.setText("Add New Test Suite");
-                                        bttnAddNewTestSuite.setToolTipText("will add a blank test suite");
+                                        bttnAddNewTestSuite.setToolTipText("create new test suite");
                                         bttnAddNewTestSuite.setBorder(null);
                                         bttnAddNewTestSuite.setBorderPainted(false);
                                         bttnAddNewTestSuite.setContentAreaFilled(false);
@@ -540,42 +529,14 @@ public class CreateTestSuite extends javax.swing.JFrame {
                                             }
                                         });
 
-                                        javax.swing.GroupLayout pnlCreateSuiteMenuLayout = new javax.swing.GroupLayout(pnlCreateSuiteMenu);
-                                        pnlCreateSuiteMenu.setLayout(pnlCreateSuiteMenuLayout);
-                                        pnlCreateSuiteMenuLayout.setHorizontalGroup(
-                                            pnlCreateSuiteMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(bttnAddTestElement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(bttnDeleteTestElm, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
-                                            .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(bttnAddStepUp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(bttnAddStepDown, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(bttnSaveSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        );
-                                        pnlCreateSuiteMenuLayout.setVerticalGroup(
-                                            pnlCreateSuiteMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCreateSuiteMenuLayout.createSequentialGroup()
-                                                .addGap(19, 19, 19)
-                                                .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(bttnAddStepUp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(bttnAddStepDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(bttnSaveSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(bttnAddTestElement, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(bttnDeleteTestElm, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(104, 104, 104))
-                                        );
-
-                                        jDesktopPane1.setLayer(pnlCreateSuiteMenu, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                        jDesktopPane1.setLayer(bttnAddTestElement, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                        jDesktopPane1.setLayer(bttnAddNewTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                        jDesktopPane1.setLayer(bttnDeleteTestElm, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                        jDesktopPane1.setLayer(bttnDeleteTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                        jDesktopPane1.setLayer(bttnAddStepUp, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                        jDesktopPane1.setLayer(bttnAddStepDown, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                        jDesktopPane1.setLayer(bttnSaveSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                        jDesktopPane1.setLayer(bttnAddNewTestSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
                                         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
                                         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -583,15 +544,37 @@ public class CreateTestSuite extends javax.swing.JFrame {
                                             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                                                 .addGap(1, 1, 1)
-                                                .addComponent(pnlCreateSuiteMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(bttnAddTestElement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(bttnDeleteTestElm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(bttnAddStepUp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(bttnAddStepDown, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(bttnSaveSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                                                 .addGap(1, 1, 1))
                                         );
                                         jDesktopPane1Layout.setVerticalGroup(
                                             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                                                .addGap(1, 1, 1)
-                                                .addComponent(pnlCreateSuiteMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addContainerGap())
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                                                .addGap(20, 20, 20)
+                                                .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(bttnAddStepUp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(bttnAddStepDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(bttnSaveSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
+                                                .addComponent(bttnAddTestElement, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(bttnDeleteTestElm, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(109, 109, 109))
                                         );
 
                                         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -600,9 +583,8 @@ public class CreateTestSuite extends javax.swing.JFrame {
                                             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGap(2, 2, 2)
-                                                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(1, 1, 1))
+                                                .addGap(0, 0, 0)
+                                                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         );
                                         layout.setVerticalGroup(
                                             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -614,7 +596,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
 
                                         getAccessibleContext().setAccessibleParent(this);
 
-                                        setSize(new java.awt.Dimension(1016, 554));
+                                        setSize(new java.awt.Dimension(1019, 554));
                                         setLocationRelativeTo(null);
                                     }// </editor-fold>//GEN-END:initComponents
 
@@ -1455,7 +1437,6 @@ public class CreateTestSuite extends javax.swing.JFrame {
     public javax.swing.JDesktopPane jDesktopPane1;
     public javax.swing.JLabel lblObjectRepository;
     public javax.swing.JLabel lblTestSuite;
-    public javax.swing.JPanel pnlCreateSuiteMenu;
     public javax.swing.JPanel pnlCreateTestSuite;
     public static javax.swing.JScrollPane scrollPaneTestFlow;
     public javax.swing.JScrollPane scrollPaneobjectRepository;
