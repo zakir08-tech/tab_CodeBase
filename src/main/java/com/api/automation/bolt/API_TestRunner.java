@@ -143,17 +143,19 @@ public class API_TestRunner extends loadAPITestRunner {
             testOut_Put.put(Constants.Run_API_Request_URL, getApiTestRequestUrl);
             
             requestHeaders = loadAPITestRunner.saveHeaderMap.get(getApiTestRunId); //get Headers
-            requestHeaders.forEach((key,value) -> {
-				if(value.toString().startsWith("{") && value.toString().endsWith("}")) {
-					value = value.toString().replaceAll("[{]", "");
-					value = value.toString().replaceAll("[}]", "");
-					
-					Object envVal = common.readEnvVarFromJson(value.toString());
-					
-					requestHeaders.put(key, envVal);
-				}
-			});
             
+            try {
+            	requestHeaders.forEach((key,value) -> {
+    				if(value.toString().startsWith("{") && value.toString().endsWith("}")) {
+    					value = value.toString().replaceAll("[{]", "");
+    					value = value.toString().replaceAll("[}]", "");
+    					
+    					Object envVal = common.readEnvVarFromJson(value.toString());
+    					
+    					requestHeaders.put(key, envVal);
+    				}
+    			});
+            }catch(NullPointerException exp) {}
             
             payloadTagElement = loadAPITestRunner.saveTagElmMap.get(getApiTestRunId); //get payload tag/element
             getSSLCertificationFlag = testRunnerEntry.getValue().get("SSL Verification"); //get ssl certification flag

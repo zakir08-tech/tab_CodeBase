@@ -98,13 +98,13 @@ public class loadAPITestRunner {
                         Object headers_key =getCellValue(testRunCurrentRow.getCell(3));
                         Object headers_value =getCellValue(testRunCurrentRow.getCell(4));
  
-                        if(headers_key !=null && !headers_key.toString().isEmpty() &&
-                                headers_value !=null && !headers_value.toString().isEmpty()){
-                            if(headers_value.toString().contains("|#")){
-                                String s = headers_value.toString().split("[|]")[0];
-                                String s1 = headers_value.toString().split("[|]")[1];
-                                headers_value = s +"_RefFnd_"+ s1;
-                            }
+                        if(headers_key !=null && !headers_key.toString().isEmpty() /*&&
+                                headers_value !=null && !headers_value.toString().isEmpty()*/){
+                            //if(headers_value.toString().contains("|#")){
+                                //String s = headers_value.toString().split("[|]")[0];
+                                //String s1 = headers_value.toString().split("[|]")[1];
+                                //headers_value = s +"_RefFnd_"+ s1;
+                            //}
                             readHeaderMap.put(headers_key, headers_value);
                             saveHeaderMap.put(getTestId, readHeaderMap);
                         }
@@ -150,14 +150,7 @@ public class loadAPITestRunner {
                         	readJsonElm_val.put(reponseElmName, captureRepElmVal);
                         	saveJsonElm_val.put(getTestId, readJsonElm_val);
                         }
-                        
-                        //testRunMap.put("ResponseTagName", reponseElmName);
-                        //apiTestSteps.put("response_tagname",reponseElmName);
-                        
-                        
-                        //testRunMap.put("CaptureTagValue", captureRepElmVal);
-                        //apiTestSteps.put("capture_tagvalue",captureRepElmVal);
-                        
+                           
                         Object authorization_type =getCellValue(testRunCurrentRow.getCell(13));
                         testRunMap.put("Authorization", authorization_type);
                         apiTestSteps.put("authorization_type",authorization_type);
@@ -211,14 +204,14 @@ public class loadAPITestRunner {
                         Object getHeadersKey =getCellValue(testRunCurrentRow.getCell(3));
                         Object getHeadersVal =getCellValue(testRunCurrentRow.getCell(4));
  
-                        if(getHeadersKey !=null && !getHeadersKey.toString().isEmpty() &&
-                                getHeadersVal !=null && !getHeadersVal.toString().isEmpty()){
+                        if(getHeadersKey !=null && !getHeadersKey.toString().isEmpty() /*&&
+                                getHeadersVal !=null && !getHeadersVal.toString().isEmpty()*/){
  
-                            if(getHeadersVal.toString().contains("|#")){
-                                String s = getHeadersVal.toString().split("[|]")[0];
-                                String s1 = getHeadersVal.toString().split("[|]")[1];
-                                getHeadersVal = s +"_RefFnd_"+ s1;
-                            }
+                            //if(getHeadersVal.toString().contains("|#")){
+                                //String s = getHeadersVal.toString().split("[|]")[0];
+                                //String s1 = getHeadersVal.toString().split("[|]")[1];
+                                //getHeadersVal = s +"_RefFnd_"+ s1;
+                            //}
  
                             readHeaderMap.put(getHeadersKey, getHeadersVal);
                             if(saveHeaderMap.get(getLastTestId) ==null)
