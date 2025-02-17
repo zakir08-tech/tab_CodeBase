@@ -693,6 +693,7 @@ public class EditAPITest extends javax.swing.JFrame {
                                     bttnEnvVarList.setBorder(null);
                                     bttnEnvVarList.setBorderPainted(false);
                                     bttnEnvVarList.setContentAreaFilled(false);
+                                    bttnEnvVarList.setEnabled(false);
                                     bttnEnvVarList.setFocusPainted(false);
                                     bttnEnvVarList.setFocusable(false);
                                     bttnEnvVarList.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);

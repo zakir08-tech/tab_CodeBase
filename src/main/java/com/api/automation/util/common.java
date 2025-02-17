@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -36,9 +37,14 @@ public class common {
 		try {
 			Reader reader = new FileReader(jsonFilePath);
 			JSONParser parser = new JSONParser();
+			
 	        JSONObject data = (JSONObject) parser.parse(reader);
+			//JSONArray data = (JSONArray) parser.parse(reader);
+	        
+	        //JSONObject x =(JSONObject) data.get(0);
 	        
 	        data.put(jsonElmName, jsonElmVal);
+	        
 	        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	        String json = gson.toJson(data);
 	        

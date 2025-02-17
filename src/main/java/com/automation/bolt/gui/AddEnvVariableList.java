@@ -42,7 +42,7 @@ import org.json.simple.JSONObject;
  */
 public class AddEnvVariableList extends javax.swing.JFrame {
         
-    public DefaultTableModel addEnvVariableTabModel = new DefaultTableModel();
+    public static DefaultTableModel addEnvVariableTabModel = new DefaultTableModel();
     
     public static TableColumn envVarNameCol =null;
     public static TableColumn envVarValueCol =null;
@@ -643,8 +643,28 @@ public class AddEnvVariableList extends javax.swing.JFrame {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         tableCellRendererAPIEnvVar renderer = new tableCellRendererAPIEnvVar();
         tableEnvVariable.setDefaultRenderer(Object.class, renderer);
+        
+        HashMap<Object, Object> jsonMap =common.uploadEnvVariableList();
+        
+        jsonMap.entrySet().stream().map(entry -> entry.getValue().toString().split("[,]")).forEachOrdered(getJsonTxt -> {
+            if(checkEnvVarlist(getJsonTxt[0].toString()) ==false){
+                addEnvVariableTabModel.addRow(getJsonTxt);
+            }
+        });
     }//GEN-LAST:event_formWindowActivated
 
+    public static boolean checkEnvVarlist(String envVarName){
+        boolean elmExist= false;
+        
+        for(int envElm=0; envElm<tableEnvVariable.getRowCount();envElm++){
+            if(envVarName.contentEquals(tableEnvVariable.getValueAt(envElm, 0).toString())){
+                elmExist =true;
+                break;
+            }
+        }
+        return elmExist;
+    }
+    
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         Image titleIcon = Toolkit.getDefaultToolkit().getImage(constants.userDir+"\\icons\\bolt.jpg");
         this.setIconImage(titleIcon);
@@ -652,10 +672,10 @@ public class AddEnvVariableList extends javax.swing.JFrame {
         tableEnvVariable.getColumnModel().getColumn(0).setMinWidth(130);
         fileSaved =false;
         
-        HashMap<Object, Object> jsonMap =common.uploadEnvVariableList();
+        /*HashMap<Object, Object> jsonMap =common.uploadEnvVariableList();
         jsonMap.entrySet().stream().map(entry -> entry.getValue().toString().split("[,]")).forEachOrdered(getJsonTxt -> {
             addEnvVariableTabModel.addRow(getJsonTxt);
-        });
+        });*/
         
          try{
             tableEnvVariable.setColumnSelectionInterval(0, 0);
@@ -709,7 +729,7 @@ public class AddEnvVariableList extends javax.swing.JFrame {
             try {
 	    	 
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                JsonElement jsonElement = JsonParser.parseString(array.toJSONString());
+                JsonElement jsonElement = JsonParser.parseString(array.toString().replace("[", "").replace("]", ""));
                 Object prettyJson = gson.toJson(jsonElement);
 	    	  
                 File directory = new File(String.valueOf("./env-var"));
@@ -735,7 +755,7 @@ public class AddEnvVariableList extends javax.swing.JFrame {
             FileWriter file;
             try {
                 file = new FileWriter("./env-var/env-var-list.json");
-                file.write(array.toJSONString());
+                file.write("{"+array.toJSONString().replace("[", "").replace("]", "")+"}");
                 file.close();
             } catch (IOException ex) {
                 Logger.getLogger(SSLCertificate.class.getName()).log(Level.SEVERE, null, ex);
