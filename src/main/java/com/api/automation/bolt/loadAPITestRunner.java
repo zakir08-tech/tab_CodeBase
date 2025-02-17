@@ -48,19 +48,19 @@ public class loadAPITestRunner {
     //public static void main(String[] args){
     public void loadApiTest(){
         APITestRun_FILE_PATH =runApiTest.testSuiteFilePath;
-        saveVerifyRespTagElmMap = new LinkedHashMap<> ();
+        saveVerifyRespTagElmMap = new LinkedHashMap<>();
         apiTestSteps = new LinkedHashMap<>();
         apiTestSuite = new LinkedHashMap<>();
-        readHeaderMap = new LinkedHashMap<> ();
-        saveHeaderMap = new LinkedHashMap<> ();
-        readJsonElm_val = new LinkedHashMap<> ();
-        saveJsonElm_val = new LinkedHashMap<> ();
-        getModifyPayloadMap = new LinkedHashMap<> ();
-        saveTagElmMap = new LinkedHashMap<> ();
-        getVerifyResponse = new LinkedHashMap<> ();
-        testRunMap = new LinkedHashMap<> ();
-        saveTestRunMap = new LinkedHashMap<> ();
-        ApiTestRunnerMap = new LinkedHashMap<> ();
+        readHeaderMap = new LinkedHashMap<>();
+        saveHeaderMap = new LinkedHashMap<>();
+        readJsonElm_val = new LinkedHashMap<>();
+        saveJsonElm_val = new LinkedHashMap<>();
+        getModifyPayloadMap = new LinkedHashMap<>();
+        saveTagElmMap = new LinkedHashMap<>();
+        getVerifyResponse = new LinkedHashMap<>();
+        testRunMap = new LinkedHashMap<>();
+        saveTestRunMap = new LinkedHashMap<>();
+        ApiTestRunnerMap = new LinkedHashMap<>();
         
         try {
             testRunnerFile = new FileInputStream(new File(APITestRun_FILE_PATH));
@@ -77,8 +77,8 @@ public class loadAPITestRunner {
                     if(getTestId !=null && !getTestId.toString().isEmpty()){
                         getLastTestId =getTestId;
                         apiTestSteps =new LinkedHashMap<>();
-                        readHeaderMap =new LinkedHashMap<> ();
-                        readJsonElm_val = new LinkedHashMap<> ();
+                        readHeaderMap =new LinkedHashMap<>();
+                        readJsonElm_val = new LinkedHashMap<>();
                         getModifyPayloadMap =new LinkedHashMap<>();
                         getVerifyResponse =new LinkedHashMap<>();
                         testRunMap =new LinkedHashMap<>();

@@ -135,23 +135,28 @@ public class API_TestRunner extends loadAPITestRunner {
             getApiTestRequestUrl =updateApiUrlWithJsonResponseElementReference(getApiTestRequestUrl);
             
             getExpResponseCode = testRunnerEntry.getValue().get("Expected Status"); //get response code
+            
             getAuth1 =testRunnerEntry.getValue().get("AuthVal1"); //get auth value 1
+            if(getAuth1.toString().startsWith("{") && getAuth1.toString().endsWith("}")) {
+            	getAuth1 = getAuth1.toString().replaceAll("[{]", "").replaceAll("}", "");
+            	getAuth1 = common.readEnvVarFromJson((String) getAuth1);
+            }
+            
             getAuth2 =testRunnerEntry.getValue().get("AuthVal2"); //get auth value 2
-
-
+            if(getAuth2.toString().startsWith("{") && getAuth2.toString().endsWith("}")) {
+            	getAuth2 = getAuth2.toString().replaceAll("[{]", "").replaceAll("}", "");
+            	getAuth2 = common.readEnvVarFromJson((String) getAuth2);
+            }
+            
             testOut_Put = ApiTestRunnerMap.get(getApiTestRunId);
             testOut_Put.put(Constants.Run_API_Request_URL, getApiTestRequestUrl);
             
             requestHeaders = loadAPITestRunner.saveHeaderMap.get(getApiTestRunId); //get Headers
-            
             try {
             	requestHeaders.forEach((key,value) -> {
     				if(value.toString().startsWith("{") && value.toString().endsWith("}")) {
-    					value = value.toString().replaceAll("[{]", "");
-    					value = value.toString().replaceAll("[}]", "");
-    					
+    					value = value.toString().replaceAll("[{]", "").replaceAll("[}]", "");
     					Object envVal = common.readEnvVarFromJson(value.toString());
-    					
     					requestHeaders.put(key, envVal);
     				}
     			});
