@@ -175,7 +175,8 @@ public class common {
 	                        if (isCharAdigit == true) {
 	                            getIndex = iInc;
 	                            for (int jInc = iInc; jInc<= readChars.length - 1; jInc++) {
-	                                if (Character.isDigit(readChars[jInc]) == false) {
+	                                //if (Character.isDigit(readChars[jInc]) == false) {
+	                                if (readChars[jInc] == ',' && readChars[jInc - 1] != '\\') {	
 	                                    elmFnd = true;
 	                                    break;
 	                                }
