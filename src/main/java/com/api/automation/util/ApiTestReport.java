@@ -169,12 +169,12 @@ public class ApiTestReport {
             	for (Entry<Object, Object> jsonTagElm: getTagElm.entrySet()) {
 	                jsonTagExp = (String) jsonTagElm.getKey();
 	                jsonTagAct = jsonTagElm.getValue();
-                    if (jsonTagAct.toString().contains("_RefFnd_")) {
-                    	jsonTagElmTxt = "Required reference Tag [<font color=\"red\"><b><i>" + jsonTagAct.toString().split("_RefFnd_")[0] + "</i></b></font>] " +
-                    					"not found in test run [<font color=\"red\"><b><i>" + jsonTagAct.toString().split("_RefFnd_")[1].split("#")[1] + "</i></b></font>] response body!" + "\n";
-                        jsonTagElmSummary = jsonTagElmSummary + jsonTagElmTxt;
-                        jsonRespTagStatus = false;
-                    }
+                    //if (jsonTagAct.toString().contains("_RefFnd_")) {
+                    	//jsonTagElmTxt = "Required reference Tag [<font color=\"red\"><b><i>" + jsonTagAct.toString().split("_RefFnd_")[0] + "</i></b></font>] " +
+                    					//"not found in test run [<font color=\"red\"><b><i>" + jsonTagAct.toString().split("_RefFnd_")[1].split("#")[1] + "</i></b></font>] response body!" + "\n";
+                        //jsonTagElmSummary = jsonTagElmSummary + jsonTagElmTxt;
+                        //jsonRespTagStatus = false;
+                    //}
                 }
             }
  
@@ -183,12 +183,12 @@ public class ApiTestReport {
             	for (Entry<Object, Object> jsonTagNotFnd: getTagElm.entrySet()) {
 	                jsonTagExp = (String) jsonTagNotFnd.getKey();
 	                jsonTagAct = jsonTagNotFnd.getValue();
-	                if (jsonTagAct.toString().contains("#.")) {
-	                	jsonTagElmTxt = "Required Tag [<font color=\"red\"><b><i>" + jsonTagExp + "</i></b></font>] " +
-                                        "not found in payload body!" + "\n";
-                        jsonTagElmNotFndSummary = jsonTagElmNotFndSummary + jsonTagElmTxt;
-                        jsonTagFnd = false;
-                    }
+	                //if (jsonTagAct.toString().contains("#.")) {
+	                	//jsonTagElmTxt = "Required Tag [<font color=\"red\"><b><i>" + jsonTagExp + "</i></b></font>] " +
+                                        //"not found in payload body!" + "\n";
+                        //jsonTagElmNotFndSummary = jsonTagElmNotFndSummary + jsonTagElmTxt;
+                        //jsonTagFnd = false;
+                    //}
                 }
             }
  

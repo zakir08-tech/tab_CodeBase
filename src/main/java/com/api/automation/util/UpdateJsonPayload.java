@@ -34,21 +34,15 @@ public class UpdateJsonPayload {
 		String[] getMethodArgs =null;
 
 	    for (Map.Entry<Object, Object> getTagElm : jsonElement.entrySet()) {
-	    	if(getTagElm.getValue().toString().contains("_RefFnd_")){
+	    	if(getTagElm.getValue().toString().startsWith("{") &&
+	    			getTagElm.getValue().toString().endsWith("}")){
 
-				try{
-					splitTagName =getTagElm.getValue().toString().split("_RefFnd_")[0];
-					getTestId =getTagElm.getValue().toString().split("_RefFnd_")[1].replace("#", "");
-
-					getPrevJsonResponse = loadAPITestRunner.saveTestRunMap.get(getTestId);
-					getJsonResponse =(String) getPrevJsonResponse.get("JSON Response");
-
-					getRespTagVal =GetTagValueFromJsonResponse.GetJsonTagElement(splitTagName, getJsonResponse);
-					if(getRespTagVal.contentEquals("#.")){
-						System.out.println("required tag [" +splitTagName+ "] not found in the json response");
-					}else
-						jsonElement.replace(getTagElm.getKey(), getRespTagVal);
-				} catch(NullPointerException ignored){}
+			try{
+				splitTagName = getTagElm.getValue().toString().replaceAll("[{]","").replaceAll("[}]", "");
+				getRespTagVal = (String) common.readEnvVarFromJson((String) splitTagName);
+            	
+				jsonElement.replace(getTagElm.getKey(), getRespTagVal);
+			} catch(NullPointerException ignored){}
 
 	    	}else if(getTagElm.getValue().toString().contains("|")){                        
 	            getMethAttributes =getTagElm.getValue().toString().split("[|]");
@@ -80,7 +74,13 @@ public class UpdateJsonPayload {
                     int getTagPosition = 1;
                     String newTagName = "";
                     tagName = (String) entry.getKey();
-                    String elementName = entry.getValue().toString();
+                    
+                    String elementName =null;
+                    
+                    try {
+                    	elementName = entry.getValue().toString();
+                    }catch(NullPointerException exp) {}
+                    
                     String getChar = "";
                     boolean charFnd = false;
                     boolean elmFnd = false;
