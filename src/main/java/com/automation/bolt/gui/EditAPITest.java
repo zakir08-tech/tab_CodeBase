@@ -1641,8 +1641,8 @@ public class EditAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_bttnEnvVarListMouseExited
 
     private void bttnEnvVarListMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnEnvVarListMouseReleased
-        envVarListFrame.setLocationRelativeTo(null);
-        envVarListFrame.setVisible(true);
+        //envVarListFrame.setLocationRelativeTo(null);
+        //envVarListFrame.setVisible(true);
     }//GEN-LAST:event_bttnEnvVarListMouseReleased
 
     private void bttnEnvVarListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnEnvVarListActionPerformed
