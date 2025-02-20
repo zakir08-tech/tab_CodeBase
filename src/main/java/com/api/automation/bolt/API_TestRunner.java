@@ -140,12 +140,21 @@ public class API_TestRunner extends loadAPITestRunner {
             if(getAuth1.toString().startsWith("{") && getAuth1.toString().endsWith("}")) {
             	getAuth1 = getAuth1.toString().replaceAll("[{]", "").replaceAll("[}]", "");
             	getAuth1 = common.readEnvVarFromJson((String) getAuth1);
+            	
+            	HashMap<Object, Object> getAPIElms =ApiTestRunnerMap.get(getApiTestRunId);
+            	getAPIElms.put("AuthVal1", getAuth1);
+            	ApiTestRunnerMap.put(getApiTestRunId, getAPIElms);
+            	
             }
             
             getAuth2 =testRunnerEntry.getValue().get("AuthVal2"); //get auth value 2
             if(getAuth2.toString().startsWith("{") && getAuth2.toString().endsWith("}")) {
             	getAuth2 = getAuth2.toString().replaceAll("[{]", "").replaceAll("[}]", "");
             	getAuth2 = common.readEnvVarFromJson((String) getAuth2);
+            	
+            	HashMap<Object, Object> getAPIElms =ApiTestRunnerMap.get(getApiTestRunId);
+            	getAPIElms.put("AuthVal2", getAuth2);
+            	ApiTestRunnerMap.put(getApiTestRunId, getAPIElms);
             }
             
             testOut_Put = ApiTestRunnerMap.get(getApiTestRunId);
