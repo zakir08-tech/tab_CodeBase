@@ -5,6 +5,7 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -149,7 +150,8 @@ public class API_TestRunner extends loadAPITestRunner {
             //extentTest = extent.createTest("creating [" + getApiTestRequest + "] request");
             
             getApiTestRequestUrl = testRunnerEntry.getValue().get("Request URL"); //get service url
-            getApiTestRequestUrl =updateApiUrlWithJsonResponseElementReference(getApiTestRequestUrl);
+            getApiTestRequestUrl =updateApiUrlWithEnvVarValue(getApiTestRequestUrl);
+            //getApiTestRequestUrl =updateApiUrlWithJsonResponseElementReference(getApiTestRequestUrl);
             
             getExpResponseCode = testRunnerEntry.getValue().get("Expected Status"); //get response code
             
@@ -692,6 +694,34 @@ public class API_TestRunner extends loadAPITestRunner {
         }
 
 		return strSqlExpOutPut;
+    }
+    
+    public static Object updateApiUrlWithEnvVarValue(Object getUrl) {
+    	char[] ulrChars = getUrl.toString().toCharArray();
+    	String getEnvVarName = "";
+    	String getEnvVarValue = "";
+    	boolean expFnd=false;
+    	ArrayList<String> envValList = new ArrayList<String>();
+    	
+		for(int i=0; i<ulrChars.length;i++) {		
+			if(ulrChars[i]=='{') {
+				expFnd =true;
+			}else if (expFnd ==true && ulrChars[i] !='}') {
+				getEnvVarName = getEnvVarName + ulrChars[i];
+			}
+			
+			if(ulrChars[i] =='}') {
+				expFnd =false;
+				envValList.add(getEnvVarName);
+				getEnvVarName="";
+			}
+		}
+		
+		for(String envVarName: envValList) {
+			getEnvVarValue =(String) common.readEnvVarFromJson(envVarName);
+			getUrl = getUrl.toString().replace("{"+envVarName+"}", getEnvVarValue);
+		}
+		return getUrl;
     }
     
     @SuppressWarnings("unused")

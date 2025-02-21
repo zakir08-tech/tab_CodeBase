@@ -29,6 +29,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
  
 public class ApiTestReport {
 	 
@@ -153,7 +154,9 @@ public class ApiTestReport {
             	getJSONResponse = getJSONResponse.toString().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
             	extentTest.info(MarkupHelper.createCodeBlock(prettyPrintUsingGson(getJSONResponse.toString()),CodeLanguage.JSON));
             } catch (NullPointerException exp) {
-            	//exp.printStackTrace();
+            	exp.printStackTrace();
+            }catch(JsonSyntaxException exp) {
+            	extentTest.fail(MarkupHelper.createLabel(getJSONResponse.toString(), ExtentColor.PINK));
             }
             
             if (storeJsonResponse != null) {
@@ -250,7 +253,7 @@ public class ApiTestReport {
         }
     }
     
-    public static String prettyPrintUsingGson(String uglyJson) {
+    public static String prettyPrintUsingGson(String uglyJson) throws JsonSyntaxException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         JsonElement jsonElement = JsonParser.parseString(uglyJson);
         String prettyJsonString = gson.toJson(jsonElement);
@@ -261,11 +264,16 @@ public class ApiTestReport {
     	JSONObject jo = new JSONObject();
     	jo.put("Expected Status", expStatus);
     	
-    	if(expStatus.trim().contentEquals(actStatus))
-    		jo.put("Actual Status", actStatus);
-    	else
-    		jo.put("Actual Status", Integer.valueOf(actStatus));
-    	
+    	try {
+    		if(expStatus.trim().contentEquals(actStatus))
+        		jo.put("Actual Status", actStatus);
+        	else
+        		jo.put("Actual Status", Integer.valueOf(actStatus));
+        
+    	}catch(NumberFormatException exp) {
+    		jo.put("Actual Status", "null");
+    	}
+    		
     	return jo;
     }
 }
