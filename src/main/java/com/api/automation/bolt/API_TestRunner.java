@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.http.ParseException;
@@ -24,10 +23,11 @@ import com.api.automation.util.GetTagValueFromJsonResponse;
 import com.api.automation.util.ReadPayloadFile;
 import com.api.automation.util.SaveResponseAsFile;
 import com.api.automation.util.UpdateJsonPayload;
-import com.api.automation.util.VerifyTagValueFromJsonResponse;
 import com.api.automation.util.VerifyValueAPICommon;
 import com.api.automation.util.common;
 import com.automation.bolt.gui.ExecuteApiTest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class API_TestRunner extends loadAPITestRunner {
 
@@ -69,8 +69,23 @@ public class API_TestRunner extends loadAPITestRunner {
     public static boolean getThreadStatus;
     public static boolean stepDefinitionError;
     public static String stepDefinitionErrorMsg;
+    //public static ExtentTest extentTest;
+    //public static ExtentReports extent;
+    //public static ExtentSparkReporter sparkReporter;
     
-    public static void runAPItest() throws NullPointerException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
+    public static void runAPItest() throws NullPointerException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException, JsonMappingException, JsonProcessingException {
+    	
+    	/*extent = new ExtentReports();
+    	sparkReporter = new ExtentSparkReporter(System.getProperty("user.dir") +"/htmlTestReport/boltTestReport.html");
+    	extent.attachReporter(sparkReporter);
+    	
+    	sparkReporter.config().setOfflineMode(true);
+    	sparkReporter.config().setDocumentTitle("Bolt: API Test Report");
+    	sparkReporter.config().setReportName("API Test Report");
+    	sparkReporter.config().setTheme(Theme.DARK);
+    	sparkReporter.config().setTimeStampFormat("EEE, MMMM dd,yyyy, hh:mm: a '('zzz')'");
+    	sparkReporter.config().setEncoding("UTF-8");*/
+    	
     	System.out.println("running api's test!");
     	
         restClient = new HttpClient();
@@ -131,6 +146,8 @@ public class API_TestRunner extends loadAPITestRunner {
             ResultSet getQueryRes = null;
 
             getApiTestRequest = testRunnerEntry.getValue().get("Request"); //get Request type
+            //extentTest = extent.createTest("creating [" + getApiTestRequest + "] request");
+            
             getApiTestRequestUrl = testRunnerEntry.getValue().get("Request URL"); //get service url
             getApiTestRequestUrl =updateApiUrlWithJsonResponseElementReference(getApiTestRequestUrl);
             
@@ -392,8 +409,10 @@ public class API_TestRunner extends loadAPITestRunner {
             verifyAPIHeadersForTestRunStatus();
             
             if(finalRunStatus ==false) {
+            	//extentTest.log(Status.FAIL, "test failed");
             	ExecuteApiTest.importDataFromExcelModel.setValueAt("FAIL", getCurrRunId, 3);}
             else if(finalRunStatus ==true) {
+            	//extentTest.log(Status.PASS, "test passed");
             	ExecuteApiTest.importDataFromExcelModel.setValueAt("PASS", getCurrRunId, 3);}
 
             //Database validation
@@ -510,6 +529,7 @@ public class API_TestRunner extends loadAPITestRunner {
         executionTime = String.format("%02d:%02d mins", minutes, seconds);
         
         //generate test report
+        //extent.flush();
         ApiTestReport.GenerateApiTestReport();
 
         //email test automation report
