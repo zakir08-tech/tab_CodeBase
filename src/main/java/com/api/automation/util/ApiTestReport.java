@@ -51,39 +51,22 @@ public class ApiTestReport {
     public static ExtentSparkReporter sparkReporter;
  
     public static void GenerateApiTestReport() {
- 
-	    String getHtmlTable = "\n";
-	    String getHtmlDiv = "\n";
-	    String htmlDiv = "\n";
-	    String htmlSummaryDiv = "\n";
-	    String htmlTestFile;
-	    int intFail = 0;
-	    int intPass = 0;
-	    String bttnColor = null;
-	    String getExecutionRunTime = API_TestRunner.executionTime;
-	    //String getExecutionRunTime = common.getTestrunTime(startRunDateTime, endRunDateTime);
 	    HashMap<Object, List<Object>> storeJsonResponse = new HashMap<>();
 	    LinkedHashMap<Object, Object> getAPiVerifyTags = new LinkedHashMap<>();
 	    Object jsonTagName = null;
 	    String jsonTagExpectedVal = null;
 	    String jsonTagActualVal = null;
-	    String getSqlQuerySummary = null;
-	    String getSqlQuerySummaryTxt = null;
+	 
 	    boolean jsonTagStatus;
 	    boolean jsonRespTagStatus;
 	    boolean dbValidtionStatus;
 	    boolean jsonTagFnd;
-	    String getReqType = null;
-	    int dbSqlPst;
-	    String getElmPst = null;
- 
+	    
         if(!new File(constants.userDir+"/htmlTestReport").exists()){
         	new File(constants.userDir+"/htmlTestReport").mkdir();
         }
  
         APITestResultPath =constants.userDir+"/htmlTestReport/";
-        //APITestResultPath = LoadProperties.prop.getProperty(Constants.APITestResultFilePathPropName);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMMM-yyyy hh:mm a");
         
         extent = new ExtentReports();
         Date date = new Date();
@@ -103,15 +86,12 @@ public class ApiTestReport {
  
         for (Entry<Object, HashMap<Object, Object>> entryReport: loadAPITestRunner.ApiTestRunnerMap.entrySet()) {
         	Object getRunID = entryReport.getValue().get("Run ID");
-            //Object modifiedRunID =getRunID.toString().replaceAll("[.]","_");
             Object getRequest = entryReport.getValue().get("Request");            
             Object getRequestUrl = entryReport.getValue().get("Request URL");
             Object getRequestExpStatus = entryReport.getValue().get("Expected Status");
             Object getRequestActualStatus = entryReport.getValue().get("Actual Status");
             Object getJSONResponse = entryReport.getValue().get("JSON Response");
-            Object getJSONResponseError =entryReport.getValue().get("JSON Response");
             
-            Object httpStatusCodeDes = entryReport.getValue().get("Status Code Phrase");
             storeJsonResponse = API_TestRunner.verifyJsonResponseAttributes.get(getRunID);
             getAPiVerifyTags = loadAPITestRunner.saveVerifyRespTagElmMap.get(getRunID);
             jsonTagStatus = true;
@@ -122,14 +102,10 @@ public class ApiTestReport {
             Object jsonTagAct = "";
             String jsonTagSummaryTxt = "";
             String jsonTagSummary = "";
-            String jsonTagElmTxt = "";
-            String jsonTagElmSummary = "";
-            String jsonTagElmNotFndSummary = "";
-            htmlDiv = "";
-            htmlSummaryDiv = "";
-            getSqlQuerySummary = "";
-            getSqlQuerySummaryTxt = "";
+            String getHeadersDetails = "";
+            Markup jResp=null;
             
+            Object getJSONPayload = entryReport.getValue().get("Payload");
             Object getAPISummary = entryReport.getValue().get("Test Summary");
             if(getAPISummary.toString().isBlank()) {
             	getAPISummary = "{no test summary available}";
@@ -137,6 +113,48 @@ public class ApiTestReport {
             extentTest = extent.createTest("Test ["+getRunID+"]: " + getAPISummary.toString());
             extentTest.info(MarkupHelper.createLabel(getRequest.toString(), ExtentColor.BLUE));
             extentTest.info(MarkupHelper.createLabel(getRequestUrl.toString(), ExtentColor.BLUE));
+            HashMap<Object, Object> headerMapNew = loadAPITestRunner.saveHeaderMap.get(getRunID);
+            try{
+            	for (Entry<Object, Object> jsonTagNotFnd: headerMapNew.entrySet()) {
+            		getHeadersDetails = getHeadersDetails + jsonTagNotFnd.getKey() +": "+ jsonTagNotFnd.getValue() + "\r\n";
+                }
+            }catch (NullPointerException exp){
+            	//exp.printStackTrace();
+            }
+ 
+            if(getHeadersDetails.isEmpty()){
+            	getHeadersDetails = "No headers define for the given API request";
+            }else
+            	extentTest.info(MarkupHelper.createUnorderedList(headerMapNew));
+            
+            // add payload to test report
+            Object getJsonPayloadType =entryReport.getValue().get("Payload Type");
+            
+            if(getJsonPayloadType.toString().contains("x-www-form-urlencoded")) {
+            	try {
+            		String[] getItemList = getJSONPayload.toString().split("&");
+            		String[] newItemList = new String[getItemList.length];
+                	
+                	int i=0;
+                	
+                	for(String x:getItemList) {
+                		newItemList[i] =x.replace("=", ":");
+                		i++;
+                	}
+                	extentTest.info(MarkupHelper.createUnorderedList(newItemList));
+            	}catch(NullPointerException exp) {}
+            }else {
+            	jResp = MarkupHelper.createCodeBlock(prettyPrintUsingGson(getJSONPayload.toString()),CodeLanguage.JSON);
+            	extentTest.info(jResp);
+            }
+           
+            // add json response to test report
+            try {
+            	getJSONResponse = getJSONResponse.toString().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+            	extentTest.info(MarkupHelper.createCodeBlock(prettyPrintUsingGson(getJSONResponse.toString()),CodeLanguage.JSON));
+            } catch (NullPointerException exp) {
+            	//exp.printStackTrace();
+            }
             
             if (storeJsonResponse != null) {
             	for (Entry<Object, List<Object>> jsonTagElm: storeJsonResponse.entrySet()) {
@@ -172,73 +190,22 @@ public class ApiTestReport {
                     jsonTagFnd == true &&
                     dbValidtionStatus == true) {
             		extentTest.pass(MarkupHelper.createCodeBlock(resStatus.toString(),CodeLanguage.JSON));
-                    bttnColor = bttnColorSuccess;
                     textResonseCodeColor = responseCodeTextColorSuccess;
-                    intPass++;
                 } else if (getRequestExpStatus.toString().contentEquals(getRequestActualStatus.toString())
                     && jsonTagStatus == false
                     || jsonRespTagStatus == false
                     || jsonTagFnd == false
                     || dbValidtionStatus == false) {
                 		extentTest.fail(MarkupHelper.createCodeBlock(resStatus.toString(),CodeLanguage.JSON));
-                        bttnColor = bttnColorDanger;
                         textResonseCodeColor = responseCodeTextColorDanger;
-                        intFail++;
                 }else {
                 		extentTest.fail(MarkupHelper.createCodeBlock(resStatus.toString(),CodeLanguage.JSON));
-		                bttnColor = bttnColorDanger;
 		                textResonseCodeColor = responseCodeTextColorDanger;
-		                intFail++;
                 }
             } else {
-                bttnColor = bttnColorDanger;
                 textResonseCodeColor = responseCodeTextColorDanger;
-                intFail++;
-            }
-
-            Object getJsonPayloadType =entryReport.getValue().get("Payload Type");
-            Object getJSONPayload = entryReport.getValue().get("Payload");
-            dbSqlPst = 0;
-            String getHeadersDetails = "";
-               
-            Markup jResp = MarkupHelper.createCodeBlock(prettyPrintUsingGson(getJSONPayload.toString()),CodeLanguage.JSON);
-            extentTest.info(jResp);
-                    
-            HashMap<Object, Object> headerMapNew = loadAPITestRunner.saveHeaderMap.get(getRunID);
-            try{
-            	for (Entry<Object, Object> jsonTagNotFnd: headerMapNew.entrySet()) {
-            		getHeadersDetails = getHeadersDetails + jsonTagNotFnd.getKey() +": "+ jsonTagNotFnd.getValue() + "\r\n";
-                }
-            }catch (NullPointerException exp){
-            	//exp.printStackTrace();
             }
  
-            if(getHeadersDetails.isEmpty()){
-            	getHeadersDetails = "No headers define for the given API request";
-            }else
-            	extentTest.info(MarkupHelper.createUnorderedList(headerMapNew));
-          
-            try {
-            	getJSONResponse = getJSONResponse.toString().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-            	extentTest.info(MarkupHelper.createCodeBlock(prettyPrintUsingGson(getJSONResponse.toString()),CodeLanguage.JSON));
-            } catch (NullPointerException exp) {
-            	//exp.printStackTrace();
-            }
-            
-            if(getJsonPayloadType.toString().contains("x-www-form-urlencoded")) {
-            	try {
-            		String[] getItemList = getJSONPayload.toString().split("&");
-                	String getNewItem ="";
-                	
-                	for(String x:getItemList) {
-                		getNewItem = getNewItem + x + "\n";
-                	}
-                	getJSONPayload =getNewItem;
-                	extentTest.info(getJSONPayload.toString());
-            	}catch(NullPointerException exp) {}
-            }
-            
-             
             LinkedHashMap<Object, Object> getTagElm = loadAPITestRunner.saveTagElmMap.get(getRunID);
             if (getTagElm != null) {
             	for (Entry<Object, Object> jsonTagElm: getTagElm.entrySet()) {

@@ -164,9 +164,13 @@ public class UpdateJsonPayload {
  
                         if (elmFnd == true) break;
                     }
-                                               
-	                getNewString = getNewString.substring(0, getIndex) + elementName + getNewString.substring(getIndex + readElmBuffer.length());
-	                readElmBuffer = "";
+                    
+                    if(elementName ==null)
+                    	elementName ="<null>";
+                    	
+                    	getNewString = getNewString.substring(0, getIndex) + elementName + getNewString.substring(getIndex + readElmBuffer.length());
+	                
+                    readElmBuffer = "";
                 }
             } catch(FileNotFoundException exp) {
             	exp.printStackTrace();
