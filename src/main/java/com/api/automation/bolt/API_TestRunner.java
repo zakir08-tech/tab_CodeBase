@@ -719,6 +719,9 @@ public class API_TestRunner extends loadAPITestRunner {
 		
 		for(String envVarName: envValList) {
 			getEnvVarValue =(String) common.readEnvVarFromJson(envVarName);
+			if(getEnvVarValue ==null)
+				getEnvVarValue ="null";
+				
 			getUrl = getUrl.toString().replace("{"+envVarName+"}", getEnvVarValue);
 		}
 		return getUrl;

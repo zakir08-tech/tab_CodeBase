@@ -145,8 +145,10 @@ public class ApiTestReport {
                 	extentTest.info(MarkupHelper.createUnorderedList(newItemList));
             	}catch(NullPointerException exp) {}
             }else {
-            	jResp = MarkupHelper.createCodeBlock(prettyPrintUsingGson(getJSONPayload.toString()),CodeLanguage.JSON);
-            	extentTest.info(jResp);
+            	if(getJSONPayload !=null) {
+            		jResp = MarkupHelper.createCodeBlock(prettyPrintUsingGson(getJSONPayload.toString()),CodeLanguage.JSON);
+            		extentTest.info(jResp);
+            	}
             }
            
             // add json response to test report
