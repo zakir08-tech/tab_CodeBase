@@ -116,12 +116,12 @@ public class ApiTestReport {
             if(getRequest.toString().contentEquals("NA"))
             	extentTest.warning(MarkupHelper.createLabel("API Request type not defined", ExtentColor.PINK));
             else
-            	extentTest.info(MarkupHelper.createLabel(getRequest.toString(), ExtentColor.BLUE));
+            	extentTest.info(MarkupHelper.createLabel(getRequest.toString(), ExtentColor.BLACK));
             
             if(getRequestUrl ==null || getRequestUrl.toString().isEmpty())
             	extentTest.warning(MarkupHelper.createLabel("API URL not defined", ExtentColor.PINK));
             else
-            	extentTest.info(MarkupHelper.createLabel(getRequestUrl.toString(), ExtentColor.BLUE));
+            	extentTest.info(MarkupHelper.createLabel(getRequestUrl.toString(), ExtentColor.TRANSPARENT));
             
             HashMap<Object, Object> headerMapNew = loadAPITestRunner.saveHeaderMap.get(getRunID);
             try{
