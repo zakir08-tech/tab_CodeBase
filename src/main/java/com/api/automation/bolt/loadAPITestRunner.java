@@ -156,11 +156,11 @@ public class loadAPITestRunner {
                         apiTestSteps.put("authorization_type",authorization_type);
  
                         Object auth_value1 =getCellValue(testRunCurrentRow.getCell(14));
-                        if(auth_value1.toString().contains("|#")){
+                        /*if(auth_value1.toString().contains("|#")){
                             String s = auth_value1.toString().split("[|]")[0];
                             String s1 = auth_value1.toString().split("[|]")[1];
                             auth_value1 = s +"_RefFnd_"+ s1;
-                        }
+                        }*/
                         testRunMap.put("AuthVal1", auth_value1);
                         apiTestSteps.put("auth_value1",auth_value1);
  

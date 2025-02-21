@@ -112,8 +112,17 @@ public class ApiTestReport {
             	getAPISummary = "{no test summary available}";
             }
             extentTest = extent.createTest("Test ["+getRunID+"]: " + getAPISummary.toString());
-            extentTest.info(MarkupHelper.createLabel(getRequest.toString(), ExtentColor.BLUE));
-            extentTest.info(MarkupHelper.createLabel(getRequestUrl.toString(), ExtentColor.BLUE));
+            
+            if(getRequest.toString().contentEquals("NA"))
+            	extentTest.warning(MarkupHelper.createLabel("API Request type not defined", ExtentColor.PINK));
+            else
+            	extentTest.info(MarkupHelper.createLabel(getRequest.toString(), ExtentColor.BLUE));
+            
+            if(getRequestUrl ==null || getRequestUrl.toString().isEmpty())
+            	extentTest.warning(MarkupHelper.createLabel("API URL not defined", ExtentColor.PINK));
+            else
+            	extentTest.info(MarkupHelper.createLabel(getRequestUrl.toString(), ExtentColor.BLUE));
+            
             HashMap<Object, Object> headerMapNew = loadAPITestRunner.saveHeaderMap.get(getRunID);
             try{
             	for (Entry<Object, Object> jsonTagNotFnd: headerMapNew.entrySet()) {
@@ -156,7 +165,7 @@ public class ApiTestReport {
             	getJSONResponse = getJSONResponse.toString().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
             	extentTest.info(MarkupHelper.createCodeBlock(prettyPrintUsingGson(getJSONResponse.toString()),CodeLanguage.JSON));
             } catch (NullPointerException exp) {
-            	exp.printStackTrace();
+            	//exp.printStackTrace();
             }catch(JsonSyntaxException exp) {
             	extentTest.fail(MarkupHelper.createLabel(getJSONResponse.toString(), ExtentColor.PINK));
             }
