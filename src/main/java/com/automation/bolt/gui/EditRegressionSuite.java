@@ -5,13 +5,11 @@
  */
 package com.automation.bolt.gui;
 
-import com.automation.bolt.common;
-import com.automation.bolt.constants;
-import static com.automation.bolt.gui.ObjectRepoFrame.*;
-import com.automation.bolt.renderer.*;
+import static com.automation.bolt.gui.ObjectRepoFrame.RegSuite;
+import static com.automation.bolt.gui.ObjectRepoFrame.updateObjectRepository;
 import static com.automation.bolt.xlsCommonMethods.createObjectRepoDataSheet;
 import static com.automation.bolt.xlsCommonMethods.createTestFlowDataSheet;
-import com.google.common.io.Files;
+
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -39,6 +37,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.DefaultCellEditor;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -62,14 +61,24 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import org.apache.poi.ss.usermodel.*;
+
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFDataFormat;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.automation.bolt.common;
+import com.automation.bolt.constants;
+import com.automation.bolt.renderer.tableCellRenderer;
+import com.google.common.io.Files;
+import java.awt.Color;
 
 /**
  *
@@ -136,23 +145,23 @@ public class EditRegressionSuite extends javax.swing.JFrame {
     public EditRegressionSuite() {
         initComponents();        
                 
-        testIdCol =RegressionSuiteTable.getColumnModel().getColumn(0);
+        testIdCol =RegSuiteTable.getColumnModel().getColumn(0);
         testIdCol.setCellEditor(new DefaultCellEditor(testIdTxt));
         
-        testFlowColumn = RegressionSuiteTable.getColumnModel().getColumn(2);
+        testFlowColumn = RegSuiteTable.getColumnModel().getColumn(2);
         comboBoxTestFlow = new JComboBox<String>();
         keywordList(comboBoxTestFlow);
         testFlowColumn.setCellEditor(new DefaultCellEditor(comboBoxTestFlow));
         comboBoxTestFlow.setEditable(true);
         
-        testObjectRepoColumn = RegressionSuiteTable.getColumnModel().getColumn(3);
+        testObjectRepoColumn = RegSuiteTable.getColumnModel().getColumn(3);
         testObjectRepoColumn.setCellEditor(new DefaultCellEditor(comboBoxObjectRepository));
         comboBoxObjectRepository.setEditable(true);
         
-        testDataCol =RegressionSuiteTable.getColumnModel().getColumn(4);
+        testDataCol =RegSuiteTable.getColumnModel().getColumn(4);
         testDataCol.setCellEditor(new DefaultCellEditor(testDataTxt));
         
-        testDescCol =RegressionSuiteTable.getColumnModel().getColumn(5);
+        testDescCol =RegSuiteTable.getColumnModel().getColumn(5);
         testDescCol.setCellEditor(new DefaultCellEditor(testDescTxt));
         
         testIdTxt.addKeyListener(new KeyAdapter() {
@@ -172,7 +181,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
 
         pnlRegSuiteTable = new JPanel();
         RegressionSuiteScrollPane = new JScrollPane();
-        RegressionSuiteTable = new JTable();
+        RegSuiteTable = new JTable();
         jDesktopPane1 = new JDesktopPane();
         pnlMenuBar = new JPanel();
         pnlOpenTestSuite = new JPanel();
@@ -221,15 +230,15 @@ public class EditRegressionSuite extends javax.swing.JFrame {
             }
         });
 
-        pnlRegSuiteTable.setBackground(java.awt.Color.lightGray);
+        pnlRegSuiteTable.setBackground(Color.lightGray);
 
         RegressionSuiteScrollPane.setAutoscrolls(true);
         RegressionSuiteScrollPane.setFont(new Font("Calibri", 0, 12)); // NOI18N
 
-        RegressionSuiteTable.setBackground(new java.awt.Color(51, 51, 51));
-        RegressionSuiteTable.setFont(new Font("Consolas", 0, 13)); // NOI18N
-        RegressionSuiteTable.setForeground(new java.awt.Color(255, 255, 255));
-        RegressionSuiteTable.setModel(new DefaultTableModel(
+        RegSuiteTable.setBackground(new Color(51, 51, 51));
+        RegSuiteTable.setFont(new Font("Consolas", 0, 13)); // NOI18N
+        RegSuiteTable.setForeground(new Color(255, 255, 255));
+        RegSuiteTable.setModel(new DefaultTableModel(
             new Object [][] {
 
             },
@@ -245,61 +254,60 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        RegressionSuiteTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        RegressionSuiteTable.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        RegressionSuiteTable.setName(""); // NOI18N
-        RegressionSuiteTable.setRowHeight(30);
-        RegressionSuiteTable.setRowMargin(2);
-        RegressionSuiteTable.setSelectionBackground(new java.awt.Color(255, 153, 153));
-        RegressionSuiteTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        RegressionSuiteTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        RegressionSuiteTable.setShowGrid(true);
-        RegressionSuiteTable.getTableHeader().setReorderingAllowed(false);
-        RegressionSuiteTable.setUpdateSelectionOnSort(false);
-        RegressionSuiteTable.setVerifyInputWhenFocusTarget(false);
-        RegressionSuiteTable.addFocusListener(new FocusAdapter() {
+        RegSuiteTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        RegSuiteTable.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        RegSuiteTable.setName(""); // NOI18N
+        RegSuiteTable.setRowHeight(30);
+        RegSuiteTable.setRowMargin(2);
+        RegSuiteTable.setSelectionBackground(new Color(255, 153, 153));
+        RegSuiteTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        RegSuiteTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        RegSuiteTable.setShowGrid(true);
+        RegSuiteTable.getTableHeader().setReorderingAllowed(false);
+        RegSuiteTable.setUpdateSelectionOnSort(false);
+        RegSuiteTable.setVerifyInputWhenFocusTarget(false);
+        RegSuiteTable.addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent evt) {
-                RegressionSuiteTableFocusGained(evt);
+                RegSuiteTableFocusGained(evt);
             }
         });
-        RegressionSuiteTable.addMouseListener(new MouseAdapter() {
+        RegSuiteTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
-                RegressionSuiteTableMouseClicked(evt);
+                RegSuiteTableMouseClicked(evt);
             }
             public void mousePressed(MouseEvent evt) {
-                RegressionSuiteTableMousePressed(evt);
+                RegSuiteTableMousePressed(evt);
             }
             public void mouseReleased(MouseEvent evt) {
-                RegressionSuiteTableMouseReleased(evt);
+                RegSuiteTableMouseReleased(evt);
             }
         });
-        RegressionSuiteTable.addKeyListener(new KeyAdapter() {
+        RegSuiteTable.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent evt) {
-                RegressionSuiteTableKeyReleased(evt);
+                RegSuiteTableKeyReleased(evt);
             }
         });
-        RegressionSuiteScrollPane.setViewportView(RegressionSuiteTable);
+        RegressionSuiteScrollPane.setViewportView(RegSuiteTable);
 
         GroupLayout pnlRegSuiteTableLayout = new GroupLayout(pnlRegSuiteTable);
         pnlRegSuiteTable.setLayout(pnlRegSuiteTableLayout);
         pnlRegSuiteTableLayout.setHorizontalGroup(pnlRegSuiteTableLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(RegressionSuiteScrollPane, GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
+            .addComponent(RegressionSuiteScrollPane, GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
         );
         pnlRegSuiteTableLayout.setVerticalGroup(pnlRegSuiteTableLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addComponent(RegressionSuiteScrollPane, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
         );
 
-        pnlMenuBar.setBackground(new java.awt.Color(0, 153, 153));
+        pnlMenuBar.setBackground(new Color(0, 153, 153));
         pnlMenuBar.setOpaque(false);
 
-        pnlOpenTestSuite.setBackground(new java.awt.Color(0, 0, 0));
+        pnlOpenTestSuite.setBackground(new Color(0, 0, 0));
 
-        RegressionSuite.setBackground(new java.awt.Color(0, 0, 0));
+        RegressionSuite.setBackground(new Color(0, 0, 0));
         RegressionSuite.setFont(new Font("Consolas", 1, 14)); // NOI18N
-        RegressionSuite.setForeground(new java.awt.Color(255, 255, 255));
+        RegressionSuite.setForeground(new Color(255, 255, 255));
         RegressionSuite.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addUploadTestSuite.png"));
-            RegressionSuite.setText("Open Test Suite");
-            RegressionSuite.setToolTipText("will upload the test suite for modifications");
+            RegressionSuite.setToolTipText("upload test suite");
             RegressionSuite.setActionCommand("OpenRegressionSuite");
             RegressionSuite.setBorder(null);
             RegressionSuite.setBorderPainted(false);
@@ -325,7 +333,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
             GroupLayout pnlOpenTestSuiteLayout = new GroupLayout(pnlOpenTestSuite);
             pnlOpenTestSuite.setLayout(pnlOpenTestSuiteLayout);
             pnlOpenTestSuiteLayout.setHorizontalGroup(pnlOpenTestSuiteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(RegressionSuite, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(RegressionSuite, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
             );
             pnlOpenTestSuiteLayout.setVerticalGroup(pnlOpenTestSuiteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                 .addGroup(GroupLayout.Alignment.TRAILING, pnlOpenTestSuiteLayout.createSequentialGroup()
@@ -333,11 +341,10 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                     .addComponent(RegressionSuite, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
             );
 
-            AssociateObjORJCheckBox.setBackground(new java.awt.Color(0, 153, 153));
+            AssociateObjORJCheckBox.setBackground(new Color(0, 153, 153));
             AssociateObjORJCheckBox.setFont(new Font("Consolas", 1, 12)); // NOI18N
-            AssociateObjORJCheckBox.setForeground(new java.awt.Color(255, 255, 255));
-            AssociateObjORJCheckBox.setText("Associate Global OR");
-            AssociateObjORJCheckBox.setToolTipText("if checked, will give option to associate a global object repository");
+            AssociateObjORJCheckBox.setForeground(new Color(255, 255, 255));
+            AssociateObjORJCheckBox.setToolTipText("associate global object repository");
             AssociateObjORJCheckBox.setEnabled(false);
             AssociateObjORJCheckBox.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent evt) {
@@ -353,14 +360,13 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                 }
             });
 
-            pnlDeleteTestStep.setBackground(new java.awt.Color(0, 0, 0));
+            pnlDeleteTestStep.setBackground(new Color(0, 0, 0));
 
-            DeleteStep.setBackground(new java.awt.Color(0, 0, 0));
+            DeleteStep.setBackground(new Color(0, 0, 0));
             DeleteStep.setFont(new Font("Consolas", 1, 14)); // NOI18N
-            DeleteStep.setForeground(new java.awt.Color(255, 255, 255));
+            DeleteStep.setForeground(new Color(255, 255, 255));
             DeleteStep.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/deleteTestStep_Element.png"));
-                DeleteStep.setText("Delete Test Step");
-                DeleteStep.setToolTipText("will delete the selected test step");
+                DeleteStep.setToolTipText("delete test step");
                 DeleteStep.setBorder(null);
                 DeleteStep.setBorderPainted(false);
                 DeleteStep.setContentAreaFilled(false);
@@ -394,14 +400,13 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                         .addComponent(DeleteStep, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
                 );
 
-                pnlAddTestStepUp.setBackground(new java.awt.Color(0, 0, 0));
+                pnlAddTestStepUp.setBackground(new Color(0, 0, 0));
 
-                AddStepUp.setBackground(new java.awt.Color(0, 0, 0));
+                AddStepUp.setBackground(new Color(0, 0, 0));
                 AddStepUp.setFont(new Font("Consolas", 1, 14)); // NOI18N
-                AddStepUp.setForeground(new java.awt.Color(255, 255, 255));
+                AddStepUp.setForeground(new Color(255, 255, 255));
                 AddStepUp.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addTestStepUp.png"));
-                    AddStepUp.setText("Add Test Step Up");
-                    AddStepUp.setToolTipText("will add a new test step above the selected step");
+                    AddStepUp.setToolTipText("add test step above the selected step");
                     AddStepUp.setActionCommand("AddNewStep");
                     AddStepUp.setBorder(null);
                     AddStepUp.setBorderPainted(false);
@@ -437,14 +442,13 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                             .addComponent(AddStepUp, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
                     );
 
-                    pnlSaveAsNewTestSuite.setBackground(new java.awt.Color(0, 0, 0));
+                    pnlSaveAsNewTestSuite.setBackground(new Color(0, 0, 0));
 
-                    SaveSuite1.setBackground(new java.awt.Color(0, 0, 0));
+                    SaveSuite1.setBackground(new Color(0, 0, 0));
                     SaveSuite1.setFont(new Font("Consolas", 1, 14)); // NOI18N
-                    SaveSuite1.setForeground(new java.awt.Color(255, 255, 255));
+                    SaveSuite1.setForeground(new Color(255, 255, 255));
                     SaveSuite1.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/saveAsNewTestSuite.png"));
-                        SaveSuite1.setText("Save As New Suite");
-                        SaveSuite1.setToolTipText("will save the opened test suite as a new test suite");
+                        SaveSuite1.setToolTipText("save as new test suite");
                         SaveSuite1.setBorder(null);
                         SaveSuite1.setBorderPainted(false);
                         SaveSuite1.setContentAreaFilled(false);
@@ -470,9 +474,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                         GroupLayout pnlSaveAsNewTestSuiteLayout = new GroupLayout(pnlSaveAsNewTestSuite);
                         pnlSaveAsNewTestSuite.setLayout(pnlSaveAsNewTestSuiteLayout);
                         pnlSaveAsNewTestSuiteLayout.setHorizontalGroup(pnlSaveAsNewTestSuiteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlSaveAsNewTestSuiteLayout.createSequentialGroup()
-                                .addComponent(SaveSuite1, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(SaveSuite1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         );
                         pnlSaveAsNewTestSuiteLayout.setVerticalGroup(pnlSaveAsNewTestSuiteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(GroupLayout.Alignment.TRAILING, pnlSaveAsNewTestSuiteLayout.createSequentialGroup()
@@ -480,12 +482,12 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                                 .addComponent(SaveSuite1, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
                         );
 
-                        LocalORJRadioButton.setBackground(new java.awt.Color(0, 153, 153));
+                        LocalORJRadioButton.setBackground(new Color(0, 153, 153));
                         LocalORJRadioButton.setFont(new Font("Consolas", 1, 12)); // NOI18N
-                        LocalORJRadioButton.setForeground(new java.awt.Color(255, 255, 255));
+                        LocalORJRadioButton.setForeground(new Color(255, 255, 255));
                         LocalORJRadioButton.setSelected(true);
                         LocalORJRadioButton.setText("Local");
-                        LocalORJRadioButton.setToolTipText("select to open currrent test suite default associated object repository");
+                        LocalORJRadioButton.setToolTipText("select to open default associated object repository");
                         LocalORJRadioButton.addMouseListener(new MouseAdapter() {
                             public void mouseEntered(MouseEvent evt) {
                                 LocalORJRadioButtonMouseEntered(evt);
@@ -500,9 +502,9 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                             }
                         });
 
-                        GlobalORJRadioButton.setBackground(new java.awt.Color(0, 153, 153));
+                        GlobalORJRadioButton.setBackground(new Color(0, 153, 153));
                         GlobalORJRadioButton.setFont(new Font("Consolas", 1, 12)); // NOI18N
-                        GlobalORJRadioButton.setForeground(new java.awt.Color(255, 255, 255));
+                        GlobalORJRadioButton.setForeground(new Color(255, 255, 255));
                         GlobalORJRadioButton.setText("Global ");
                         GlobalORJRadioButton.setToolTipText("select to open global object repository");
                         GlobalORJRadioButton.addMouseListener(new MouseAdapter() {
@@ -519,14 +521,13 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                             }
                         });
 
-                        pnlAddTestStepDown.setBackground(new java.awt.Color(0, 0, 0));
+                        pnlAddTestStepDown.setBackground(new Color(0, 0, 0));
 
-                        AddStepDown.setBackground(new java.awt.Color(0, 0, 0));
+                        AddStepDown.setBackground(new Color(0, 0, 0));
                         AddStepDown.setFont(new Font("Consolas", 1, 14)); // NOI18N
-                        AddStepDown.setForeground(new java.awt.Color(255, 255, 255));
+                        AddStepDown.setForeground(new Color(255, 255, 255));
                         AddStepDown.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addStepUpDown.png"));
-                            AddStepDown.setText("Add Test Step Down");
-                            AddStepDown.setToolTipText("will add a new test step below the selected step");
+                            AddStepDown.setToolTipText("add test step below the selected step");
                             AddStepDown.setBorder(null);
                             AddStepDown.setBorderPainted(false);
                             AddStepDown.setContentAreaFilled(false);
@@ -560,14 +561,13 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                                     .addComponent(AddStepDown, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
                             );
 
-                            pnlSaveTestSuite.setBackground(new java.awt.Color(0, 0, 0));
+                            pnlSaveTestSuite.setBackground(new Color(0, 0, 0));
 
-                            SaveSuite.setBackground(new java.awt.Color(0, 0, 0));
+                            SaveSuite.setBackground(new Color(0, 0, 0));
                             SaveSuite.setFont(new Font("Consolas", 1, 14)); // NOI18N
-                            SaveSuite.setForeground(new java.awt.Color(255, 255, 255));
+                            SaveSuite.setForeground(new Color(255, 255, 255));
                             SaveSuite.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/saveTestSuite.png"));
-                                SaveSuite.setText("Save Suite");
-                                SaveSuite.setToolTipText("will save the updated test suite");
+                                SaveSuite.setToolTipText("save test suite");
                                 SaveSuite.setBorder(null);
                                 SaveSuite.setBorderPainted(false);
                                 SaveSuite.setContentAreaFilled(false);
@@ -601,14 +601,13 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                                         .addComponent(SaveSuite, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
                                 );
 
-                                pnlAddNewTestStep.setBackground(new java.awt.Color(0, 0, 0));
+                                pnlAddNewTestStep.setBackground(new Color(0, 0, 0));
 
-                                AddNewStep.setBackground(new java.awt.Color(0, 0, 0));
+                                AddNewStep.setBackground(new Color(0, 0, 0));
                                 AddNewStep.setFont(new Font("Consolas", 1, 14)); // NOI18N
-                                AddNewStep.setForeground(new java.awt.Color(255, 255, 255));
+                                AddNewStep.setForeground(new Color(255, 255, 255));
                                 AddNewStep.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addTestStep_Element.png"));
-                                    AddNewStep.setText("Add New Test Step");
-                                    AddNewStep.setToolTipText("will add a new test step at the bottom");
+                                    AddNewStep.setToolTipText("add test step");
                                     AddNewStep.setBorder(null);
                                     AddNewStep.setBorderPainted(false);
                                     AddNewStep.setContentAreaFilled(false);
@@ -642,14 +641,13 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                                             .addGap(0, 0, Short.MAX_VALUE))
                                     );
 
-                                    pnlOpenOR.setBackground(new java.awt.Color(0, 0, 0));
+                                    pnlOpenOR.setBackground(new Color(0, 0, 0));
 
-                                    OpenObjectRepository.setBackground(new java.awt.Color(0, 0, 0));
+                                    OpenObjectRepository.setBackground(new Color(0, 0, 0));
                                     OpenObjectRepository.setFont(new Font("Consolas", 1, 14)); // NOI18N
-                                    OpenObjectRepository.setForeground(new java.awt.Color(255, 255, 255));
+                                    OpenObjectRepository.setForeground(new Color(255, 255, 255));
                                     OpenObjectRepository.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/editObjectRepository.png"));
-                                        OpenObjectRepository.setText("Edit OR");
-                                        OpenObjectRepository.setToolTipText("will open the requested local or global object repositroy");
+                                        OpenObjectRepository.setToolTipText("open requested object repositroy");
                                         OpenObjectRepository.setBorder(null);
                                         OpenObjectRepository.setBorderPainted(false);
                                         OpenObjectRepository.setContentAreaFilled(false);
@@ -678,7 +676,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                                         GroupLayout pnlOpenORLayout = new GroupLayout(pnlOpenOR);
                                         pnlOpenOR.setLayout(pnlOpenORLayout);
                                         pnlOpenORLayout.setHorizontalGroup(pnlOpenORLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                            .addComponent(OpenObjectRepository, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(OpenObjectRepository, GroupLayout.PREFERRED_SIZE, 35, Short.MAX_VALUE)
                                         );
                                         pnlOpenORLayout.setVerticalGroup(pnlOpenORLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addGroup(GroupLayout.Alignment.TRAILING, pnlOpenORLayout.createSequentialGroup()
@@ -689,45 +687,40 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                                         GroupLayout pnlMenuBarLayout = new GroupLayout(pnlMenuBar);
                                         pnlMenuBar.setLayout(pnlMenuBarLayout);
                                         pnlMenuBarLayout.setHorizontalGroup(pnlMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                            .addGroup(pnlMenuBarLayout.createSequentialGroup()
-                                                .addComponent(LocalORJRadioButton, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(GlobalORJRadioButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                            .addGroup(pnlMenuBarLayout.createSequentialGroup()
-                                                .addGroup(pnlMenuBarLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                                                    .addComponent(AssociateObjORJCheckBox, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(pnlOpenTestSuite, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(pnlAddTestStepUp, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(pnlAddTestStepDown, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(pnlDeleteTestStep, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(pnlSaveTestSuite, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(pnlAddNewTestStep, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(pnlSaveAsNewTestSuite, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(pnlOpenOR, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(0, 0, Short.MAX_VALUE))
+                                            .addComponent(AssociateObjORJCheckBox)
+                                            .addGroup(pnlMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(pnlSaveAsNewTestSuite, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pnlSaveTestSuite, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pnlAddNewTestStep, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pnlDeleteTestStep, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pnlAddTestStepDown, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pnlAddTestStepUp, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pnlOpenTestSuite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(LocalORJRadioButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(GlobalORJRadioButton)
+                                            .addComponent(pnlOpenOR, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                         );
                                         pnlMenuBarLayout.setVerticalGroup(pnlMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addGroup(pnlMenuBarLayout.createSequentialGroup()
-                                                .addGap(27, 27, 27)
-                                                .addComponent(AssociateObjORJCheckBox, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(AssociateObjORJCheckBox, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(pnlOpenTestSuite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(pnlAddTestStepUp, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(pnlAddTestStepDown, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(13, 13, 13)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(pnlDeleteTestStep, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(pnlAddNewTestStep, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(11, 11, 11)
+                                                .addGap(5, 5, 5)
                                                 .addComponent(pnlSaveTestSuite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(pnlSaveAsNewTestSuite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
-                                                .addGroup(pnlMenuBarLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                    .addComponent(GlobalORJRadioButton)
-                                                    .addComponent(LocalORJRadioButton))
+                                                .addComponent(LocalORJRadioButton)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(GlobalORJRadioButton)
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(pnlOpenOR, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -739,7 +732,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                                         jDesktopPane1.setLayout(jDesktopPane1Layout);
                                         jDesktopPane1Layout.setHorizontalGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                                                .addGap(1, 1, 1)
+                                                .addGap(0, 0, 0)
                                                 .addComponent(pnlMenuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(1, 1, 1))
                                         );
@@ -761,16 +754,15 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                                         );
                                         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(pnlRegSuiteTable, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGap(1, 1, 1))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jDesktopPane1)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                    .addComponent(pnlRegSuiteTable, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(jDesktopPane1))
                                                 .addGap(1, 1, 1))
                                         );
 
                                         getAccessibleContext().setAccessibleParent(this);
 
-                                        setSize(new Dimension(893, 505));
+                                        setSize(new Dimension(898, 505));
                                         setLocationRelativeTo(null);
                                     }// </editor-fold>//GEN-END:initComponents
 
@@ -782,7 +774,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
         XSSFRow excelRow;
         comboBoxObjectRepository = new JComboBox<String>();
         
-        tabOutFromEditingColumn(false, RegressionSuiteTable, 
+        tabOutFromEditingColumn(false, RegSuiteTable, 
                 getFlowCellxPoint, 
                 getFlowCellyPoint, 
                 getEditingRow);
@@ -795,6 +787,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
         }
         
         excelFileImport = new JFileChooser(getCurrDir);
+        excelFileImport.setPreferredSize(new Dimension(450,300));
         excelFileImport.setFileSelectionMode(JFileChooser.FILES_ONLY);
         excelFileImport.setDialogTitle("Open Test Suite");
         excelFileImport.addChoosableFileFilter(new FileNameExtensionFilter("EXCEL WORKBOOK", "xlsx"));
@@ -808,7 +801,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
         noRepoFound =false;
         
         if (excelChooser == JFileChooser.APPROVE_OPTION) {
-            importDataFromExcelModel = (DefaultTableModel) RegressionSuiteTable.getModel();
+            importDataFromExcelModel = (DefaultTableModel) RegSuiteTable.getModel();
             if (AssociateObjORJCheckBox.isSelected() == true) {
                 testObjectRepoColumn.setCellEditor(new DefaultCellEditor(comboBoxObjectRepository));
                 AssociateObjORJCheckBox.setSelected(false);
@@ -874,9 +867,9 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                     }
                 }
 
-                RegressionSuiteTable.setRowSelectionInterval(0, 0);
-                RegressionSuiteTable.scrollRectToVisible(RegressionSuiteTable.getCellRect(0, 0, true));
-                RegressionSuiteTable.requestFocus();
+                RegSuiteTable.setRowSelectionInterval(0, 0);
+                RegSuiteTable.scrollRectToVisible(RegSuiteTable.getCellRect(0, 0, true));
+                RegSuiteTable.requestFocus();
                 
                 if(objRepo.isVisible())
                     objRepo.dispose();
@@ -905,7 +898,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
         }
 
         //RegressionSuiteTable.setDefaultRenderer(Object.class, renderer);
-        if (RegressionSuiteTable.getRowCount() > 0) {    
+        if (RegSuiteTable.getRowCount() > 0) {    
             if (AssociateObjORJCheckBox.isEnabled() == false) {
                 AssociateObjORJCheckBox.setEnabled(true);
             }
@@ -940,7 +933,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
     
     private void OpenObjectRepositoryActionPerformed(ActionEvent evt) {//GEN-FIRST:event_OpenObjectRepositoryActionPerformed
         if(checkEditorIsShowing() ==true)
-            tabOutFromEditingColumn(false, RegressionSuiteTable, 
+            tabOutFromEditingColumn(false, RegSuiteTable, 
             getFlowCellxPoint, 
             getFlowCellyPoint, 
             getEditingRow);
@@ -958,7 +951,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
         String getCurrDir;
         
         if (LocalORJRadioButton.isSelected()) {
-            if (RegressionSuiteTable.getRowCount() > 0) {
+            if (RegSuiteTable.getRowCount() > 0) {
                 try {
                     excelFIS = new FileInputStream(testSuiteFilePath);
                     excelBIS = new BufferedInputStream(excelFIS);
@@ -995,12 +988,14 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                 }
                 
                 excelFileImportOR = new JFileChooser(getCurrDir);
+                excelFileImportOR.setPreferredSize(new Dimension(450,300));
                 excelFileImportOR.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 excelFileImportOR.setDialogTitle("Open Global Test Repository");
                 excelFileImportOR.addChoosableFileFilter(new FileNameExtensionFilter("EXCEL WORKBOOK", "xlsx"));
                 excelFileImportOR.setAcceptAllFileFilterUsed(false);
 
                 int excelChooser = excelFileImportOR.showOpenDialog(this);
+                //excelFileImport.setPreferredSize(new Dimension(450,300));
                 if (excelChooser == JFileChooser.APPROVE_OPTION) {
                     try {
 
@@ -1045,7 +1040,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
     
     private void formWindowActivated(WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         tableCellRenderer renderer = new tableCellRenderer();
-        RegressionSuiteTable.setDefaultRenderer(Object.class, renderer);
+        RegSuiteTable.setDefaultRenderer(Object.class, renderer);
     }//GEN-LAST:event_formWindowActivated
 
     private void LocalORJRadioButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_LocalORJRadioButtonActionPerformed
@@ -1083,7 +1078,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
         testGlobalORAssociatedFilePath = null;
         String getCurrDir;
         
-        tabOutFromEditingColumn(false, RegressionSuiteTable, 
+        tabOutFromEditingColumn(false, RegSuiteTable, 
                 getFlowCellxPoint, 
                 getFlowCellyPoint, 
                 getEditingRow);
@@ -1097,6 +1092,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
             }
             
             excelFileImportOR = new JFileChooser(getCurrDir);
+            excelFileImport.setPreferredSize(new Dimension(450,300));
             excelFileImportOR.setFileSelectionMode(JFileChooser.FILES_ONLY);
             excelFileImportOR.addChoosableFileFilter(new FileNameExtensionFilter("EXCEL WORKBOOK", "xlsx"));
             excelFileImportOR.setAcceptAllFileFilterUsed(false);
@@ -1105,9 +1101,9 @@ public class EditRegressionSuite extends javax.swing.JFrame {
             int excelChooser = excelFileImportOR.showOpenDialog(this);
 
             if (excelChooser == JFileChooser.APPROVE_OPTION) {
-                importDataFromExcelModel = (DefaultTableModel) RegressionSuiteTable.getModel();
+                importDataFromExcelModel = (DefaultTableModel) RegSuiteTable.getModel();
                 testSuiteUploaded = true;
-                testObjectRepoColumn = RegressionSuiteTable.getColumnModel().getColumn(3);
+                testObjectRepoColumn = RegSuiteTable.getColumnModel().getColumn(3);
                 comboBoxObjectRepository = new JComboBox<>();
                 comboBoxObjectRepository.setEditable(true);
     
@@ -1144,7 +1140,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
         } else if (AssociateObjORJCheckBox.isSelected() == false) {
             try {
                 if (noRepoFound == true) {
-                    testObjectRepoColumn = RegressionSuiteTable.getColumnModel().getColumn(3);
+                    testObjectRepoColumn = RegSuiteTable.getColumnModel().getColumn(3);
                     testObjectRepoColumn.setCellEditor(new DefaultCellEditor(RegSuite.comboBoxObjectRepository));
                     RegSuite.comboBoxObjectRepository.setEditable(true);
                 } else {
@@ -1152,7 +1148,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                     RegSuite.getObjectListFromObjectRepository(getCurrSheet);
                     RegSuite.ObjectRepositoryList();
 
-                    RegSuite.testObjectRepoColumn = EditRegressionSuite.RegressionSuiteTable.getColumnModel().getColumn(3);
+                    RegSuite.testObjectRepoColumn = EditRegressionSuite.RegSuiteTable.getColumnModel().getColumn(3);
                     RegSuite.testObjectRepoColumn.setCellEditor(new DefaultCellEditor(RegSuite.comboBoxObjectRepository));
                     RegSuite.comboBoxObjectRepository.setEditable(true);
                 }
@@ -1244,18 +1240,18 @@ public class EditRegressionSuite extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void SaveSuite1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_SaveSuite1ActionPerformed
-        if (RegressionSuiteTable.getRowCount() == 0) {
+        if (RegSuiteTable.getRowCount() == 0) {
             JOptionPane.showMessageDialog(RegressionSuiteScrollPane, "No test suite available to Save As New Test Suite!", "Alert", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
         if(checkEditorIsShowing() ==true)
-                tabOutFromEditingColumn(false, RegressionSuiteTable, 
+                tabOutFromEditingColumn(false, RegSuiteTable, 
                 getFlowCellxPoint, 
                 getFlowCellyPoint, 
                 getEditingRow);
         
-        if(common.checkForDuplicateTestId(importDataFromExcelModel, RegressionSuiteTable, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateTestId(importDataFromExcelModel, RegSuiteTable, editableRow, testIdTxt) ==true)
             return;
         
         FileOutputStream excelFos;
@@ -1271,6 +1267,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
         }
          
         excelFileExport = new JFileChooser(getCurrDir);
+        excelFileExport.setPreferredSize(new Dimension(450,300));
         excelFileExport.setDialogTitle("Save As New Test Suite");
         excelFileExport.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
@@ -1370,12 +1367,12 @@ public class EditRegressionSuite extends javax.swing.JFrame {
     private void SaveSuiteActionPerformed(ActionEvent evt) {//GEN-FIRST:event_SaveSuiteActionPerformed
         if (excelFile != null) {
             if(checkEditorIsShowing() ==true)
-                tabOutFromEditingColumn(false, RegressionSuiteTable, 
+                tabOutFromEditingColumn(false, RegSuiteTable, 
                 getFlowCellxPoint, 
                 getFlowCellyPoint, 
                 getEditingRow);
             
-            if(common.checkForDuplicateTestId(importDataFromExcelModel, RegressionSuiteTable, editableRow, testIdTxt) ==true)
+            if(common.checkForDuplicateTestId(importDataFromExcelModel, RegSuiteTable, editableRow, testIdTxt) ==true)
                 return;
             
             try {
@@ -1404,31 +1401,31 @@ public class EditRegressionSuite extends javax.swing.JFrame {
 
     private void AddNewStepActionPerformed(ActionEvent evt) {//GEN-FIRST:event_AddNewStepActionPerformed
         boolean rowAdded = false;
-        if (RegressionSuiteTable.getRowCount() > 0) {
+        if (RegSuiteTable.getRowCount() > 0) {
             if(checkEditorIsShowing() ==true)
-                tabOutFromEditingColumn(false, RegressionSuiteTable, 
+                tabOutFromEditingColumn(false, RegSuiteTable, 
                 getFlowCellxPoint, 
                 getFlowCellyPoint, 
                 getEditingRow);
             
-            if(common.checkForDuplicateTestId(importDataFromExcelModel, RegressionSuiteTable, editableRow, testIdTxt) ==true)
+            if(common.checkForDuplicateTestId(importDataFromExcelModel, RegSuiteTable, editableRow, testIdTxt) ==true)
                 return;
             
             importDataFromExcelModel.addRow(new Object[]{null, null, null, null, null, null});
-            RegressionSuiteTable.setColumnSelectionInterval(0, 0);
-            RegressionSuiteTable.setRowSelectionInterval(RegressionSuiteTable.getRowCount() - 1, RegressionSuiteTable.getRowCount() - 1);
-            RegressionSuiteTable.scrollRectToVisible(RegressionSuiteTable.getCellRect(RegressionSuiteTable.getRowCount() - 1, 0, true));
-            RegressionSuiteTable.requestFocus();
+            RegSuiteTable.setColumnSelectionInterval(0, 0);
+            RegSuiteTable.setRowSelectionInterval(RegSuiteTable.getRowCount() - 1, RegSuiteTable.getRowCount() - 1);
+            RegSuiteTable.scrollRectToVisible(RegSuiteTable.getCellRect(RegSuiteTable.getRowCount() - 1, 0, true));
+            RegSuiteTable.requestFocus();
             rowAdded = true;
         } else {
             if (testSuiteFilePath == null) {
                 JOptionPane.showMessageDialog(RegressionSuiteScrollPane, "No test suite available to add new step(s)!", "Alert", JOptionPane.WARNING_MESSAGE);
             } else {
                 importDataFromExcelModel.addRow(new Object[]{null, null, null, null, null, null});
-                RegressionSuiteTable.setColumnSelectionInterval(0, 0);
-                RegressionSuiteTable.setRowSelectionInterval(RegressionSuiteTable.getRowCount() - 1, RegressionSuiteTable.getRowCount() - 1);
-                RegressionSuiteTable.scrollRectToVisible(RegressionSuiteTable.getCellRect(RegressionSuiteTable.getRowCount() - 1, 0, true));
-                RegressionSuiteTable.requestFocus();
+                RegSuiteTable.setColumnSelectionInterval(0, 0);
+                RegSuiteTable.setRowSelectionInterval(RegSuiteTable.getRowCount() - 1, RegSuiteTable.getRowCount() - 1);
+                RegSuiteTable.scrollRectToVisible(RegSuiteTable.getCellRect(RegSuiteTable.getRowCount() - 1, 0, true));
+                RegSuiteTable.requestFocus();
                 rowAdded = true;
             }
             //JOptionPane.showMessageDialog(RegressionSuiteScrollPane,"No test step(s) available to add new step up!","Alert",JOptionPane.WARNING_MESSAGE);
@@ -1437,11 +1434,11 @@ public class EditRegressionSuite extends javax.swing.JFrame {
         if (rowAdded == true) {
             Object getPreviousRowData = 0;
             try {
-                getPreviousRowData = RegressionSuiteTable.getValueAt(RegressionSuiteTable.getSelectedRow() - 1, 1);
+                getPreviousRowData = RegSuiteTable.getValueAt(RegSuiteTable.getSelectedRow() - 1, 1);
             } catch (ArrayIndexOutOfBoundsException exp) {
                 getPreviousRowData = 0;
             }
-            RegressionSuiteTable.setValueAt(Integer.valueOf(getPreviousRowData.toString()) + 1, RegressionSuiteTable.getRowCount() - 1, 1);
+            RegSuiteTable.setValueAt(Integer.valueOf(getPreviousRowData.toString()) + 1, RegSuiteTable.getRowCount() - 1, 1);
         }
     }//GEN-LAST:event_AddNewStepActionPerformed
 
@@ -1456,18 +1453,18 @@ public class EditRegressionSuite extends javax.swing.JFrame {
     }//GEN-LAST:event_AddNewStepMouseEntered
 
     private void DeleteStepActionPerformed(ActionEvent evt) {//GEN-FIRST:event_DeleteStepActionPerformed
-        if (RegressionSuiteTable.getRowCount() > 0) {           
+        if (RegSuiteTable.getRowCount() > 0) {           
             
             if(checkEditorIsShowing() ==true)
-                tabOutFromEditingColumn(false, RegressionSuiteTable, 
+                tabOutFromEditingColumn(false, RegSuiteTable, 
                 getFlowCellxPoint, 
                 getFlowCellyPoint, 
                 getEditingRow);
                 
-            if(common.checkForDuplicateTestId(importDataFromExcelModel, RegressionSuiteTable, editableRow, testIdTxt) ==true)
+            if(common.checkForDuplicateTestId(importDataFromExcelModel, RegSuiteTable, editableRow, testIdTxt) ==true)
                 return;
             
-            int rowIndex =RegressionSuiteTable.getSelectedRow();
+            int rowIndex =RegSuiteTable.getSelectedRow();
             int colIndex =getEditingColumn;
                     
             Object getSelTestStep =null;
@@ -1479,13 +1476,13 @@ public class EditRegressionSuite extends javax.swing.JFrame {
             boolean lastRowSelected =false;
             
             try {
-                getTestId =RegressionSuiteTable.getValueAt(rowIndex, 0).toString();
+                getTestId =RegSuiteTable.getValueAt(rowIndex, 0).toString();
             } catch (NullPointerException exp) {
                 getTestId ="";
             }
             
             try {
-                getTestIdx =importDataFromExcelModel.getValueAt(RegressionSuiteTable.getSelectedRow() + 1, 0).toString();                
+                getTestIdx =importDataFromExcelModel.getValueAt(RegSuiteTable.getSelectedRow() + 1, 0).toString();                
             } catch (ArrayIndexOutOfBoundsException | NullPointerException exp) {
                 getTestIdx ="";
             }
@@ -1495,19 +1492,19 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                     diffTestId =true;
                 }
             }
-            getSelTestStep = importDataFromExcelModel.getValueAt(RegressionSuiteTable.getSelectedRow(), 1);
+            getSelTestStep = importDataFromExcelModel.getValueAt(RegSuiteTable.getSelectedRow(), 1);
             int newTestStep = Integer.valueOf(String.valueOf(getSelTestStep));
             importDataFromExcelModel.removeRow(rowIndex);
             
-            if (RegressionSuiteTable.getRowCount() != 0) {
-                if (RegressionSuiteTable.getRowCount() ==rowIndex) {
+            if (RegSuiteTable.getRowCount() != 0) {
+                if (RegSuiteTable.getRowCount() ==rowIndex) {
                     rowIndex =rowIndex-1;
                     lastRowSelected =true;
                 }
-                RegressionSuiteTable.requestFocus();
-                RegressionSuiteTable.setColumnSelectionInterval(0, 0);
-                RegressionSuiteTable.setRowSelectionInterval(rowIndex, rowIndex);
-                RegressionSuiteTable.scrollRectToVisible(RegressionSuiteTable.getCellRect(rowIndex,rowIndex, true));
+                RegSuiteTable.requestFocus();
+                RegSuiteTable.setColumnSelectionInterval(0, 0);
+                RegSuiteTable.setRowSelectionInterval(rowIndex, rowIndex);
+                RegSuiteTable.scrollRectToVisible(RegSuiteTable.getCellRect(rowIndex,rowIndex, true));
                 
                 if(lastRowSelected ==true)
                     return;
@@ -1515,7 +1512,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                 if (getTestId ==null || !getTestId.isEmpty() && !getTestId.contentEquals("#")) {
                     try{
                         try{
-                            getNextStepVal =importDataFromExcelModel.getValueAt(RegressionSuiteTable.getSelectedRow() + 1, 0).toString();
+                            getNextStepVal =importDataFromExcelModel.getValueAt(RegSuiteTable.getSelectedRow() + 1, 0).toString();
                         }catch (NullPointerException exp){
                             getNextStepVal ="";
                         }
@@ -1525,32 +1522,32 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                         if (diffTestId == true) {
                             getTestId = getTestIdx;
                         }
-                        RegressionSuiteTable.setValueAt(getTestId, RegressionSuiteTable.getSelectedRow(), 0);
+                        RegSuiteTable.setValueAt(getTestId, RegSuiteTable.getSelectedRow(), 0);
                     }
                     }catch (ArrayIndexOutOfBoundsException exp){ 
-                        RegressionSuiteTable.setValueAt(getTestId, RegressionSuiteTable.getSelectedRow(), 0);
+                        RegSuiteTable.setValueAt(getTestId, RegSuiteTable.getSelectedRow(), 0);
                     }
                 }
                 
-                for (int i = RegressionSuiteTable.getSelectedRow(); i <RegressionSuiteTable.getRowCount(); i++) {
-                    RegressionSuiteTable.getModel().setValueAt(newTestStep,i , 1);
+                for (int i = RegSuiteTable.getSelectedRow(); i <RegSuiteTable.getRowCount(); i++) {
+                    RegSuiteTable.getModel().setValueAt(newTestStep,i , 1);
                     try{
                         try{
-                            getNextStepVal =RegressionSuiteTable.getModel().getValueAt(i + 1, 0).toString();
+                            getNextStepVal =RegSuiteTable.getModel().getValueAt(i + 1, 0).toString();
                         }catch(NullPointerException exp){
                             getNextStepVal ="";
                         }
                         
-                        if (RegressionSuiteTable.getModel().getValueAt(i, 0) != null && 
+                        if (RegSuiteTable.getModel().getValueAt(i, 0) != null && 
                                 !getNextStepVal.isEmpty() &&
                                 !getNextStepVal.contentEquals("#")) {
                             break;
-                        } else if (RegressionSuiteTable.getModel().getValueAt(i, 1) == null || 
-                                   RegressionSuiteTable.getModel().getValueAt(i + 1, 1).toString().isEmpty()) {
+                        } else if (RegSuiteTable.getModel().getValueAt(i, 1) == null || 
+                                   RegSuiteTable.getModel().getValueAt(i + 1, 1).toString().isEmpty()) {
                             break;
                         }
                     }catch (ArrayIndexOutOfBoundsException exp){
-                        RegressionSuiteTable.getModel().setValueAt(newTestStep, i, 1);
+                        RegSuiteTable.getModel().setValueAt(newTestStep, i, 1);
                     }
                     newTestStep++;
                 }
@@ -1575,48 +1572,48 @@ public class EditRegressionSuite extends javax.swing.JFrame {
     }//GEN-LAST:event_DeleteStepMouseEntered
 
     private void AddStepDownActionPerformed(ActionEvent evt) {//GEN-FIRST:event_AddStepDownActionPerformed
-        if (RegressionSuiteTable.getRowCount() > 0) {
+        if (RegSuiteTable.getRowCount() > 0) {
             if(checkEditorIsShowing() ==true)
-                tabOutFromEditingColumn(false, RegressionSuiteTable, 
+                tabOutFromEditingColumn(false, RegSuiteTable, 
                 getFlowCellxPoint, 
                 getFlowCellyPoint, 
                 getEditingRow);
             
-            if(common.checkForDuplicateTestId(importDataFromExcelModel, RegressionSuiteTable, editableRow, testIdTxt) ==true)
+            if(common.checkForDuplicateTestId(importDataFromExcelModel, RegSuiteTable, editableRow, testIdTxt) ==true)
                 return;
             
-            int rowIndex = RegressionSuiteTable.getSelectedRow();
+            int rowIndex = RegSuiteTable.getSelectedRow();
             if (rowIndex != -1) {
                 try {
                     try {
-                        String getTestID = RegressionSuiteTable.getValueAt(RegressionSuiteTable.getSelectedRow(), 0).toString();
-                        String getTestStep = RegressionSuiteTable.getValueAt(RegressionSuiteTable.getSelectedRow(), 1).toString();
+                        String getTestID = RegSuiteTable.getValueAt(RegSuiteTable.getSelectedRow(), 0).toString();
+                        String getTestStep = RegSuiteTable.getValueAt(RegSuiteTable.getSelectedRow(), 1).toString();
 
                         if ((getTestID.isEmpty()) && (getTestStep.isEmpty())) {
                             return;
                         } else {
                             importDataFromExcelModel.insertRow(rowIndex + 1, new Object[]{null, null, null, null, null, null});
-                            rowIndex = RegressionSuiteTable.getSelectedRow();
-                            RegressionSuiteTable.setColumnSelectionInterval(0, 0);
-                            RegressionSuiteTable.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
-                            RegressionSuiteTable.scrollRectToVisible(RegressionSuiteTable.getCellRect(rowIndex + 1, 0, true));
-                            RegressionSuiteTable.requestFocus();
+                            rowIndex = RegSuiteTable.getSelectedRow();
+                            RegSuiteTable.setColumnSelectionInterval(0, 0);
+                            RegSuiteTable.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
+                            RegSuiteTable.scrollRectToVisible(RegSuiteTable.getCellRect(rowIndex + 1, 0, true));
+                            RegSuiteTable.requestFocus();
                         }
                     } catch (NullPointerException exp) {
                         importDataFromExcelModel.insertRow(rowIndex + 1, new Object[]{null, null, null, null, null, null});
-                        rowIndex = RegressionSuiteTable.getSelectedRow();
-                        RegressionSuiteTable.setColumnSelectionInterval(0, 0);
-                        RegressionSuiteTable.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
-                        RegressionSuiteTable.scrollRectToVisible(RegressionSuiteTable.getCellRect(rowIndex + 1, 0, true));
-                        RegressionSuiteTable.requestFocus();
+                        rowIndex = RegSuiteTable.getSelectedRow();
+                        RegSuiteTable.setColumnSelectionInterval(0, 0);
+                        RegSuiteTable.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
+                        RegSuiteTable.scrollRectToVisible(RegSuiteTable.getCellRect(rowIndex + 1, 0, true));
+                        RegSuiteTable.requestFocus();
                     }
                 } catch (NullPointerException exp) {
                     importDataFromExcelModel.insertRow(rowIndex + 1, new Object[]{null, null, null, null, null, null});
-                    rowIndex = RegressionSuiteTable.getSelectedRow();
-                    RegressionSuiteTable.setColumnSelectionInterval(0, 0);
-                    RegressionSuiteTable.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
-                    RegressionSuiteTable.scrollRectToVisible(RegressionSuiteTable.getCellRect(rowIndex + 1, 0, true));
-                    RegressionSuiteTable.requestFocus();
+                    rowIndex = RegSuiteTable.getSelectedRow();
+                    RegSuiteTable.setColumnSelectionInterval(0, 0);
+                    RegSuiteTable.setRowSelectionInterval(rowIndex + 1, rowIndex + 1);
+                    RegSuiteTable.scrollRectToVisible(RegSuiteTable.getCellRect(rowIndex + 1, 0, true));
+                    RegSuiteTable.requestFocus();
                 }
 
             } else {
@@ -1646,51 +1643,51 @@ public class EditRegressionSuite extends javax.swing.JFrame {
 
     private void AddStepUpActionPerformed(ActionEvent evt) {//GEN-FIRST:event_AddStepUpActionPerformed
         int getTestStep =0;
-        if(RegressionSuiteTable.getRowCount()>0){
+        if(RegSuiteTable.getRowCount()>0){
             if(checkEditorIsShowing() ==true)
-                tabOutFromEditingColumn(false, RegressionSuiteTable, 
+                tabOutFromEditingColumn(false, RegSuiteTable, 
                 getFlowCellxPoint, 
                 getFlowCellyPoint, 
                 getEditingRow);
             
-            if(common.checkForDuplicateTestId(importDataFromExcelModel, RegressionSuiteTable, editableRow, testIdTxt) ==true)
+            if(common.checkForDuplicateTestId(importDataFromExcelModel, RegSuiteTable, editableRow, testIdTxt) ==true)
                 return;
             
-            int rowIndex = RegressionSuiteTable.getSelectedRow();
+            int rowIndex = RegSuiteTable.getSelectedRow();
             if(rowIndex !=-1){
-                rowIndex = RegressionSuiteTable.getSelectedRow();
+                rowIndex = RegSuiteTable.getSelectedRow();
                 String getTestId = null;
                     
                 try{
-                    getTestId = RegressionSuiteTable.getValueAt(rowIndex, 0).toString();
+                    getTestId = RegSuiteTable.getValueAt(rowIndex, 0).toString();
                 }catch(NullPointerException exp){
                     getTestId ="";
                 }
                         
                 if(rowIndex ==0)
-                    getTestStep = Integer.valueOf(RegressionSuiteTable.getValueAt(rowIndex, 1).toString());
+                    getTestStep = Integer.valueOf(RegSuiteTable.getValueAt(rowIndex, 1).toString());
                 else
-                    getTestStep = Integer.valueOf(RegressionSuiteTable.getValueAt(rowIndex-1, 1).toString())+1;
+                    getTestStep = Integer.valueOf(RegSuiteTable.getValueAt(rowIndex-1, 1).toString())+1;
                     
                 importDataFromExcelModel.insertRow(rowIndex, new Object[] {null,null,null,null,null,null });
-                RegressionSuiteTable.setColumnSelectionInterval(0, 0);
-                RegressionSuiteTable.setRowSelectionInterval(rowIndex, rowIndex);
-                RegressionSuiteTable.scrollRectToVisible(RegressionSuiteTable.getCellRect(rowIndex,0, true));
-                RegressionSuiteTable.requestFocus();
+                RegSuiteTable.setColumnSelectionInterval(0, 0);
+                RegSuiteTable.setRowSelectionInterval(rowIndex, rowIndex);
+                RegSuiteTable.scrollRectToVisible(RegSuiteTable.getCellRect(rowIndex,0, true));
+                RegSuiteTable.requestFocus();
                     
-                for(int i=rowIndex; i<RegressionSuiteTable.getRowCount(); i++ ){
+                for(int i=rowIndex; i<RegSuiteTable.getRowCount(); i++ ){
                     try{
-                        if(!RegressionSuiteTable.getValueAt(i, 0).toString().isEmpty())
+                        if(!RegSuiteTable.getValueAt(i, 0).toString().isEmpty())
                             break;
                     }catch(NullPointerException exp){
 
                     }
-                    RegressionSuiteTable.setValueAt(getTestStep++, i, 1);
+                    RegSuiteTable.setValueAt(getTestStep++, i, 1);
                 }
                     
                 if(!getTestId.isEmpty()){
-                    RegressionSuiteTable.setValueAt(getTestId, RegressionSuiteTable.getSelectedRow(), 0);
-                    RegressionSuiteTable.setValueAt("", RegressionSuiteTable.getSelectedRow()+1, 0);
+                    RegSuiteTable.setValueAt(getTestId, RegSuiteTable.getSelectedRow(), 0);
+                    RegSuiteTable.setValueAt("", RegSuiteTable.getSelectedRow()+1, 0);
                 }
         
             }else
@@ -1713,85 +1710,85 @@ public class EditRegressionSuite extends javax.swing.JFrame {
         AddStepUp.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_AddStepUpMouseEntered
 
-    private void RegressionSuiteTableMousePressed(MouseEvent evt) {//GEN-FIRST:event_RegressionSuiteTableMousePressed
-        getFlowCellxPoint =RegressionSuiteTable.rowAtPoint(evt.getPoint());
-        getFlowCellyPoint =RegressionSuiteTable.columnAtPoint(evt.getPoint());
-        getEditingRow =RegressionSuiteTable.getEditingRow();
+    private void RegSuiteTableMousePressed(MouseEvent evt) {//GEN-FIRST:event_RegSuiteTableMousePressed
+        getFlowCellxPoint =RegSuiteTable.rowAtPoint(evt.getPoint());
+        getFlowCellyPoint =RegSuiteTable.columnAtPoint(evt.getPoint());
+        getEditingRow =RegSuiteTable.getEditingRow();
         
         if(getFlowCellyPoint ==2){
-           comboBoxTestFlow.dispatchEvent(new KeyEvent(RegressionSuiteTable,KeyEvent.KEY_PRESSED, getEditingRow,2,KeyEvent.VK_DOWN, ' '));
+           comboBoxTestFlow.dispatchEvent(new KeyEvent(RegSuiteTable,KeyEvent.KEY_PRESSED, getEditingRow,2,KeyEvent.VK_DOWN, ' '));
         }     
         
         try{
-            getSelRowTestFlow =RegressionSuiteTable.getValueAt(getFlowCellxPoint, 2).toString();
+            getSelRowTestFlow =RegSuiteTable.getValueAt(getFlowCellxPoint, 2).toString();
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){
             
         }
         
-        int getCurRow = RegressionSuiteTable.convertRowIndexToModel(RegressionSuiteTable.rowAtPoint(evt.getPoint()));
-        int gerCurrCol = RegressionSuiteTable.convertColumnIndexToModel(RegressionSuiteTable.columnAtPoint(evt.getPoint()));
+        int getCurRow = RegSuiteTable.convertRowIndexToModel(RegSuiteTable.rowAtPoint(evt.getPoint()));
+        int gerCurrCol = RegSuiteTable.convertColumnIndexToModel(RegSuiteTable.columnAtPoint(evt.getPoint()));
         
-        RegressionSuiteTable.requestFocus();
-        RegressionSuiteTable.setRowSelectionInterval(getFlowCellxPoint, getFlowCellxPoint);
-        RegressionSuiteTable.scrollRectToVisible(RegressionSuiteTable.getCellRect(getFlowCellxPoint,getFlowCellxPoint, true));
+        RegSuiteTable.requestFocus();
+        RegSuiteTable.setRowSelectionInterval(getFlowCellxPoint, getFlowCellxPoint);
+        RegSuiteTable.scrollRectToVisible(RegSuiteTable.getCellRect(getFlowCellxPoint,getFlowCellxPoint, true));
                             
-        if(common.checkForDuplicateTestId(importDataFromExcelModel, RegressionSuiteTable, editableRow, testIdTxt) ==true)
+        if(common.checkForDuplicateTestId(importDataFromExcelModel, RegSuiteTable, editableRow, testIdTxt) ==true)
             return;
         
         if(duplicateTestId ==false){
             switch (gerCurrCol) {
                 case 0:
-                    RegressionSuiteTable.editCellAt(getCurRow, 0);
-                    editableRow =RegressionSuiteTable.getEditingRow();
+                    RegSuiteTable.editCellAt(getCurRow, 0);
+                    editableRow =RegSuiteTable.getEditingRow();
                     testIdTxt.requestFocusInWindow();
                     break;
                 case 2:
-                    RegressionSuiteTable.editCellAt(getCurRow, 2);
+                    RegSuiteTable.editCellAt(getCurRow, 2);
                     comboBoxTestFlow.requestFocusInWindow();
                     break;
                 case 3:
-                    RegressionSuiteTable.editCellAt(getCurRow, 3);
+                    RegSuiteTable.editCellAt(getCurRow, 3);
                     comboBoxObjectRepository.requestFocusInWindow();
                     break;
                 case 4:
-                    RegressionSuiteTable.editCellAt(getCurRow, 4);
+                    RegSuiteTable.editCellAt(getCurRow, 4);
                     testDataTxt.requestFocusInWindow();
                     break;
                 case 5:
-                    RegressionSuiteTable.editCellAt(getCurRow, 5);
+                    RegSuiteTable.editCellAt(getCurRow, 5);
                     testDescTxt.requestFocusInWindow();
                     break;
                 default:
                     break;
             }
         }
-    }//GEN-LAST:event_RegressionSuiteTableMousePressed
+    }//GEN-LAST:event_RegSuiteTableMousePressed
 
-    private void RegressionSuiteTableKeyReleased(KeyEvent evt) {//GEN-FIRST:event_RegressionSuiteTableKeyReleased
-        common.checkForDuplicateTestId(importDataFromExcelModel, RegressionSuiteTable, editableRow, testIdTxt);
-    }//GEN-LAST:event_RegressionSuiteTableKeyReleased
+    private void RegSuiteTableKeyReleased(KeyEvent evt) {//GEN-FIRST:event_RegSuiteTableKeyReleased
+        common.checkForDuplicateTestId(importDataFromExcelModel, RegSuiteTable, editableRow, testIdTxt);
+    }//GEN-LAST:event_RegSuiteTableKeyReleased
 
-    private void RegressionSuiteTableFocusGained(FocusEvent evt) {//GEN-FIRST:event_RegressionSuiteTableFocusGained
+    private void RegSuiteTableFocusGained(FocusEvent evt) {//GEN-FIRST:event_RegSuiteTableFocusGained
         /*testObjectRepoColumn = RegressionSuiteTable.getColumnModel().getColumn(3);
         testObjectRepoColumn.setCellEditor(new DefaultCellEditor(comboBoxObjectRepository));
         comboBoxObjectRepository.setEditable(true);*/
-    }//GEN-LAST:event_RegressionSuiteTableFocusGained
+    }//GEN-LAST:event_RegSuiteTableFocusGained
 
-    private void RegressionSuiteTableMouseReleased(MouseEvent evt) {//GEN-FIRST:event_RegressionSuiteTableMouseReleased
-        getFlowCellxPoint =RegressionSuiteTable.rowAtPoint(evt.getPoint());
-        getFlowCellyPoint =RegressionSuiteTable.columnAtPoint(evt.getPoint());
-        getEditingRow =RegressionSuiteTable.getEditingRow();
-        getEditingColumn =RegressionSuiteTable.getEditingColumn();
-    }//GEN-LAST:event_RegressionSuiteTableMouseReleased
+    private void RegSuiteTableMouseReleased(MouseEvent evt) {//GEN-FIRST:event_RegSuiteTableMouseReleased
+        getFlowCellxPoint =RegSuiteTable.rowAtPoint(evt.getPoint());
+        getFlowCellyPoint =RegSuiteTable.columnAtPoint(evt.getPoint());
+        getEditingRow =RegSuiteTable.getEditingRow();
+        getEditingColumn =RegSuiteTable.getEditingColumn();
+    }//GEN-LAST:event_RegSuiteTableMouseReleased
 
-    private void RegressionSuiteTableMouseClicked(MouseEvent evt) {//GEN-FIRST:event_RegressionSuiteTableMouseClicked
+    private void RegSuiteTableMouseClicked(MouseEvent evt) {//GEN-FIRST:event_RegSuiteTableMouseClicked
         /*testObjectRepoColumn = RegressionSuiteTable.getColumnModel().getColumn(3);
         testObjectRepoColumn.setCellEditor(new DefaultCellEditor(comboBoxObjectRepository));
         comboBoxObjectRepository.setEditable(true);*/
-    }//GEN-LAST:event_RegressionSuiteTableMouseClicked
+    }//GEN-LAST:event_RegSuiteTableMouseClicked
 
     private void formWindowGainedFocus(WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-        testObjectRepoColumn = RegressionSuiteTable.getColumnModel().getColumn(3);
+        testObjectRepoColumn = RegSuiteTable.getColumnModel().getColumn(3);
         testObjectRepoColumn.setCellEditor(new DefaultCellEditor(comboBoxObjectRepository));
         comboBoxObjectRepository.setEditable(true);
         
@@ -1946,6 +1943,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                 + "ROBOT_SCREENSHOT,"
                 + "MOUSE_HOVER,"
                 + "UPLOAD_FILE,"
+                + "SELECT_SAL_RANGE,"
                 + "USER_DEFINE,"
                 + ":START,:GET,:IF,:THEN,:STOP,";
               
@@ -1974,7 +1972,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
                 comboBoxObjectRepository = new JComboBox<>();
 
                 updateObjectRepository(excelFile, 1);
-                testObjectRepoColumn = RegressionSuiteTable.getColumnModel().getColumn(3);
+                testObjectRepoColumn = RegSuiteTable.getColumnModel().getColumn(3);
                 testObjectRepoColumn.setCellEditor(new DefaultCellEditor(comboBoxObjectRepository));
                 JOptionPane.showMessageDialog(RegressionSuiteScrollPane, "Test suite " + "\"" + excelFileImport.getName(excelFile) + "\"" + " updated and saved!", "Alert", JOptionPane.WARNING_MESSAGE);
             }
@@ -2042,17 +2040,17 @@ public class EditRegressionSuite extends javax.swing.JFrame {
     }
     
     public static void setTableColWidthForCreateRegSuiteTable(){
-        RegressionSuiteTable.getColumnModel().getColumn(0).setMaxWidth(61);
-        RegressionSuiteTable.getColumnModel().getColumn(0).setMinWidth(61);
+        RegSuiteTable.getColumnModel().getColumn(0).setMaxWidth(61);
+        RegSuiteTable.getColumnModel().getColumn(0).setMinWidth(61);
         
-        RegressionSuiteTable.getColumnModel().getColumn(1).setMaxWidth(72);
-        RegressionSuiteTable.getColumnModel().getColumn(1).setMinWidth(72);
+        RegSuiteTable.getColumnModel().getColumn(1).setMaxWidth(72);
+        RegSuiteTable.getColumnModel().getColumn(1).setMinWidth(72);
         
-        RegressionSuiteTable.getColumnModel().getColumn(2).setMaxWidth(163);
-        RegressionSuiteTable.getColumnModel().getColumn(2).setMinWidth(163);
+        RegSuiteTable.getColumnModel().getColumn(2).setMaxWidth(163);
+        RegSuiteTable.getColumnModel().getColumn(2).setMinWidth(163);
         
-        RegressionSuiteTable.getColumnModel().getColumn(3).setMaxWidth(173);
-        RegressionSuiteTable.getColumnModel().getColumn(3).setMinWidth(173);
+        RegSuiteTable.getColumnModel().getColumn(3).setMaxWidth(173);
+        RegSuiteTable.getColumnModel().getColumn(3).setMinWidth(173);
     }
     
     public static boolean checkEditorIsShowing(){
@@ -2119,9 +2117,9 @@ public class EditRegressionSuite extends javax.swing.JFrame {
     public static JRadioButton GlobalORJRadioButton;
     public static JRadioButton LocalORJRadioButton;
     public static JButton OpenObjectRepository;
+    public static JTable RegSuiteTable;
     public static JButton RegressionSuite;
     public static JScrollPane RegressionSuiteScrollPane;
-    public static JTable RegressionSuiteTable;
     public static JButton SaveSuite;
     public static JButton SaveSuite1;
     public JDesktopPane jDesktopPane1;

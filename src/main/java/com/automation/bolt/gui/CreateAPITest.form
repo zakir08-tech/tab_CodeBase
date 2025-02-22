@@ -484,7 +484,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="textModifyPayload">
+        <Component class="javax.swing.JTextArea" name="txtModifyPayload">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -578,7 +578,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="19" rowCount="0">
+                  <Table columnCount="21" rowCount="0">
                     <Column editable="true" title="Test ID" type="java.lang.Object"/>
                     <Column editable="true" title="Request" type="java.lang.Object"/>
                     <Column editable="true" title="URL" type="java.lang.Object"/>
@@ -586,10 +586,12 @@
                     <Column editable="true" title="Headers (value)" type="java.lang.Object"/>
                     <Column editable="true" title="Params (key)" type="java.lang.Object"/>
                     <Column editable="true" title="Params (value)" type="java.lang.Object"/>
-                    <Column editable="true" title="Payload" type="java.lang.Object"/>
+                    <Column editable="false" title="Payload" type="java.lang.Object"/>
                     <Column editable="true" title="Payload Type" type="java.lang.Object"/>
                     <Column editable="true" title="Modify Payload (key)" type="java.lang.Object"/>
                     <Column editable="true" title="Modify Payload (value)" type="java.lang.Object"/>
+                    <Column editable="true" title="Response Tag Name (value)" type="java.lang.Object"/>
+                    <Column editable="true" title="Capture Tag Value (env var)" type="java.lang.Object"/>
                     <Column editable="true" title="Authorization" type="java.lang.Object"/>
                     <Column editable="true" title="" type="java.lang.Object"/>
                     <Column editable="true" title="" type="java.lang.Object"/>
@@ -603,6 +605,16 @@
                 <Property name="autoResizeMode" type="int" value="0"/>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
@@ -791,6 +803,7 @@
             <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
             <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="horizontalTextPosition" type="int" value="2"/>
             <Property name="opaque" type="boolean" value="true"/>
             <Property name="requestFocusEnabled" type="boolean" value="false"/>
             <Property name="rolloverEnabled" type="boolean" value="false"/>

@@ -32,8 +32,10 @@ import com.automation.bolt.common;
 import static com.automation.bolt.common.tabOutFromAnyEditingColumn;
 import com.automation.bolt.constants;
 import static com.automation.bolt.gui.EditRegressionSuite.RegressionSuiteScrollPane;
+import static com.automation.bolt.gui.ExecuteRegressionSuite.bttnRefreshTestRun;
 import com.automation.bolt.renderer.tableCellRendererAPI;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.IllegalComponentStateException;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -52,6 +54,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
  * @author zakir
  */
 public class EditAPITest extends javax.swing.JFrame {
+    public boolean isEnvVarClicked =false;
     public static DefaultTableModel editSuiteTabModel =new DefaultTableModel();
     //public static DefaultTableModel createORTabModel =new DefaultTableModel();
     
@@ -65,6 +68,7 @@ public class EditAPITest extends javax.swing.JFrame {
     //public static JTextField elmXpathTxt =new JTextField();
     
     public static JTextField testIdTxt =new JTextField();
+    public static JTextField testEnvVarTxt =new JTextField();
     public static JTextField etestURLTxt =new JTextField();
     public static JTextField testExpectedStatusTxt =new JTextField();
     public static JTextField testPayloadTxt =new JTextField();
@@ -84,6 +88,7 @@ public class EditAPITest extends javax.swing.JFrame {
     //public static TableColumn elmXpathCol =null;
     
     public static TableColumn testIdCol =null;
+    public static TableColumn testEnvVarCol =null;
     public static TableColumn etestURLCol =null;
     public static TableColumn testExpectedStatusCol =null;
     public static TableColumn testApiTypeCol =null;
@@ -123,6 +128,7 @@ public class EditAPITest extends javax.swing.JFrame {
     public static FileInputStream excelFIS;
     public static File excelFile;
     private XSSFSheet excelSheetTestFlow;
+    public AddEnvVariableList envVarListFrame = new AddEnvVariableList();
     
     /**
      * Creates new form CreateTestSuite
@@ -136,10 +142,13 @@ public class EditAPITest extends javax.swing.JFrame {
         testIdCol =tableEditTestFlow.getColumnModel().getColumn(0);
         testIdCol.setCellEditor(new DefaultCellEditor(testIdTxt));
         
+        testEnvVarCol =tableEditTestFlow.getColumnModel().getColumn(12);
+        testEnvVarCol.setCellEditor(new DefaultCellEditor(testEnvVarTxt));
+        
         etestURLCol =tableEditTestFlow.getColumnModel().getColumn(2);
         etestURLCol.setCellEditor(new DefaultCellEditor(etestURLTxt));
         
-        testExpectedStatusCol =tableEditTestFlow.getColumnModel().getColumn(15);
+        testExpectedStatusCol =tableEditTestFlow.getColumnModel().getColumn(17);
         testExpectedStatusCol.setCellEditor(new DefaultCellEditor(testExpectedStatusTxt));
         
         testPayloadCol =tableEditTestFlow.getColumnModel().getColumn(7);
@@ -151,7 +160,7 @@ public class EditAPITest extends javax.swing.JFrame {
         testApiTypeCol.setCellEditor(new DefaultCellEditor(cBoxApiRequest));
         //cBoxApiRequest.setEditable(true);
         
-        testApiSSLCol = tableEditTestFlow.getColumnModel().getColumn(14);
+        testApiSSLCol = tableEditTestFlow.getColumnModel().getColumn(16);
         cBoxApiSSL = new JComboBox<String>();
         apiSSLCertList();
         testApiSSLCol.setCellEditor(new DefaultCellEditor(cBoxApiSSL));
@@ -163,7 +172,7 @@ public class EditAPITest extends javax.swing.JFrame {
         testPayloadTypeCol.setCellEditor(new DefaultCellEditor(coBoxPayloadType));
         //coBoxPayloadType.setEditable(true);
         
-        testAuthCol = tableEditTestFlow.getColumnModel().getColumn(11);
+        testAuthCol = tableEditTestFlow.getColumnModel().getColumn(13);
         coBoxAuth = new JComboBox<String>();
         apiAuthList(coBoxAuth);
         testAuthCol.setCellEditor(new DefaultCellEditor(coBoxAuth));
@@ -175,17 +184,23 @@ public class EditAPITest extends javax.swing.JFrame {
             }
         });
         
+        testEnvVarTxt.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent evt) {
+                common.testEnvVarTxtKeyTyped(evt, testEnvVarTxt);
+            }
+        });
+        
         tableEditTestFlow.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
                 int getCol =tableEditTestFlow.getSelectedColumn();
-                if(getCol ==0 || getCol==15)
+                if(getCol ==0 || getCol==17)
                     common.testIdTxtKeyTyped(evt, null);
             }
         });
         
         etestURLTxt.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent evt) {
-                etestURLTxtKeyReleased(evt, etestURLTxt);
+                testURLTxtKeyReleased(evt, etestURLTxt);
             }
         });
         
@@ -225,7 +240,7 @@ public class EditAPITest extends javax.swing.JFrame {
 
         txtRequestType = new javax.swing.JTextField();
         txtExpStatus = new javax.swing.JTextField();
-        etxtAPIurl = new javax.swing.JTextField();
+        txtAPIurl = new javax.swing.JTextField();
         lblURL = new javax.swing.JLabel();
         lblStatus = new javax.swing.JLabel();
         lblRequest = new javax.swing.JLabel();
@@ -248,7 +263,7 @@ public class EditAPITest extends javax.swing.JFrame {
         scrollVerifyPayload = new javax.swing.JScrollPane();
         txtVerifyPayload = new javax.swing.JTextArea();
         pnlEditApiTest = new javax.swing.JPanel();
-        scrollEditApiTest = new javax.swing.JScrollPane();
+        scrlEditApiTest = new javax.swing.JScrollPane();
         tableEditTestFlow = new javax.swing.JTable();
         dPaneMenu = new javax.swing.JDesktopPane();
         bttnLoadApiTest = new javax.swing.JButton();
@@ -257,6 +272,7 @@ public class EditAPITest extends javax.swing.JFrame {
         bttnAddStepUp = new javax.swing.JButton();
         bttnAddStepDown = new javax.swing.JButton();
         bttnSaveSuite = new javax.swing.JButton();
+        bttnEnvVarList = new javax.swing.JButton();
         lblInvalidBody = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -303,13 +319,13 @@ public class EditAPITest extends javax.swing.JFrame {
             }
         });
 
-        etxtAPIurl.setBackground(new java.awt.Color(51, 51, 51));
-        etxtAPIurl.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        etxtAPIurl.setForeground(new java.awt.Color(255, 255, 204));
-        etxtAPIurl.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        etxtAPIurl.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 1));
-        etxtAPIurl.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        etxtAPIurl.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtAPIurl.setBackground(new java.awt.Color(51, 51, 51));
+        txtAPIurl.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtAPIurl.setForeground(new java.awt.Color(255, 255, 204));
+        txtAPIurl.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtAPIurl.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 1));
+        txtAPIurl.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtAPIurl.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtAPIurlFocusGained(evt);
             }
@@ -317,7 +333,7 @@ public class EditAPITest extends javax.swing.JFrame {
                 txtAPIurlFocusLost(evt);
             }
         });
-        etxtAPIurl.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtAPIurl.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtAPIurlKeyReleased(evt);
             }
@@ -441,9 +457,17 @@ public class EditAPITest extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Test ID", "Request", "URL", "Headers (key)", "Headers (value)", "Params (key)", "Params (value)", "Payload", "Payload Type", "Modify Payload (key)", "Modify Payload (value)", "Authorization", "", "", "SSL Validation", "Expected Status", "Verify Payload (key)", "Verify Payload (value)", "Test Description"
+                "Test ID", "Request", "URL", "Headers (key)", "Headers (value)", "Params (key)", "Params (value)", "Payload", "Payload Type", "Modify Payload (key)", "Modify Payload (value)", "Response Tag Name (value)", "Capture Tag Value (env var)", "Authorization", "", "", "SSL Validation", "Expected Status", "Verify Payload (key)", "Verify Payload (value)", "Test Description"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tableEditTestFlow.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tableEditTestFlow.setName("tableEditTestFlow"); // NOI18N
         tableEditTestFlow.setRowHeight(30);
@@ -472,21 +496,21 @@ public class EditAPITest extends javax.swing.JFrame {
                 tableEditTestFlowKeyReleased(evt);
             }
         });
-        scrollEditApiTest.setViewportView(tableEditTestFlow);
+        scrlEditApiTest.setViewportView(tableEditTestFlow);
 
         javax.swing.GroupLayout pnlEditApiTestLayout = new javax.swing.GroupLayout(pnlEditApiTest);
         pnlEditApiTest.setLayout(pnlEditApiTestLayout);
         pnlEditApiTestLayout.setHorizontalGroup(
             pnlEditApiTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEditApiTestLayout.createSequentialGroup()
-                .addComponent(scrollEditApiTest)
+                .addComponent(scrlEditApiTest)
                 .addGap(1, 1, 1))
         );
         pnlEditApiTestLayout.setVerticalGroup(
             pnlEditApiTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEditApiTestLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(scrollEditApiTest, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
+                .addComponent(scrlEditApiTest, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -651,6 +675,9 @@ public class EditAPITest extends javax.swing.JFrame {
                                     public void mouseExited(java.awt.event.MouseEvent evt) {
                                         bttnSaveSuiteMouseExited(evt);
                                     }
+                                    public void mouseReleased(java.awt.event.MouseEvent evt) {
+                                        bttnSaveSuiteMouseReleased(evt);
+                                    }
                                 });
                                 bttnSaveSuite.addActionListener(new java.awt.event.ActionListener() {
                                     public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -658,157 +685,195 @@ public class EditAPITest extends javax.swing.JFrame {
                                     }
                                 });
 
-                                dPaneMenu.setLayer(bttnLoadApiTest, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                dPaneMenu.setLayer(bttnAddNewTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                dPaneMenu.setLayer(bttnDeleteTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                dPaneMenu.setLayer(bttnAddStepUp, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                dPaneMenu.setLayer(bttnAddStepDown, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                dPaneMenu.setLayer(bttnSaveSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                bttnEnvVarList.setBackground(new java.awt.Color(0, 0, 0));
+                                bttnEnvVarList.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+                                bttnEnvVarList.setForeground(new java.awt.Color(255, 255, 255));
+                                bttnEnvVarList.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addEnvVariable.png"));
+                                    bttnEnvVarList.setToolTipText("will save the test suite");
+                                    bttnEnvVarList.setBorder(null);
+                                    bttnEnvVarList.setBorderPainted(false);
+                                    bttnEnvVarList.setContentAreaFilled(false);
+                                    bttnEnvVarList.setEnabled(false);
+                                    bttnEnvVarList.setFocusPainted(false);
+                                    bttnEnvVarList.setFocusable(false);
+                                    bttnEnvVarList.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                                    bttnEnvVarList.setOpaque(true);
+                                    bttnEnvVarList.setRequestFocusEnabled(false);
+                                    bttnEnvVarList.setRolloverEnabled(false);
+                                    bttnEnvVarList.addMouseListener(new java.awt.event.MouseAdapter() {
+                                        public void mouseEntered(java.awt.event.MouseEvent evt) {
+                                            bttnEnvVarListMouseEntered(evt);
+                                        }
+                                        public void mouseExited(java.awt.event.MouseEvent evt) {
+                                            bttnEnvVarListMouseExited(evt);
+                                        }
+                                        public void mouseReleased(java.awt.event.MouseEvent evt) {
+                                            bttnEnvVarListMouseReleased(evt);
+                                        }
+                                    });
+                                    bttnEnvVarList.addActionListener(new java.awt.event.ActionListener() {
+                                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                            bttnEnvVarListActionPerformed(evt);
+                                        }
+                                    });
 
-                                javax.swing.GroupLayout dPaneMenuLayout = new javax.swing.GroupLayout(dPaneMenu);
-                                dPaneMenu.setLayout(dPaneMenuLayout);
-                                dPaneMenuLayout.setHorizontalGroup(
-                                    dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(dPaneMenuLayout.createSequentialGroup()
-                                        .addGroup(dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(bttnLoadApiTest, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(bttnSaveSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(bttnAddStepDown, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(bttnAddStepUp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, 0))
-                                );
-                                dPaneMenuLayout.setVerticalGroup(
-                                    dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(dPaneMenuLayout.createSequentialGroup()
-                                        .addGap(28, 28, 28)
-                                        .addComponent(bttnLoadApiTest, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(bttnAddStepUp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(bttnAddStepDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(bttnSaveSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                );
+                                    dPaneMenu.setLayer(bttnLoadApiTest, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                    dPaneMenu.setLayer(bttnAddNewTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                    dPaneMenu.setLayer(bttnDeleteTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                    dPaneMenu.setLayer(bttnAddStepUp, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                    dPaneMenu.setLayer(bttnAddStepDown, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                    dPaneMenu.setLayer(bttnSaveSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                    dPaneMenu.setLayer(bttnEnvVarList, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-                                lblInvalidBody.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-                                lblInvalidBody.setForeground(new java.awt.Color(255, 51, 51));
+                                    javax.swing.GroupLayout dPaneMenuLayout = new javax.swing.GroupLayout(dPaneMenu);
+                                    dPaneMenu.setLayout(dPaneMenuLayout);
+                                    dPaneMenuLayout.setHorizontalGroup(
+                                        dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(dPaneMenuLayout.createSequentialGroup()
+                                            .addGroup(dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(bttnLoadApiTest, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(bttnSaveSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(bttnAddStepDown, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(bttnAddStepUp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dPaneMenuLayout.createSequentialGroup()
+                                                    .addGap(0, 0, Short.MAX_VALUE)
+                                                    .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(bttnEnvVarList, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addGap(0, 0, 0))
+                                    );
+                                    dPaneMenuLayout.setVerticalGroup(
+                                        dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(dPaneMenuLayout.createSequentialGroup()
+                                            .addGap(28, 28, 28)
+                                            .addComponent(bttnLoadApiTest, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(bttnAddStepUp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(bttnAddStepDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(bttnSaveSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(bttnEnvVarList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    );
 
-                                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-                                getContentPane().setLayout(layout);
-                                layout.setHorizontalGroup(
-                                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(1, 1, 1)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(lblHeaders)
-                                                    .addComponent(scrlPnlHeaders, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(4, 4, 4)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(lblAuthorization))
-                                                    .addComponent(lblParams)
-                                                    .addComponent(scrlPnlAuthorization)
-                                                    .addComponent(scrlPnlParams))
-                                                .addGap(4, 4, 4)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(scrlPnlPayload)
-                                                        .addGap(4, 4, 4))
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(lblPayload)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(lblInvalidBody, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(scrollModifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(lblModifyPayload))
-                                                .addGap(4, 4, 4)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(lblVerifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(scrollVerifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(txtRequestType, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(lblRequest))
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(txtExpStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(lblURL, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(0, 1003, Short.MAX_VALUE))
-                                                            .addComponent(etxtAPIurl)))
-                                                    .addComponent(pnlEditApiTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(1, 1, 1)
-                                                .addComponent(dPaneMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(1, 1, 1))
-                                );
-                                layout.setVerticalGroup(
-                                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(pnlEditApiTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(dPaneMenu))
-                                        .addGap(1, 1, 1)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblURL)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(lblStatus)
-                                                .addComponent(lblRequest)))
-                                        .addGap(1, 1, 1)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(etxtAPIurl, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtExpStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtRequestType, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(4, 4, 4)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblHeaders, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, 0)
-                                                .addComponent(scrlPnlHeaders, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                    .addComponent(lblPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(lblInvalidBody, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(0, 0, 0)
-                                                .addComponent(scrlPnlPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblParams, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, 0)
-                                                .addComponent(scrlPnlParams, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(2, 2, 2)
-                                                .addComponent(lblAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, 0)
-                                                .addComponent(scrlPnlAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(lblModifyPayload, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(lblVerifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(scrollVerifyPayload, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(scrollModifyPayload, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))))
-                                        .addGap(1, 1, 1))
-                                );
+                                    lblInvalidBody.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+                                    lblInvalidBody.setForeground(new java.awt.Color(255, 51, 51));
 
-                                getAccessibleContext().setAccessibleParent(this);
+                                    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                                    getContentPane().setLayout(layout);
+                                    layout.setHorizontalGroup(
+                                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addGap(1, 1, 1)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(lblHeaders)
+                                                        .addComponent(scrlPnlHeaders, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGap(4, 4, 4)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(lblAuthorization))
+                                                        .addComponent(lblParams)
+                                                        .addComponent(scrlPnlAuthorization)
+                                                        .addComponent(scrlPnlParams))
+                                                    .addGap(4, 4, 4)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                            .addComponent(scrlPnlPayload)
+                                                            .addGap(4, 4, 4))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                            .addComponent(lblPayload)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                            .addComponent(lblInvalidBody, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(scrollModifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(lblModifyPayload))
+                                                    .addGap(4, 4, 4)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(lblVerifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(scrollVerifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addComponent(txtRequestType, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(lblRequest))
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addComponent(txtExpStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addGroup(layout.createSequentialGroup()
+                                                                    .addComponent(lblURL, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                    .addGap(0, 1003, Short.MAX_VALUE))
+                                                                .addComponent(txtAPIurl)))
+                                                        .addComponent(pnlEditApiTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                    .addGap(1, 1, 1)
+                                                    .addComponent(dPaneMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGap(1, 1, 1))
+                                    );
+                                    layout.setVerticalGroup(
+                                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(pnlEditApiTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(dPaneMenu))
+                                            .addGap(1, 1, 1)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(lblURL)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                    .addComponent(lblStatus)
+                                                    .addComponent(lblRequest)))
+                                            .addGap(1, 1, 1)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(txtAPIurl, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(txtExpStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(txtRequestType, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(4, 4, 4)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(lblHeaders, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(0, 0, 0)
+                                                    .addComponent(scrlPnlHeaders, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(lblPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(lblInvalidBody, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGap(0, 0, 0)
+                                                    .addComponent(scrlPnlPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(lblParams, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(0, 0, 0)
+                                                    .addComponent(scrlPnlParams, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(2, 2, 2)
+                                                    .addComponent(lblAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(0, 0, 0)
+                                                    .addComponent(scrlPnlAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(lblModifyPayload, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(lblVerifyPayload, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(scrollVerifyPayload, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(scrollModifyPayload, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))))
+                                            .addGap(1, 1, 1))
+                                    );
 
-                                setSize(new java.awt.Dimension(1246, 803));
-                                setLocationRelativeTo(null);
-                            }// </editor-fold>//GEN-END:initComponents
+                                    getAccessibleContext().setAccessibleParent(this);
+
+                                    setSize(new java.awt.Dimension(1246, 803));
+                                    setLocationRelativeTo(null);
+                                }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
        tableCellRendererAPI renderer = new tableCellRendererAPI();
@@ -835,9 +900,9 @@ public class EditAPITest extends javax.swing.JFrame {
         bttnAddNewTestStep.setForeground(new java.awt.Color(255,255,255));
     }//GEN-LAST:event_bttnAddNewTestStepMouseExited
     
-     public static void etestURLTxtKeyReleased(KeyEvent evt, JTextField textField) {
+     public static void testURLTxtKeyReleased(KeyEvent evt, JTextField textField) {
         String getURLText =textField.getText();
-        etxtAPIurl.setText(getURLText);
+        txtAPIurl.setText(getURLText);
     }
     
     public static void testExpectedStatusTxtKeyReleased(KeyEvent evt, JTextField textField) {
@@ -861,27 +926,27 @@ public class EditAPITest extends javax.swing.JFrame {
             Object getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
             
             if(getTestId !=null && !getTestId.toString().isEmpty()){
-                Object getAuth =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 11);
+                Object getAuth =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
                 if(getAuth.toString().contentEquals("Basic Auth")){
-                    Object getUsername =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                    Object getUsername =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 14);
                     if(getUsername ==null)
                     	getUsername ="";
-                    Object getPassword =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
+                    Object getPassword =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 15);
                     if(getPassword ==null)
                     	getPassword ="";
                     
                     txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
                     lblAuthorization.setText("Authorization: Basic Auth");
                 }else if(getAuth.toString().contentEquals("Bearer Token")){
-                    Object getToken =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                    Object getToken =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 14);
                     if(getToken ==null)
                     	getToken ="";
-                    tableEditTestFlow.setValueAt("",getCurrRowBeforeKeyPressed, 13);
+                    tableEditTestFlow.setValueAt("",getCurrRowBeforeKeyPressed, 15);
                     txtAreaAuthorization.setText("Token: "+getToken);
                     lblAuthorization.setText("Authorization: Bearer Token");
                 }else {
-                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
-                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 14);
+                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 15);
                     lblAuthorization.setText("Authorization");
                     txtAreaAuthorization.setText("");
                 }
@@ -975,7 +1040,7 @@ public class EditAPITest extends javax.swing.JFrame {
             
             txtRequestType.setText("");
             txtExpStatus.setText("");
-            etxtAPIurl.setText("");
+            txtAPIurl.setText("");
             txtAreaHeaders.setText("");
             txtAreaParams.setText("");
             txtAreaAuthorization.setText("");
@@ -1057,7 +1122,7 @@ public class EditAPITest extends javax.swing.JFrame {
                 tableEditTestFlow.setColumnSelectionInterval(0, 0);
                 tableEditTestFlow.scrollRectToVisible(tableEditTestFlow.getCellRect(rowIndex, 0, true));
             }else
-                  JOptionPane.showMessageDialog(scrollEditApiTest,"Select row to add test step!","Alert",JOptionPane.WARNING_MESSAGE);
+                  JOptionPane.showMessageDialog(scrlEditApiTest,"Select row to add test step!","Alert",JOptionPane.WARNING_MESSAGE);
         }//else
             //JOptionPane.showMessageDialog(scrollEditApiTest,"No test step(s) available to add a new step up!","Alert",JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_bttnAddStepUpActionPerformed
@@ -1131,6 +1196,7 @@ public class EditAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_bttnSaveSuiteMouseExited
 
     private void bttnSaveSuiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnSaveSuiteActionPerformed
+        
         if(getTestFlowSelectedRow !=-1){
             //getElmRepoSelectedRow =tableAddOR.getSelectedRow();
             //tabOutFromEditingColumn(getElmRepoCellEditorStatus, tableAddOR, getRepoCellxPoint, getRepoCellyPoint, getElmRepoSelectedRow);
@@ -1300,6 +1366,7 @@ public class EditAPITest extends javax.swing.JFrame {
         }
         
         excelFileImport = new JFileChooser(getCurrDir);
+        excelFileImport.setPreferredSize(new Dimension(450,300));
         excelFileImport.setFileSelectionMode(JFileChooser.FILES_ONLY);
         excelFileImport.setDialogTitle("Open Test Suite");
         excelFileImport.addChoosableFileFilter(new FileNameExtensionFilter("EXCEL WORKBOOK", "xlsx"));
@@ -1348,17 +1415,19 @@ public class EditAPITest extends javax.swing.JFrame {
                         XSSFCell testPayloadType = excelRow.getCell(8);
                         XSSFCell testModifyPayloadKey = excelRow.getCell(9);
                         XSSFCell testModifyPayloadValue = excelRow.getCell(10);
-                        XSSFCell testAuthorizationType = excelRow.getCell(11);
-                        XSSFCell testAuthVal1 = excelRow.getCell(12);
-                        XSSFCell testAuthVal2 = excelRow.getCell(13);
-                        XSSFCell testSSLValidation = excelRow.getCell(14);
-                        XSSFCell testExpStatus = excelRow.getCell(15);
-                        XSSFCell testVerifyPayloadKey = excelRow.getCell(16);
-                        XSSFCell testVerifyPayloadValue = excelRow.getCell(17);
-                        XSSFCell testTestDesc = excelRow.getCell(18);
+                        XSSFCell responseTagName = excelRow.getCell(11);
+                        XSSFCell captureTagVaue = excelRow.getCell(12);
+                        XSSFCell testAuthorizationType = excelRow.getCell(13);
+                        XSSFCell testAuthVal1 = excelRow.getCell(14);
+                        XSSFCell testAuthVal2 = excelRow.getCell(15);
+                        XSSFCell testSSLValidation = excelRow.getCell(16);
+                        XSSFCell testExpStatus = excelRow.getCell(17);
+                        XSSFCell testVerifyPayloadKey = excelRow.getCell(18);
+                        XSSFCell testVerifyPayloadValue = excelRow.getCell(19);
+                        XSSFCell testTestDesc = excelRow.getCell(20);
 
                         editSuiteTabModel.addRow(new Object[]{testId, testRequest, testURL, testHeaderKey, testHeaderValue, testParamKey,
-                            testParamValue, testPayload, testPayloadType, testModifyPayloadKey, testModifyPayloadValue, testAuthorizationType,
+                            testParamValue, testPayload, testPayloadType, testModifyPayloadKey, testModifyPayloadValue, responseTagName, captureTagVaue, testAuthorizationType,
                             testAuthVal1, testAuthVal2, testSSLValidation, testExpStatus, testVerifyPayloadKey, testVerifyPayloadValue, testTestDesc  
                         });
                     } catch (NullPointerException exp) {
@@ -1369,7 +1438,7 @@ public class EditAPITest extends javax.swing.JFrame {
                 if(tableEditTestFlow.getRowCount() <=0){
                     editSuiteTabModel.addRow(new Object[]{null, null, null, null, null, null,
                             null, null, null, null, null, null,
-                            null, null, null, null, null, null, null  
+                            null, null, null, null, null, null, null, null, null  
                         });
                 }
                 
@@ -1416,6 +1485,12 @@ public class EditAPITest extends javax.swing.JFrame {
         
         if(duplicateTestId ==false){
             switch (gerCurrCol) {
+                case 12:
+                    tableEditTestFlow.editCellAt(getCurRow, 12);
+                    editableRow =tableEditTestFlow.getEditingRow();
+                    testEnvVarTxt.requestFocusInWindow();
+                    testEnvVarTxt.setCaretPosition(0);
+                    break;
                 case 0:
                     tableEditTestFlow.editCellAt(getCurRow, 0);
                     editableRow =tableEditTestFlow.getEditingRow();
@@ -1440,14 +1515,14 @@ public class EditAPITest extends javax.swing.JFrame {
                     coBoxPayloadType.setFocusable(true);
                     coBoxPayloadType.showPopup();
                     break;
-                case 11:
+                case 13:
                     coBoxAuth.setFocusable(true);
                     coBoxAuth.showPopup();
                     break;
-                case 14:
+                case 16:
                     apiSSLCertList();
                     try{
-                    	tableEditTestFlow.editCellAt(getCurRow, 14);
+                    	tableEditTestFlow.editCellAt(getCurRow, 16);
                         cBoxApiSSL.setFocusable(true);
                         cBoxApiSSL.showPopup();
                     }catch(IllegalComponentStateException exp){}
@@ -1488,7 +1563,7 @@ public class EditAPITest extends javax.swing.JFrame {
     }*/
     
     private void txtAPIurlFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAPIurlFocusLost
-        getTheAPIurl =etxtAPIurl.getText();
+        getTheAPIurl =txtAPIurl.getText();
         try {
         	tableEditTestFlow.setValueAt(getTheAPIurl,getCurrRowBeforeKeyPressed, 2);
         }catch(ArrayIndexOutOfBoundsException exp) {}
@@ -1496,7 +1571,7 @@ public class EditAPITest extends javax.swing.JFrame {
 
     private void txtAPIurlKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAPIurlKeyReleased
         try{
-            tableEditTestFlow.setValueAt(etxtAPIurl.getText(),getCurrRowBeforeKeyPressed, 2);
+            tableEditTestFlow.setValueAt(txtAPIurl.getText(),getCurrRowBeforeKeyPressed, 2);
         }catch(ArrayIndexOutOfBoundsException exp){}
         
     }//GEN-LAST:event_txtAPIurlKeyReleased
@@ -1551,6 +1626,28 @@ public class EditAPITest extends javax.swing.JFrame {
             tabOutFromAnyEditingColumn(getTestFlowCellEditorStatus, tableEditTestFlow, getFlowCellxPoint, getFlowCellyPoint, getTestFlowSelectedRow);
         }
     }//GEN-LAST:event_txtAreaPayloadFocusGained
+
+    private void bttnSaveSuiteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnSaveSuiteMouseReleased
+        //if(ExecuteApiTest.tableExecuteRegSuite.isShowing())
+            ExecuteApiTest.bttnRefreshTestRun.doClick();
+    }//GEN-LAST:event_bttnSaveSuiteMouseReleased
+
+    private void bttnEnvVarListMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnEnvVarListMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bttnEnvVarListMouseEntered
+
+    private void bttnEnvVarListMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnEnvVarListMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bttnEnvVarListMouseExited
+
+    private void bttnEnvVarListMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnEnvVarListMouseReleased
+        //envVarListFrame.setLocationRelativeTo(null);
+        //envVarListFrame.setVisible(true);
+    }//GEN-LAST:event_bttnEnvVarListMouseReleased
+
+    private void bttnEnvVarListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnEnvVarListActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bttnEnvVarListActionPerformed
     
     public static void updateAPIAttributeData(){
         getCurrRowBeforeKeyPressed =tableEditTestFlow.getSelectedRow();
@@ -1559,7 +1656,7 @@ public class EditAPITest extends javax.swing.JFrame {
         if(getTestId ==null || getTestId.toString().isEmpty()){
             txtRequestType.setText("");
             txtExpStatus.setText("");
-            etxtAPIurl.setText("");
+            txtAPIurl.setText("");
             txtAreaHeaders.setText("");
             txtAreaParams.setText("");
             txtAreaAuthorization.setText("");
@@ -1574,11 +1671,11 @@ public class EditAPITest extends javax.swing.JFrame {
         // update api test url
         try{    
             getTheAPIurl =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 2).toString();
-            etxtAPIurl.setText(getTheAPIurl);
-            etxtAPIurl.setCaretPosition(0);
+            txtAPIurl.setText(getTheAPIurl);
+            txtAPIurl.setCaretPosition(0);
         }catch(NullPointerException | ArrayIndexOutOfBoundsException exp){
-            etxtAPIurl.setText("");
-            etxtAPIurl.setCaretPosition(0);
+            txtAPIurl.setText("");
+            txtAPIurl.setCaretPosition(0);
         }
         
         // update api payload body
@@ -1673,31 +1770,31 @@ public class EditAPITest extends javax.swing.JFrame {
         
         // update authentication
         try{
-            Object getAuth =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 11);
+            Object getAuth =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
             if(getAuth ==null || getAuth.toString().isEmpty())
                     getAuth ="";
 
             if(getAuth.toString().contentEquals("Basic Auth")){
-                Object getUsername =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                Object getUsername =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 14);
                 if(getUsername ==null)
                     getUsername ="";
 
-                Object getPassword =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 13);
+                Object getPassword =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 15);
                 if(getPassword ==null)
                     getPassword ="";
 
                 txtAreaAuthorization.setText("Username: "+getUsername +"\n"+ "Password: "+getPassword);
                 lblAuthorization.setText("Authorization: Basic Auth");
             }else if(getAuth.toString().contentEquals("Bearer Token")){
-                Object getToken =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 12);
+                Object getToken =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 14);
                 if(getToken ==null)
                     getToken ="";
 
                 txtAreaAuthorization.setText("Token: "+getToken);
                 lblAuthorization.setText("Authorization: Bearer Token");
             }else {
-                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 12);
-                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 13);
+                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 14);
+                    tableEditTestFlow.setValueAt("", getCurrRowBeforeKeyPressed, 15);
                     lblAuthorization.setText("Authorization");
                     txtAreaAuthorization.setText("");
             }
@@ -1705,7 +1802,7 @@ public class EditAPITest extends javax.swing.JFrame {
         
         // update expected status
         try{
-            Object getStatus =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 15);
+            Object getStatus =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 17);
             if(getStatus ==null)
                  getStatus ="";
 
@@ -1769,11 +1866,11 @@ public class EditAPITest extends javax.swing.JFrame {
             int rowStart =getCurrRowBeforeKeyPressed;
 
             for(int rowStart1=rowStart; rowStart1<=getRowCnt;rowStart1++) {
-                    Object getPayloadVerifyKey =tableEditTestFlow.getValueAt(rowStart1, 16);
+                    Object getPayloadVerifyKey =tableEditTestFlow.getValueAt(rowStart1, 18);
                 if(getPayloadVerifyKey ==null)
                     getPayloadVerifyKey ="";
 
-                Object getPayloadVerifyVal =tableEditTestFlow.getValueAt(rowStart1, 17);
+                Object getPayloadVerifyVal =tableEditTestFlow.getValueAt(rowStart1, 19);
                 if(getPayloadVerifyVal ==null)
                     getPayloadVerifyVal ="";
 
@@ -1907,29 +2004,35 @@ public class EditAPITest extends javax.swing.JFrame {
         //tableAddTestFlow.getColumnModel().getColumn(10).setMaxWidth(150);
         tableEditTestFlow.getColumnModel().getColumn(10).setMinWidth(150);
         
-        //tableAddTestFlow.getColumnModel().getColumn(11).setMaxWidth(150);
-        tableEditTestFlow.getColumnModel().getColumn(11).setMinWidth(100);
+        //tableAddTestFlow.getColumnModel().getColumn(11).setMaxWidth(165);
+        tableEditTestFlow.getColumnModel().getColumn(11).setMinWidth(165);
         
-        //tableAddTestFlow.getColumnModel().getColumn(12).setMaxWidth(150);
-        tableEditTestFlow.getColumnModel().getColumn(12).setMinWidth(150);
+        //tableAddTestFlow.getColumnModel().getColumn(12).setMaxWidth(165);
+        tableEditTestFlow.getColumnModel().getColumn(12).setMinWidth(165);
         
         //tableAddTestFlow.getColumnModel().getColumn(13).setMaxWidth(150);
-        tableEditTestFlow.getColumnModel().getColumn(13).setMinWidth(150);
+        tableEditTestFlow.getColumnModel().getColumn(13).setMinWidth(100);
         
-        //tableAddTestFlow.getColumnModel().getColumn(14).setMaxWidth(200);
-        tableEditTestFlow.getColumnModel().getColumn(14).setMinWidth(120);
+        //tableAddTestFlow.getColumnModel().getColumn(14).setMaxWidth(150);
+        tableEditTestFlow.getColumnModel().getColumn(14).setMinWidth(150);
         
-        //tableAddTestFlow.getColumnModel().getColumn(15).setMaxWidth(100);
-        tableEditTestFlow.getColumnModel().getColumn(15).setMinWidth(100);
+        //tableAddTestFlow.getColumnModel().getColumn(15).setMaxWidth(150);
+        tableEditTestFlow.getColumnModel().getColumn(15).setMinWidth(150);
         
-        //tableAddTestFlow.getColumnModel().getColumn(16).setMaxWidth(150);
-        tableEditTestFlow.getColumnModel().getColumn(16).setMinWidth(150);
+        //tableAddTestFlow.getColumnModel().getColumn(16).setMaxWidth(200);
+        tableEditTestFlow.getColumnModel().getColumn(16).setMinWidth(120);
         
-        //tableAddTestFlow.getColumnModel().getColumn(17).setMaxWidth(150);
-        tableEditTestFlow.getColumnModel().getColumn(17).setMinWidth(150);
+        //tableAddTestFlow.getColumnModel().getColumn(17).setMaxWidth(100);
+        tableEditTestFlow.getColumnModel().getColumn(17).setMinWidth(100);
         
-        //tableAddTestFlow.getColumnModel().getColumn(18).setMaxWidth(200);
-        tableEditTestFlow.getColumnModel().getColumn(18).setMinWidth(200);
+        //tableAddTestFlow.getColumnModel().getColumn(18).setMaxWidth(150);
+        tableEditTestFlow.getColumnModel().getColumn(18).setMinWidth(150);
+        
+        //tableAddTestFlow.getColumnModel().getColumn(19).setMaxWidth(150);
+        tableEditTestFlow.getColumnModel().getColumn(19).setMinWidth(150);
+        
+        //tableAddTestFlow.getColumnModel().getColumn(20).setMaxWidth(200);
+        tableEditTestFlow.getColumnModel().getColumn(20).setMinWidth(200);
     }
     
     /**
@@ -1969,6 +2072,7 @@ public class EditAPITest extends javax.swing.JFrame {
     public static javax.swing.JButton bttnAddStepDown;
     public static javax.swing.JButton bttnAddStepUp;
     public javax.swing.JButton bttnDeleteTestStep;
+    public static javax.swing.JButton bttnEnvVarList;
     public static javax.swing.JButton bttnLoadApiTest;
     public static javax.swing.JButton bttnSaveSuite;
     public javax.swing.JDesktopPane dPaneMenu;
@@ -1983,15 +2087,15 @@ public class EditAPITest extends javax.swing.JFrame {
     public static javax.swing.JLabel lblURL;
     public javax.swing.JLabel lblVerifyPayload;
     public javax.swing.JPanel pnlEditApiTest;
+    public static javax.swing.JScrollPane scrlEditApiTest;
     public static javax.swing.JScrollPane scrlPnlAuthorization;
     public javax.swing.JScrollPane scrlPnlHeaders;
     public javax.swing.JScrollPane scrlPnlParams;
     public static javax.swing.JScrollPane scrlPnlPayload;
-    public static javax.swing.JScrollPane scrollEditApiTest;
     public javax.swing.JScrollPane scrollModifyPayload;
     public javax.swing.JScrollPane scrollVerifyPayload;
     public static javax.swing.JTable tableEditTestFlow;
-    public static javax.swing.JTextField etxtAPIurl;
+    public static javax.swing.JTextField txtAPIurl;
     public static javax.swing.JTextArea txtAreaAuthorization;
     public static javax.swing.JTextArea txtAreaHeaders;
     public static javax.swing.JTextArea txtAreaParams;

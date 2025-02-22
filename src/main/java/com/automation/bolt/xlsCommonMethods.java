@@ -287,34 +287,44 @@ public class xlsCommonMethods {
         cell = excelRow.createCell(10);
         cell.setCellType(CellType.STRING);
         //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
-        cell.setCellValue("Modify Payload (vlue)");
+        cell.setCellValue("Modify Payload (value)");
         
         cell = excelRow.createCell(11);
         cell.setCellType(CellType.STRING);
         //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
+        cell.setCellValue("Response Tag Name");
+        
+        cell = excelRow.createCell(12);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
+        cell.setCellValue("Capture Tag Value (env var)");
+        
+        cell = excelRow.createCell(13);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
         cell.setCellValue("Authorization");
-        
-        cell = excelRow.createCell(14);
-        cell.setCellType(CellType.STRING);
-        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
-        cell.setCellValue("SSL Validation");
-        
-        cell = excelRow.createCell(15);
-        cell.setCellType(CellType.STRING);
-        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
-        cell.setCellValue("Expected Status");
         
         cell = excelRow.createCell(16);
         cell.setCellType(CellType.STRING);
         //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
-        cell.setCellValue("Verify Payload (key)");
+        cell.setCellValue("SSL Validation");
         
         cell = excelRow.createCell(17);
         cell.setCellType(CellType.STRING);
         //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
+        cell.setCellValue("Expected Status");
+        
+        cell = excelRow.createCell(18);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
+        cell.setCellValue("Verify Payload (key)");
+        
+        cell = excelRow.createCell(19);
+        cell.setCellType(CellType.STRING);
+        //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
         cell.setCellValue("Verify Payload (value)");
         
-         cell = excelRow.createCell(18);
+         cell = excelRow.createCell(20);
         cell.setCellType(CellType.STRING);
         //cell.setCellStyle(getHeaderStyle(testSuite, IndexedColors.LIGHT_GREEN.getIndex()));
         cell.setCellValue("Test Description");
@@ -373,13 +383,14 @@ public class xlsCommonMethods {
         excelSheet.autoSizeColumn(9);
         excelSheet.autoSizeColumn(10);
         excelSheet.autoSizeColumn(11);
-        //excelSheet.autoSizeColumn(12);
-        //excelSheet.autoSizeColumn(13);
+        excelSheet.autoSizeColumn(12);
+        excelSheet.autoSizeColumn(13);
         excelSheet.autoSizeColumn(14);
         excelSheet.autoSizeColumn(15);
         excelSheet.autoSizeColumn(16);
         excelSheet.autoSizeColumn(17);
         excelSheet.autoSizeColumn(18);
+        excelSheet.autoSizeColumn(19);
    
         excelSheet.createFreezePane(0, 1);
         

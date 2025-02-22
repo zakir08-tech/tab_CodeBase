@@ -28,6 +28,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -76,6 +77,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class common extends userDefineTest{
     public static Workbook testRunnerWorkbook =null;
@@ -215,6 +218,12 @@ public class common extends userDefineTest{
                 saveStepResult = "User define test " +"\""+getTestELm+"\"";
 
                 getFormatter2(getKey, "User define test ", getTestELm);
+                break;
+            case "SELECT_SAL_RANGE":
+                testStepResult = "Step "+getKey+": Select salary range "+"\""+getTestData+"\" from "+"\""+getTestELm+"\"";
+                saveStepResult = "Select salary range "+"\""+getTestData+"\" from "+"\""+getTestELm+"\"";
+
+                getFormatter1(getKey, "Select salary range ", getTestData, " from ", getTestELm);
                 break;    
             case "SWITCH_DEFAULT":
                 testStepResult = "Step "+getKey+": Switch to default iframe";
@@ -945,23 +954,45 @@ public class common extends userDefineTest{
     public static void testIdTxtKeyTyped(KeyEvent evt, JTextField textField) {
         boolean result = false;
         boolean result1 = false;
-       
-        Pattern pattern = Pattern.compile("^(\\d*\\.?\\d*)$");
+                
+        Pattern pattern = Pattern.compile("^(\\d*\\d*)$");
         Pattern pattern1 = Pattern.compile("[#]");
         
         char keyText = evt.getKeyChar();
         String textId = Character.toString(keyText);
         
         result =pattern.matcher(textId).matches();
-        result1 =pattern.matcher(textId).matches();
+        result1 =pattern1.matcher(textId).matches();
         
+        if(result1){
+            if(textField.getText().contains("#")){
+                evt.consume();
+            } else if(!textField.getText().isBlank() && textId.contains("#")){
+                evt.consume();
+            }
+            return;
+        }
+            
         if(!result){
             result =pattern1.matcher(textId).matches();
             if(!result){
                 evt.consume();
-            }else
-                if(textField.getText().length()>0)
-                    evt.consume();
+            }
+        }else if(textField.getText().contains("#")){
+            evt.consume();
+        }
+    }
+    
+    public static void testEnvVarTxtKeyTyped(KeyEvent evt, JTextField textField) {
+        boolean result = false;
+        Pattern pattern = Pattern.compile("^([a-zA-Z_-]*)$");
+        
+        char keyText = evt.getKeyChar();
+        String textId = Character.toString(keyText);
+        result =pattern.matcher(textId).matches();
+        
+        if(!result){
+            evt.consume();
         }
     }
      
@@ -1331,6 +1362,9 @@ public class common extends userDefineTest{
             case "MOVE_TO_ELEMENT":
                 glueCode.keyMoveToElement(getElement);
                 break;
+            case "SELECT_SAL_RANGE":
+            	glueCode.keySelectSalaryRange(getElement, testData);
+                break;
             case "ASSERT_CLICKABLE":
                 glueCode.keyAssertClickable(getElement);
                 break;   
@@ -1668,6 +1702,87 @@ public class common extends userDefineTest{
                 }
                 reader.close();
             } catch (IOException | ParseException e) {}
+
+        } catch (FileNotFoundException e) {}
+
+        return jsonMap;
+    }
+    
+    public static boolean checkForDuplicateEnvVariable(DefaultTableModel tableModel, JTextField testElmNameTxt,
+            javax.swing.JTable JTable,
+            boolean testElmNameVisible,
+            int getFlowCellxPoint,
+            int getFlowCellyPoint,
+            int getEditingRow){
+        
+        String getElmName ="";
+        String getNewElmName ="";
+        int elmIndex =0;
+        boolean duplicateElmName =false;
+        
+        if(testElmNameTxt !=null){
+            if(testElmNameTxt.isShowing()){
+                tabOutFromEditingColumn(true, JTable,getFlowCellxPoint, getFlowCellyPoint, getEditingRow);
+                getNewElmName =testElmNameTxt.getText();
+            }
+        }
+        
+        if(testElmNameVisible ==true){
+            getNewElmName =testElmNameTxt.getText();
+            for(int i=0; i<JTable.getRowCount(); i++){
+                try{
+                    getElmName =JTable.getValueAt(i, 0).toString().toLowerCase();
+                }catch (NullPointerException exp){
+                    getElmName ="";
+                }
+                
+                if(!getElmName.isEmpty()){
+                    if(getElmName.toLowerCase().contentEquals(getNewElmName.toLowerCase())){
+                        elmIndex++;
+                        if(elmIndex ==2){
+                            JTable.editCellAt(getEditingRow, 0);
+                            JTable.getEditorComponent().requestFocus();
+                            JTable.changeSelection(getEditingRow, 0, false, true);
+                            testElmNameTxt.selectAll();
+                            duplicateElmName =true;
+                            JOptionPane.showMessageDialog(null, "Environment variable ["+getNewElmName+"] already exist!", "Alert", JOptionPane.WARNING_MESSAGE);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return duplicateElmName;
+    }
+    
+    public static HashMap<Object, Object> uploadEnvVariableList() {
+        JSONParser parser =new JSONParser();
+        FileReader reader;
+        HashMap<Object, Object> jsonMap =new HashMap<>();
+        int i=1;
+        
+        try {
+            reader =new FileReader("./env-var/env-var-list.json");
+            Object objJson;
+            try {
+    			parser = new JSONParser();
+    	        JSONObject data = (JSONObject) parser.parse(reader);
+        
+                Set<Entry<String, String>> entrySet = data.entrySet();
+                
+                for(Map.Entry<String,String> entry : entrySet){
+                    String envVarName=entry.getKey();
+                    String envVarValue=entry.getValue();
+                    
+                    Object getJsonObj =envVarName +","+ 
+                    envVarValue;
+
+                    jsonMap.put(i+1, getJsonObj);
+                    i++;
+                }
+                
+                reader.close();
+            } catch (IOException | ParseException | IndexOutOfBoundsException e) {}
 
         } catch (FileNotFoundException e) {}
 

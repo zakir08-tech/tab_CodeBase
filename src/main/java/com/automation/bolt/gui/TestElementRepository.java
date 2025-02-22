@@ -10,7 +10,6 @@ import static com.automation.bolt.common.checkValueExistInColumn;
 import com.automation.bolt.constants;
 import static com.automation.bolt.gui.EditRegressionSuite.AssociateObjORJCheckBox;
 import static com.automation.bolt.gui.EditRegressionSuite.GlobalORJRadioButton;
-import static com.automation.bolt.gui.EditRegressionSuite.RegressionSuiteTable;
 import static com.automation.bolt.gui.EditRegressionSuite.SaveSuite;
 import static com.automation.bolt.gui.EditRegressionSuite.importDataFromExcelModel;
 import static com.automation.bolt.gui.EditRegressionSuite.testIdTxt;
@@ -70,6 +69,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import com.automation.bolt.renderer.*;
+import static com.automation.bolt.gui.EditRegressionSuite.RegSuiteTable;
+import javax.swing.LayoutStyle;
 
 /**
  *
@@ -171,42 +173,41 @@ public class TestElementRepository extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlObjectRepo = new JPanel();
-        ObjectRepoScrollPane = new JScrollPane();
-        ObjectRepoTable = new JTable();
-        jDesktopPane1 = new JDesktopPane();
-        pnlMenuBar = new JPanel();
-        pnlDeleteTestElement = new JPanel();
-        DeleteTestElement = new JButton();
-        pnlSaveTestRepository = new JPanel();
-        SaveTestRepository = new JButton();
-        pnlAddNewTestElement = new JPanel();
-        AddNewTestElement = new JButton();
+        pnlObjectRepo = new javax.swing.JPanel();
+        ObjectRepoScrollPane = new javax.swing.JScrollPane();
+        ObjectRepoTable = new javax.swing.JTable();
+        jDesktopPane1 = new javax.swing.JDesktopPane();
+        pnlDeleteTestElement = new javax.swing.JPanel();
+        DeleteTestElement = new javax.swing.JButton();
+        pnlSaveTestRepository = new javax.swing.JPanel();
+        SaveTestRepository = new javax.swing.JButton();
+        pnlAddNewTestElement = new javax.swing.JPanel();
+        AddNewTestElement = new javax.swing.JButton();
 
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit Test Suite");
-        setBounds(new Rectangle(0, 0, 973, 500));
+        setBounds(new java.awt.Rectangle(0, 0, 973, 500));
         setIconImages(null);
-        setMinimumSize(new Dimension(851, 328));
-        setSize(new Dimension(0, 0));
-        addWindowFocusListener(new WindowFocusListener() {
-            public void windowGainedFocus(WindowEvent evt) {
+        setMinimumSize(new java.awt.Dimension(851, 328));
+        setSize(new java.awt.Dimension(0, 0));
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
                 formWindowGainedFocus(evt);
             }
-            public void windowLostFocus(WindowEvent evt) {
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
             }
         });
-        addWindowListener(new WindowAdapter() {
-            public void windowActivated(WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
-            public void windowClosed(WindowEvent evt) {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
-            public void windowClosing(WindowEvent evt) {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
-            public void windowOpened(WindowEvent evt) {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
         });
@@ -217,7 +218,7 @@ public class TestElementRepository extends javax.swing.JFrame {
         ObjectRepoTable.setBackground(new java.awt.Color(51, 51, 51));
         ObjectRepoTable.setFont(new java.awt.Font("Consolas", 0, 13)); // NOI18N
         ObjectRepoTable.setForeground(new java.awt.Color(255, 255, 255));
-        ObjectRepoTable.setModel(new DefaultTableModel(
+        ObjectRepoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -225,91 +226,92 @@ public class TestElementRepository extends javax.swing.JFrame {
                 "Test Element Name (user defined)", "id", "xpath"
             }
         ));
-        ObjectRepoTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        ObjectRepoTable.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        ObjectRepoTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        ObjectRepoTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         ObjectRepoTable.setName(""); // NOI18N
         ObjectRepoTable.setRowHeight(30);
         ObjectRepoTable.setRowMargin(2);
         ObjectRepoTable.setSelectionBackground(new java.awt.Color(255, 153, 153));
-        ObjectRepoTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        ObjectRepoTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        ObjectRepoTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        ObjectRepoTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         ObjectRepoTable.setShowGrid(true);
         ObjectRepoTable.getTableHeader().setReorderingAllowed(false);
         ObjectRepoTable.setUpdateSelectionOnSort(false);
         ObjectRepoTable.setVerifyInputWhenFocusTarget(false);
-        ObjectRepoTable.addFocusListener(new FocusAdapter() {
-            public void focusGained(FocusEvent evt) {
+        ObjectRepoTable.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
                 ObjectRepoTableFocusGained(evt);
             }
         });
-        ObjectRepoTable.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent evt) {
+        ObjectRepoTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
                 ObjectRepoTableMousePressed(evt);
             }
-            public void mouseReleased(MouseEvent evt) {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
                 ObjectRepoTableMouseReleased(evt);
             }
         });
-        ObjectRepoTable.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent evt) {
+        ObjectRepoTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
                 ObjectRepoTableKeyReleased(evt);
             }
         });
         ObjectRepoScrollPane.setViewportView(ObjectRepoTable);
 
-        GroupLayout pnlObjectRepoLayout = new GroupLayout(pnlObjectRepo);
+        javax.swing.GroupLayout pnlObjectRepoLayout = new javax.swing.GroupLayout(pnlObjectRepo);
         pnlObjectRepo.setLayout(pnlObjectRepoLayout);
-        pnlObjectRepoLayout.setHorizontalGroup(pnlObjectRepoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(ObjectRepoScrollPane, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
+        pnlObjectRepoLayout.setHorizontalGroup(
+            pnlObjectRepoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(ObjectRepoScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 818, Short.MAX_VALUE)
         );
-        pnlObjectRepoLayout.setVerticalGroup(pnlObjectRepoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        pnlObjectRepoLayout.setVerticalGroup(
+            pnlObjectRepoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlObjectRepoLayout.createSequentialGroup()
-                .addComponent(ObjectRepoScrollPane, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                .addComponent(ObjectRepoScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
-
-        pnlMenuBar.setBackground(new java.awt.Color(0, 153, 153));
-        pnlMenuBar.setOpaque(false);
 
         pnlDeleteTestElement.setBackground(new java.awt.Color(0, 0, 0));
 
         DeleteTestElement.setBackground(new java.awt.Color(0, 0, 0));
         DeleteTestElement.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         DeleteTestElement.setForeground(new java.awt.Color(255, 255, 255));
-        DeleteTestElement.setIcon(new ImageIcon(System.getProperty("user.dir")+"\\icons\\deleteTestStep_Element.png"));
-        DeleteTestElement.setText("Delete Object");
-        DeleteTestElement.setToolTipText("will delete the selected test step from the test suite");
+        DeleteTestElement.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\icons\\deleteTestStep_Element.png"));
+        DeleteTestElement.setToolTipText("delete test element");
         DeleteTestElement.setBorder(null);
         DeleteTestElement.setBorderPainted(false);
         DeleteTestElement.setContentAreaFilled(false);
         DeleteTestElement.setFocusPainted(false);
         DeleteTestElement.setFocusable(false);
-        DeleteTestElement.setHorizontalAlignment(SwingConstants.LEFT);
+        DeleteTestElement.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        DeleteTestElement.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         DeleteTestElement.setRequestFocusEnabled(false);
         DeleteTestElement.setRolloverEnabled(false);
-        DeleteTestElement.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent evt) {
+        DeleteTestElement.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
                 DeleteTestElementMouseEntered(evt);
             }
-            public void mouseExited(MouseEvent evt) {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
                 DeleteTestElementMouseExited(evt);
             }
         });
-        DeleteTestElement.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+        DeleteTestElement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeleteTestElementActionPerformed(evt);
             }
         });
 
-        GroupLayout pnlDeleteTestElementLayout = new GroupLayout(pnlDeleteTestElement);
+        javax.swing.GroupLayout pnlDeleteTestElementLayout = new javax.swing.GroupLayout(pnlDeleteTestElement);
         pnlDeleteTestElement.setLayout(pnlDeleteTestElementLayout);
-        pnlDeleteTestElementLayout.setHorizontalGroup(pnlDeleteTestElementLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(DeleteTestElement, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        pnlDeleteTestElementLayout.setHorizontalGroup(
+            pnlDeleteTestElementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(DeleteTestElement, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
         );
-        pnlDeleteTestElementLayout.setVerticalGroup(pnlDeleteTestElementLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(GroupLayout.Alignment.TRAILING, pnlDeleteTestElementLayout.createSequentialGroup()
+        pnlDeleteTestElementLayout.setVerticalGroup(
+            pnlDeleteTestElementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDeleteTestElementLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(DeleteTestElement, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+                .addComponent(DeleteTestElement, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pnlSaveTestRepository.setBackground(new java.awt.Color(0, 0, 0));
@@ -317,40 +319,41 @@ public class TestElementRepository extends javax.swing.JFrame {
         SaveTestRepository.setBackground(new java.awt.Color(0, 0, 0));
         SaveTestRepository.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         SaveTestRepository.setForeground(new java.awt.Color(255, 255, 255));
-        SaveTestRepository.setIcon(new ImageIcon(System.getProperty("user.dir")+"\\icons\\addUploadTestSuite.png"));
-        SaveTestRepository.setText("Save Object Repository");
-        SaveTestRepository.setToolTipText("will save the updated test suite");
+        SaveTestRepository.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\icons\\saveTestSuite.png"));
+        SaveTestRepository.setToolTipText("save test elements");
         SaveTestRepository.setBorder(null);
         SaveTestRepository.setBorderPainted(false);
         SaveTestRepository.setContentAreaFilled(false);
         SaveTestRepository.setFocusPainted(false);
         SaveTestRepository.setFocusable(false);
-        SaveTestRepository.setHorizontalAlignment(SwingConstants.LEFT);
+        SaveTestRepository.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         SaveTestRepository.setRequestFocusEnabled(false);
         SaveTestRepository.setRolloverEnabled(false);
-        SaveTestRepository.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent evt) {
+        SaveTestRepository.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
                 SaveTestRepositoryMouseEntered(evt);
             }
-            public void mouseExited(MouseEvent evt) {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
                 SaveTestRepositoryMouseExited(evt);
             }
         });
-        SaveTestRepository.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+        SaveTestRepository.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SaveTestRepositoryActionPerformed(evt);
             }
         });
 
-        GroupLayout pnlSaveTestRepositoryLayout = new GroupLayout(pnlSaveTestRepository);
+        javax.swing.GroupLayout pnlSaveTestRepositoryLayout = new javax.swing.GroupLayout(pnlSaveTestRepository);
         pnlSaveTestRepository.setLayout(pnlSaveTestRepositoryLayout);
-        pnlSaveTestRepositoryLayout.setHorizontalGroup(pnlSaveTestRepositoryLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(SaveTestRepository, GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+        pnlSaveTestRepositoryLayout.setHorizontalGroup(
+            pnlSaveTestRepositoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(SaveTestRepository, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        pnlSaveTestRepositoryLayout.setVerticalGroup(pnlSaveTestRepositoryLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(GroupLayout.Alignment.TRAILING, pnlSaveTestRepositoryLayout.createSequentialGroup()
+        pnlSaveTestRepositoryLayout.setVerticalGroup(
+            pnlSaveTestRepositoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSaveTestRepositoryLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(SaveTestRepository, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+                .addComponent(SaveTestRepository, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pnlAddNewTestElement.setBackground(new java.awt.Color(0, 0, 0));
@@ -358,88 +361,80 @@ public class TestElementRepository extends javax.swing.JFrame {
         AddNewTestElement.setBackground(new java.awt.Color(0, 0, 0));
         AddNewTestElement.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         AddNewTestElement.setForeground(new java.awt.Color(255, 255, 255));
-        AddNewTestElement.setIcon(new ImageIcon(System.getProperty("user.dir")+"\\icons\\addTestStep_Element.png"));
-        AddNewTestElement.setText("Add New Object");
-        AddNewTestElement.setToolTipText("will add a new test step to the bottom of the test suite");
+        AddNewTestElement.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\icons\\addTestStep_Element.png"));
+        AddNewTestElement.setToolTipText("add test element");
         AddNewTestElement.setBorder(null);
         AddNewTestElement.setBorderPainted(false);
         AddNewTestElement.setContentAreaFilled(false);
         AddNewTestElement.setFocusPainted(false);
         AddNewTestElement.setFocusable(false);
-        AddNewTestElement.setHorizontalAlignment(SwingConstants.LEFT);
+        AddNewTestElement.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         AddNewTestElement.setRequestFocusEnabled(false);
         AddNewTestElement.setRolloverEnabled(false);
-        AddNewTestElement.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent evt) {
+        AddNewTestElement.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AddNewTestElementMouseEntered(evt);
             }
-            public void mouseExited(MouseEvent evt) {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
                 AddNewTestElementMouseExited(evt);
             }
         });
-        AddNewTestElement.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+        AddNewTestElement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AddNewTestElementActionPerformed(evt);
             }
         });
 
-        GroupLayout pnlAddNewTestElementLayout = new GroupLayout(pnlAddNewTestElement);
+        javax.swing.GroupLayout pnlAddNewTestElementLayout = new javax.swing.GroupLayout(pnlAddNewTestElement);
         pnlAddNewTestElement.setLayout(pnlAddNewTestElementLayout);
-        pnlAddNewTestElementLayout.setHorizontalGroup(pnlAddNewTestElementLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(AddNewTestElement, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        pnlAddNewTestElementLayout.setHorizontalGroup(
+            pnlAddNewTestElementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(AddNewTestElement, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        pnlAddNewTestElementLayout.setVerticalGroup(pnlAddNewTestElementLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(GroupLayout.Alignment.TRAILING, pnlAddNewTestElementLayout.createSequentialGroup()
+        pnlAddNewTestElementLayout.setVerticalGroup(
+            pnlAddNewTestElementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAddNewTestElementLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(AddNewTestElement, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+                .addComponent(AddNewTestElement, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        GroupLayout pnlMenuBarLayout = new GroupLayout(pnlMenuBar);
-        pnlMenuBar.setLayout(pnlMenuBarLayout);
-        pnlMenuBarLayout.setHorizontalGroup(pnlMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(pnlDeleteTestElement, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnlSaveTestRepository, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnlAddNewTestElement, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        pnlMenuBarLayout.setVerticalGroup(pnlMenuBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMenuBarLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(pnlAddNewTestElement, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
-                .addComponent(pnlDeleteTestElement, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
-                .addComponent(pnlSaveTestRepository, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jDesktopPane1.setLayer(pnlDeleteTestElement, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(pnlSaveTestRepository, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(pnlAddNewTestElement, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jDesktopPane1.setLayer(pnlMenuBar, JLayeredPane.DEFAULT_LAYER);
-
-        GroupLayout jDesktopPane1Layout = new GroupLayout(jDesktopPane1);
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGap(1, 1, 1)
-                .addComponent(pnlMenuBar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(1, 1, 1))
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlDeleteTestElement, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlSaveTestRepository, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlAddNewTestElement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jDesktopPane1Layout.setVerticalGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGap(1, 1, 1)
-                .addComponent(pnlMenuBar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(1, 1, 1))
+                .addGap(30, 30, 30)
+                .addComponent(pnlAddNewTestElement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlDeleteTestElement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlSaveTestRepository, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        GroupLayout layout = new GroupLayout(getContentPane());
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlObjectRepo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(2, 2, 2)
-                .addComponent(jDesktopPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlObjectRepo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(1, 1, 1)
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1))
         );
-        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(pnlObjectRepo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlObjectRepo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jDesktopPane1)
                 .addGap(1, 1, 1))
@@ -447,7 +442,7 @@ public class TestElementRepository extends javax.swing.JFrame {
 
         getAccessibleContext().setAccessibleParent(this);
 
-        setSize(new Dimension(865, 365));
+        setSize(new java.awt.Dimension(865, 365));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -540,12 +535,12 @@ public class TestElementRepository extends javax.swing.JFrame {
         }
         
         if(EditRegressionSuite.checkEditorIsShowing() ==true)
-                tabOutFromEditingColumn(false, RegressionSuiteTable, 
+                tabOutFromEditingColumn(false, RegSuiteTable, 
                 getFlowCellxPoint, 
                 getFlowCellyPoint, 
-                RegressionSuiteTable.getSelectedRow());
+                RegSuiteTable.getSelectedRow());
         
-        if(common.checkForDuplicateTestId(importDataFromExcelModel, RegressionSuiteTable, RegressionSuiteTable.getSelectedRow(), testIdTxt) ==true){
+        if(common.checkForDuplicateTestId(importDataFromExcelModel, RegSuiteTable, RegSuiteTable.getSelectedRow(), testIdTxt) ==true){
             return;
         }
         
@@ -564,7 +559,7 @@ public class TestElementRepository extends javax.swing.JFrame {
                         RegSuite.getObjectListFromObjectRepository(getCurrSheet);
                         RegSuite.ObjectRepositoryList();
                         
-                        RegSuite.testObjectRepoColumn = EditRegressionSuite.RegressionSuiteTable.getColumnModel().getColumn(3);
+                        RegSuite.testObjectRepoColumn = EditRegressionSuite.RegSuiteTable.getColumnModel().getColumn(3);
                         RegSuite.testObjectRepoColumn.setCellEditor(new DefaultCellEditor(RegSuite.comboBoxObjectRepository));
                     }
                     JOptionPane.showMessageDialog(null,"Test suite "+"\""+EditRegressionSuite.excelFileImport.getName(EditRegressionSuite.excelFile)+"\""+" local repository updated and saved!","Alert",JOptionPane.WARNING_MESSAGE);
@@ -572,10 +567,10 @@ public class TestElementRepository extends javax.swing.JFrame {
                     try{
                         for (Map.Entry<Integer,String> entry : newTestElmList.entrySet()){
                             if(!testElmList.get(entry.getKey()).toString().contentEquals(entry.getValue())){
-                                for(int i=0; i<RegressionSuiteTable.getRowCount(); i++){
-                                    String getElm =RegressionSuiteTable.getValueAt(i, 3).toString();
+                                for(int i=0; i<RegSuiteTable.getRowCount(); i++){
+                                    String getElm =RegSuiteTable.getValueAt(i, 3).toString();
                                     if(testElmList.get(entry.getKey()).toString().contentEquals(getElm)){
-                                        RegressionSuiteTable.setValueAt(entry.getValue(), i, 3);
+                                        RegSuiteTable.setValueAt(entry.getValue(), i, 3);
                                     }
                                 }
                             }    
@@ -609,7 +604,7 @@ public class TestElementRepository extends javax.swing.JFrame {
                         RegSuite.getObjectListFromObjectRepository(getCurrSheet);
                         RegSuite.ObjectRepositoryList();
                         
-                        RegSuite.testObjectRepoColumn = EditRegressionSuite.RegressionSuiteTable.getColumnModel().getColumn(3);
+                        RegSuite.testObjectRepoColumn = EditRegressionSuite.RegSuiteTable.getColumnModel().getColumn(3);
                         RegSuite.testObjectRepoColumn.setCellEditor(new DefaultCellEditor(RegSuite.comboBoxObjectRepository));
                     }
                 }
@@ -618,10 +613,10 @@ public class TestElementRepository extends javax.swing.JFrame {
                     try{
                         for (Map.Entry<Integer,String> entry : newTestElmList.entrySet()){
                             if(!testElmList.get(entry.getKey()).toString().contentEquals(entry.getValue())){
-                                for(int i=0; i<RegressionSuiteTable.getRowCount(); i++){
-                                    String getElm =RegressionSuiteTable.getValueAt(i, 3).toString();
+                                for(int i=0; i<RegSuiteTable.getRowCount(); i++){
+                                    String getElm =RegSuiteTable.getValueAt(i, 3).toString();
                                     if(testElmList.get(entry.getKey()).toString().contentEquals(getElm)){
-                                        RegressionSuiteTable.setValueAt(entry.getValue(), i, 3);
+                                        RegSuiteTable.setValueAt(entry.getValue(), i, 3);
                                     }
                                 }
                             }    
@@ -708,7 +703,7 @@ public class TestElementRepository extends javax.swing.JFrame {
             if(!getValAt.isEmpty() && (EditRegressionSuite.LocalORJRadioButton.isSelected() || 
                 EditRegressionSuite.AssociateObjORJCheckBox.isSelected())){
                 
-                boolean fndElementExist =checkValueExistInColumn(RegressionSuiteTable,"TestElement",getValAt);
+                boolean fndElementExist =checkValueExistInColumn(RegSuiteTable,"TestElement",getValAt);
 
                 if(fndElementExist){
                     int response = JOptionPane.showConfirmDialog(null, //
@@ -1123,17 +1118,16 @@ public class TestElementRepository extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static JButton AddNewTestElement;
-    public static JButton DeleteTestElement;
-    public static JScrollPane ObjectRepoScrollPane;
-    public static JTable ObjectRepoTable;
-    public static JButton SaveTestRepository;
-    public JDesktopPane jDesktopPane1;
-    public JPanel pnlAddNewTestElement;
-    public JPanel pnlDeleteTestElement;
-    public JPanel pnlMenuBar;
-    public JPanel pnlObjectRepo;
-    public JPanel pnlSaveTestRepository;
+    public static javax.swing.JButton AddNewTestElement;
+    public static javax.swing.JButton DeleteTestElement;
+    public static javax.swing.JScrollPane ObjectRepoScrollPane;
+    public static javax.swing.JTable ObjectRepoTable;
+    public static javax.swing.JButton SaveTestRepository;
+    public javax.swing.JDesktopPane jDesktopPane1;
+    public javax.swing.JPanel pnlAddNewTestElement;
+    public javax.swing.JPanel pnlDeleteTestElement;
+    public javax.swing.JPanel pnlObjectRepo;
+    public javax.swing.JPanel pnlSaveTestRepository;
     // End of variables declaration//GEN-END:variables
 
     private void contentEquals(String testId) {

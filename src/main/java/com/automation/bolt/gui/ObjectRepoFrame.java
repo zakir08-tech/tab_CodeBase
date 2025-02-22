@@ -5,17 +5,15 @@
  */
 package com.automation.bolt.gui;
 
-import com.automation.bolt.common;
-import static com.automation.bolt.gui.EditRegressionSuite.*;
-import com.automation.bolt.renderer.*;
+import static com.automation.bolt.gui.EditRegressionSuite.editableRow;
+import static com.automation.bolt.gui.EditRegressionSuite.excelFileOR;
+import static com.automation.bolt.gui.EditRegressionSuite.tabOutFromEditingColumn;
+
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -30,10 +28,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -47,6 +44,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FillPatternType;
@@ -57,6 +55,9 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.automation.bolt.common;
+import com.automation.bolt.renderer.tableAddORCellRenderer;
 
 /**
  *
@@ -422,7 +423,7 @@ public class ObjectRepoFrame extends javax.swing.JFrame {
                         RegSuite.getObjectListFromObjectRepository(getCurrSheet);
                         RegSuite.ObjectRepositoryList();
                         
-                        RegSuite.testObjectRepoColumn = EditRegressionSuite.RegressionSuiteTable.getColumnModel().getColumn(3);
+                        RegSuite.testObjectRepoColumn = EditRegressionSuite.RegSuiteTable.getColumnModel().getColumn(3);
                         RegSuite.testObjectRepoColumn.setCellEditor(new DefaultCellEditor(RegSuite.comboBoxObjectRepository));
                     }
                     JOptionPane.showMessageDialog(EditRegressionSuite.RegressionSuiteScrollPane,"Test suite "+"\""+EditRegressionSuite.excelFileImport.getName(EditRegressionSuite.excelFile)+"\""+" local repository updated and saved!","Alert",JOptionPane.WARNING_MESSAGE);
@@ -444,7 +445,7 @@ public class ObjectRepoFrame extends javax.swing.JFrame {
                         RegSuite.getObjectListFromObjectRepository(getCurrSheet);
                         RegSuite.ObjectRepositoryList();
                         
-                        RegSuite.testObjectRepoColumn = EditRegressionSuite.RegressionSuiteTable.getColumnModel().getColumn(4);
+                        RegSuite.testObjectRepoColumn = EditRegressionSuite.RegSuiteTable.getColumnModel().getColumn(4);
                         RegSuite.testObjectRepoColumn.setCellEditor(new DefaultCellEditor(RegSuite.comboBoxObjectRepository));
                     }
                 }

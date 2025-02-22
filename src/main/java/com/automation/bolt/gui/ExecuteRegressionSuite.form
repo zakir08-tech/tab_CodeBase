@@ -58,7 +58,7 @@
               <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="scrollExecuteRegSuite" pref="696" max="32767" attributes="0"/>
+                      <Component id="scrollExecuteRegSuite" pref="716" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
@@ -80,7 +80,7 @@
                   <Group type="102" attributes="0">
                       <Component id="jDesktopPane2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                      <Component id="scrollExecuteRegSuite" pref="472" max="32767" attributes="0"/>
+                      <Component id="scrollExecuteRegSuite" pref="502" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
@@ -193,10 +193,10 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                  <Component id="pnlRunMenuBar" min="-2" pref="198" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                  <Component id="pnlRunMenuBar" min="-2" pref="179" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -228,49 +228,40 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="bttnStartTestRun" alignment="0" max="32767" attributes="0"/>
-                  <Component id="bttnStopTestRun" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="pnlTimeOuts" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="rdBttnTimeouts" alignment="1" min="-2" pref="191" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="bttnLoadRegSuite" min="-2" pref="40" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="bttnRefreshTestRun" min="-2" pref="40" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="bttnStartTestRun" min="-2" pref="40" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="bttnStopTestRun" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="chkBoxRunHeadless" alignment="0" min="-2" pref="188" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="bttnRefreshTestRun" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="bttnLoadRegSuite" alignment="0" pref="198" max="32767" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="rdButtonEdge" max="32767" attributes="0"/>
-                                              <Component id="rdButtonChrome" max="32767" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="lblEdge" pref="163" max="32767" attributes="0"/>
-                                              <Component id="lblChrome" max="32767" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                  </Group>
-                                  <Component id="chkBoxAssociateObjOR" alignment="0" min="-2" pref="188" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblRunwith" min="-2" pref="189" max="-2" attributes="0"/>
-                                          <Component id="lblTestType" alignment="0" min="-2" pref="189" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="jTextTestType" alignment="0" max="32767" attributes="0"/>
-                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblRunwith" min="-2" pref="189" max="-2" attributes="0"/>
+                          <Component id="lblTestType" alignment="0" min="-2" pref="189" max="-2" attributes="0"/>
+                          <Component id="rdBttnTimeouts" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                          <Component id="pnlTimeOuts" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="rdButtonEdge" max="32767" attributes="0"/>
+                                  <Component id="rdButtonChrome" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="lblChrome" max="32767" attributes="0"/>
+                                  <Component id="lblEdge" min="-2" pref="40" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="chkBoxRunHeadless" alignment="0" max="32767" attributes="0"/>
+                              <Component id="chkBoxAssociateObjOR" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="txtTestType" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -278,10 +269,11 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                      <Component id="bttnLoadRegSuite" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                      <Component id="bttnRefreshTestRun" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="bttnLoadRegSuite" min="-2" max="-2" attributes="0"/>
+                          <Component id="bttnRefreshTestRun" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="lblRunwith" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -296,20 +288,21 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblTestType" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="jTextTestType" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="txtTestType" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="chkBoxAssociateObjOR" linkSize="6" min="-2" pref="15" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="chkBoxRunHeadless" linkSize="6" min="-2" pref="15" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="bttnStartTestRun" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Component id="bttnStopTestRun" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="bttnStartTestRun" min="-2" max="-2" attributes="0"/>
+                          <Component id="bttnStopTestRun" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="rdBttnTimeouts" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="pnlTimeOuts" max="-2" attributes="0"/>
-                      <EmptySpace pref="25" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                      <Component id="pnlTimeOuts" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -327,7 +320,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Associate Global OR"/>
-                <Property name="toolTipText" type="java.lang.String" value="select to use global repository for execution"/>
+                <Property name="toolTipText" type="java.lang.String" value="associate global repository"/>
                 <Property name="enabled" type="boolean" value="false"/>
                 <Property name="horizontalAlignment" type="int" value="2"/>
               </Properties>
@@ -354,15 +347,13 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new javax.swing.ImageIcon(System.getProperty(&quot;user.dir&quot;).replaceAll(&quot;\\\\&quot;, &quot;/&quot;)+&quot;/icons/addUploadTestSuite.png&quot;)" type="code"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Upload Test Suite "/>
-                <Property name="toolTipText" type="java.lang.String" value="open and upload the test suite for execution"/>
+                <Property name="toolTipText" type="java.lang.String" value="upload test suite"/>
                 <Property name="actionCommand" type="java.lang.String" value="OpenRegressionSuite"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
                 </Property>
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
-                <Property name="horizontalAlignment" type="int" value="2"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[121, 33]"/>
                 </Property>
@@ -397,7 +388,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Run Headless"/>
-                <Property name="toolTipText" type="java.lang.String" value="select to execute headless"/>
+                <Property name="toolTipText" type="java.lang.String" value="headless test run"/>
                 <Property name="enabled" type="boolean" value="false"/>
                 <Property name="horizontalAlignment" type="int" value="2"/>
               </Properties>
@@ -424,16 +415,13 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new javax.swing.ImageIcon(System.getProperty(&quot;user.dir&quot;).replaceAll(&quot;\\\\&quot;, &quot;/&quot;)+&quot;/icons/startTestRun.png&quot;)" type="code"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Start Test Run"/>
                 <Property name="toolTipText" type="java.lang.String" value="start test execution"/>
-                <Property name="actionCommand" type="java.lang.String" value=""/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
                 </Property>
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
                 <Property name="enabled" type="boolean" value="false"/>
-                <Property name="horizontalAlignment" type="int" value="2"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[121, 33]"/>
                 </Property>
@@ -469,37 +457,24 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="lblImplicitWait" min="-2" pref="103" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtImplicitWait" min="-2" pref="52" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="lblPageLoadTimeout" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtPageLoadTimeout" min="-2" pref="52" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="txtImplicitWait" min="-2" pref="52" max="-2" attributes="0"/>
+                      <Component id="lblImplicitWait" min="-2" pref="103" max="-2" attributes="0"/>
+                      <Component id="lblPageLoadTimeout" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtPageLoadTimeout" min="-2" pref="52" max="-2" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblImplicitWait" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtImplicitWait" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="lblImplicitWait" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblPageLoadTimeout" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtPageLoadTimeout" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="txtImplicitWait" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblPageLoadTimeout" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                          <Component id="txtPageLoadTimeout" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -542,7 +517,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="cc" green="cc" red="cc" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Page Load Timeout"/>
+                    <Property name="text" type="java.lang.String" value="Page Load"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtPageLoadTimeout">
@@ -582,16 +557,13 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new javax.swing.ImageIcon(System.getProperty(&quot;user.dir&quot;).replaceAll(&quot;\\\\&quot;, &quot;/&quot;)+&quot;/icons/stopTestRun.png&quot;)" type="code"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Stop Test Run"/>
                 <Property name="toolTipText" type="java.lang.String" value="stop test execution"/>
-                <Property name="actionCommand" type="java.lang.String" value=""/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
                 </Property>
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
                 <Property name="enabled" type="boolean" value="false"/>
-                <Property name="horizontalAlignment" type="int" value="2"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[121, 33]"/>
                 </Property>
@@ -713,15 +685,13 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new javax.swing.ImageIcon(System.getProperty(&quot;user.dir&quot;).replaceAll(&quot;\\\\&quot;, &quot;/&quot;)+&quot;/icons/refreshTestRun.png&quot;)" type="code"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Refresh Test run"/>
-                <Property name="toolTipText" type="java.lang.String" value="Refresh to reload test run for new changes"/>
+                <Property name="toolTipText" type="java.lang.String" value="refresh run for new changes"/>
                 <Property name="actionCommand" type="java.lang.String" value="OpenRegressionSuite"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
                 </Property>
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
-                <Property name="horizontalAlignment" type="int" value="2"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[121, 33]"/>
                 </Property>
@@ -755,7 +725,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Timeouts (in seconds):"/>
+                <Property name="text" type="java.lang.String" value="Timeouts (seconds):"/>
                 <Property name="toolTipText" type="java.lang.String" value="set wait"/>
               </Properties>
               <Events>
@@ -779,7 +749,7 @@
                 <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblTestTypeMouseExited"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextTestType">
+            <Component class="javax.swing.JTextField" name="txtTestType">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="0" type="rgb"/>
@@ -791,6 +761,7 @@
                   <Color blue="af" green="af" id="pink" palette="1" red="ff" type="palette"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="2"/>
+                <Property name="toolTipText" type="java.lang.String" value="test type run (@smoke/@reg/@sanity)"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                     <EmptyBorder/>
@@ -802,7 +773,7 @@
                 <Property name="name" type="java.lang.String" value="SetTestType" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextTestTypeFocusLost"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTestTypeFocusLost"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
@@ -940,7 +911,7 @@
                   <Font name="Calibri" size="10" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="33" green="33" red="0" type="rgb"/>
+                  <Color blue="cc" green="cc" red="ff" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="4"/>
                 <Property name="text" type="java.lang.String" value=" * Double click Test Status to view test result"/>

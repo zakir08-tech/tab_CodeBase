@@ -45,11 +45,14 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+
 
 public class glueCode {
     public static WebDriver boltDriver;
@@ -122,7 +125,7 @@ public class glueCode {
             boltExecutor.log.error(exp);
         }
     }
-	
+    
     public static void keySet(WebElement elm, String setValue) {
         stepSuccess = true;
 
@@ -142,6 +145,60 @@ public class glueCode {
                 StaleElementReferenceException exp) {
             stepSuccess = false;
             boltRunner.logError = exp.getMessage();
+            boltExecutor.log.error(exp);
+        }catch(WebDriverException exp){
+            stepSuccess = false;
+            boltRunner.logError = exp.getMessage();
+            boltExecutor.log.error(exp);
+        }
+    }
+    
+    public static void keySelectSalaryRange(WebElement elm, String setValue) {
+        stepSuccess = true;
+
+        if(elm ==null) {
+            stepSuccess = false;
+            boltRunner.logError = "No test element defined for "+"\""+"SELECT_SAL_RANGE"+"\"";
+            return;
+        }
+
+        try {
+        	String rangeMax = elm.getAttribute("max");
+        	String rangeStep = elm.getAttribute("step");
+        	
+        	if(setValue.isEmpty()) {
+        		setValue ="0";
+        	}
+        	
+        	if(rangeStep ==null) {
+        		rangeStep = "0.5";
+        	}
+        	
+        	if(rangeMax !=null) {
+        		if(Double.valueOf(setValue)>Double.valueOf(rangeMax)) {
+            		setValue = rangeMax;
+            	}
+        	}
+        	
+            double barMovement =Double.parseDouble(setValue)/Float.valueOf(rangeStep);
+            
+            JavascriptExecutor executor = (JavascriptExecutor)glueCode.boltDriver;
+            executor.executeScript("arguments[0].click();", elm);
+            
+            //elm.click();
+            elm.sendKeys(Keys.HOME);
+            
+            for(int i=1; i<=barMovement;i++) {
+                elm.sendKeys(Keys.ARROW_RIGHT);
+            }
+        }catch (IllegalArgumentException|
+                NullPointerException|
+                NoSuchElementException|
+                ElementNotInteractableException|
+                TimeoutException|
+                StaleElementReferenceException exp) {
+            stepSuccess = false;
+            boltRunner.logError = exp.toString();
             boltExecutor.log.error(exp);
         }catch(WebDriverException exp){
             stepSuccess = false;
@@ -573,8 +630,9 @@ public class glueCode {
 		try {
 			URL[] dependencyUrls = {new URL("file:/"+System.getProperty("user.dir").replaceAll("\\\\", "/")+"/target/tab.jar")};
 			classLoader = new URLClassLoader(dependencyUrls);
-			Class<?> loadedClass = classLoader.loadClass("test.automation.tab.userDefine");
-
+			Class<?> loadedClass = classLoader.loadClass("com.automation.bolt.userDefineTest");
+			//Class<?> loadedClass = classLoader.loadClass("test.automation.tab.userDefine");
+		
 			Object obj = loadedClass.getDeclaredConstructor().newInstance();
 			Method method = loadedClass.getMethod(getMethodName, String[].class);
 			String[] args =methodArgs.split(",");
@@ -1160,7 +1218,11 @@ public class glueCode {
                 jse.executeScript("arguments[0].style.border='3px solid red'", elm);
                 Thread.sleep(1000);
             }
-
+            
+            //Screenshot s=new AShot().shootingStrategy(ShootingStrategies.viewportPasting(2000)).takeScreenshot(boltDriver);
+            //screenshotPath = constants.userDir+"/screenShots/screenShot_"+common.getCurrentDateTimeMS()+".png";
+            //ImageIO.write(s.getImage(),"PNG",new File(screenshotPath));
+              
             TakesScreenshot ts = (TakesScreenshot)boltDriver;
             File source = ts.getScreenshotAs(OutputType.FILE);
             screenshotPath = constants.userDir+"/screenShots/screenShot_"+common.getCurrentDateTimeMS()+".png";
