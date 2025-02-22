@@ -198,7 +198,7 @@ public class API_TestRunner extends loadAPITestRunner {
 
             getBasicAuthFlag = testRunnerEntry.getValue().get("Authorization"); //get authorization
             if(getBasicAuthFlag.toString().contentEquals("Bearer Token")){
-                updateValueFromJsonResponse(getApiTestRunId, getAuth1,"AuthVal1");
+                //updateValueFromJsonResponse(getApiTestRunId, getAuth1,"AuthVal1");
                 getAuth1 =testRunnerEntry.getValue().get("AuthVal1");
 
                 if(requestHeaders ==null){

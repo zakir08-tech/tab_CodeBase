@@ -84,7 +84,7 @@ public class ApiTestReport {
     	sparkReporter.config().setTheme(Theme.DARK);
     	sparkReporter.config().setTimeStampFormat("EEE, MMMM dd,yyyy, hh:mm: a '('zzz')'");
     	sparkReporter.config().setEncoding("UTF-8");
- 
+    
         for (Entry<Object, HashMap<Object, Object>> entryReport: loadAPITestRunner.ApiTestRunnerMap.entrySet()) {
         	Object getRunID = entryReport.getValue().get("Run ID");
             Object getRequest = entryReport.getValue().get("Request");            
@@ -92,6 +92,9 @@ public class ApiTestReport {
             Object getRequestExpStatus = entryReport.getValue().get("Expected Status");
             Object getRequestActualStatus = entryReport.getValue().get("Actual Status");
             Object getJSONResponse = entryReport.getValue().get("JSON Response");
+            Object getAuthType = entryReport.getValue().get("Authorization");
+            Object getAuth1 = entryReport.getValue().get("AuthVal1");
+            Object getAuth2 = entryReport.getValue().get("AuthVal2");
             
             storeJsonResponse = API_TestRunner.verifyJsonResponseAttributes.get(getRunID);
             getAPiVerifyTags = loadAPITestRunner.saveVerifyRespTagElmMap.get(getRunID);
@@ -116,28 +119,35 @@ public class ApiTestReport {
             if(getRequest.toString().contentEquals("NA"))
             	extentTest.warning(MarkupHelper.createLabel("API Request type not defined", ExtentColor.PINK));
             else
-            	extentTest.info(MarkupHelper.createLabel(getRequest.toString(), ExtentColor.BLACK));
+            	extentTest.pass(MarkupHelper.createLabel(getRequest.toString(), ExtentColor.INDIGO));
             
             if(getRequestUrl ==null || getRequestUrl.toString().isEmpty())
             	extentTest.warning(MarkupHelper.createLabel("API URL not defined", ExtentColor.PINK));
             else
-            	extentTest.info(MarkupHelper.createLabel(getRequestUrl.toString(), ExtentColor.TRANSPARENT));
+            	extentTest.pass(MarkupHelper.createLabel(getRequestUrl.toString(), ExtentColor.TRANSPARENT));
             
-            HashMap<Object, Object> headerMapNew = loadAPITestRunner.saveHeaderMap.get(getRunID);
-            try{
-            	for (Entry<Object, Object> jsonTagNotFnd: headerMapNew.entrySet()) {
-            		getHeadersDetails = getHeadersDetails + jsonTagNotFnd.getKey() +": "+ jsonTagNotFnd.getValue() + "\r\n";
-                }
-            }catch (NullPointerException exp){
-            	//exp.printStackTrace();
-            }
- 
-            if(getHeadersDetails.isEmpty()){
+            // add header list to test report
+            HashMap<Object, Object> headerMapNew = loadAPITestRunner.saveHeaderMap.get(getRunID);  
+            if(headerMapNew ==null){
             	getHeadersDetails = "No headers define for the given API request";
-            }else
-            	extentTest.info(MarkupHelper.createUnorderedList(headerMapNew));
+            }else {
+            	extentTest.info(MarkupHelper.createLabel("Headers:", ExtentColor.BLACK));
+            	extentTest.pass(MarkupHelper.createUnorderedList(headerMapNew));
+            }
+            	
+            // add basic auth to test report
+            if(getAuthType.toString().contentEquals("Basic Auth")) {
+            	extentTest.info(MarkupHelper.createLabel("Basic Authentication:", ExtentColor.BLACK));
+            	String[] getBasicAuth = new String[2];
+            	getBasicAuth[0] ="Username:" +getAuth1.toString();
+            	getBasicAuth[1] ="Password:" +getAuth2.toString();
+            	extentTest.pass(MarkupHelper.createUnorderedList(getBasicAuth));
+            }
             
             // add payload to test report
+            if(getJSONPayload !=null)
+            	extentTest.info(MarkupHelper.createLabel("Payload:", ExtentColor.BLACK));
+            
             Object getJsonPayloadType =entryReport.getValue().get("Payload Type");
             
             if(getJsonPayloadType.toString().contains("x-www-form-urlencoded")) {
@@ -151,19 +161,20 @@ public class ApiTestReport {
                 		newItemList[i] =x.replace("=", ":");
                 		i++;
                 	}
-                	extentTest.info(MarkupHelper.createUnorderedList(newItemList));
+                	extentTest.pass(MarkupHelper.createUnorderedList(newItemList));
             	}catch(NullPointerException exp) {}
             }else {
             	if(getJSONPayload !=null) {
             		jResp = MarkupHelper.createCodeBlock(prettyPrintUsingGson(getJSONPayload.toString()),CodeLanguage.JSON);
-            		extentTest.info(jResp);
+            		extentTest.pass(jResp);
             	}
             }
            
             // add json response to test report
             try {
             	getJSONResponse = getJSONResponse.toString().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-            	extentTest.info(MarkupHelper.createCodeBlock(prettyPrintUsingGson(getJSONResponse.toString()),CodeLanguage.JSON));
+            	extentTest.info(MarkupHelper.createLabel("Response:", ExtentColor.BLACK));
+            	extentTest.pass(MarkupHelper.createCodeBlock(prettyPrintUsingGson(getJSONResponse.toString()),CodeLanguage.JSON));
             } catch (NullPointerException exp) {
             	//exp.printStackTrace();
             }catch(JsonSyntaxException exp) {
@@ -197,6 +208,7 @@ public class ApiTestReport {
             }
 
             if (getRequestActualStatus != null) {
+            	extentTest.info(MarkupHelper.createLabel("Status:", ExtentColor.BLACK));
             	JSONObject resStatus = jsonStatusObject(getRequestExpStatus.toString(), getRequestActualStatus.toString());
             	if (getRequestExpStatus.toString().contentEquals(getRequestActualStatus.toString()) &&
             		jsonTagStatus == true &&
