@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.json.JSONObject;
@@ -19,6 +20,7 @@ import com.api.automation.bolt.loadAPITestRunner;
 import com.automation.bolt.constants;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.CodeLanguage;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.Markup;
@@ -119,29 +121,32 @@ public class ApiTestReport {
             if(getRequest.toString().contentEquals("NA"))
             	extentTest.warning(MarkupHelper.createLabel("API Request type not defined", ExtentColor.PINK));
             else
-            	extentTest.pass(MarkupHelper.createLabel(getRequest.toString(), ExtentColor.INDIGO));
+            	extentTest.info(MarkupHelper.createLabel(getRequest.toString(), ExtentColor.INDIGO));
             
             if(getRequestUrl ==null || getRequestUrl.toString().isEmpty())
             	extentTest.warning(MarkupHelper.createLabel("API URL not defined", ExtentColor.PINK));
             else
-            	extentTest.pass(MarkupHelper.createLabel(getRequestUrl.toString(), ExtentColor.TRANSPARENT));
+            	extentTest.info(MarkupHelper.createLabel(getRequestUrl.toString(), ExtentColor.TRANSPARENT));
             
             // add header list to test report
             HashMap<Object, Object> headerMapNew = loadAPITestRunner.saveHeaderMap.get(getRunID);  
             if(headerMapNew ==null){
             	getHeadersDetails = "No headers define for the given API request";
             }else {
-            	extentTest.info(MarkupHelper.createLabel("Headers:", ExtentColor.BLACK));
-            	extentTest.pass(MarkupHelper.createUnorderedList(headerMapNew));
+            	String getHeaderList="";
+            	for (Map.Entry<Object, Object> entry : headerMapNew.entrySet()) {
+            		getHeaderList = getHeaderList +"<span style=\"color:#33b5ff;\">"+ entry.getKey()+"</span>"+": "+entry.getValue()+"<br>";
+            	}
+            	
+            	extentTest.info(MarkupHelper.createLabel("Headers:", ExtentColor.BLACK).getMarkup().concat("<br>"+getHeaderList));
             }
             	
             // add basic auth to test report
             if(getAuthType.toString().contentEquals("Basic Auth")) {
-            	extentTest.info(MarkupHelper.createLabel("Basic Authentication:", ExtentColor.BLACK));
-            	String[] getBasicAuth = new String[2];
-            	getBasicAuth[0] ="Username:" +getAuth1.toString();
-            	getBasicAuth[1] ="Password:" +getAuth2.toString();
-            	extentTest.pass(MarkupHelper.createUnorderedList(getBasicAuth));
+            	String getBasicAuthUsername ="<span style=\"color:#33b5ff;\">Username</span>: " +getAuth1.toString();
+            	String getBasicAuthPwd ="<span style=\"color:#33b5ff;\">Password</span>: " +getAuth2.toString();
+            	extentTest.info(MarkupHelper.createLabel("Basic Authentication:", ExtentColor.BLACK).getMarkup()
+            			.concat("<br>"+getBasicAuthUsername+"<br>"+getBasicAuthPwd));
             }
             
             // add payload to test report
@@ -172,7 +177,7 @@ public class ApiTestReport {
            
             // add json response to test report
             try {
-            	getJSONResponse = getJSONResponse.toString().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+            	//getJSONResponse = getJSONResponse.toString().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
             	extentTest.info(MarkupHelper.createLabel("Response:", ExtentColor.BLACK));
             	extentTest.pass(MarkupHelper.createCodeBlock(prettyPrintUsingGson(getJSONResponse.toString()),CodeLanguage.JSON));
             } catch (NullPointerException exp) {
@@ -182,50 +187,58 @@ public class ApiTestReport {
             }
             
             if (storeJsonResponse != null) {
+            	String getTagElm ="";
+            	boolean verifyStatus= true;
+            	
             	for (Entry<Object, List<Object>> jsonTagElm: storeJsonResponse.entrySet()) {
 	                jsonTagExp = jsonTagElm.getValue().get(0).toString().toLowerCase();
 	                jsonTagAct = jsonTagElm.getValue().get(1).toString().toLowerCase();
- 
-                    if (jsonTagExp != "#." && jsonTagAct != "#.") {
-	                    if (!jsonTagElm.getValue().get(0).toString().toLowerCase().contentEquals(jsonTagElm.getValue().get(1).toString().toLowerCase())) {
-	                        jsonTagActualVal = " [Actual:" + "<font color=\"red\"><b>" + jsonTagElm.getValue().get(1) + "</b></font>" + "]";
-	                        jsonTagStatus = false;
-	                    } else {
-	                    	jsonTagActualVal = " [Actual:" + "<font color=\"green\"><b>" + jsonTagElm.getValue().get(1) + "</b></font>" + "]";
-	                    }
- 
-                        jsonTagName = jsonTagElm.getKey();
-                        jsonTagExpectedVal = "[Expected:" + "<font color=\"green\"><b>" + jsonTagElm.getValue().get(0) + "</b></font>" + "]";
-                        jsonTagSummaryTxt = jsonTagName + ":" + jsonTagExpectedVal + jsonTagActualVal + "\n";
-                    } else if (jsonTagExp == "#." && jsonTagAct == "#.") {
-                        jsonTagStatus = false;
-                        jsonTagName = jsonTagElm.getKey();
-                        jsonTagSummaryTxt = jsonTagName + ":</font>" + "<font color=\"red\"><b><i>" + "given tag not found in JSON response!" + "</i></b></font>" + "\n";
-                    }
- 
-                    jsonTagSummary = jsonTagSummary + jsonTagSummaryTxt;
+	                
+	                
+	                if(jsonTagExp.trim().toLowerCase().contentEquals(jsonTagAct.toString().toLowerCase())) {
+	                	getTagElm = getTagElm + "<span style=\"color:#33b5ff;\">" +jsonTagElm.getKey() 
+	                	+"</span>" +": Expected &lt;" +"<span style=\"color:#33ff42;\">"
+	                	+jsonTagExp +"</span>"+"&gt; Actual &lt;" +"<span style=\"color:#33ff42;\">"+ jsonTagAct+ "</span>"+"&gt;<br>";
+	                }else {
+	                	verifyStatus =false;
+	                	getTagElm = getTagElm + "<span style=\"color:#33b5ff;\">" 
+	                	+jsonTagElm.getKey() +"</span>" +": Expected &lt;" +"<span style=\"color:#33ff42;\">"
+	                	+jsonTagExp +"</span>"+"&gt; Actual &lt;" +"<span style=\"color:#ff4f33;\">"+ jsonTagAct+ "</span>"+"&gt;<br>";
+	                }
                 }
+            	
+            	if(verifyStatus ==true)
+            		extentTest.pass(MarkupHelper.createLabel("JSON Element Verification:", ExtentColor.BLACK).getMarkup().concat("<br>"+ getTagElm));
+            	else
+            		extentTest.fail(MarkupHelper.createLabel("JSON Element Verification:", ExtentColor.BLACK).getMarkup().concat("<br>"+ getTagElm));
             }
 
             if (getRequestActualStatus != null) {
-            	extentTest.info(MarkupHelper.createLabel("Status:", ExtentColor.BLACK));
             	JSONObject resStatus = jsonStatusObject(getRequestExpStatus.toString(), getRequestActualStatus.toString());
+            	String getExpStatus =getRequestExpStatus.toString();
+            	String getActStatus =getRequestActualStatus.toString();
+            	
             	if (getRequestExpStatus.toString().contentEquals(getRequestActualStatus.toString()) &&
             		jsonTagStatus == true &&
                     jsonRespTagStatus == true &&
                     jsonTagFnd == true &&
                     dbValidtionStatus == true) {
-            		extentTest.pass(MarkupHelper.createCodeBlock(resStatus.toString(),CodeLanguage.JSON));
+            		extentTest.pass(MarkupHelper.createLabel("Status:", ExtentColor.BLACK).getMarkup().
+            				concat("<br> <span style=\"color:#33b5ff;\">Expected Status</span>: "+"<span style=\"color:#33ff42;\">"+getExpStatus+"</span>"+"<br> <span style=\"color:#33b5ff;\">Actual Status</span>: "+"<span style=\"color:#33ff42;\">"+getActStatus+"</span>"));
+            		//extentTest.pass(MarkupHelper.createCodeBlock(resStatus.toString(),CodeLanguage.JSON));
                     textResonseCodeColor = responseCodeTextColorSuccess;
                 } else if (getRequestExpStatus.toString().contentEquals(getRequestActualStatus.toString())
                     && jsonTagStatus == false
                     || jsonRespTagStatus == false
                     || jsonTagFnd == false
                     || dbValidtionStatus == false) {
-                		extentTest.fail(MarkupHelper.createCodeBlock(resStatus.toString(),CodeLanguage.JSON));
+                	extentTest.fail(MarkupHelper.createLabel("Status:", ExtentColor.BLACK).getMarkup().
+            				concat("<br> <span style=\"color:#33b5ff;\">Expected Status</span>: "+"<span style=\"color:#33ff42;\">"+getExpStatus+"</span>"+"<br> <span style=\"color:#33b5ff;\">Actual Status</span>: "+"<span style=\"color:#ff4f33;\">"+getActStatus+"</span>"));
+                		//extentTest.fail(MarkupHelper.createCodeBlock(resStatus.toString(),CodeLanguage.JSON));
                         textResonseCodeColor = responseCodeTextColorDanger;
                 }else {
-                		extentTest.fail(MarkupHelper.createCodeBlock(resStatus.toString(),CodeLanguage.JSON));
+                	extentTest.fail(MarkupHelper.createLabel("Status:", ExtentColor.BLACK).getMarkup().
+            				concat("<br> <span style=\"color:#33b5ff;\">Expected Status</span>: "+"<span style=\"color:#33ff42;\">"+getExpStatus+"</span>"+"<br> <span style=\"color:#33b5ff;\">Actual Status</span>: "+"<span style=\"color:#ff4f33;\">"+getActStatus+"</span>"));
 		                textResonseCodeColor = responseCodeTextColorDanger;
                 }
             } else {
@@ -248,7 +261,7 @@ public class ApiTestReport {
                 }
             }
         }
-	        extent.flush();
+        	extent.flush();
 	        
 	        File htmlFile = new File(TestAutomationReport);
 	        try {
