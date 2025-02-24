@@ -279,9 +279,9 @@ public class API_TestRunner extends loadAPITestRunner {
                             finalRunStatus =false;
                 	}
             } else if (getApiTestRequest.toString().trim().toUpperCase().contentEquals("PUT")) { //PUT call
-            	if (requestHeaders.size() != 0){
+            	//if (requestHeaders.size() != 0){
         			//updateHeaderFromJsonResponse(getApiTestRunId);
-        		}
+        		//}
             	
             	if (requestPayload != null){	
             		closeableHttpRespone = restClient.putClientRequest(getApiTestRequestUrl, requestPayload.toString(), requestHeaders, getSSLCertificationFlag, getBasicAuthFlag);
