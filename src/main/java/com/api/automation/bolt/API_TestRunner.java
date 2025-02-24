@@ -235,7 +235,7 @@ public class API_TestRunner extends loadAPITestRunner {
             		closeableHttpRespone = restClient.getClientResponse(getApiTestRequestUrl, getSSLCertificationFlag, getBasicAuthFlag, getBasicAuthFlag);
             	else {
             		// update header value from previous json response
-            		updateHeaderFromJsonResponse(getApiTestRunId);
+            		//updateHeaderFromJsonResponse(getApiTestRunId);
             		closeableHttpRespone = restClient.getClientResponse(getApiTestRequestUrl, requestHeaders, getSSLCertificationFlag, getBasicAuthFlag); //GET call with headers
             	}
 
@@ -254,7 +254,7 @@ public class API_TestRunner extends loadAPITestRunner {
             } else if (getApiTestRequest.toString().trim().toUpperCase().contentEquals("POST")) { //POST call
             	try{
                     if (requestHeaders.size() != 0){
-                    	updateHeaderFromJsonResponse(getApiTestRunId);
+                    	//updateHeaderFromJsonResponse(getApiTestRunId);
                     }
                 }catch(NullPointerException exp){}
             	
@@ -280,7 +280,7 @@ public class API_TestRunner extends loadAPITestRunner {
                 	}
             } else if (getApiTestRequest.toString().trim().toUpperCase().contentEquals("PUT")) { //PUT call
             	if (requestHeaders.size() != 0){
-        			updateHeaderFromJsonResponse(getApiTestRunId);
+        			//updateHeaderFromJsonResponse(getApiTestRunId);
         		}
             	
             	if (requestPayload != null){	
@@ -305,7 +305,7 @@ public class API_TestRunner extends loadAPITestRunner {
                     }
             } else if(getApiTestRequest.toString().trim().toUpperCase().contentEquals("DELETE")){ // DELETE call
 	        	   if (requestHeaders !=null){
-	        		   updateHeaderFromJsonResponse(getApiTestRunId);
+	        		   //updateHeaderFromJsonResponse(getApiTestRunId);
 	        	   }
 	        	   
 	        	   if(stepDefinitionError ==false) {
