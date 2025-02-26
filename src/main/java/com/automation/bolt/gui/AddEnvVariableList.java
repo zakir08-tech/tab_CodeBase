@@ -507,55 +507,6 @@ public class AddEnvVariableList extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(tableEnvVariable,"No Object(s) available to delete!","Alert",JOptionPane.WARNING_MESSAGE);
         }
-        
-        
-        /*if(tableEnvVariable.getRowCount()>0){
-            if(checkEditorIsShowing() ==true)
-            tabOutFromEditingColumn(false, tableEnvVariable,
-                getFlowCellxPoint,
-                getFlowCellyPoint,
-                tableEnvVariable.getSelectedRow());
-
-            int rowIndex = tableEnvVariable.getSelectedRow();
-            int lastRowIndex;
-            String getValAt;
-
-            if(tableEnvVariable.getRowCount()-1 == rowIndex)
-                lastRowIndex = tableEnvVariable.getRowCount()-2;
-            else
-                lastRowIndex = rowIndex;
-
-            try{
-                getValAt =tableEnvVariable.getValueAt(rowIndex, 0).toString();
-            }catch(NullPointerException exp){
-                getValAt ="";
-            }
-
-            if(!getValAt.isEmpty() && (EditRegressionSuite.LocalORJRadioButton.isSelected() ||
-                EditRegressionSuite.AssociateObjORJCheckBox.isSelected())){
-
-            boolean fndElementExist =checkValueExistInColumn(RegSuiteTable,"TestElement",getValAt);
-
-            if(fndElementExist){
-                int response = JOptionPane.showConfirmDialog(null, //
-                    "Deleting test element ["+getValAt+"] is used in the current test suite!\n\ndo you want to continue?", //
-                    "Confirm", JOptionPane.YES_NO_OPTION, //
-                    JOptionPane.QUESTION_MESSAGE);
-                if (response != JOptionPane.YES_OPTION) {
-                    return;
-                }
-            }
-        }
-
-            addEnvVariableTabModel.removeRow(rowIndex);
-            if(tableEnvVariable.getRowCount() >0){
-                tableEnvVariable.setColumnSelectionInterval(0, 0);
-                tableEnvVariable.setRowSelectionInterval(lastRowIndex, lastRowIndex);
-            }
-            tableEnvVariable.requestFocus();
-        }else{
-            JOptionPane.showMessageDialog(tableEnvVariable,"No Object(s) available to delete!","Alert",JOptionPane.WARNING_MESSAGE);
-        }*/
     }//GEN-LAST:event_DeleteEnvVariableActionPerformed
 
     private void SaveEnvVariableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveEnvVariableMouseEntered
@@ -651,6 +602,11 @@ public class AddEnvVariableList extends javax.swing.JFrame {
                 addEnvVariableTabModel.addRow(getJsonTxt);
             }
         });
+        
+        try{
+            tableEnvVariable.setColumnSelectionInterval(0, 0);
+            tableEnvVariable.setRowSelectionInterval(0, 0);
+        }catch (IllegalArgumentException exp){}
     }//GEN-LAST:event_formWindowActivated
 
     public static boolean checkEnvVarlist(String envVarName){
@@ -675,12 +631,12 @@ public class AddEnvVariableList extends javax.swing.JFrame {
         /*HashMap<Object, Object> jsonMap =common.uploadEnvVariableList();
         jsonMap.entrySet().stream().map(entry -> entry.getValue().toString().split("[,]")).forEachOrdered(getJsonTxt -> {
             addEnvVariableTabModel.addRow(getJsonTxt);
-        });*/
+        });
         
          try{
             tableEnvVariable.setColumnSelectionInterval(0, 0);
             tableEnvVariable.setRowSelectionInterval(0, 0);
-        }catch (IllegalArgumentException exp){}
+        }catch (IllegalArgumentException exp){}*/
     }//GEN-LAST:event_formWindowOpened
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
