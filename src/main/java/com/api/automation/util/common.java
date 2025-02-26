@@ -229,16 +229,17 @@ public class common {
         }
     }
 	
-	public static void VerifyJsonTagElement(Object testRunId, LinkedHashMap<Object, Object> jsonElement, Object jsonResponse) {
+	public static boolean VerifyJsonTagElement(Object testRunId, LinkedHashMap<Object, Object> jsonElement, Object jsonResponse) {
         String readLine = "";
         char[] readChars = null;
         String readElmBuffer = "";
         BufferedReader jsonBuffer = null;
         getNewString = "";
         int k = 0;
+        boolean jsonElmTextMatched =true;
+        
         HashMap<Object, List<Object>> storeJsonResponse = new HashMap<>();
         ArrayList<Object> storeElementVal = new ArrayList<Object> ();
- 
         StringReader jsonReader = new StringReader((String) jsonResponse);
  
         try {
@@ -348,7 +349,10 @@ public class common {
                             }
                             storeElementVal.add(readElmBuffer);
                         }
- 
+                        
+                        if(!storeElementVal.get(0).toString().contentEquals(storeElementVal.get(1).toString()))
+                        	jsonElmTextMatched =false;
+                        
                         storeJsonResponse.put(entry.getKey(), storeElementVal);
                         API_TestRunner.verifyJsonResponseAttributes.put(testRunId, storeJsonResponse);
                         readElmBuffer = "";
@@ -360,6 +364,8 @@ public class common {
         } catch (IOException exp) {
                     exp.printStackTrace();
         }
+        
+		return jsonElmTextMatched;
  
     }
  
