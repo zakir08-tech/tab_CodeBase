@@ -21,7 +21,10 @@ public class UserDefineExternalSolutions {
 
     public static Object runExternalMethod(String[] getMethodArgs) {
     	Object getReturnVal = null;
- 
+    	
+    	if(readExternalMethodName ==null)
+    		readExternalMethodName ="NULL";
+    	
         switch (readExternalMethodName) {
 	        case "generateUniqueBankID":
 	            //getReturnVal = generateUniqueBankID(getMethodArgs);
@@ -46,7 +49,7 @@ public class UserDefineExternalSolutions {
         }
         
         if (getReturnVal == null)
-        	getReturnVal = "#.";
+        	getReturnVal = "NULL";
  
         return getReturnVal;
     }
