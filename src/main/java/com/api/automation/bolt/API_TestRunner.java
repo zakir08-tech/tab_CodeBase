@@ -371,7 +371,7 @@ public class API_TestRunner extends loadAPITestRunner {
             			saveResponse.savingResponseToFile(jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR), getApiTestRequest, String.valueOf(getApiTestRunId));
             			if (verifyResponseTagElement !=null) {
             				updateVerifyJsonElementValWithUserDefineMethodAndEnvVar();
-            				common.VerifyJsonTagElement(getApiTestRunId, verifyResponseTagElement, jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR));
+            				finalRunStatus = common.VerifyJsonTagElement(getApiTestRunId, verifyResponseTagElement, jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR));
             			}
                     } catch (IOException exp) {
                     	exp.printStackTrace();
@@ -655,7 +655,7 @@ public class API_TestRunner extends loadAPITestRunner {
         for (Entry<Object, Object> jsonTagElm: verifyResponseTagElement.entrySet()) {
         	String jsonTagExp = jsonTagElm.getValue().toString();
             
-            if(jsonTagExp.toString().trim().toLowerCase().startsWith("|")) {	
+            if(jsonTagExp.toString().trim().startsWith("|")) {	
 	            try{
 	            	getMethAttributes =jsonTagExp.toString().trim().split("[|]");
                 	getMethodName =getMethAttributes[1];
@@ -666,6 +666,15 @@ public class API_TestRunner extends loadAPITestRunner {
 	            Object getMthdReturnValue = UserDefineExternalSolutions.runExternalMethod(getMethodArgs);
 	            verifyResponseTagElement.put(jsonTagElm.getKey(), getMthdReturnValue);
             }
+            
+            if(jsonTagExp.toString().startsWith("{") && jsonTagExp.toString().endsWith("}")) {
+            	jsonTagExp = jsonTagExp.toString().replaceAll("[{]", "").replaceAll("[}]", "");
+				Object envVal = common.readEnvVarFromJson(jsonTagExp.toString());
+				if(envVal ==null)
+					envVal ="NULL";
+				
+				verifyResponseTagElement.put(jsonTagElm.getKey(), envVal);
+			}
         }
         loadAPITestRunner.saveVerifyRespTagElmMap.put(getApiTestRunId, verifyResponseTagElement);
     }
