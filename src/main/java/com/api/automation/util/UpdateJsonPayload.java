@@ -136,7 +136,8 @@ public class UpdateJsonPayload {
                     	if (isCharAdigit == true) {
                     		getIndex = i;
                     		for (int j = i; j <= readChars.length - 1; j++) {
-                    			if (Character.isDigit(readChars[j]) == false) {
+                    			//if (Character.isDigit(readChars[j]) == false) {
+                    			if (readChars[j] == ',' && readChars[j - 1] != '\\') {		
 	                                elmFnd = true;
 	                                break;
                     			}
