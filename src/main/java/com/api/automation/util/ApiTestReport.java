@@ -16,6 +16,7 @@ import java.util.Map.Entry;
 import org.json.JSONObject;
 
 import com.api.automation.bolt.API_TestRunner;
+import com.api.automation.bolt.UserDefineExternalSolutions;
 import com.api.automation.bolt.loadAPITestRunner;
 import com.automation.bolt.constants;
 import com.aventstack.extentreports.ExtentReports;
@@ -192,9 +193,8 @@ public class ApiTestReport {
             	boolean verifyStatus= true;
             	
             	for (Entry<Object, List<Object>> jsonTagElm: storeJsonResponse.entrySet()) {
-	                jsonTagExp = jsonTagElm.getValue().get(0).toString().toLowerCase();
-	                jsonTagAct = jsonTagElm.getValue().get(1).toString().toLowerCase();
-	                
+	                jsonTagExp = jsonTagElm.getValue().get(0).toString();
+	                jsonTagAct = jsonTagElm.getValue().get(1).toString();
 	                
 	                if(jsonTagExp.trim().toLowerCase().contentEquals(jsonTagAct.toString().toLowerCase())) {
 	                	getTagElm = getTagElm + "<span style=\"color:#33b5ff;\">" +jsonTagElm.getKey() 
@@ -206,8 +206,7 @@ public class ApiTestReport {
 	                	+jsonTagElm.getKey() +"</span>" +": Expected &lt;" +"<span style=\"color:#33ff42;\">"
 	                	+jsonTagExp +"</span>"+"&gt; Actual &lt;" +"<span style=\"color:#ff4f33;\">"+ jsonTagAct+ "</span>"+"&gt;<br>";
 	                }
-                }
-            	
+            	}
             	if(verifyStatus ==true)
             		extentTest.pass(MarkupHelper.createLabel("JSON Element Verification:", ExtentColor.TEAL).getMarkup().concat("<br>"+ getTagElm));
             	else

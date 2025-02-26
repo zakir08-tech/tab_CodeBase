@@ -370,6 +370,7 @@ public class API_TestRunner extends loadAPITestRunner {
             		try {
             			saveResponse.savingResponseToFile(jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR), getApiTestRequest, String.valueOf(getApiTestRunId));
             			if (verifyResponseTagElement !=null) {
+            				updateVerifyJsonElementValWithUserDefineMethodAndEnvVar();
             				common.VerifyJsonTagElement(getApiTestRunId, verifyResponseTagElement, jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR));
             			}
                     } catch (IOException exp) {
@@ -408,7 +409,7 @@ public class API_TestRunner extends loadAPITestRunner {
             if(!testOut_Put.get(Constants.Run_API_Actual_Status).toString().equals(getExpResponseCode))
             	{finalRunStatus =false;}
             
-            verifyAPIHeadersForTestRunStatus();
+            //verifyAPIHeadersForTestRunStatus();
             
             if(finalRunStatus ==false) {
             	//extentTest.log(Status.FAIL, "test failed");
@@ -646,23 +647,27 @@ public class API_TestRunner extends loadAPITestRunner {
         return strSqlQuery;
     }
     
-    public static void verifyAPIHeadersForTestRunStatus() {
-    	HashMap<Object, List<Object>> storeJsonResponse = new HashMap<>();
-        storeJsonResponse =verifyJsonResponseAttributes.get(getApiTestRunId);
-        
-        if(storeJsonResponse ==null)
-        	return;
-        
-        for (Entry<Object, List<Object>> jsonTagElm: storeJsonResponse.entrySet()) {
-        	String jsonTagExp = jsonTagElm.getValue().get(0).toString().toLowerCase();
-            String jsonTagAct = jsonTagElm.getValue().get(1).toString().toLowerCase();
+    public static void updateVerifyJsonElementValWithUserDefineMethodAndEnvVar() {
+    	String [] getMethAttributes =null;
+    	String getMethodName =null;
+    	String[] getMethodArgs =null;
+    	     
+        for (Entry<Object, Object> jsonTagElm: verifyResponseTagElement.entrySet()) {
+        	String jsonTagExp = jsonTagElm.getValue().toString();
             
-            if (!jsonTagExp.toLowerCase().contentEquals(jsonTagAct.toLowerCase()) ||
-            		(jsonTagExp.contentEquals("#.") && jsonTagAct.contentEquals("#."))) {
-            	finalRunStatus =false;
-            	break;
+            if(jsonTagExp.toString().trim().toLowerCase().startsWith("|")) {	
+	            try{
+	            	getMethAttributes =jsonTagExp.toString().trim().split("[|]");
+                	getMethodName =getMethAttributes[1];
+	            	getMethodArgs =getMethAttributes[2].split(",");
+	            }catch(ArrayIndexOutOfBoundsException exp){}
+	            
+	            UserDefineExternalSolutions.readExternalMethodName = getMethodName;
+	            Object getMthdReturnValue = UserDefineExternalSolutions.runExternalMethod(getMethodArgs);
+	            verifyResponseTagElement.put(jsonTagElm.getKey(), getMthdReturnValue);
             }
         }
+        loadAPITestRunner.saveVerifyRespTagElmMap.put(getApiTestRunId, verifyResponseTagElement);
     }
     
     private static Object updateSqlQueryExpectedOutput(Object strSqlExpOutPut, LinkedHashMap<Object, Object> mapReadTagValue, Entry<Object, HashMap<Object, Object>> testRunnerEntry) {
