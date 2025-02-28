@@ -252,7 +252,7 @@ public class common {
                 int getTagPosition = 1;
                 String newTagName = "";
                 String tagName = (String) entry.getKey();
-                String elementName = entry.getValue().toString();
+                String elementValue = entry.getValue().toString();
                 String getChar = "";
                 boolean charFnd = false;
                 boolean elmFnd = false;
@@ -327,7 +327,7 @@ public class common {
 	                            }
                             }*/
  
-                            if (elementName.toLowerCase().contentEquals(readElmBuffer.toString().toLowerCase())) {
+                            if (elementValue.toLowerCase().contentEquals(readElmBuffer.toString().toLowerCase())) {
                                 if (elmFnd == true) {
                                 	break;
                                 }
@@ -338,20 +338,21 @@ public class common {
                                 readElmBuffer = "";
                     		}
                         }
+                    
+                    	if(elmFnd ==false)
+                    		storeElementVal.add("json~elm~not~found");
  
                         if (kPost == 0) {
-                            storeElementVal.add("#.");
-                            storeElementVal.add("#.");
+                            storeElementVal.add("");
                         } else {
-                            storeElementVal.add(elementName);
+                            storeElementVal.add(elementValue);
                             if(readElmBuffer.isEmpty()&& linearSrch == false){
                             	readElmBuffer = "no text matched with the expected text for the given tag";
                             }
                             storeElementVal.add(readElmBuffer);
+                            if(!storeElementVal.get(0).toString().contentEquals(storeElementVal.get(1).toString()))
+                            	jsonElmTextMatched =false;
                         }
-                        
-                        if(!storeElementVal.get(0).toString().contentEquals(storeElementVal.get(1).toString()))
-                        	jsonElmTextMatched =false;
                         
                         storeJsonResponse.put(entry.getKey(), storeElementVal);
                         API_TestRunner.verifyJsonResponseAttributes.put(testRunId, storeJsonResponse);
