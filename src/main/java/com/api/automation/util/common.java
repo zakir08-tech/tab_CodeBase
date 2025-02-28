@@ -339,9 +339,11 @@ public class common {
                     		}
                         }
                     
-                    	if(elmFnd ==false)
+                    	if(elmFnd ==false) {
                     		storeElementVal.add("json~elm~not~found");
- 
+                    		jsonElmTextMatched =false;
+                    	}
+                    		
                         if (kPost == 0) {
                             storeElementVal.add("");
                         } else {
