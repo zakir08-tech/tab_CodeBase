@@ -177,11 +177,8 @@ public class ApiTestReport {
            
             // add json response to test report
             try {
-            	//getJSONResponse = getJSONResponse.toString().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-            	//extentTest.info(MarkupHelper.createLabel("Response:", ExtentColor.BLACK));
             	jResp = MarkupHelper.createCodeBlock(prettyPrintUsingGson(getJSONResponse.toString()),CodeLanguage.JSON);
             	extentTest.pass(MarkupHelper.createLabel("Response:", ExtentColor.TEAL).getMarkup().concat(jResp.getMarkup().toString().indent(4)));
-            	//extentTest.pass(MarkupHelper.createCodeBlock(prettyPrintUsingGson(getJSONResponse.toString()),CodeLanguage.JSON));
             } catch (NullPointerException exp) {
             	//exp.printStackTrace();
             }catch(JsonSyntaxException exp) {
@@ -213,9 +210,9 @@ public class ApiTestReport {
 	                }
             	}
             	if(verifyStatus ==true)
-            		extentTest.pass(MarkupHelper.createLabel("JSON Element Verification:", ExtentColor.TEAL).getMarkup().concat("<br>"+ getTagElm));
+            		extentTest.pass(MarkupHelper.createLabel("JSON Response Element Verification:", ExtentColor.TEAL).getMarkup().concat("<br>"+ getTagElm));
             	else
-            		extentTest.fail(MarkupHelper.createLabel("JSON Element Verification:", ExtentColor.TEAL).getMarkup().concat("<br>"+ getTagElm));
+            		extentTest.fail(MarkupHelper.createLabel("JSON Response Element Verification:", ExtentColor.TEAL).getMarkup().concat("<br>"+ getTagElm));
             }
 
             if (getRequestActualStatus != null) {
