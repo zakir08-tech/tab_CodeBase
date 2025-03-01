@@ -33,7 +33,7 @@ public class AutomationTestRunner extends javax.swing.JFrame {
     public SettingsAndConfiguration settingsAndConfiguration = new SettingsAndConfiguration(); 
     public static String bttnAPIBackColor;
     public static String userDir=System.getProperty("user.dir");
-    public AddEnvVariableList addEnvVariableList = new AddEnvVariableList();
+    //public AddEnvVariableList addEnvVariableList = new AddEnvVariableList();
     //public static Image titleIcon = Toolkit.getDefaultToolkit().getImage(constants.userDir+"C:\\Users\\zakir\\Documents\\bolt.jpg");
     /**
      * Creates new form AutomationTestRunner
@@ -69,7 +69,6 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         radioBttnAPI = new javax.swing.JRadioButton();
         lblChooseTestType = new javax.swing.JLabel();
         lblSettingsAndConfiguration = new javax.swing.JLabel();
-        lblEnvVar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(955, 258));
@@ -367,57 +366,46 @@ public class AutomationTestRunner extends javax.swing.JFrame {
                             });
                             pnlMenuBarGUI.add(lblSettingsAndConfiguration, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 34, -1));
 
-                            lblEnvVar.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addEnvVariable.png"));
-                                lblEnvVar.setToolTipText("Environment Variables");
-                                lblEnvVar.setEnabled(false);
-                                lblEnvVar.setFocusable(false);
-                                lblEnvVar.addMouseListener(new java.awt.event.MouseAdapter() {
-                                    public void mousePressed(java.awt.event.MouseEvent evt) {
-                                        lblEnvVarMousePressed(evt);
-                                    }
-                                });
-                                pnlMenuBarGUI.add(lblEnvVar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 34, -1));
+                            jDesktopPane2.setLayer(pnlMenuBarGUI, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-                                jDesktopPane2.setLayer(pnlMenuBarGUI, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                            javax.swing.GroupLayout jDesktopPane2Layout = new javax.swing.GroupLayout(jDesktopPane2);
+                            jDesktopPane2.setLayout(jDesktopPane2Layout);
+                            jDesktopPane2Layout.setHorizontalGroup(
+                                jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jDesktopPane2Layout.createSequentialGroup()
+                                    .addGap(1, 1, 1)
+                                    .addComponent(pnlMenuBarGUI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(1, 1, 1))
+                            );
+                            jDesktopPane2Layout.setVerticalGroup(
+                                jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(pnlMenuBarGUI, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                            );
 
-                                javax.swing.GroupLayout jDesktopPane2Layout = new javax.swing.GroupLayout(jDesktopPane2);
-                                jDesktopPane2.setLayout(jDesktopPane2Layout);
-                                jDesktopPane2Layout.setHorizontalGroup(
-                                    jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jDesktopPane2Layout.createSequentialGroup()
-                                        .addGap(1, 1, 1)
-                                        .addComponent(pnlMenuBarGUI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(1, 1, 1))
-                                );
-                                jDesktopPane2Layout.setVerticalGroup(
-                                    jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(pnlMenuBarGUI, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
-                                );
+                            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                            getContentPane().setLayout(layout);
+                            layout.setHorizontalGroup(
+                                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGap(1, 1, 1)
+                                    .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(2, 2, 2)
+                                    .addComponent(jDesktopPane1))
+                            );
+                            layout.setVerticalGroup(
+                                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(1, 1, 1)
+                                            .addComponent(jDesktopPane1))
+                                        .addComponent(jDesktopPane2))
+                                    .addGap(1, 1, 1))
+                            );
 
-                                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-                                getContentPane().setLayout(layout);
-                                layout.setHorizontalGroup(
-                                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(1, 1, 1)
-                                        .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(2, 2, 2)
-                                        .addComponent(jDesktopPane1))
-                                );
-                                layout.setVerticalGroup(
-                                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(1, 1, 1)
-                                                .addComponent(jDesktopPane1))
-                                            .addComponent(jDesktopPane2))
-                                        .addGap(1, 1, 1))
-                                );
-
-                                setSize(new java.awt.Dimension(969, 300));
-                                setLocationRelativeTo(null);
-                            }// </editor-fold>//GEN-END:initComponents
+                            setSize(new java.awt.Dimension(969, 300));
+                            setLocationRelativeTo(null);
+                        }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         Image titleIcon = Toolkit.getDefaultToolkit().getImage(constants.userDir+"\\icons\\bolt.jpg");
@@ -449,8 +437,8 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         }else if(lblExecuteTestSuite.getText().contentEquals("Execute API Test")){
             //runApiTest.setLocationRelativeTo(null);
             runApiTest.setVisible(true);
-            if(addEnvVariableList.isVisible())
-                addEnvVariableList.dispose();
+            //if(addEnvVariableList.isVisible())
+                //addEnvVariableList.dispose();
         }
     }//GEN-LAST:event_lblExecuteTestSuiteMousePressed
 
@@ -479,8 +467,8 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         }else if(lblEditTestSuite.getText().contentEquals("Edit API Test")){
             //createApiTestSuite.setLocationRelativeTo(null);
             editApiTest.setVisible(true);
-            if(addEnvVariableList.isVisible())
-                addEnvVariableList.dispose();
+            //if(addEnvVariableList.isVisible())
+                //addEnvVariableList.dispose();
         }
     }//GEN-LAST:event_lblEditTestSuiteMousePressed
 
@@ -505,8 +493,8 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         }else if(lblCreateTestSuite.getText().contentEquals("Build API Test")){
             //createApiTestSuite.setLocationRelativeTo(null);
             createApiTestSuite.setVisible(true);
-            if(addEnvVariableList.isVisible())
-                addEnvVariableList.dispose();
+            //if(addEnvVariableList.isVisible())
+                //addEnvVariableList.dispose();
         }
     }//GEN-LAST:event_lblCreateTestSuiteMousePressed
 
@@ -540,7 +528,7 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         if(radioBttnGUI.isSelected()){
             radioBttnAPI.setSelected(false);
             lblSettingsAndConfiguration.setEnabled(false);
-            lblEnvVar.setEnabled(false);
+            //lblEnvVar.setEnabled(false);
         }else
             radioBttnGUI.setSelected(true);
     }//GEN-LAST:event_radioBttnGUIActionPerformed
@@ -550,7 +538,7 @@ public class AutomationTestRunner extends javax.swing.JFrame {
             radioBttnGUI.setSelected(false);
             //JOptionPane.showMessageDialog(null, "Under Construction!", "Alert", JOptionPane.WARNING_MESSAGE);
             lblSettingsAndConfiguration.setEnabled(true);
-            lblEnvVar.setEnabled(true);
+            //lblEnvVar.setEnabled(true);
         }else
             radioBttnAPI.setSelected(true);
             lblCreateTestSuite.setText("Build API Test");
@@ -583,8 +571,8 @@ public class AutomationTestRunner extends javax.swing.JFrame {
     }//GEN-LAST:event_lblSettingsAndConfigurationMousePressed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        if(addEnvVariableList.isVisible())
-            addEnvVariableList.dispose();
+        //if(addEnvVariableList.isVisible())
+            //addEnvVariableList.dispose();
         
         if(sslCertConfig.isVisible())
             sslCertConfig.dispose();
@@ -640,13 +628,6 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_radioBttnGUIMouseReleased
 
-    private void lblEnvVarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEnvVarMousePressed
-        if(lblEnvVar.isEnabled() && radioBttnAPI.isSelected()){
-            addEnvVariableList.setLocationRelativeTo(null);
-            addEnvVariableList.setVisible(true);
-        }
-    }//GEN-LAST:event_lblEnvVarMousePressed
-
     /**
      * @param args the command line arguments
      */
@@ -691,7 +672,6 @@ public class AutomationTestRunner extends javax.swing.JFrame {
     public static javax.swing.JLabel lblChooseTestType;
     public static javax.swing.JLabel lblCreateTestSuite;
     public static javax.swing.JLabel lblEditTestSuite;
-    public static javax.swing.JLabel lblEnvVar;
     public static javax.swing.JLabel lblExecuteTestSuite;
     public static javax.swing.JLabel lblSettingsAndConfiguration;
     public static javax.swing.JPanel pnlAutomationTestReport;

@@ -62,30 +62,17 @@ public class EditAPITest extends javax.swing.JFrame {
     public static JComboBox<String> cBoxApiSSL =new JComboBox<String>();
     public static JComboBox<String> coBoxPayloadType =new JComboBox<String>();
     public static JComboBox<String> coBoxAuth =new JComboBox<String>();
-    
-    //public static JTextField elmNameTxt =new JTextField();
-    //public static JTextField elmIdTxt =new JTextField();
-    //public static JTextField elmXpathTxt =new JTextField();
-    
+   
     public static JTextField testIdTxt =new JTextField();
     public static JTextField testEnvVarTxt =new JTextField();
     public static JTextField etestURLTxt =new JTextField();
     public static JTextField testExpectedStatusTxt =new JTextField();
     public static JTextField testPayloadTxt =new JTextField();
     public static JTextField testComTxt =new JTextField();
-    
-    //public static TableColumn testFlowColumn =null;
-    //public static TableColumn testObjectRepoColumn =null;
-    
-    //public static boolean duplicateElement =false;
+ 
     public static boolean duplicateTestId =false;
     
     public static int editableRow;
-    //public static int editableAddElmRow;
-    
-    //public static TableColumn elmNameCol =null;
-    //public static TableColumn elmIdCol =null;
-    //public static TableColumn elmXpathCol =null;
     
     public static TableColumn testIdCol =null;
     public static TableColumn testEnvVarCol =null;
@@ -128,7 +115,8 @@ public class EditAPITest extends javax.swing.JFrame {
     public static FileInputStream excelFIS;
     public static File excelFile;
     private XSSFSheet excelSheetTestFlow;
-    public AddEnvVariableList envVarListFrame = new AddEnvVariableList();
+    public static AddEnvVariableList envVarListWin = new AddEnvVariableList();
+    //public static boolean envVarListWinCreated =false;
     
     /**
      * Creates new form CreateTestSuite
@@ -693,7 +681,6 @@ public class EditAPITest extends javax.swing.JFrame {
                                     bttnEnvVarList.setBorder(null);
                                     bttnEnvVarList.setBorderPainted(false);
                                     bttnEnvVarList.setContentAreaFilled(false);
-                                    bttnEnvVarList.setEnabled(false);
                                     bttnEnvVarList.setFocusPainted(false);
                                     bttnEnvVarList.setFocusable(false);
                                     bttnEnvVarList.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -1641,8 +1628,9 @@ public class EditAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_bttnEnvVarListMouseExited
 
     private void bttnEnvVarListMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnEnvVarListMouseReleased
-        //envVarListFrame.setLocationRelativeTo(null);
-        //envVarListFrame.setVisible(true);
+        envVarListWin.setLocationRelativeTo(null);
+        envVarListWin.setVisible(true);
+        //envVarListWinCreated =true;
     }//GEN-LAST:event_bttnEnvVarListMouseReleased
 
     private void bttnEnvVarListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnEnvVarListActionPerformed
@@ -1651,7 +1639,12 @@ public class EditAPITest extends javax.swing.JFrame {
     
     public static void updateAPIAttributeData(){
         getCurrRowBeforeKeyPressed =tableEditTestFlow.getSelectedRow();
-        Object getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
+        
+        Object getTestId =null;
+        
+        try{
+            getTestId =tableEditTestFlow.getValueAt(getCurrRowBeforeKeyPressed, 0);
+        }catch (ArrayIndexOutOfBoundsException exp){}
         
         if(getTestId ==null || getTestId.toString().isEmpty()){
             txtRequestType.setText("");
