@@ -41,7 +41,6 @@ import org.json.simple.JSONObject;
  * @author zakir
  */
 public class AddEnvVariableList extends javax.swing.JFrame {
-        
     public static DefaultTableModel addEnvVariableTabModel = new DefaultTableModel();
     
     public static TableColumn envVarNameCol =null;
@@ -57,43 +56,10 @@ public class AddEnvVariableList extends javax.swing.JFrame {
     
     public static JComboBox<String> comboBoxTestFlow = new JComboBox<String>();
     public static JComboBox<String> comboBoxObjectRepository = new JComboBox<String>();
-    //public static tableAddORCellRenderer renderer = new tableAddORCellRenderer();
     
     private TableColumn testFlowColumn =new TableColumn();
     public TableColumn testObjectRepoColumn =new TableColumn();
     
-    //private XSSFSheet excelSheetTestFlow;
-    //public XSSFSheet excelSheetObjectRepository;
-    //public XSSFSheet excelSheetObjectRepositorySecodary;
-    //public XSSFSheet excelSheetObjectRepositoryOR;
-    //public XSSFSheet excelSheetObjectRepositoryORSecondary;
-    //private String objectRepositoryList = "";
-    //public static JFileChooser excelFileImport;
-    //public static JFileChooser excelFileImportOR;
-    //public static File excelFile;
-    //public static File excelFileOR;
-    //public File excelFileORSub;
-    //public String testSuiteName;
-    //public XSSFWorkbook excelImportWorkBook = new XSSFWorkbook();
-    //public XSSFWorkbook excelImportWorkBookOR = new XSSFWorkbook();
-    //public boolean noRepoFound;
-    //public boolean testSuiteUploaded;
-    //public static String testSuiteFilePath;
-    //public static String testGlobalORFilePath;
-    //public static String testGlobalORAssociatedFilePath;
-    //public static FileInputStream excelFIS;
-    //public static boolean previousCellClicked =false;
-    
-    //public static TableColumn elmNameCol =null;
-    //public static JTextField elmNameTxt =new JTextField();
-    
-    //public static TableColumn elmIdCol =null;
-    //public static JTextField elmIdTxt =new JTextField();
-    
-    //public static TableColumn elmXpathCol =null;
-    //public static JTextField elmXpathTxt =new JTextField();
-    
-    //public static boolean duplicateTestId =false;
     public static int editableRow;
     
     public static int getFlowCellxPoint;
@@ -102,9 +68,6 @@ public class AddEnvVariableList extends javax.swing.JFrame {
     public static int getEditingColumn;
     
     public static String getSelRowTestFlow;
-    
-    //public static  HashMap<Integer, String> newTestElmList = new HashMap<>();
-    //public static  HashMap<Integer, String> testElmList = new HashMap<>();
    
     public static boolean testElmNameVisible;
     /**

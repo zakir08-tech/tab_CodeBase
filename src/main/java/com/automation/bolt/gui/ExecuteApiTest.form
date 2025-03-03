@@ -197,7 +197,7 @@
                   <Component id="bttnStartTestRun" min="-2" pref="38" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="bttnStopTestRun" min="-2" pref="38" max="-2" attributes="0"/>
-                  <EmptySpace pref="394" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -205,15 +205,15 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="bttnStopTestRun" min="-2" max="-2" attributes="0"/>
-                      <Component id="bttnLoadRegSuite" min="-2" max="-2" attributes="0"/>
-                      <Component id="bttnRefreshTestRun" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="bttnStopTestRun" max="32767" attributes="0"/>
+                      <Component id="bttnLoadRegSuite" max="32767" attributes="0"/>
+                      <Component id="bttnRefreshTestRun" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txtTestTypeTag" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="lblTestTypeTag" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="bttnStartTestRun" min="-2" max="-2" attributes="0"/>
+                      <Component id="bttnStartTestRun" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>

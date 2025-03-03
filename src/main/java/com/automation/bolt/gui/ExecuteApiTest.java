@@ -128,6 +128,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     public static boolean duplicateRunId;
     public static boolean stopExecution;
     public static JTextField textTestType;
+    //public static AddEnvVariableList envVarListWin = new AddEnvVariableList();
     
     /**
      * Creates new form NewJFrame
@@ -409,19 +410,19 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                                 .addComponent(bttnStartTestRun, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(bttnStopTestRun, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(394, Short.MAX_VALUE))
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         );
                         jDesktopPane1Layout.setVerticalGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                    .addComponent(bttnStopTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(bttnLoadRegSuite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(bttnRefreshTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(bttnStopTestRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(bttnLoadRegSuite, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(bttnRefreshTestRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(txtTestTypeTag, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(lblTestTypeTag))
-                                    .addComponent(bttnStartTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(bttnStartTestRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         );
 
@@ -1273,47 +1274,6 @@ public class ExecuteApiTest extends javax.swing.JFrame {
         return deleteSuccessfull;
     }
     
-    /*public static void keywordList(){
-        comboBoxTestFlow = new JComboBox<>();
-        
-        String keywordlist = "URL,"
-                + "SWITCH_WINDOW,"
-                + "SWITCH_IFRAME,"
-                + "SWITCH_DEFAULT,"
-                + "ASSERT_VISIBLE,"
-                + "SET,"
-                + "CLEAR,"
-                + "GET,"
-                + "CLICK,"
-                + "DOUBLE_CLICK,"
-                + "PRESS_KEY,"
-                + "PRESS_KEYS,"
-                + "MOVE_TO_ELEMENT,"
-                + "ASSERT_CLICKABLE,"
-                + "OPEN_NEW_WINDOW,"
-                + "MOVE_TO_WINDOW,"
-                + "ASSERT_TEXT,"
-                + "TAKE_SCREENSHOT,"
-                + "MOUSE_HOVER,"
-                + "USER_DEFINE,"
-                + ":START,:GET,:IF,:THEN,:STOP,";
-        
-        String[] keywordList = keywordlist.split(",");
-        for(String txt:keywordList){
-            comboBoxTestFlow.addItem(txt);
-        }
-    }*/
-    
-    /*public void ObjectRepositoryList(){
-        String objectrepositorylist = objectRepositoryList;
-        comboBoxObjectRepository = new JComboBox<>();
-        
-        String[] keywordList = objectrepositorylist.split(",");
-        for(String txt:keywordList){
-            comboBoxObjectRepository.addItem(txt);
-        }
-    }*/
-    
     public static boolean checkForRunRunning(){
         boolean checkBoxTicked =testRunInProgress;
         return checkBoxTicked;
@@ -1372,32 +1332,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
         }
         return failStatus;
     }
-    
-    /*public void getObjectListFromObjectRepository(XSSFSheet suiteObjectRepo){
-        objectRepositoryList = "";
-        
-        for(int i=1;i<=suiteObjectRepo.getLastRowNum();i++) {
-            XSSFRow excelRow = suiteObjectRepo.getRow(i);
-            try{
-                objectRepositoryList = objectRepositoryList + excelRow.getCell(0).toString()+",";
-            }catch(NullPointerException exp){
-                //Logger.getLogger(EditRegressionSuite2.class.getName()).log(Level.SEVERE, null, exp);
-            }
-        }
-    }*/
-    
-    /*public void getObjectListFromObjectRepositoryGlobal(){
-        objectRepositoryList = "";
-        try{
-            for(int i=1;i<=excelSheetObjectRepositoryOR.getLastRowNum();i++) {
-                XSSFRow excelRow = excelSheetObjectRepositoryOR.getRow(i);
-                objectRepositoryList = objectRepositoryList + excelRow.getCell(0).toString()+",";
-            }
-        }catch (NullPointerException exp){
-            //JOptionPane.showMessageDialog(RegressionSuiteScrollPane,"No Object Repository found for the loaded test suite!","Alert",JOptionPane.WARNING_MESSAGE);
-        }
-    }*/
-    
+   
     public static void setTableColWidthForExeRegSuiteTable(){
         tabExecuteRegSuite.getColumnModel().getColumn(0).setMaxWidth(35);
         tabExecuteRegSuite.getColumnModel().getColumn(0).setMinWidth(35);
