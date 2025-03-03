@@ -63,7 +63,7 @@ public class boltApiExecutor extends Thread {
 		}
 
 		bttnStartTestRun.setEnabled(true);
-		ExecuteApiTest.bttnRefreshTestRun.setEnabled(true);
+		bttnRefreshTestRun.setEnabled(true);
 		bttnRefreshTestRun.setEnabled(true);
 		chkBoxFilterFailTest.setEnabled(true);
 		chkBoxFilterFailTest.setSelected(false);
