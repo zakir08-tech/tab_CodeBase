@@ -218,7 +218,7 @@ public class ApiTestRunner extends javax.swing.JFrame {
             lblAutomationTestReport.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
             lblAutomationTestReport.setForeground(new java.awt.Color(255, 255, 255));
             lblAutomationTestReport.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            lblAutomationTestReport.setText("Test Report");
+            lblAutomationTestReport.setText("API Test Report");
             lblAutomationTestReport.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseEntered(java.awt.event.MouseEvent evt) {
                     lblAutomationTestReportMouseEntered(evt);
@@ -422,10 +422,10 @@ public class ApiTestRunner extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCreateTestSuiteMouseEntered
 
     private void lblSettingsAndConfigurationMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSettingsAndConfigurationMousePressed
-        /*if(lblSettingsAndConfiguration.isEnabled() && radioBttnAPI.isSelected()){
+        if(lblSettingsAndConfiguration.isEnabled()){
             sslCertConfig.setLocationRelativeTo(null);
             sslCertConfig.setVisible(true);
-        }*/
+        }
         //settingsAndConfiguration.setLocationRelativeTo(null);
         //settingsAndConfiguration.setVisible(true);
     }//GEN-LAST:event_lblSettingsAndConfigurationMousePressed
