@@ -28,7 +28,7 @@ public class AutomationTestRunner extends javax.swing.JFrame {
     public ExecuteRegressionSuite runTestSuite = new ExecuteRegressionSuite();
     public CreateTestSuite createTestSuite = new CreateTestSuite();
     public CreateAPITest createApiTestSuite = new CreateAPITest();
-    public SSLCertificate sslCertConfig = new SSLCertificate();
+    public SSLCertificate2 sslCertConfig = new SSLCertificate2();
     public TestReporting testReporting = new TestReporting();
     public SettingsAndConfiguration settingsAndConfiguration = new SettingsAndConfiguration(); 
     public static String bttnAPIBackColor;

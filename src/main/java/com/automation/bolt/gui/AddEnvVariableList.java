@@ -677,7 +677,7 @@ public class AddEnvVariableList extends javax.swing.JFrame {
                 file.write("{"+array.toJSONString().replace("[", "").replace("]", "")+"}");
                 file.close();
             } catch (IOException ex) {
-                Logger.getLogger(SSLCertificate.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SSLCertificate2.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
