@@ -40,8 +40,8 @@ public class tableCellRendererAPIEnvVar implements TableCellRenderer{
         }
            
         if (isSelected) {
-             c.setBackground(new java.awt.Color(250, 128, 114));
-             c.setForeground(Color.black);
+             c.setBackground(new java.awt.Color(52, 73, 94));
+             c.setForeground(new java.awt.Color(245, 176, 65 ));
         }else
             c.setBackground(new java.awt.Color(51, 51, 51));
         
