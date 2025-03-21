@@ -168,7 +168,6 @@ public class AutomationTestRunner extends javax.swing.JFrame {
                     lblCreateTestSuiteMouseExited(evt);
                 }
                 public void mousePressed(java.awt.event.MouseEvent evt) {
-                    lblCreateTestSuiteMousePressed(evt);
                 }
             });
 

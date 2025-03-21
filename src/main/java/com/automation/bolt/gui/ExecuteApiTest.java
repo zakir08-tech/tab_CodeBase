@@ -152,14 +152,12 @@ public class ExecuteApiTest extends javax.swing.JFrame {
 
         scrollExecuteRegSuite = new JScrollPane();
         tabExecuteRegSuite = new JTable();
-        jDesktopPane1 = new JDesktopPane();
         bttnStartTestRun = new JButton();
         txtTestTypeTag = new JTextField();
         bttnRefreshTestRun = new JButton();
         bttnStopTestRun = new JButton();
         bttnLoadRegSuite = new JButton();
         lblTestTypeTag = new JLabel();
-        jDesktopPane2 = new JDesktopPane();
         pnlHeader = new JPanel();
         chkBoxSelectDeselectAllRun = new JCheckBox();
         chkBoxFilterFailTest = new JCheckBox();
@@ -259,7 +257,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
         bttnStartTestRun.setBackground(new Color(0, 0, 0));
         bttnStartTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
         bttnStartTestRun.setForeground(new Color(255, 255, 255));
-        bttnStartTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/startTestRun.png"));
+        bttnStartTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/ApiRunTest.png"));
             bttnStartTestRun.setToolTipText("start test execution");
             bttnStartTestRun.setBorder(null);
             bttnStartTestRun.setBorderPainted(false);
@@ -297,7 +295,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             bttnRefreshTestRun.setBackground(new Color(0, 0, 0));
             bttnRefreshTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
             bttnRefreshTestRun.setForeground(new Color(255, 255, 255));
-            bttnRefreshTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/refreshTestRun.png"));
+            bttnRefreshTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/ApiRefreshTest.png"));
                 bttnRefreshTestRun.setToolTipText("Refresh to reload test run for new changes");
                 bttnRefreshTestRun.setActionCommand("OpenRegressionSuite");
                 bttnRefreshTestRun.setBorder(null);
@@ -327,7 +325,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                 bttnStopTestRun.setBackground(new Color(0, 0, 0));
                 bttnStopTestRun.setFont(new Font("Consolas", 1, 14)); // NOI18N
                 bttnStopTestRun.setForeground(new Color(255, 255, 255));
-                bttnStopTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/stopTestRun.png"));
+                bttnStopTestRun.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/ApiStopRun.png"));
                     bttnStopTestRun.setToolTipText("stop test execution");
                     bttnStopTestRun.setBorder(null);
                     bttnStopTestRun.setBorderPainted(false);
@@ -356,8 +354,8 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                     bttnLoadRegSuite.setBackground(new Color(0, 0, 0));
                     bttnLoadRegSuite.setFont(new Font("Consolas", 1, 14)); // NOI18N
                     bttnLoadRegSuite.setForeground(new Color(255, 255, 255));
-                    bttnLoadRegSuite.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addUploadTestSuite.png"));
-                        bttnLoadRegSuite.setToolTipText("open and upload the test suite for execution");
+                    bttnLoadRegSuite.setIcon(new ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/ApiUploadTest.png"));
+                        bttnLoadRegSuite.setToolTipText("upload api test for run");
                         bttnLoadRegSuite.setActionCommand("OpenRegressionSuite");
                         bttnLoadRegSuite.setBorder(null);
                         bttnLoadRegSuite.setBorderPainted(false);
@@ -384,51 +382,12 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                         });
 
                         lblTestTypeTag.setFont(new Font("Consolas", 0, 12)); // NOI18N
-                        lblTestTypeTag.setForeground(new Color(255, 255, 255));
+                        lblTestTypeTag.setForeground(new Color(0, 0, 0));
                         lblTestTypeTag.setText("test type: @<tag_name>");
 
-                        jDesktopPane1.setLayer(bttnStartTestRun, JLayeredPane.DEFAULT_LAYER);
-                        jDesktopPane1.setLayer(txtTestTypeTag, JLayeredPane.DEFAULT_LAYER);
-                        jDesktopPane1.setLayer(bttnRefreshTestRun, JLayeredPane.DEFAULT_LAYER);
-                        jDesktopPane1.setLayer(bttnStopTestRun, JLayeredPane.DEFAULT_LAYER);
-                        jDesktopPane1.setLayer(bttnLoadRegSuite, JLayeredPane.DEFAULT_LAYER);
-                        jDesktopPane1.setLayer(lblTestTypeTag, JLayeredPane.DEFAULT_LAYER);
-
-                        GroupLayout jDesktopPane1Layout = new GroupLayout(jDesktopPane1);
-                        jDesktopPane1.setLayout(jDesktopPane1Layout);
-                        jDesktopPane1Layout.setHorizontalGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(bttnLoadRegSuite, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bttnRefreshTestRun, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblTestTypeTag)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTestTypeTag, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(bttnStartTestRun, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bttnStopTestRun, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        );
-                        jDesktopPane1Layout.setVerticalGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(bttnStopTestRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(bttnLoadRegSuite, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(bttnRefreshTestRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(jDesktopPane1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(txtTestTypeTag, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lblTestTypeTag))
-                                    .addComponent(bttnStartTestRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        );
-
-                        pnlHeader.setBackground(new Color(0, 153, 153));
+                        pnlHeader.setBackground(new Color(51, 51, 51));
+                        pnlHeader.setForeground(new Color(51, 51, 51));
                         pnlHeader.setMinimumSize(new Dimension(206, 40));
-                        pnlHeader.setOpaque(false);
 
                         chkBoxSelectDeselectAllRun.setFont(new Font("Tahoma", 1, 10)); // NOI18N
                         chkBoxSelectDeselectAllRun.setForeground(new Color(255, 255, 255));
@@ -496,26 +455,9 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                             .addGroup(GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(pnlHeaderLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                    .addComponent(chkBoxSelectDeselectAllRun, GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                                    .addComponent(chkBoxSelectDeselectAllRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(chkBoxFilterFailTest, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap())
-                        );
-
-                        jDesktopPane2.setLayer(pnlHeader, JLayeredPane.DEFAULT_LAYER);
-
-                        GroupLayout jDesktopPane2Layout = new GroupLayout(jDesktopPane2);
-                        jDesktopPane2.setLayout(jDesktopPane2Layout);
-                        jDesktopPane2Layout.setHorizontalGroup(jDesktopPane2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addGroup(jDesktopPane2Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(pnlHeader, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(1, 1, 1))
-                        );
-                        jDesktopPane2Layout.setVerticalGroup(jDesktopPane2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addGroup(jDesktopPane2Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(pnlHeader, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         );
 
                         GroupLayout layout = new GroupLayout(getContentPane());
@@ -523,21 +465,43 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jDesktopPane1)
-                                    .addComponent(scrollExecuteRegSuite, GroupLayout.DEFAULT_SIZE, 897, Short.MAX_VALUE)
-                                    .addComponent(jDesktopPane2))
+                                .addComponent(scrollExecuteRegSuite, GroupLayout.DEFAULT_SIZE, 897, Short.MAX_VALUE)
                                 .addGap(1, 1, 1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(pnlHeader, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(bttnLoadRegSuite, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bttnRefreshTestRun, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblTestTypeTag)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtTestTypeTag, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(bttnStartTestRun, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bttnStopTestRun, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         );
                         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(pnlHeader, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(1, 1, 1)
-                                .addComponent(jDesktopPane2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addGap(1, 1, 1)
-                                .addComponent(scrollExecuteRegSuite, GroupLayout.PREFERRED_SIZE, 396, Short.MAX_VALUE)
-                                .addGap(1, 1, 1)
-                                .addComponent(jDesktopPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addGap(1, 1, 1))
+                                .addComponent(scrollExecuteRegSuite, GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(bttnStopTestRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(bttnLoadRegSuite, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(bttnRefreshTestRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtTestTypeTag, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblTestTypeTag))
+                                    .addComponent(bttnStartTestRun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(8, 8, 8))
                         );
 
                         getAccessibleContext().setAccessibleParent(this);
@@ -589,7 +553,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     }*/
     
     private void formWindowOpened(WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        Image titleIcon = Toolkit.getDefaultToolkit().getImage(constants.userDir+"\\icons\\bolt.jpg");
+        Image titleIcon = Toolkit.getDefaultToolkit().getImage(constants.userDir+"\\icons\\Phantom.png");
         this.setIconImage(titleIcon);
         tabExecuteRegSuite.setDefaultRenderer(Object.class, RunCell_renderer);
         
@@ -603,7 +567,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
         bttnStartTestRun.setForeground(new java.awt.Color(0,0,0));
                 
         if(bttnStartTestRun.isEnabled() ==true){
-            bttnStartTestRun.setBackground(new java.awt.Color(250, 128, 114));
+            bttnStartTestRun.setBackground(new java.awt.Color(203, 67, 53));
             bttnStartTestRun.setToolTipText("start test execution");
         }else{
             bttnStartTestRun.setBackground(new java.awt.Color(133, 146, 158));
@@ -617,7 +581,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     }//GEN-LAST:event_bttnStartTestRunMouseExited
 
     private void bttnLoadRegSuiteMouseEntered(MouseEvent evt) {//GEN-FIRST:event_bttnLoadRegSuiteMouseEntered
-        bttnLoadRegSuite.setBackground(new java.awt.Color(250, 128, 114));
+        bttnLoadRegSuite.setBackground(new java.awt.Color(203, 67, 53));
         bttnLoadRegSuite.setForeground(new java.awt.Color(0,0,0));
     }//GEN-LAST:event_bttnLoadRegSuiteMouseEntered
 
@@ -770,7 +734,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
 
     private void bttnStopTestRunMouseEntered(MouseEvent evt) {//GEN-FIRST:event_bttnStopTestRunMouseEntered
         bttnStopTestRun.setForeground(new java.awt.Color(0,0,0));
-        bttnStopTestRun.setBackground(new java.awt.Color(250, 128, 114));
+        bttnStopTestRun.setBackground(new java.awt.Color(203, 67, 53));
         bttnStopTestRun.setToolTipText("stop test execution");
     }//GEN-LAST:event_bttnStopTestRunMouseEntered
 
@@ -946,7 +910,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     }
     
     private void bttnRefreshTestRunMouseEntered(MouseEvent evt) {//GEN-FIRST:event_bttnRefreshTestRunMouseEntered
-        bttnRefreshTestRun.setBackground(new java.awt.Color(250, 128, 114));
+        bttnRefreshTestRun.setBackground(new java.awt.Color(203, 67, 53));
         bttnRefreshTestRun.setForeground(new java.awt.Color(0,0,0));  
     }//GEN-LAST:event_bttnRefreshTestRunMouseEntered
 
@@ -1390,8 +1354,6 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     public static JButton bttnStopTestRun;
     public static JCheckBox chkBoxFilterFailTest;
     public static JCheckBox chkBoxSelectDeselectAllRun;
-    public JDesktopPane jDesktopPane1;
-    public JDesktopPane jDesktopPane2;
     public JLabel lblTestTypeTag;
     public JPanel pnlHeader;
     public static JScrollPane scrollExecuteRegSuite;
