@@ -249,7 +249,7 @@ public class CreateAPITest extends javax.swing.JFrame {
         pnlCreateApiTest = new javax.swing.JPanel();
         scrollCreateApiTest = new javax.swing.JScrollPane();
         tableCreateApiTest = new javax.swing.JTable();
-        dPaneMenu = new javax.swing.JDesktopPane();
+        lblInvalidBody = new javax.swing.JLabel();
         bttnAddNewTestStep = new javax.swing.JButton();
         bttnDeleteTestStep = new javax.swing.JButton();
         bttnAddStepUp = new javax.swing.JButton();
@@ -257,10 +257,10 @@ public class CreateAPITest extends javax.swing.JFrame {
         bttnSaveSuite = new javax.swing.JButton();
         bttnAddNewTestSuite = new javax.swing.JButton();
         bttnEnvVarList = new javax.swing.JButton();
-        lblInvalidBody = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create API Test");
+        setBackground(new java.awt.Color(153, 102, 255));
         setMinimumSize(new java.awt.Dimension(1464, 761));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -514,11 +514,14 @@ public class CreateAPITest extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
+        lblInvalidBody.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblInvalidBody.setForeground(new java.awt.Color(255, 51, 51));
+
         bttnAddNewTestStep.setBackground(new java.awt.Color(0, 0, 0));
         bttnAddNewTestStep.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         bttnAddNewTestStep.setForeground(new java.awt.Color(255, 255, 255));
-        bttnAddNewTestStep.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addTestStep_Element.png"));
-            bttnAddNewTestStep.setToolTipText("will add a blank test step");
+        bttnAddNewTestStep.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/ApiAddRow.png"));
+            bttnAddNewTestStep.setToolTipText("add blank test step");
             bttnAddNewTestStep.setActionCommand("OpenRegressionSuite");
             bttnAddNewTestStep.setBorder(null);
             bttnAddNewTestStep.setBorderPainted(false);
@@ -548,8 +551,8 @@ public class CreateAPITest extends javax.swing.JFrame {
             bttnDeleteTestStep.setBackground(new java.awt.Color(0, 0, 0));
             bttnDeleteTestStep.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
             bttnDeleteTestStep.setForeground(new java.awt.Color(255, 255, 255));
-            bttnDeleteTestStep.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/deleteTestStep_Element.png"));
-                bttnDeleteTestStep.setToolTipText("will delete the selected test step");
+            bttnDeleteTestStep.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/ApiDeleteRow.png"));
+                bttnDeleteTestStep.setToolTipText("delete selected test step");
                 bttnDeleteTestStep.setActionCommand("OpenRegressionSuite");
                 bttnDeleteTestStep.setBorder(null);
                 bttnDeleteTestStep.setBorderPainted(false);
@@ -575,8 +578,8 @@ public class CreateAPITest extends javax.swing.JFrame {
                 bttnAddStepUp.setBackground(new java.awt.Color(0, 0, 0));
                 bttnAddStepUp.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
                 bttnAddStepUp.setForeground(new java.awt.Color(255, 255, 255));
-                bttnAddStepUp.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addTestStepUp.png"));
-                    bttnAddStepUp.setToolTipText("will add a new test step above the selected step");
+                bttnAddStepUp.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/ApiAddRowUp.png"));
+                    bttnAddStepUp.setToolTipText("add new test step above selected step");
                     bttnAddStepUp.setActionCommand("AddNewStep");
                     bttnAddStepUp.setBorder(null);
                     bttnAddStepUp.setBorderPainted(false);
@@ -605,8 +608,8 @@ public class CreateAPITest extends javax.swing.JFrame {
                     bttnAddStepDown.setBackground(new java.awt.Color(0, 0, 0));
                     bttnAddStepDown.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
                     bttnAddStepDown.setForeground(new java.awt.Color(255, 255, 255));
-                    bttnAddStepDown.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addStepUpDown.png"));
-                        bttnAddStepDown.setToolTipText("will add a new test step below the selected step");
+                    bttnAddStepDown.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/ApiAddRowDown.png"));
+                        bttnAddStepDown.setToolTipText("add new test step below selected step");
                         bttnAddStepDown.setBorder(null);
                         bttnAddStepDown.setBorderPainted(false);
                         bttnAddStepDown.setContentAreaFilled(false);
@@ -633,8 +636,8 @@ public class CreateAPITest extends javax.swing.JFrame {
                         bttnSaveSuite.setBackground(new java.awt.Color(0, 0, 0));
                         bttnSaveSuite.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
                         bttnSaveSuite.setForeground(new java.awt.Color(255, 255, 255));
-                        bttnSaveSuite.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/saveTestSuite.png"));
-                            bttnSaveSuite.setToolTipText("will save the test suite");
+                        bttnSaveSuite.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/ApiSaveTest.png"));
+                            bttnSaveSuite.setToolTipText("save api test suite");
                             bttnSaveSuite.setBorder(null);
                             bttnSaveSuite.setBorderPainted(false);
                             bttnSaveSuite.setContentAreaFilled(false);
@@ -661,8 +664,8 @@ public class CreateAPITest extends javax.swing.JFrame {
                             bttnAddNewTestSuite.setBackground(new java.awt.Color(0, 0, 0));
                             bttnAddNewTestSuite.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
                             bttnAddNewTestSuite.setForeground(new java.awt.Color(255, 255, 255));
-                            bttnAddNewTestSuite.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addUploadTestSuite.png"));
-                                bttnAddNewTestSuite.setToolTipText("will add a blank test suite");
+                            bttnAddNewTestSuite.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/ApiNewTest.png"));
+                                bttnAddNewTestSuite.setToolTipText("add blank test suite");
                                 bttnAddNewTestSuite.setBorder(null);
                                 bttnAddNewTestSuite.setBorderPainted(false);
                                 bttnAddNewTestSuite.setContentAreaFilled(false);
@@ -689,8 +692,8 @@ public class CreateAPITest extends javax.swing.JFrame {
                                 bttnEnvVarList.setBackground(new java.awt.Color(0, 0, 0));
                                 bttnEnvVarList.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
                                 bttnEnvVarList.setForeground(new java.awt.Color(255, 255, 255));
-                                bttnEnvVarList.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/addEnvVariable.png"));
-                                    bttnEnvVarList.setToolTipText("will save the test suite");
+                                bttnEnvVarList.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/ApiEnvVar.png"));
+                                    bttnEnvVarList.setToolTipText("open env var list");
                                     bttnEnvVarList.setBorder(null);
                                     bttnEnvVarList.setBorderPainted(false);
                                     bttnEnvVarList.setContentAreaFilled(false);
@@ -716,52 +719,6 @@ public class CreateAPITest extends javax.swing.JFrame {
                                             bttnEnvVarListActionPerformed(evt);
                                         }
                                     });
-
-                                    dPaneMenu.setLayer(bttnAddNewTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                    dPaneMenu.setLayer(bttnDeleteTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                    dPaneMenu.setLayer(bttnAddStepUp, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                    dPaneMenu.setLayer(bttnAddStepDown, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                    dPaneMenu.setLayer(bttnSaveSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                    dPaneMenu.setLayer(bttnAddNewTestSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                    dPaneMenu.setLayer(bttnEnvVarList, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-                                    javax.swing.GroupLayout dPaneMenuLayout = new javax.swing.GroupLayout(dPaneMenu);
-                                    dPaneMenu.setLayout(dPaneMenuLayout);
-                                    dPaneMenuLayout.setHorizontalGroup(
-                                        dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dPaneMenuLayout.createSequentialGroup()
-                                            .addGap(0, 0, 0)
-                                            .addGroup(dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(bttnEnvVarList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(bttnSaveSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(bttnAddStepDown, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(bttnAddStepUp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)))
-                                    );
-                                    dPaneMenuLayout.setVerticalGroup(
-                                        dPaneMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(dPaneMenuLayout.createSequentialGroup()
-                                            .addGap(27, 27, 27)
-                                            .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(bttnAddStepUp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(bttnAddStepDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(bttnSaveSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(bttnEnvVarList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    );
-
-                                    lblInvalidBody.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-                                    lblInvalidBody.setForeground(new java.awt.Color(255, 51, 51));
 
                                     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
                                     getContentPane().setLayout(layout);
@@ -813,19 +770,41 @@ public class CreateAPITest extends javax.swing.JFrame {
                                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                 .addGroup(layout.createSequentialGroup()
                                                                     .addComponent(lblURL, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                    .addGap(0, 1003, Short.MAX_VALUE))
+                                                                    .addGap(0, 1005, Short.MAX_VALUE))
                                                                 .addComponent(txtAPIurl)))
                                                         .addComponent(pnlCreateApiTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                    .addGap(1, 1, 1)
-                                                    .addComponent(dPaneMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addGap(1, 1, 1))
+                                                    .addGap(0, 0, 0)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(bttnEnvVarList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(bttnSaveSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(bttnAddStepDown, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(bttnAddStepUp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))))
+                                            .addGap(0, 0, 0))
                                     );
                                     layout.setVerticalGroup(
                                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(pnlCreateApiTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(dPaneMenu))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGap(32, 32, 32)
+                                                    .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(bttnAddStepUp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(bttnAddStepDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(bttnSaveSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(bttnEnvVarList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(0, 0, Short.MAX_VALUE)))
                                             .addGap(1, 1, 1)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(lblURL)
@@ -882,14 +861,14 @@ public class CreateAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowActivated
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        Image titleIcon = Toolkit.getDefaultToolkit().getImage(constants.userDir+"\\icons\\bolt.jpg");
+        Image titleIcon = Toolkit.getDefaultToolkit().getImage(constants.userDir+"\\icons\\Phantom2.png");
         this.setIconImage(titleIcon);
         setTableColWidthForCreateRegSuiteTable();
         fileSaved =false;
     }//GEN-LAST:event_formWindowOpened
 
     private void bttnAddNewTestStepMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddNewTestStepMouseEntered
-        bttnAddNewTestStep.setBackground(new java.awt.Color(250, 128, 114));
+        bttnAddNewTestStep.setBackground(new java.awt.Color(203, 67, 53));
         bttnAddNewTestStep.setForeground(new java.awt.Color(0,0,0));
     }//GEN-LAST:event_bttnAddNewTestStepMouseEntered
 
@@ -989,7 +968,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_bttnAddNewTestStepActionPerformed
 
     private void bttnDeleteTestStepMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnDeleteTestStepMouseEntered
-        bttnDeleteTestStep.setBackground(new java.awt.Color(250, 128, 114));
+        bttnDeleteTestStep.setBackground(new java.awt.Color(203, 67, 53));
         bttnDeleteTestStep.setForeground(new java.awt.Color(0,0,0));
     }//GEN-LAST:event_bttnDeleteTestStepMouseEntered
 
@@ -1066,7 +1045,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_bttnDeleteTestStepActionPerformed
 
     private void bttnAddStepUpMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddStepUpMouseEntered
-        bttnAddStepUp.setBackground(new java.awt.Color(250, 128, 114));
+        bttnAddStepUp.setBackground(new java.awt.Color(203, 67, 53));
         bttnAddStepUp.setForeground(new java.awt.Color(0,0,0));   
     }//GEN-LAST:event_bttnAddStepUpMouseEntered
 
@@ -1122,7 +1101,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_bttnAddStepUpActionPerformed
 
     private void bttnAddStepDownMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddStepDownMouseEntered
-        bttnAddStepDown.setBackground(new java.awt.Color(250, 128, 114));
+        bttnAddStepDown.setBackground(new java.awt.Color(203, 67, 53));
         bttnAddStepDown.setForeground(new java.awt.Color(0,0,0));
     }//GEN-LAST:event_bttnAddStepDownMouseEntered
 
@@ -1180,7 +1159,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_bttnAddStepDownActionPerformed
 
     private void bttnSaveSuiteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnSaveSuiteMouseEntered
-        bttnSaveSuite.setBackground(new java.awt.Color(250, 128, 114));
+        bttnSaveSuite.setBackground(new java.awt.Color(203, 67, 53));
         bttnSaveSuite.setForeground(new java.awt.Color(0,0,0));
     }//GEN-LAST:event_bttnSaveSuiteMouseEntered
 
@@ -1338,7 +1317,7 @@ public class CreateAPITest extends javax.swing.JFrame {
     }
     
     private void bttnAddNewTestSuiteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddNewTestSuiteMouseEntered
-        bttnAddNewTestSuite.setBackground(new java.awt.Color(250, 128, 114));
+        bttnAddNewTestSuite.setBackground(new java.awt.Color(203, 67, 53));
         bttnAddNewTestSuite.setForeground(new java.awt.Color(0,0,0));
     }//GEN-LAST:event_bttnAddNewTestSuiteMouseEntered
 
@@ -1582,11 +1561,13 @@ public class CreateAPITest extends javax.swing.JFrame {
     }//GEN-LAST:event_tableCreateApiTestMouseExited
 
     private void bttnEnvVarListMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnEnvVarListMouseEntered
-        // TODO add your handling code here:
+        bttnEnvVarList.setBackground(new java.awt.Color(203, 67, 53));
+        bttnEnvVarList.setForeground(new java.awt.Color(0,0,0));
     }//GEN-LAST:event_bttnEnvVarListMouseEntered
 
     private void bttnEnvVarListMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnEnvVarListMouseExited
-        // TODO add your handling code here:
+        bttnEnvVarList.setBackground(new java.awt.Color(0,0,0));
+        bttnEnvVarList.setForeground(new java.awt.Color(255,255,255));
     }//GEN-LAST:event_bttnEnvVarListMouseExited
 
     private void bttnEnvVarListMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnEnvVarListMouseReleased
@@ -2024,7 +2005,6 @@ public class CreateAPITest extends javax.swing.JFrame {
     public static javax.swing.JButton bttnDeleteTestStep;
     public static javax.swing.JButton bttnEnvVarList;
     public static javax.swing.JButton bttnSaveSuite;
-    public javax.swing.JDesktopPane dPaneMenu;
     public static javax.swing.JLabel lblAuthorization;
     public javax.swing.JLabel lblHeaders;
     public static javax.swing.JLabel lblInvalidBody;
