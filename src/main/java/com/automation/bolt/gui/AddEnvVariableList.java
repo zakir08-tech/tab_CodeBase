@@ -102,7 +102,6 @@ public class AddEnvVariableList extends javax.swing.JFrame {
         pnlEnvVariable = new javax.swing.JPanel();
         scrollPEnvVariable = new javax.swing.JScrollPane();
         tableEnvVariable = new javax.swing.JTable();
-        dPnlMenu = new javax.swing.JDesktopPane();
         pnlDeleteEnvVariable = new javax.swing.JPanel();
         DeleteEnvVariable = new javax.swing.JButton();
         pnlSaveEnvVariable = new javax.swing.JPanel();
@@ -189,7 +188,7 @@ public class AddEnvVariableList extends javax.swing.JFrame {
         DeleteEnvVariable.setBackground(new java.awt.Color(0, 0, 0));
         DeleteEnvVariable.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         DeleteEnvVariable.setForeground(new java.awt.Color(255, 255, 255));
-        DeleteEnvVariable.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\icons\\deleteTestStep_Element.png"));
+        DeleteEnvVariable.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\icons\\ApiDeleteRow.png"));
         DeleteEnvVariable.setToolTipText("delete Env variable");
         DeleteEnvVariable.setBorder(null);
         DeleteEnvVariable.setBorderPainted(false);
@@ -231,7 +230,7 @@ public class AddEnvVariableList extends javax.swing.JFrame {
         SaveEnvVariable.setBackground(new java.awt.Color(0, 0, 0));
         SaveEnvVariable.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         SaveEnvVariable.setForeground(new java.awt.Color(255, 255, 255));
-        SaveEnvVariable.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\icons\\saveTestSuite.png"));
+        SaveEnvVariable.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\icons\\ApiSaveTest.png"));
         SaveEnvVariable.setToolTipText("save Env variable");
         SaveEnvVariable.setBorder(null);
         SaveEnvVariable.setBorderPainted(false);
@@ -273,7 +272,7 @@ public class AddEnvVariableList extends javax.swing.JFrame {
         AddEnvVariable.setBackground(new java.awt.Color(0, 0, 0));
         AddEnvVariable.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         AddEnvVariable.setForeground(new java.awt.Color(255, 255, 255));
-        AddEnvVariable.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\icons\\addTestStep_Element.png"));
+        AddEnvVariable.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\icons\\ApiAddRow.png"));
         AddEnvVariable.setToolTipText("add Env variable");
         AddEnvVariable.setBorder(null);
         AddEnvVariable.setBorderPainted(false);
@@ -310,34 +309,6 @@ public class AddEnvVariableList extends javax.swing.JFrame {
                 .addComponent(AddEnvVariable, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        dPnlMenu.setLayer(pnlDeleteEnvVariable, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        dPnlMenu.setLayer(pnlSaveEnvVariable, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        dPnlMenu.setLayer(pnlAddEnvVariable, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout dPnlMenuLayout = new javax.swing.GroupLayout(dPnlMenu);
-        dPnlMenu.setLayout(dPnlMenuLayout);
-        dPnlMenuLayout.setHorizontalGroup(
-            dPnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dPnlMenuLayout.createSequentialGroup()
-                .addGap(1, 1, 1)
-                .addGroup(dPnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlSaveEnvVariable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlAddEnvVariable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlDeleteEnvVariable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(1, 1, 1))
-        );
-        dPnlMenuLayout.setVerticalGroup(
-            dPnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dPnlMenuLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(pnlAddEnvVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlDeleteEnvVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlSaveEnvVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -345,18 +316,23 @@ public class AddEnvVariableList extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(pnlEnvVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(dPnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(2, 2, 2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlSaveEnvVariable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlAddEnvVariable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlDeleteEnvVariable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlEnvVariable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlEnvVariable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(dPnlMenu))
-                .addGap(0, 0, 0))
+                .addGap(28, 28, 28)
+                .addComponent(pnlAddEnvVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlDeleteEnvVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlSaveEnvVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getAccessibleContext().setAccessibleParent(this);
@@ -585,7 +561,7 @@ public class AddEnvVariableList extends javax.swing.JFrame {
     }
     
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        Image titleIcon = Toolkit.getDefaultToolkit().getImage(constants.userDir+"\\icons\\bolt.jpg");
+        Image titleIcon = Toolkit.getDefaultToolkit().getImage(constants.userDir+"\\icons\\Phantom2.png");
         this.setIconImage(titleIcon);
         tableEnvVariable.getColumnModel().getColumn(0).setMaxWidth(250);
         tableEnvVariable.getColumnModel().getColumn(0).setMinWidth(130);
@@ -724,7 +700,6 @@ public class AddEnvVariableList extends javax.swing.JFrame {
     public static javax.swing.JButton AddEnvVariable;
     public static javax.swing.JButton DeleteEnvVariable;
     public static javax.swing.JButton SaveEnvVariable;
-    private javax.swing.JDesktopPane dPnlMenu;
     private javax.swing.JPanel pnlAddEnvVariable;
     private javax.swing.JPanel pnlDeleteEnvVariable;
     private javax.swing.JPanel pnlEnvVariable;
