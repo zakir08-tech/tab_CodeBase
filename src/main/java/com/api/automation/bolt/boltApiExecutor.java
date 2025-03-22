@@ -1,18 +1,10 @@
 package com.api.automation.bolt;
 
-//import static com.automation.bolt.common.getCurrentDateAndTime;
 import static com.automation.bolt.gui.ExecuteApiTest.*;
-//import static com.automation.bolt.gui.ExecuteApiTest.bttnRefreshTestRun;
-//import static com.automation.bolt.gui.ExecuteApiTest.bttnStartTestRun;
-//import static com.automation.bolt.gui.ExecuteApiTest.bttnStopTestRun;
-//import static com.automation.bolt.gui.ExecuteApiTest.chkBoxFilterFailTest;
-//import static com.automation.bolt.gui.ExecuteApiTest.chkBoxSelectDeselectAllRun;
-//import static com.automation.bolt.gui.ExecuteApiTest.tableExecuteRegSuite;
 
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -21,8 +13,6 @@ import org.apache.log4j.Logger;
 import com.automation.bolt.boltRunner;
 import com.automation.bolt.gui.ExecuteApiTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
-
-import static com.automation.bolt.gui.ExecuteRegressionSuite.bttnRefreshTestRun;
 
 public class boltApiExecutor extends Thread {
 	static Logger log = Logger.getLogger(boltApiExecutor.class.getName());
@@ -63,7 +53,6 @@ public class boltApiExecutor extends Thread {
 		}
 
 		bttnStartTestRun.setEnabled(true);
-		bttnRefreshTestRun.setEnabled(true);
 		bttnRefreshTestRun.setEnabled(true);
 		chkBoxFilterFailTest.setEnabled(true);
 		chkBoxFilterFailTest.setSelected(false);
