@@ -813,9 +813,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
             bttnLoadRegSuite.setEnabled(false);
             bttnStopTestRun.setEnabled(true);
             bttnRefreshTestRun.setEnabled(false);
-            //chkBoxAssociateObjOR.setEnabled(false);
-            //chkBoxRunHeadless.setEnabled(false);
-
+          
             if(runThread.isAlive())
                 runThread.interrupt();
             
