@@ -461,8 +461,8 @@ public class ApiTestRunner extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void lblAutomationTestReportMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAutomationTestReportMousePressed
-        if(lblAutomationTestReport.getText().contentEquals("Automation Test Report")){
-            Image titleIcon = Toolkit.getDefaultToolkit().getImage(constants.userDir+"\\icons\\bolt.jpg");
+        //if(lblAutomationTestReport.getText().contentEquals("Automation Test Report")){
+            Image titleIcon = Toolkit.getDefaultToolkit().getImage(constants.userDir+"\\icons\\Phantom.png");
             testReporting.setIconImage(titleIcon);
 
             JTreeCellRenderer renderer = new JTreeCellRenderer();
@@ -470,7 +470,7 @@ public class ApiTestRunner extends javax.swing.JFrame {
             
             testReporting.setLocationRelativeTo(null);
             testReporting.setVisible(true);
-        }
+        //}
     }//GEN-LAST:event_lblAutomationTestReportMousePressed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing

@@ -5,7 +5,6 @@
  */
 package com.automation.bolt.gui;
 
-import com.automation.bolt.constants;
 import static com.automation.bolt.htmlReportCommon.getHtmlTestReportList;
 import static com.automation.bolt.htmlReportCommon.getSuiteList;
 import static com.automation.bolt.htmlReportCommon.getTestCaseResultList;
@@ -17,9 +16,6 @@ import static com.automation.bolt.htmlReportCommon.testCaseReportFolderEmpty;
 import static com.automation.bolt.htmlReportCommon.testCaseReportFolderExist;
 import static com.automation.bolt.htmlReportCommon.testReportFolderEmpty;
 import static com.automation.bolt.htmlReportCommon.testReportFolderExist;
-import com.automation.bolt.renderer.*;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
@@ -35,12 +31,12 @@ import javax.swing.tree.TreePath;
  *
  * @author zakir
  */
-public class TestReporting extends javax.swing.JFrame {
+public class ApiTestReporting extends javax.swing.JFrame {
 
     /**
      * Creates new form TestReporting
      */
-    public TestReporting() {
+    public ApiTestReporting() {
         initComponents();
     }
 
@@ -55,13 +51,12 @@ public class TestReporting extends javax.swing.JFrame {
 
         scrollTestReporting = new javax.swing.JScrollPane();
         treeTestReporting = new javax.swing.JTree();
-        pnlMenuBar = new javax.swing.JPanel();
+        pnlCollapseAll = new javax.swing.JPanel();
+        testReportTreeCollaspeAll = new javax.swing.JButton();
         pnlRefresh = new javax.swing.JPanel();
         testReportTreeRefresh = new javax.swing.JButton();
         pnlExpandAll = new javax.swing.JPanel();
         testReportTreeExpandAll = new javax.swing.JButton();
-        pnlCollapseAll = new javax.swing.JPanel();
-        testReportTreeCollaspeAll = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Test Reporting");
@@ -75,10 +70,8 @@ public class TestReporting extends javax.swing.JFrame {
         });
 
         scrollTestReporting.setBackground(new java.awt.Color(51, 51, 51));
-        scrollTestReporting.setForeground(new java.awt.Color(255, 255, 255));
 
         treeTestReporting.setBackground(new java.awt.Color(51, 51, 51));
-        treeTestReporting.setForeground(new java.awt.Color(255, 255, 255));
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Test Reporting");
         javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("HTML Reports");
         javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("-");
@@ -102,159 +95,135 @@ public class TestReporting extends javax.swing.JFrame {
         });
         scrollTestReporting.setViewportView(treeTestReporting);
 
-        pnlMenuBar.setBackground(new java.awt.Color(0, 153, 153));
-        pnlMenuBar.setOpaque(false);
+        pnlCollapseAll.setBackground(new java.awt.Color(0, 0, 0));
+        pnlCollapseAll.setRequestFocusEnabled(false);
 
-        pnlRefresh.setBackground(new java.awt.Color(0, 0, 0));
-        pnlRefresh.setRequestFocusEnabled(false);
-
-        testReportTreeRefresh.setBackground(new java.awt.Color(0, 0, 0));
-        testReportTreeRefresh.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        testReportTreeRefresh.setForeground(new java.awt.Color(255, 255, 255));
-        testReportTreeRefresh.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/treeRefresh.png"));
-            testReportTreeRefresh.setToolTipText("refresh test report tree");
-            testReportTreeRefresh.setBorder(null);
-            testReportTreeRefresh.setBorderPainted(false);
-            testReportTreeRefresh.setContentAreaFilled(false);
-            testReportTreeRefresh.setFocusPainted(false);
-            testReportTreeRefresh.setFocusable(false);
-            testReportTreeRefresh.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-            testReportTreeRefresh.setRequestFocusEnabled(false);
-            testReportTreeRefresh.setRolloverEnabled(false);
-            testReportTreeRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
+        testReportTreeCollaspeAll.setBackground(new java.awt.Color(0, 0, 0));
+        testReportTreeCollaspeAll.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        testReportTreeCollaspeAll.setForeground(new java.awt.Color(255, 255, 255));
+        testReportTreeCollaspeAll.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/treeCollapseAll.png"));
+            testReportTreeCollaspeAll.setToolTipText("collapse test report tree");
+            testReportTreeCollaspeAll.setActionCommand("");
+            testReportTreeCollaspeAll.setBorder(null);
+            testReportTreeCollaspeAll.setBorderPainted(false);
+            testReportTreeCollaspeAll.setContentAreaFilled(false);
+            testReportTreeCollaspeAll.setFocusPainted(false);
+            testReportTreeCollaspeAll.setFocusable(false);
+            testReportTreeCollaspeAll.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            testReportTreeCollaspeAll.setRequestFocusEnabled(false);
+            testReportTreeCollaspeAll.setRolloverEnabled(false);
+            testReportTreeCollaspeAll.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseEntered(java.awt.event.MouseEvent evt) {
-                    testReportTreeRefreshMouseEntered(evt);
+                    testReportTreeCollaspeAllMouseEntered(evt);
                 }
                 public void mouseExited(java.awt.event.MouseEvent evt) {
-                    testReportTreeRefreshMouseExited(evt);
+                    testReportTreeCollaspeAllMouseExited(evt);
                 }
             });
-            testReportTreeRefresh.addActionListener(new java.awt.event.ActionListener() {
+            testReportTreeCollaspeAll.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    testReportTreeRefreshActionPerformed(evt);
+                    testReportTreeCollaspeAllActionPerformed(evt);
                 }
             });
 
-            javax.swing.GroupLayout pnlRefreshLayout = new javax.swing.GroupLayout(pnlRefresh);
-            pnlRefresh.setLayout(pnlRefreshLayout);
-            pnlRefreshLayout.setHorizontalGroup(
-                pnlRefreshLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(testReportTreeRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+            javax.swing.GroupLayout pnlCollapseAllLayout = new javax.swing.GroupLayout(pnlCollapseAll);
+            pnlCollapseAll.setLayout(pnlCollapseAllLayout);
+            pnlCollapseAllLayout.setHorizontalGroup(
+                pnlCollapseAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(testReportTreeCollaspeAll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             );
-            pnlRefreshLayout.setVerticalGroup(
-                pnlRefreshLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRefreshLayout.createSequentialGroup()
+            pnlCollapseAllLayout.setVerticalGroup(
+                pnlCollapseAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCollapseAllLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(testReportTreeRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(testReportTreeCollaspeAll, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
             );
 
-            pnlExpandAll.setBackground(new java.awt.Color(0, 0, 0));
-            pnlExpandAll.setRequestFocusEnabled(false);
+            pnlRefresh.setBackground(new java.awt.Color(0, 0, 0));
+            pnlRefresh.setRequestFocusEnabled(false);
 
-            testReportTreeExpandAll.setBackground(new java.awt.Color(0, 0, 0));
-            testReportTreeExpandAll.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-            testReportTreeExpandAll.setForeground(new java.awt.Color(255, 255, 255));
-            testReportTreeExpandAll.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/treeExpandAll.png"));
-                testReportTreeExpandAll.setToolTipText("expand test report tree");
-                testReportTreeExpandAll.setBorder(null);
-                testReportTreeExpandAll.setBorderPainted(false);
-                testReportTreeExpandAll.setContentAreaFilled(false);
-                testReportTreeExpandAll.setFocusPainted(false);
-                testReportTreeExpandAll.setFocusable(false);
-                testReportTreeExpandAll.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-                testReportTreeExpandAll.setRequestFocusEnabled(false);
-                testReportTreeExpandAll.setRolloverEnabled(false);
-                testReportTreeExpandAll.addMouseListener(new java.awt.event.MouseAdapter() {
+            testReportTreeRefresh.setBackground(new java.awt.Color(0, 0, 0));
+            testReportTreeRefresh.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+            testReportTreeRefresh.setForeground(new java.awt.Color(255, 255, 255));
+            testReportTreeRefresh.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/treeRefresh.png"));
+                testReportTreeRefresh.setToolTipText("refresh test report tree");
+                testReportTreeRefresh.setActionCommand("");
+                testReportTreeRefresh.setBorder(null);
+                testReportTreeRefresh.setBorderPainted(false);
+                testReportTreeRefresh.setContentAreaFilled(false);
+                testReportTreeRefresh.setFocusPainted(false);
+                testReportTreeRefresh.setFocusable(false);
+                testReportTreeRefresh.setRequestFocusEnabled(false);
+                testReportTreeRefresh.setRolloverEnabled(false);
+                testReportTreeRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
-                        testReportTreeExpandAllMouseEntered(evt);
+                        testReportTreeRefreshMouseEntered(evt);
                     }
                     public void mouseExited(java.awt.event.MouseEvent evt) {
-                        testReportTreeExpandAllMouseExited(evt);
+                        testReportTreeRefreshMouseExited(evt);
                     }
                 });
-                testReportTreeExpandAll.addActionListener(new java.awt.event.ActionListener() {
+                testReportTreeRefresh.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        testReportTreeExpandAllActionPerformed(evt);
+                        testReportTreeRefreshActionPerformed(evt);
                     }
                 });
 
-                javax.swing.GroupLayout pnlExpandAllLayout = new javax.swing.GroupLayout(pnlExpandAll);
-                pnlExpandAll.setLayout(pnlExpandAllLayout);
-                pnlExpandAllLayout.setHorizontalGroup(
-                    pnlExpandAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(testReportTreeExpandAll, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                javax.swing.GroupLayout pnlRefreshLayout = new javax.swing.GroupLayout(pnlRefresh);
+                pnlRefresh.setLayout(pnlRefreshLayout);
+                pnlRefreshLayout.setHorizontalGroup(
+                    pnlRefreshLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(testReportTreeRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 );
-                pnlExpandAllLayout.setVerticalGroup(
-                    pnlExpandAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlExpandAllLayout.createSequentialGroup()
+                pnlRefreshLayout.setVerticalGroup(
+                    pnlRefreshLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRefreshLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(testReportTreeExpandAll, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(testReportTreeRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 );
 
-                pnlCollapseAll.setBackground(new java.awt.Color(0, 0, 0));
-                pnlCollapseAll.setRequestFocusEnabled(false);
+                pnlExpandAll.setBackground(new java.awt.Color(0, 0, 0));
+                pnlExpandAll.setRequestFocusEnabled(false);
 
-                testReportTreeCollaspeAll.setBackground(new java.awt.Color(0, 0, 0));
-                testReportTreeCollaspeAll.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-                testReportTreeCollaspeAll.setForeground(new java.awt.Color(255, 255, 255));
-                testReportTreeCollaspeAll.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/treeCollapseAll.png"));
-                    testReportTreeCollaspeAll.setToolTipText("collapse test report tree");
-                    testReportTreeCollaspeAll.setBorder(null);
-                    testReportTreeCollaspeAll.setBorderPainted(false);
-                    testReportTreeCollaspeAll.setContentAreaFilled(false);
-                    testReportTreeCollaspeAll.setFocusPainted(false);
-                    testReportTreeCollaspeAll.setFocusable(false);
-                    testReportTreeCollaspeAll.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-                    testReportTreeCollaspeAll.setRequestFocusEnabled(false);
-                    testReportTreeCollaspeAll.setRolloverEnabled(false);
-                    testReportTreeCollaspeAll.addMouseListener(new java.awt.event.MouseAdapter() {
+                testReportTreeExpandAll.setBackground(new java.awt.Color(0, 0, 0));
+                testReportTreeExpandAll.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+                testReportTreeExpandAll.setForeground(new java.awt.Color(255, 255, 255));
+                testReportTreeExpandAll.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/treeExpandAll.png"));
+                    testReportTreeExpandAll.setToolTipText("expand test report tree");
+                    testReportTreeExpandAll.setActionCommand("");
+                    testReportTreeExpandAll.setBorder(null);
+                    testReportTreeExpandAll.setBorderPainted(false);
+                    testReportTreeExpandAll.setContentAreaFilled(false);
+                    testReportTreeExpandAll.setFocusPainted(false);
+                    testReportTreeExpandAll.setFocusable(false);
+                    testReportTreeExpandAll.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                    testReportTreeExpandAll.setRequestFocusEnabled(false);
+                    testReportTreeExpandAll.setRolloverEnabled(false);
+                    testReportTreeExpandAll.addMouseListener(new java.awt.event.MouseAdapter() {
                         public void mouseEntered(java.awt.event.MouseEvent evt) {
-                            testReportTreeCollaspeAllMouseEntered(evt);
+                            testReportTreeExpandAllMouseEntered(evt);
                         }
                         public void mouseExited(java.awt.event.MouseEvent evt) {
-                            testReportTreeCollaspeAllMouseExited(evt);
+                            testReportTreeExpandAllMouseExited(evt);
                         }
                     });
-                    testReportTreeCollaspeAll.addActionListener(new java.awt.event.ActionListener() {
+                    testReportTreeExpandAll.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
-                            testReportTreeCollaspeAllActionPerformed(evt);
+                            testReportTreeExpandAllActionPerformed(evt);
                         }
                     });
 
-                    javax.swing.GroupLayout pnlCollapseAllLayout = new javax.swing.GroupLayout(pnlCollapseAll);
-                    pnlCollapseAll.setLayout(pnlCollapseAllLayout);
-                    pnlCollapseAllLayout.setHorizontalGroup(
-                        pnlCollapseAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(testReportTreeCollaspeAll, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    javax.swing.GroupLayout pnlExpandAllLayout = new javax.swing.GroupLayout(pnlExpandAll);
+                    pnlExpandAll.setLayout(pnlExpandAllLayout);
+                    pnlExpandAllLayout.setHorizontalGroup(
+                        pnlExpandAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(testReportTreeExpandAll, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                     );
-                    pnlCollapseAllLayout.setVerticalGroup(
-                        pnlCollapseAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCollapseAllLayout.createSequentialGroup()
+                    pnlExpandAllLayout.setVerticalGroup(
+                        pnlExpandAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlExpandAllLayout.createSequentialGroup()
                             .addGap(0, 0, Short.MAX_VALUE)
-                            .addComponent(testReportTreeCollaspeAll, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    );
-
-                    javax.swing.GroupLayout pnlMenuBarLayout = new javax.swing.GroupLayout(pnlMenuBar);
-                    pnlMenuBar.setLayout(pnlMenuBarLayout);
-                    pnlMenuBarLayout.setHorizontalGroup(
-                        pnlMenuBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMenuBarLayout.createSequentialGroup()
-                            .addGap(0, 0, Short.MAX_VALUE)
-                            .addGroup(pnlMenuBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(pnlCollapseAll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(pnlExpandAll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(pnlRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    );
-                    pnlMenuBarLayout.setVerticalGroup(
-                        pnlMenuBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlMenuBarLayout.createSequentialGroup()
-                            .addGap(211, 211, 211)
-                            .addComponent(pnlRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(pnlExpandAll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(pnlCollapseAll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(testReportTreeExpandAll, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     );
 
                     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -263,22 +232,28 @@ public class TestReporting extends javax.swing.JFrame {
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addGap(1, 1, 1)
-                            .addComponent(scrollTestReporting, javax.swing.GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE)
-                            .addGap(0, 0, 0)
-                            .addComponent(pnlMenuBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(scrollTestReporting, javax.swing.GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE)
+                            .addGap(1, 1, 1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(pnlExpandAll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(pnlCollapseAll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(pnlRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGap(1, 1, 1))
                     );
                     layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addGap(1, 1, 1)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(scrollTestReporting, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
-                                    .addGap(1, 1, 1))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(pnlMenuBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addContainerGap())))
+                            .addComponent(scrollTestReporting, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
+                            .addGap(1, 1, 1))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(26, 26, 26)
+                            .addComponent(pnlRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(pnlExpandAll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(pnlCollapseAll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     );
 
                     getAccessibleContext().setAccessibleParent(this);
@@ -530,15 +505,17 @@ public class TestReporting extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TestReporting.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ApiTestReporting.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TestReporting().setVisible(true);
+                new ApiTestReporting().setVisible(true);
             }
         });
     }
@@ -546,7 +523,6 @@ public class TestReporting extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JPanel pnlCollapseAll;
     public static javax.swing.JPanel pnlExpandAll;
-    public static javax.swing.JPanel pnlMenuBar;
     public static javax.swing.JPanel pnlRefresh;
     public static javax.swing.JScrollPane scrollTestReporting;
     public static javax.swing.JButton testReportTreeCollaspeAll;
