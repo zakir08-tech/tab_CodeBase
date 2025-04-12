@@ -16,12 +16,11 @@ import java.util.Map.Entry;
 import org.json.JSONObject;
 
 import com.api.automation.bolt.API_TestRunner;
-import com.api.automation.bolt.UserDefineExternalSolutions;
 import com.api.automation.bolt.loadAPITestRunner;
 import com.automation.bolt.constants;
+import com.automation.bolt.gui.ExecuteApiTest;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.CodeLanguage;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.Markup;
@@ -34,19 +33,18 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
-import freemarker.core.MarkupOutputFormat;
  
 public class ApiTestReport {
-	 
-	static String bttnColorSuccess = "btn btn-success btn-xs";
-	static String bttnColorDanger = "btn btn-danger btn-xs";
-	static String bttnColorWarning = "btn btn-warning btn-xs";
-	static String responseCodeTextColorSuccess = "text-success";
-	static String responseCodeTextColorDanger = "text-danger";
-	static String responseCodeTextColorWarning = "text-warning";
-	static String textResonseCodeColor;
-	static String APITestResultPath;
-	public static String TestAutomationReport;
+
+    static String bttnColorSuccess = "btn btn-success btn-xs";
+    static String bttnColorDanger = "btn btn-danger btn-xs";
+    static String bttnColorWarning = "btn btn-warning btn-xs";
+    static String responseCodeTextColorSuccess = "text-success";
+    static String responseCodeTextColorDanger = "text-danger";
+    static String responseCodeTextColorWarning = "text-warning";
+    static String textResonseCodeColor;
+    static String APITestResultPath;
+    public static String TestAutomationReport;
  
     public static String uniqueID;
     public static String property = "java.io.tmpdir";
@@ -55,6 +53,7 @@ public class ApiTestReport {
     public static ExtentTest extentTest;
     public static ExtentReports extent;
     public static ExtentSparkReporter sparkReporter;
+    public static ExecuteApiTest exeApiTest = new ExecuteApiTest();
  
     public static void GenerateApiTestReport() {
 	    HashMap<Object, List<Object>> storeJsonResponse = new HashMap<>();
@@ -79,7 +78,8 @@ public class ApiTestReport {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMMM-yyyy hh:mm:ss a");
         String strDate = formatter.format(date).toLowerCase();
         uniqueID = strDate.replaceAll(":", "-");
-        TestAutomationReport = APITestResultPath + "BoltApiTestReport " + uniqueID + ".html";
+        String getSuiteName = exeApiTest.excelFile.getName().toString().split(".xlsx")[0]+"~";
+        TestAutomationReport = APITestResultPath + getSuiteName + uniqueID + ".html";
     	sparkReporter = new ExtentSparkReporter(TestAutomationReport);
     	extent.attachReporter(sparkReporter);
     	
