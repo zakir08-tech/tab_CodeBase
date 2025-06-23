@@ -28,6 +28,7 @@ import java.util.NoSuchElementException;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
@@ -55,6 +56,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class glueCode {
     public static WebDriver boltDriver;
@@ -73,6 +82,7 @@ public class glueCode {
     
     public static void getWebDriver(String browserType) {
         waitTimeInSeconds = constants.waitTimeInSec;
+        List<String> getDriverOptions = readJsonToList();
         
         if(browserType.contentEquals("chrome")){
             WebDriverManager.chromedriver().setup();
@@ -82,14 +92,7 @@ public class glueCode {
             co.addArguments("--start-maximized");
             co.addArguments("--ignore-certificate-errors");
             co.addArguments("--blink-settings=imagesEnabled=true");
-            co.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"); // Avoid bot detection
-            co.addArguments("--disable-blink-features=AutomationControlled"); // Hide WebDriver detection
-          
-            // Set preferences to enable images
-            Map<String, Object> prefs = new HashMap<>();
-            prefs.put("profile.default_content_setting_values.images", 1); // 1 = Allow images, 2 = Block
-            prefs.put("profile.managed_default_content_settings.images", 1); // Additional image setting
-            co.setExperimentalOption("prefs", prefs);
+            co.addArguments(getDriverOptions);
             
             if(runHeadless ==true) {
             	co.addArguments("window-size=1980,960");
@@ -105,14 +108,7 @@ public class glueCode {
             edgeOptions.addArguments("--start-maximized");
             edgeOptions.addArguments("--ignore-certificate-errors");
             edgeOptions.addArguments("--blink-settings=imagesEnabled=true");
-            edgeOptions.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"); // Avoid bot detection
-            edgeOptions.addArguments("--disable-blink-features=AutomationControlled"); // Hide WebDriver detection
-            
-            // Set preferences to enable images
-            Map<String, Object> prefs = new HashMap<>();
-            prefs.put("profile.default_content_setting_values.images", 1); // 1 = Allow images, 2 = Block
-            prefs.put("profile.managed_default_content_settings.images", 1); // Additional image setting
-            edgeOptions.setExperimentalOption("prefs", prefs);
+            edgeOptions.addArguments(getDriverOptions);
             
             if(runHeadless ==true) {
             	edgeOptions.addArguments("window-size=1980,960");
@@ -1290,5 +1286,76 @@ public class glueCode {
             boltExecutor.log.error(exp);
         }
         return stepSuccess;
+    }
+    
+    public static List<String> readJsonToList() {
+        List<String> result = new ArrayList<>();
+        JSONParser parser = new JSONParser();
+        FileReader reader = null;
+        String filePath = System.getProperty("user.dir") + "/config/driverOptions.json";
+        		
+        try { 	
+            // Attempt to open and read the file
+            reader = new FileReader(filePath);
+            
+            // Parse JSON file
+            Object obj = parser.parse(reader);
+            
+            // Verify if parsed object is a JSONObject
+            if (!(obj instanceof JSONObject)) {
+                throw new IllegalArgumentException("Root element must be a JSON object");
+            }
+            
+            JSONObject jsonObject = (JSONObject) obj;
+            
+            // Iterate through JSON object entries
+            for (Object entryObj : jsonObject.entrySet()) {
+                @SuppressWarnings("unchecked")
+                Map.Entry<String, Object> entry = (Map.Entry<String, Object>) entryObj;
+                String key = entry.getKey();
+                Object value = entry.getValue();
+                
+                // Handle null values
+                if (key == null) {
+                    System.err.println("Warning: Found null key, skipping entry");
+                    continue;
+                }
+                
+             // Format the entry: key=value if value exists, otherwise just key
+                String formattedPair = (value != null) ? String.format("%s=%s", key, value.toString()) : key;
+                
+                result.add(formattedPair);
+            }
+            
+        } catch (java.io.FileNotFoundException e) {
+            System.err.println("Error: File not found at path: " + filePath);
+            return result; // Return empty list
+        } catch (IOException e) {
+            System.err.println("Error: Unable to read file: " + e.getMessage());
+            return result; // Return empty list
+        } catch (ParseException e) {
+            System.err.println("Error: Invalid JSON structure: " + e.getMessage());
+            return result; // Return empty list
+        } catch (IllegalArgumentException e) {
+            System.err.println("Error: " + e.getMessage());
+            return result; // Return empty list
+        } catch (ClassCastException e) {
+            System.err.println("Error: Invalid entry type in JSON object: " + e.getMessage());
+            return result; // Return empty list
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+            return result; // Return empty list
+        } finally {
+            // Close the FileReader if it was opened
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    System.err.println("Warning: Error closing file reader: " + e.getMessage());
+                }
+            }
+        }
+        
+        return result;
     }
 }
