@@ -116,7 +116,7 @@ public class ApiTestReport {
             
             Object getJSONPayload = entryReport.getValue().get("Payload");
             Object getAPISummary = entryReport.getValue().get("Test Summary");
-            if(getAPISummary.toString().isBlank()) {
+            if(getAPISummary.toString().isEmpty()) {
             	getAPISummary = "{no test summary available}";
             }
             extentTest = extent.createTest("Test ["+getRunID+"]: " + getAPISummary.toString());

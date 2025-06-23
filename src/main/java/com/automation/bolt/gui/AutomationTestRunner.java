@@ -159,7 +159,7 @@ public class AutomationTestRunner extends javax.swing.JFrame {
         lblCreateTestSuite.setForeground(new java.awt.Color(255, 255, 255));
         lblCreateTestSuite.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblCreateTestSuite.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/buildTestSuite.png"));
-            lblCreateTestSuite.setText("Build Test Suite");
+            lblCreateTestSuite.setText("Create Test Suite");
             lblCreateTestSuite.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseEntered(java.awt.event.MouseEvent evt) {
                     lblCreateTestSuiteMouseEntered(evt);
@@ -168,6 +168,7 @@ public class AutomationTestRunner extends javax.swing.JFrame {
                     lblCreateTestSuiteMouseExited(evt);
                 }
                 public void mousePressed(java.awt.event.MouseEvent evt) {
+                    lblCreateTestSuiteMousePressed(evt);
                 }
             });
 
@@ -486,10 +487,11 @@ public class AutomationTestRunner extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlCreateTestSuiteMouseClicked
 
     private void lblCreateTestSuiteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCreateTestSuiteMousePressed
-        if(lblCreateTestSuite.getText().contentEquals("Build Test Suite")){
+        if(lblCreateTestSuite.getText().contentEquals(""
+                + "Create Test Suite")){
             createTestSuite.setLocationRelativeTo(null);
             createTestSuite.setVisible(true);
-        }else if(lblCreateTestSuite.getText().contentEquals("Build API Test")){
+        }else if(lblCreateTestSuite.getText().contentEquals("Create API Test")){
             //createApiTestSuite.setLocationRelativeTo(null);
             createApiTestSuite.setVisible(true);
             //if(addEnvVariableList.isVisible())
@@ -540,14 +542,14 @@ public class AutomationTestRunner extends javax.swing.JFrame {
             //lblEnvVar.setEnabled(true);
         }else
             radioBttnAPI.setSelected(true);
-            lblCreateTestSuite.setText("Build API Test");
+            lblCreateTestSuite.setText("Create API Test");
             lblEditTestSuite.setText("Edit API Test");
             lblExecuteTestSuite.setText("Execute API Test");
             lblAutomationTestReport.setText("API Automation Report");
     }//GEN-LAST:event_radioBttnAPIActionPerformed
 
     private void radioBttnGUIMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioBttnGUIMouseClicked
-        lblCreateTestSuite.setText("Build Test Suite");
+        lblCreateTestSuite.setText("Create Test Suite");
         lblEditTestSuite.setText("Edit Test Suite");
         lblExecuteTestSuite.setText("Execute Test Suite");
         lblAutomationTestReport.setText("Automation Test Report");

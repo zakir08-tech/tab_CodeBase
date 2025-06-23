@@ -16,12 +16,16 @@ import static com.automation.bolt.htmlReportCommon.trTemplateEditStepSkipped;
 import static com.automation.bolt.htmlReportCommon.trTemplateEditStepWarningKeyword;
 import static com.automation.bolt.htmlReportCommon.trTemplateEditStepWarningObject;
 import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -52,6 +56,10 @@ public class boltRunner{
     public static String getSkipStep;
     public static Integer stepIndex;
     public static Integer stepTestNumber;
+    public static Date stepStartTime;
+    public static Date stepEndTime;
+    public static DateTimeFormatter formatter;
+    public static String stepExecTimeInterval;
     
     public static LinkedHashMap<Integer, String> getTestSteps = new LinkedHashMap<Integer, String>();
     public static LinkedHashMap<Integer, ArrayList<String>> getTestFlowSteps = new LinkedHashMap<Integer, ArrayList<String>>();
@@ -218,6 +226,9 @@ public class boltRunner{
                     }
                 }
                 
+                formatter = DateTimeFormatter.ofPattern("hh:mm:ss:SS");
+                stepStartTime = new Date();
+                
                 if(testFlowFnd ==true){
                     if(!testRunStep.toUpperCase().contentEquals("URL") &&
                         !testRunStep.toUpperCase().contentEquals("HARD_WAIT") &&    
@@ -376,6 +387,9 @@ public class boltRunner{
                             executeUserDefineTestStep(testRunStep, testElement, getAttributeName, getAttributeValue, getActionName, testStep,
                                     getActionName, getActionValue, testDescription);
                     }
+                    
+                    stepEndTime = new Date();
+                    stepExecTimeInterval = getTimeInterval(stepStartTime, stepEndTime);
                     
                     if(glueCode.stepSuccess ==false) {
                         resTestStep.put(testStep.getKey(), "FAIL");
@@ -591,5 +605,17 @@ public class boltRunner{
         
         getReplaceText =testStep.substring(0, secondOccurance) +newText+testStep.substring((secondOccurance+indxy)-1);
         return getReplaceText;
+    }
+    
+    public static String getTimeInterval(Date startTime, Date endTime) {
+        long diffInMillis = endTime.getTime() - startTime.getTime();
+        long hours = TimeUnit.MILLISECONDS.toHours(diffInMillis);
+        diffInMillis -= TimeUnit.HOURS.toMillis(hours);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(diffInMillis);
+        diffInMillis -= TimeUnit.MINUTES.toMillis(minutes);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(diffInMillis);
+        diffInMillis -= TimeUnit.SECONDS.toMillis(seconds);
+        long milliseconds = diffInMillis;
+        return String.format("%02d:%02d:%02d:%03d", hours, minutes, seconds, milliseconds);
     }
 }
