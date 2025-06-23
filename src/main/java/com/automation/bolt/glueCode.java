@@ -18,8 +18,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,6 +82,7 @@ public class glueCode {
     public static Robot robotClassObject;
     public static Alert alert;
     private static ClassLoader classLoader;
+    public static String dataUrl;
     
     public static void getWebDriver(String browserType) {
         waitTimeInSeconds = constants.waitTimeInSec;
@@ -1264,13 +1268,43 @@ public class glueCode {
             TakesScreenshot ts = (TakesScreenshot)boltDriver;
             File source = ts.getScreenshotAs(OutputType.FILE);
             screenshotPath = constants.userDir+"/screenShots/screenShot_"+common.getCurrentDateTimeMS()+".png";
-            FileUtils.copyFile(source, new File(screenshotPath)); 
+            FileUtils.copyFile(source, new File(screenshotPath));
+            
+            // Read image bytes
+            byte[] imageBytes = Files.readAllBytes(Paths.get(screenshotPath));
+            
+            // Convert to Base64 string
+            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+            
+            // Determine image MIME type (basic detection based on extension)
+            String mimeType = getMimeType(screenshotPath);
+            if (mimeType == null) {
+                throw new IllegalArgumentException("Unsupported image format: " + screenshotPath);
+            }
+            // Create data URL
+            dataUrl = String.format("data:%s;base64,%s", mimeType, base64Image);
+            
         } catch (RuntimeException | IOException exp) {
             stepSuccess = false;
             boltRunner.logError = exp.getMessage();
             boltExecutor.log.error(exp);
         }
         return stepSuccess;
+    }
+    
+    // Helper method to determine MIME type based on file extension
+    private static String getMimeType(String filePath) {
+        String extension = filePath.toLowerCase();
+        if (extension.endsWith(".png")) {
+            return "image/png";
+        } else if (extension.endsWith(".jpg") || extension.endsWith(".jpeg")) {
+            return "image/jpeg";
+        } else if (extension.endsWith(".gif")) {
+            return "image/gif";
+        } else if (extension.endsWith(".bmp")) {
+            return "image/bmp";
+        }
+        return null; // Unsupported format
     }
     
     public static Boolean keyTakeScreenShotRobot() {
