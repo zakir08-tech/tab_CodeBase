@@ -226,7 +226,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="new javax.swing.ImageIcon(System.getProperty(&quot;user.dir&quot;).replaceAll(&quot;\\\\&quot;, &quot;/&quot;)+&quot;/icons/buildTestSuite.png&quot;)" type="code"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Build Test Suite"/>
+                    <Property name="text" type="java.lang.String" value="Create Test Suite"/>
                   </Properties>
                   <Events>
                     <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCreateTestSuiteMouseEntered"/>

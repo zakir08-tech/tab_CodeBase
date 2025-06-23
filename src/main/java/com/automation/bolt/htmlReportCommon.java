@@ -30,16 +30,19 @@ public class htmlReportCommon {
     public static String trTemplatePassed ="							  <tr class=\"$tableStatus\">\n" +
     "								 <td>$testId</td>\n" +
     "								 <td>$testStep</td>\n" +
+    "								 <td>$testDuration</td>\n" +
     "							  </tr>";
     
     public static String trTemplateUserDefine ="							  <tr class=\"$tableStatus\">\n" +
     	    "								 <td>$testId</td>\n" +
     	    "								 <td>$testStep</td>\n" +
+    	    "								 <td>$testDuration</td>\n" +
     	    "							  </tr>";
     
     public static String trTemplateScreenShot ="							  <tr class=\"$tableStatus\">\n" +
     "                                 <td>$testId</td>\n" +
     "                                 <td>$testStep<img src=\"$screenShotFilePath\" width=\"100%\" height=\"auto\"></td>\n" +
+    "								 <td>$testDuration</td>\n" +
     "                              </tr>";
     
     public static String trTemplateScreenShotUserDefine ="							  <tr class=\"$tableStatus\">\n" +
@@ -52,22 +55,26 @@ public class htmlReportCommon {
     "                                 <td>$testStep<br><font style=\"color:blue\">$stepError</font>\n" +
     "								 <img src=\"$screenShotFilePath\" width=\"100%\" height=\"auto\">\n" +
     "								 </td>\n" +
+    "								 <td>$testDuration</td>\n" +
     "                              </tr>";
 
     public static String trTemplateKeywordWarning ="							  <tr class=\"$tableStatus\">\n" +
     "								 <td>$testId</td>\n" +
     "								 <td>$testStep</td>\n" +
+    "								 <td>$testDuration</td>\n" +
     "							  </tr>";
 
     public static String trTemplateOjbectWarning ="                             <tr class=\"$tableStatus\">\n" +
     "                                 <td>$testId</td>\n" +
     "                                 <td>$testStep<br><font style=\"color:brown\">$stepError</font>\n" +
     "								 </td>\n" +
+    "								 <td>$testDuration</td>\n" +
     "                              </tr>";
 
     public static String trTemplateSkipped ="							  <tr class=\"$tableStatus\">\n" +
     "								 <td>$testId</td>\n" +
     "								 <td>$testStep</td>\n" +
+    "								 <td>$testDuration</td>\n" +
     "							  </tr>";
     
     public static String trTemplateCard="            <div class=\"card\">\n" +
@@ -83,7 +90,8 @@ public class htmlReportCommon {
     "                           <thead>\n" +
     "                              <tr class=\"table-dark\">\n" +
     "                                 <th style=\"width:8%\">Step No.</th>\n" +
-    "                                 <th>Test Step</th>\n" +
+    "                                 <th>Test Step</th>\n" + 
+    "                                 <th style=\"width:15%\">Duration</th>\n" +
     "                              </tr>\n" +
     "                           </thead>\n" +
     "                           <tbody>\n" +
@@ -359,12 +367,14 @@ public class htmlReportCommon {
         	editedTemplate =editedTemplate.replace("$tableStatus", "table-success");
             editedTemplate =editedTemplate.replace("$testId", trTestStepId);
             editedTemplate =editedTemplate.replace("$testStep", trTestStep);
+            editedTemplate =editedTemplate.replace("$testDuration", boltRunner.stepExecTimeInterval);
 	        editedTemplate =editedTemplate + editedTemplate2;
         	
         }else {
         	editedTemplate =editedTemplate.replace("$tableStatus", "table-success");
             editedTemplate =editedTemplate.replace("$testId", trTestStepId);
             editedTemplate =editedTemplate.replace("$testStep", trTestStep);
+            editedTemplate =editedTemplate.replace("$testDuration", boltRunner.stepExecTimeInterval);
         }
         
         return editedTemplate;
@@ -408,6 +418,7 @@ public class htmlReportCommon {
         editedTemplate =editedTemplate.replace("$testId", trTestStepId);
         editedTemplate =editedTemplate.replace("$testStep", trTestStep);
         editedTemplate =editedTemplate.replace("$screenShotFilePath", filePath);
+        editedTemplate =editedTemplate.replace("$testDuration", boltRunner.stepExecTimeInterval);
                 
         return editedTemplate;
     }
@@ -438,6 +449,8 @@ public class htmlReportCommon {
 	        editedTemplate =editedTemplate.replace("$testStep", trTestStep);
 	        editedTemplate =editedTemplate.replace("$stepError", stepError);
 	        editedTemplate =editedTemplate.replace("$screenShotFilePath", filePath);
+	        editedTemplate =editedTemplate.replace("$testDuration", boltRunner.stepExecTimeInterval);
+	        
 	        editedTemplate =editedTemplate + editedTemplate2;
         	
         }else {
@@ -446,6 +459,7 @@ public class htmlReportCommon {
 	        editedTemplate =editedTemplate.replace("$testStep", trTestStep);
 	        editedTemplate =editedTemplate.replace("$stepError", stepError);
 	        editedTemplate =editedTemplate.replace("$screenShotFilePath", filePath);
+	        editedTemplate =editedTemplate.replace("$testDuration", boltRunner.stepExecTimeInterval);
         }
         
         return editedTemplate;

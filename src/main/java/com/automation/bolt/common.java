@@ -967,7 +967,7 @@ public class common extends userDefineTest{
         if(result1){
             if(textField.getText().contains("#")){
                 evt.consume();
-            } else if(!textField.getText().isBlank() && textId.contains("#")){
+            } else if(!textField.getText().isEmpty() & textId.contains("#")){
                 evt.consume();
             }
             return;
