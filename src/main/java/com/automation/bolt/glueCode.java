@@ -20,7 +20,9 @@ import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import javax.imageio.ImageIO;
@@ -74,18 +76,27 @@ public class glueCode {
         
         if(browserType.contentEquals("chrome")){
             WebDriverManager.chromedriver().setup();
-            
+             		
             ChromeOptions co = new ChromeOptions();
             co.addArguments("--remote-allow-origins=*");
             co.addArguments("--start-maximized");
             co.addArguments("--ignore-certificate-errors");
+            co.addArguments("--blink-settings=imagesEnabled=true");
+            co.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"); // Avoid bot detection
+            co.addArguments("--disable-blink-features=AutomationControlled"); // Hide WebDriver detection
+          
+            // Set preferences to enable images
+            Map<String, Object> prefs = new HashMap<>();
+            prefs.put("profile.default_content_setting_values.images", 1); // 1 = Allow images, 2 = Block
+            prefs.put("profile.managed_default_content_settings.images", 1); // Additional image setting
+            co.setExperimentalOption("prefs", prefs);
             
             if(runHeadless ==true) {
             	co.addArguments("window-size=1980,960");
             	co.addArguments("--headless");
             }
                 
-            boltDriver = new ChromeDriver(co);
+            boltDriver = new ChromeDriver(co);      
         }else if(browserType.contentEquals("edge")){
             WebDriverManager.edgedriver().setup();
             
@@ -93,6 +104,15 @@ public class glueCode {
             edgeOptions.addArguments("--remote-allow-origins=*");
             edgeOptions.addArguments("--start-maximized");
             edgeOptions.addArguments("--ignore-certificate-errors");
+            edgeOptions.addArguments("--blink-settings=imagesEnabled=true");
+            edgeOptions.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"); // Avoid bot detection
+            edgeOptions.addArguments("--disable-blink-features=AutomationControlled"); // Hide WebDriver detection
+            
+            // Set preferences to enable images
+            Map<String, Object> prefs = new HashMap<>();
+            prefs.put("profile.default_content_setting_values.images", 1); // 1 = Allow images, 2 = Block
+            prefs.put("profile.managed_default_content_settings.images", 1); // Additional image setting
+            edgeOptions.setExperimentalOption("prefs", prefs);
             
             if(runHeadless ==true) {
             	edgeOptions.addArguments("window-size=1980,960");
