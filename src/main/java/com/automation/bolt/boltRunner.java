@@ -318,7 +318,11 @@ public class boltRunner{
                             if(glueCode.keyTakeScreenShot())
                                 common.addScreenShotToDoc(common.docx,glueCode.screenshotPath);
                             
-                            String trFailed =trTemplateEditStepFailed(htmlReportCommon.trTemplateStepFailed, testStep.getKey().toString(), common.getTestStepFromString(testStepResult), logError,glueCode.screenshotPath);
+                            String trFailed =trTemplateEditStepFailed(htmlReportCommon.trTemplateStepFailed, 
+                            		testStep.getKey().toString(), 
+                            		common.getTestStepFromString(testStepResult), 
+                            		logError, glueCode.dataUrl); 
+                            		//glueCode.screenshotPath);
                             trTestSteps.put(testStep.getKey(), trFailed);
                             
                             boltExecutor.log.info(testStepResult+ ": FAIL");
@@ -401,7 +405,11 @@ public class boltRunner{
                         if(glueCode.keyTakeScreenShot())
                             common.addScreenShotToDoc(common.docx,glueCode.screenshotPath);
                         
-                        String trFailed =trTemplateEditStepFailed(htmlReportCommon.trTemplateStepFailed, testStep.getKey().toString(), common.getTestStepFromString(testStepResult), logError, glueCode.screenshotPath);
+                        String trFailed =trTemplateEditStepFailed(htmlReportCommon.trTemplateStepFailed, 
+                        		testStep.getKey().toString(), 
+                        		common.getTestStepFromString(testStepResult), 
+                        		logError, glueCode.dataUrl);
+                        		//glueCode.screenshotPath);
                         trTestSteps.put(testStep.getKey(), trFailed);
                         
                         boltExecutor.log.info(testStepResult+ ": FAIL");
@@ -424,9 +432,14 @@ public class boltRunner{
                                     testRunStep.toUpperCase().contentEquals(":THEN")) &&
                                     testDescription.toLowerCase().contentEquals("take_screenshot")){
                                 
-                                trPassed =trTemplateEditScreenShot(htmlReportCommon.trTemplateScreenShot, testStep.getKey().toString(), common.getTestStepFromString(testStepResult), glueCode.screenshotPath);
+                                trPassed =trTemplateEditScreenShot(htmlReportCommon.trTemplateScreenShot, 
+                                		testStep.getKey().toString(), 
+                                		common.getTestStepFromString(testStepResult), glueCode.dataUrl);  
+                                		//glueCode.screenshotPath);
                             }else{
-                                trPassed =trTemplateEditStepPassed(htmlReportCommon.trTemplatePassed, testStep.getKey().toString(), common.getTestStepFromString(testStepResult));
+                                trPassed =trTemplateEditStepPassed(htmlReportCommon.trTemplatePassed, 
+                                		testStep.getKey().toString(), 
+                                		common.getTestStepFromString(testStepResult));
                             }
                                 
                             trTestSteps.put(testStep.getKey(), trPassed);
@@ -435,9 +448,14 @@ public class boltRunner{
                             common.writeTestStepWithResult(common.docx, testStepResult+ ":","screenshot",testRunStep);
                             String trScreenShot ="";
                             if(testRunStep.toUpperCase().contentEquals("TAKE_SCREENSHOT") || testRunStep.toUpperCase().contentEquals("ROBOT_SCREENSHOT"))
-                                trScreenShot =trTemplateEditScreenShot(htmlReportCommon.trTemplateScreenShot, testStep.getKey().toString(), common.getTestStepFromString(testStepResult), glueCode.screenshotPath);
+                                trScreenShot =trTemplateEditScreenShot(htmlReportCommon.trTemplateScreenShot, 
+                                		testStep.getKey().toString(), 
+                                		common.getTestStepFromString(testStepResult), glueCode.dataUrl); 
+                                		//glueCode.screenshotPath);
                             else
-                                trScreenShot =trTemplateEditStepPassed(htmlReportCommon.trTemplatePassed, testStep.getKey().toString(), common.getTestStepFromString(testStepResult));
+                                trScreenShot =trTemplateEditStepPassed(htmlReportCommon.trTemplatePassed, 
+                                		testStep.getKey().toString(), 
+                                		common.getTestStepFromString(testStepResult));
                             trTestSteps.put(testStep.getKey(), trScreenShot);
                         }
                     }
