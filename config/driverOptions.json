@@ -1,0 +1,3 @@
+{
+	"--host-resolver-rules":"MAP stgus10303r001.prodpos.lcl 10.132.120.3"
+}
