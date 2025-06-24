@@ -58,6 +58,8 @@ public class boltRunner{
     public static Integer stepTestNumber;
     public static Date stepStartTime;
     public static Date stepEndTime;
+    public static Date lastStepEndTime;
+    public static boolean checkForStepTime; 
     public static DateTimeFormatter formatter;
     public static String stepExecTimeInterval;
     
@@ -87,6 +89,8 @@ public class boltRunner{
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void boltTestRunner() throws InterruptedException, IOException {
         
+    	checkForStepTime =false;
+    	
         for(Entry<Integer, LinkedHashMap> runTestFlow:common.mapTestFlows.entrySet()){
             ArrayList<String> loadTestSteps = new ArrayList<String>();
             getTestFlowSteps = new LinkedHashMap<Integer, ArrayList<String>>();
@@ -227,8 +231,12 @@ public class boltRunner{
                 }
                 
                 formatter = DateTimeFormatter.ofPattern("hh:mm:ss:SS");
-                stepStartTime = new Date();
                 
+                if(checkForStepTime ==false)
+                	stepStartTime = new Date();
+                else if (checkForStepTime ==true)
+                	stepStartTime = lastStepEndTime;
+                	
                 if(testFlowFnd ==true){
                     if(!testRunStep.toUpperCase().contentEquals("URL") &&
                         !testRunStep.toUpperCase().contentEquals("HARD_WAIT") &&    
@@ -393,6 +401,9 @@ public class boltRunner{
                     }
                     
                     stepEndTime = new Date();
+                    lastStepEndTime = new Date();
+                    checkForStepTime =true;
+                    
                     stepExecTimeInterval = getTimeInterval(stepStartTime, stepEndTime);
                     
                     if(glueCode.stepSuccess ==false) {
