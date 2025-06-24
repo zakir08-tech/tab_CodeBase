@@ -89,9 +89,12 @@ public class boltRunner{
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void boltTestRunner() throws InterruptedException, IOException {
         
-    	checkForStepTime =false;
-    	
         for(Entry<Integer, LinkedHashMap> runTestFlow:common.mapTestFlows.entrySet()){
+        	checkForStepTime =false;
+        	lastStepEndTime = null;
+        	stepStartTime = null;
+        	stepEndTime = null;
+        			
             ArrayList<String> loadTestSteps = new ArrayList<String>();
             getTestFlowSteps = new LinkedHashMap<Integer, ArrayList<String>>();
             

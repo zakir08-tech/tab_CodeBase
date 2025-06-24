@@ -459,7 +459,7 @@ public class htmlReportCommon {
 	        editedTemplate =editedTemplate.replace("$testStep", trTestStep);
 	        editedTemplate =editedTemplate.replace("$stepError", stepError);
 	        editedTemplate =editedTemplate.replace("$screenShotFilePath", filePath);
-	        editedTemplate =editedTemplate.replace("$testDuration", boltRunner.stepExecTimeInterval);
+	        editedTemplate =editedTemplate.replace("$testDuration", "");
         }
         
         return editedTemplate;
