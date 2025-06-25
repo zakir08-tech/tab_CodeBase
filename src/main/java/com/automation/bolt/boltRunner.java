@@ -16,6 +16,7 @@ import static com.automation.bolt.htmlReportCommon.trTemplateEditStepSkipped;
 import static com.automation.bolt.htmlReportCommon.trTemplateEditStepWarningKeyword;
 import static com.automation.bolt.htmlReportCommon.trTemplateEditStepWarningObject;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class boltRunner{
     public static boolean checkForStepTime; 
     public static DateTimeFormatter formatter;
     public static String stepExecTimeInterval;
+    public static String formattedTime;
     
     public static LinkedHashMap<Integer, String> getTestSteps = new LinkedHashMap<Integer, String>();
     public static LinkedHashMap<Integer, ArrayList<String>> getTestFlowSteps = new LinkedHashMap<Integer, ArrayList<String>>();
@@ -233,12 +235,9 @@ public class boltRunner{
                     }
                 }
                 
-                formatter = DateTimeFormatter.ofPattern("hh:mm:ss:SS");
-                
-                if(checkForStepTime ==false)
-                	stepStartTime = new Date();
-                else if (checkForStepTime ==true)
-                	stepStartTime = lastStepEndTime;
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MMM-dd hh:mm:ss:SS a");
+                String currentTime = sdf.format(new Date());
+                stepExecTimeInterval = currentTime;
                 	
                 if(testFlowFnd ==true){
                     if(!testRunStep.toUpperCase().contentEquals("URL") &&
@@ -403,11 +402,11 @@ public class boltRunner{
                                     getActionName, getActionValue, testDescription);
                     }
                     
-                    stepEndTime = new Date();
-                    lastStepEndTime = new Date();
-                    checkForStepTime =true;
+                    //stepEndTime = new Date();
+                    //lastStepEndTime = new Date();
+                    //checkForStepTime =true;
                     
-                    stepExecTimeInterval = getTimeInterval(stepStartTime, stepEndTime);
+                    //stepExecTimeInterval = getTimeInterval(stepStartTime, stepEndTime);
                     
                     if(glueCode.stepSuccess ==false) {
                         resTestStep.put(testStep.getKey(), "FAIL");
