@@ -38,9 +38,11 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +113,10 @@ public class common extends userDefineTest{
     public static XWPFRun paraTestElement;
     public static XWPFRun paraTestData;
     public static int tagListndex;
- 
+    
+    public static int mapIndex;
+    public static ArrayList<String> testSteps = new ArrayList<String>();
+    
     public static void createTestResult() {
         try {
             if(!new File(constants.userDir+"/testResults").exists()){
@@ -702,12 +707,15 @@ public class common extends userDefineTest{
         String testData = "";
         String testDescription = "";
         String nextRowData = "";
-        int mapIndex = 0;
+        mapIndex = 0;
+        boolean gFnd =false;
+        
         //mapTestStep = new LinkedHashMap<>();
         mapTestSteps = new LinkedHashMap<Integer, ArrayList<String>>();
-        ArrayList<String> testSteps = new ArrayList<String>();
         
-        for (int i = rowNum; i <= testFlowRows; i++) {
+        ArrayList<String> groupingTestSteps = new ArrayList<String>();
+        
+        for (int i = rowNum; i <=testFlowRows; i++) {
             testSteps = new ArrayList<String>();
             Row row = testFlow.getRow(i);
             Row nextRow = testFlow.getRow(i+1);
@@ -739,10 +747,66 @@ public class common extends userDefineTest{
                     break;
                 }
             }
-
-            //if(!testId.contentEquals("#"))
-                //mapTestStep.put(mapIndex, testStep+"|"+testElement+"|"+testData+"|"+testDescription+"|"+testId);
-                mapTestSteps.put(mapIndex, testSteps);
+            
+            if(gFnd !=true && !testStep.toLowerCase().contentEquals("<grouping>"))
+            	mapTestSteps.put(mapIndex, testSteps);
+            
+            if(testStep.toLowerCase().trim().contentEquals("<grouping>")) {
+            	gFnd =true;
+            }
+            
+            if(gFnd ==true) {
+            	groupingTestSteps.add(testSteps.toString());
+            }
+            
+            if(testStep.toLowerCase().trim().contentEquals("</grouping>")) {
+            	gFnd =false;
+            	
+            	String getIteration = groupingTestSteps.get(0).toString().split("[,]")[3].trim();
+            	
+            	groupingTestSteps.remove(0);
+            	groupingTestSteps.remove(groupingTestSteps.size()-1);
+            	
+            	testSteps = new ArrayList<String>();
+            	
+            	for(int gr=1; gr<=Integer.valueOf(getIteration);gr++) {
+            		for(String gText : groupingTestSteps) {
+            			testSteps =new ArrayList<String>();
+            			String[] gList = gText.split(",");
+            			
+            			testId = gList[0].trim().replaceAll("[\\[\\]\\s]", "");
+            			if(testId.contentEquals("[")) {
+            				testId ="";
+            			}
+            				
+                        testStep = gList[1].replaceAll("[\\[\\]\\s]", "");
+                        testElement = gList[2].replaceAll("[\\[\\]\\s]", "");
+                        testData = gList[3].trim().replaceAll("[\\[\\]]", "");
+                        
+                        String[] testDataArry = testData.split("[|]");
+                        
+                        testDescription = gList[4].trim().replaceAll("[\\[\\]]", "");
+                        if(testDescription.contentEquals("]")) {
+                        	testDescription ="";
+                        }
+                        
+                        testSteps.add(testId);
+                        testSteps.add(testStep);
+                        testSteps.add(testElement);
+                        try {
+                        	testSteps.add(testDataArry[gr-1]);
+                        }catch(ArrayIndexOutOfBoundsException exp){
+                        	testSteps.add(testData);}
+                        
+                        testSteps.add(testDescription);
+                        
+                        mapTestSteps.put(mapIndex, testSteps);
+                        mapIndex++;
+            		}		
+            	}
+            	groupingTestSteps = new ArrayList<String>();
+            	gFnd =false;
+            }
         }
     }
 	
