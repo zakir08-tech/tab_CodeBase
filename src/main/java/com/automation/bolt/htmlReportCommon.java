@@ -91,7 +91,7 @@ public class htmlReportCommon {
     "                              <tr class=\"table-dark\">\n" +
     "                                 <th style=\"width:8%\">Step No.</th>\n" +
     "                                 <th>Test Step</th>\n" + 
-    "                                 <th style=\"width:15%\">Time-Stamp</th>\n" +
+    "                                 <th style=\"width:15%\">Duration</th>\n" +
     "                              </tr>\n" +
     "                           </thead>\n" +
     "                           <tbody>\n" +
