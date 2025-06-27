@@ -30,19 +30,19 @@ public class htmlReportCommon {
     public static String trTemplatePassed ="							  <tr class=\"$tableStatus\">\n" +
     "								 <td>$testId</td>\n" +
     "								 <td>$testStep</td>\n" +
-    "								 <td style=\"font-size: .65rem;\">$testDuration</td>\n" +
+    "								 <td style=\"font-size: 1rem;\">$testDuration</td>\n" +
     "							  </tr>";
     
     public static String trTemplateUserDefine ="							  <tr class=\"$tableStatus\">\n" +
     	    "								 <td>$testId</td>\n" +
     	    "								 <td>$testStep</td>\n" +
-    	    "								 <td style=\"font-size: .65rem;\">$testDuration</td>\n" +
+    	    "								 <td style=\"font-size: 1rem;\">$testDuration</td>\n" +
     	    "							  </tr>";
     
     public static String trTemplateScreenShot ="							  <tr class=\"$tableStatus\">\n" +
     "                                 <td>$testId</td>\n" +
     "                                 <td>$testStep<img src=\"$screenShotFilePath\" width=\"100%\" height=\"auto\"></td>\n" +
-    "								 <td style=\"font-size: .65rem;\">$testDuration</td>\n" +
+    "								 <td style=\"font-size: 1rem;\">$testDuration</td>\n" +
     "                              </tr>";
     
     public static String trTemplateScreenShotUserDefine ="							  <tr class=\"$tableStatus\">\n" +
@@ -55,20 +55,20 @@ public class htmlReportCommon {
     "                                 <td>$testStep<br><font style=\"color:blue\">$stepError</font>\n" +
     "								 <img src=\"$screenShotFilePath\" width=\"100%\" height=\"auto\">\n" +
     "								 </td>\n" +
-    "								 <td style=\"font-size: .65rem;\">$testDuration</td>\n" +
+    "								 <td style=\"font-size: 1rem;\">$testDuration</td>\n" +
     "                              </tr>";
 
     public static String trTemplateKeywordWarning ="							  <tr class=\"$tableStatus\">\n" +
     "								 <td>$testId</td>\n" +
     "								 <td>$testStep</td>\n" +
-    "								 <td style=\"font-size: .65rem;\">$testDuration</td>\n" +
+    "								 <td style=\"font-size: 1rem;\">$testDuration</td>\n" +
     "							  </tr>";
 
     public static String trTemplateOjbectWarning ="                             <tr class=\"$tableStatus\">\n" +
     "                                 <td>$testId</td>\n" +
     "                                 <td>$testStep<br><font style=\"color:brown\">$stepError</font>\n" +
     "								 </td>\n" +
-    "								 <td style=\"font-size: .65rem;\">$testDuration</td>\n" +
+    "								 <td style=\"font-size: 1rem;\">$testDuration</td>\n" +
     "                              </tr>";
 
     public static String trTemplateSkipped ="							  <tr class=\"$tableStatus\">\n" +
