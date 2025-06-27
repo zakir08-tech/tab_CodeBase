@@ -1252,6 +1252,21 @@ public class glueCode {
                 jse.executeScript("arguments[0].style.border='0px solid red'", elm);
                 Thread.sleep(1000);
             }
+            
+            // Read image bytes
+            byte[] imageBytes = Files.readAllBytes(Paths.get(screenshotPath));
+            
+            // Convert to Base64 string
+            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+            
+            // Determine image MIME type (basic detection based on extension)
+            String mimeType = getMimeType(screenshotPath);
+            if (mimeType == null) {
+                throw new IllegalArgumentException("Unsupported image format: " + screenshotPath);
+            }
+            // Create data URL
+            dataUrl = String.format("data:%s;base64,%s", mimeType, base64Image);
+            
         } catch (RuntimeException | IOException | InterruptedException exp) {
             stepSuccess = false;
             boltRunner.logError = exp.getMessage();
