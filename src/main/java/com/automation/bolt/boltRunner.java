@@ -235,9 +235,12 @@ public class boltRunner{
                     }
                 }
                 
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MMM-dd hh:mm:ss:SS a");
-                String currentTime = sdf.format(new Date());
-                stepExecTimeInterval = currentTime;
+                formatter = DateTimeFormatter.ofPattern("hh:mm:ss:SS");
+                
+                if(checkForStepTime ==false)
+                	stepStartTime = new Date();
+                else if (checkForStepTime ==true)
+                	stepStartTime = lastStepEndTime;
                 	
                 if(testFlowFnd ==true){
                     if(!testRunStep.toUpperCase().contentEquals("URL") &&
@@ -402,11 +405,11 @@ public class boltRunner{
                                     getActionName, getActionValue, testDescription);
                     }
                     
-                    //stepEndTime = new Date();
-                    //lastStepEndTime = new Date();
-                    //checkForStepTime =true;
+                    stepEndTime = new Date();
+                    lastStepEndTime = new Date();
+                    checkForStepTime =true;
                     
-                    //stepExecTimeInterval = getTimeInterval(stepStartTime, stepEndTime);
+                    stepExecTimeInterval = getTimeInterval(stepStartTime, stepEndTime);
                     
                     if(glueCode.stepSuccess ==false) {
                         resTestStep.put(testStep.getKey(), "FAIL");
