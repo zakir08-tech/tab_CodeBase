@@ -235,7 +235,7 @@ public class boltRunner{
                     }
                 }
                 
-                formatter = DateTimeFormatter.ofPattern("hh:mm:ss:SS");
+                formatter = DateTimeFormatter.ofPattern("mm:ss:SS");
                 
                 if(checkForStepTime ==false)
                 	stepStartTime = new Date();
