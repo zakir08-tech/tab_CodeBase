@@ -650,6 +650,6 @@ public class boltRunner{
         long seconds = TimeUnit.MILLISECONDS.toSeconds(diffInMillis);
         diffInMillis -= TimeUnit.SECONDS.toMillis(seconds);
         long milliseconds = diffInMillis;
-        return String.format("%02d:%02d:%02d:%03d", hours, minutes, seconds, milliseconds);
+        return String.format("%02d:%02d:%03d", minutes, seconds, milliseconds);
     }
 }

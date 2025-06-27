@@ -89,9 +89,9 @@ public class htmlReportCommon {
     "                        <table class=\"table\">\n" +
     "                           <thead>\n" +
     "                              <tr class=\"table-dark\">\n" +
-    "                                 <th style=\"width:8%\">Step No.</th>\n" +
-    "                                 <th>Test Step</th>\n" + 
-    "                                 <th style=\"width:15%\">Duration</th>\n" +
+    "                                 <th style=\"width:8%; text-align: left; vertical-align: middle\">Step No.</th>\n" +
+    "                                 <th style=\"text-align: left; vertical-align: middle;\">Test Step</th>\n" + 
+    "                                 <th style=\"width:15%\">Duration [min:sec:ms]</th>\n" +
     "                              </tr>\n" +
     "                           </thead>\n" +
     "                           <tbody>\n" +
