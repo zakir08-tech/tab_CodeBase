@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriverException;
 
 import com.automation.bolt.gui.ExecuteRegressionSuite;
@@ -59,7 +60,7 @@ public class boltExecutor extends Thread {
    
     @Override
     public void run() {
-    	//PropertyConfigurator.configure(boltExecutor.class.getResourceAsStream("log4j.properties"));
+    	PropertyConfigurator.configure(boltExecutor.class.getResourceAsStream("log4j.properties"));
         //PropertyConfigurator.configure(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/config/log4j.properties");
         testRunInProgress =true;
         bRunner = new boltRunner();
