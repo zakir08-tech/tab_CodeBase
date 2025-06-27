@@ -719,8 +719,7 @@ public class common extends userDefineTest{
             testSteps = new ArrayList<String>();
             Row row = testFlow.getRow(i);
             Row nextRow = testFlow.getRow(i+1);
-            mapIndex++;
-
+            
             try {
                 nextRowData = nextRow.getCell(0).toString().toLowerCase();
             }catch(NullPointerException exp) {
@@ -743,14 +742,16 @@ public class common extends userDefineTest{
             if(!nextRowData.isEmpty()) {
                 if(!nextRowData.contentEquals("#")){
                     //mapTestStep.put(mapIndex, testStep+"|"+testElement+"|"+testData+"|"+testDescription+"|"+testId);
-                    mapTestSteps.put(mapIndex, testSteps);
+                	mapTestSteps.put(mapIndex, testSteps);
                     break;
                 }
             }
             
-            if(gFnd !=true && !testStep.toLowerCase().contentEquals("<grouping>"))
+            if(gFnd !=true && !testStep.toLowerCase().contentEquals("<grouping>")) {
+            	mapIndex++;
             	mapTestSteps.put(mapIndex, testSteps);
-            
+            }
+            	
             if(testStep.toLowerCase().trim().contentEquals("<grouping>")) {
             	gFnd =true;
             }
@@ -800,8 +801,8 @@ public class common extends userDefineTest{
                         
                         testSteps.add(testDescription);
                         
-                        mapTestSteps.put(mapIndex, testSteps);
                         mapIndex++;
+                        mapTestSteps.put(mapIndex, testSteps);
             		}		
             	}
             	groupingTestSteps = new ArrayList<String>();
