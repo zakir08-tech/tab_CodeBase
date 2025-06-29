@@ -765,6 +765,13 @@ public class common extends userDefineTest{
             	
             	String getIteration = groupingTestSteps.get(0).toString().split("[,]")[3].trim();
             	
+            	try {
+            		if(getIteration.isEmpty() || Integer.valueOf(getIteration)<1)
+            			getIteration ="1";
+            	}catch(NumberFormatException exp) {
+            		getIteration ="1";
+            	}
+            	
             	groupingTestSteps.remove(0);
             	groupingTestSteps.remove(groupingTestSteps.size()-1);
             	
