@@ -708,12 +708,12 @@ public class common extends userDefineTest{
         String testDescription = "";
         String nextRowData = "";
         mapIndex = 0;
-        boolean gFnd =false;
-        
-        //mapTestStep = new LinkedHashMap<>();
+        boolean gFnd = false;
+        boolean gClosingFnd = false;
         mapTestSteps = new LinkedHashMap<Integer, ArrayList<String>>();
-        
         ArrayList<String> groupingTestSteps = new ArrayList<String>();
+        boolean gCloseFnd = false;
+        LinkedHashMap<Integer, Boolean> gMap = new LinkedHashMap<>();
         
         for (int i = rowNum; i <=testFlowRows; i++) {
             testSteps = new ArrayList<String>();
@@ -726,7 +726,6 @@ public class common extends userDefineTest{
                 boltExecutor.log.error(exp);
             }
 
-            //testRun = readTestStep(row,0);
             testId = readTestStep(row,0);
             testStep = readTestStep(row,2);
             testElement = readTestStep(row,3);
@@ -741,7 +740,6 @@ public class common extends userDefineTest{
                     
             if(!nextRowData.isEmpty()) {
                 if(!nextRowData.contentEquals("#")){
-                    //mapTestStep.put(mapIndex, testStep+"|"+testElement+"|"+testData+"|"+testDescription+"|"+testId);
                 	mapTestSteps.put(mapIndex, testSteps);
                     break;
                 }
@@ -760,9 +758,9 @@ public class common extends userDefineTest{
             	groupingTestSteps.add(testSteps.toString());
             }
             
-            if(testStep.toLowerCase().trim().contentEquals("</grouping>")) {
+            if(gFnd ==true && testStep.toLowerCase().trim().contentEquals("</grouping>")) {
             	gFnd =false;
-            	
+            	gClosingFnd =true;
             	String getIteration = groupingTestSteps.get(0).toString().split("[,]")[3].trim();
             	
             	try {
@@ -804,16 +802,16 @@ public class common extends userDefineTest{
                         try {
                         	testSteps.add(testDataArry[gr-1]);
                         }catch(ArrayIndexOutOfBoundsException exp){
-                        	testSteps.add(testData);}
+                        	testSteps.add(testDataArry[testDataArry.length-1]);}
                         
                         testSteps.add(testDescription);
                         
                         mapIndex++;
                         mapTestSteps.put(mapIndex, testSteps);
-            		}		
+            		}
             	}
             	groupingTestSteps = new ArrayList<String>();
-            	gFnd =false;
+        		gFnd =false;
             }
         }
     }
