@@ -1392,7 +1392,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
         tableAddTestFlow.getColumnModel().getColumn(2).setMaxWidth(163);
         tableAddTestFlow.getColumnModel().getColumn(2).setMinWidth(163);
         
-        tableAddTestFlow.getColumnModel().getColumn(3).setMaxWidth(173);
+        //tableAddTestFlow.getColumnModel().getColumn(3).setMaxWidth(173);
         tableAddTestFlow.getColumnModel().getColumn(3).setMinWidth(173);
     }
     
