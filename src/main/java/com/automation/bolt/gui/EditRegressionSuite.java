@@ -2049,7 +2049,7 @@ public class EditRegressionSuite extends javax.swing.JFrame {
         RegSuiteTable.getColumnModel().getColumn(2).setMaxWidth(163);
         RegSuiteTable.getColumnModel().getColumn(2).setMinWidth(163);
         
-        RegSuiteTable.getColumnModel().getColumn(3).setMaxWidth(173);
+        //RegSuiteTable.getColumnModel().getColumn(3).setMaxWidth(173);
         RegSuiteTable.getColumnModel().getColumn(3).setMinWidth(173);
     }
     
