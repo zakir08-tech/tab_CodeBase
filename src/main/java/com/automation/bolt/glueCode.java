@@ -1091,12 +1091,13 @@ public class glueCode {
                 List<WebElement> getElmList = getTheFinalElm.findElements(By.tagName(tagName));
 
                 for(WebElement getElmChild: getElmList) {
-                    if(attributeName.toLowerCase().contentEquals("attachedtext")) {
+                	if(attributeName.toLowerCase().contentEquals("attachedtext")) {
                         if(getElmChild.getText().toLowerCase().trim().contentEquals(attributeValue.toLowerCase().trim())) {
                             getChildElm =getElmChild;
                             break;
                         }
                     }else{
+                    	getChildElm =getElmChild;
                         if(getElmChild.getAttribute(attributeName).contentEquals(attributeValue)){
                             getChildElm =getElmChild;
                             break;
