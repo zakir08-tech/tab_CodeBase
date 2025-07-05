@@ -713,7 +713,10 @@ public class common extends userDefineTest{
         mapTestSteps = new LinkedHashMap<Integer, ArrayList<String>>();
         ArrayList<String> groupingTestSteps = new ArrayList<String>();
         boolean gCloseFnd = false;
-        LinkedHashMap<Integer, Boolean> gMap = new LinkedHashMap<>();
+        String getTestId = null;
+        int getGroupIndex =0;
+        LinkedHashMap<Integer, Boolean> gStartMap = new LinkedHashMap<>();
+        LinkedHashMap<Integer, Boolean> gCloseMap = new LinkedHashMap<>();
         
         for (int i = rowNum; i <=testFlowRows; i++) {
             testSteps = new ArrayList<String>();
@@ -727,6 +730,9 @@ public class common extends userDefineTest{
             }
 
             testId = readTestStep(row,0);
+            if(!testId.isEmpty()) {
+            	getTestId = testId;
+            }
             testStep = readTestStep(row,2);
             testElement = readTestStep(row,3);
             testData = readTestStep(row,4);
@@ -751,6 +757,16 @@ public class common extends userDefineTest{
             }
             	
             if(testStep.toLowerCase().trim().contentEquals("<grouping>")) {
+            	if(gStartMap.size( )!=0) {
+            		if(gCloseMap.get(gStartMap.size()) ==null){
+            			
+            		}
+            	}
+            	
+            	getGroupIndex++;
+            	try {
+            		gStartMap.put(getGroupIndex, true);
+            	}catch(NumberFormatException exp) {}
             	gFnd =true;
             }
             
@@ -759,6 +775,10 @@ public class common extends userDefineTest{
             }
             
             if(gFnd ==true && testStep.toLowerCase().trim().contentEquals("</grouping>")) {
+            	try {
+            		gCloseMap.put(getGroupIndex, true);
+            	}catch(NumberFormatException exp) {}
+            	
             	gFnd =false;
             	gClosingFnd =true;
             	String getIteration = groupingTestSteps.get(0).toString().split("[,]")[3].trim();
@@ -1497,14 +1517,14 @@ public class common extends userDefineTest{
                 if(getParentIndex(testElement) ==null){
                     List<WebElement> elmList =getElmList(boltDriver, testElement,getAttributeName, getAttributeValue);
                     if(!elmList.isEmpty()){
-                        tagListndex =tagListndex+1;
+                        tagListndex++;
                         lhm.put(tagListndex, elmList);
                     }
 
                 }else{
                    List<WebElement> elmList =getElmList(lhm.get(getParentIndex(testElement)), getOnlyTag(testElement),getAttributeName, getAttributeValue);
                    if(!elmList.isEmpty()){
-                        tagListndex =tagListndex+1;
+                        tagListndex++;
                         lhm.put(tagListndex, elmList);
                     }
                }
@@ -1529,7 +1549,7 @@ public class common extends userDefineTest{
                  }
 
                 if(!elmList.isEmpty()){
-                    tagListndex =tagListndex+1;
+                    tagListndex++;
                     lhm.put(tagListndex, elmList);
 
                     if(!actionName.isEmpty() || !actionValue.isEmpty()){
