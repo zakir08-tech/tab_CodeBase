@@ -16,7 +16,7 @@ public class UserDefineExternalSolutions {
 	//public static String dbName = LoadProperties.prop.getProperty(Constants.SQLServer_DatabaseName);
 	//public static String dbUserName = LoadProperties.prop.getProperty(Constants.SQLServer_UserName);
 	//public static String dbUserPassword = LoadProperties.prop.getProperty(Constants.SQLServer_UserPassword);
-	public static SimpleDateFormat timeStamp = new SimpleDateFormat("yyyyMMddHHmmss");
+	public static SimpleDateFormat timeStamp = new SimpleDateFormat("MMddHHmmss");
     public static String UniqueValueWithPreFix =null;
 
     public static Object runExternalMethod(String[] getMethodArgs) {
@@ -61,7 +61,7 @@ public class UserDefineExternalSolutions {
         try{
         	timeFormat =getMethodArgs[0];
         }catch(NullPointerException exp){
-        	timeFormat ="YYMMddhhmSS";
+        	timeFormat ="MMddhhmSS";
         }
                        
         try{
@@ -71,7 +71,7 @@ public class UserDefineExternalSolutions {
         try{
         	timeStamp = new SimpleDateFormat(timeFormat);
         }catch(IllegalArgumentException exp){
-            timeStamp = new SimpleDateFormat("YYMMddhhmSS");
+            timeStamp = new SimpleDateFormat("MMddhhmSS");
         }
                        
         String uniqueNumberTimeStamp;

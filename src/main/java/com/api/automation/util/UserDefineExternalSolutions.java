@@ -7,7 +7,7 @@ import java.util.Date;
  
 public class UserDefineExternalSolutions {
 	public static String readExternalMethodName;
-	public static SimpleDateFormat timeStamp = new SimpleDateFormat("yyyyMMddHHmmss");
+	public static SimpleDateFormat timeStamp = new SimpleDateFormat("YYddHHmmss");
     public static String UniqueValueWithPreFix =null;
 
     public static Object runExternalMethod(String[] getMethodArgs) {
@@ -52,7 +52,7 @@ public class UserDefineExternalSolutions {
         try{
         	timeFormat =getMethodArgs[0];
         }catch(NullPointerException exp){
-        	timeFormat ="YYMMddhhmSS";
+        	timeFormat ="YYddhhmSS";
         }
                        
         try{
@@ -62,7 +62,7 @@ public class UserDefineExternalSolutions {
         try{
         	timeStamp = new SimpleDateFormat(timeFormat);
         }catch(IllegalArgumentException exp){
-            timeStamp = new SimpleDateFormat("YYMMddhhmSS");
+            timeStamp = new SimpleDateFormat("YYddhhmSS");
         }
                        
         String uniqueNumberTimeStamp;
