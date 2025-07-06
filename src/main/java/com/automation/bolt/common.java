@@ -46,6 +46,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,8 +73,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
+import com.api.automation.util.UserDefineExternalSolutions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -752,6 +757,7 @@ public class common extends userDefineTest{
             }
             
             if(gFnd !=true && !testStep.toLowerCase().contentEquals("<grouping>")) {
+            	 testData = checkForUserDefineSolution(testData);
             	mapIndex++;
             	mapTestSteps.put(mapIndex, testSteps);
             }
@@ -820,9 +826,12 @@ public class common extends userDefineTest{
                         testSteps.add(testStep);
                         testSteps.add(testElement);
                         try {
-                        	testSteps.add(testDataArry[gr-1]);
+                        	testData = checkForUserDefineSolution(testDataArry[gr-1]);
+                        	testSteps.add(testData);
                         }catch(ArrayIndexOutOfBoundsException exp){
-                        	testSteps.add(testDataArry[testDataArry.length-1]);}
+                        	testData = checkForUserDefineSolution(testDataArry[testDataArry.length-1]);
+                        	testSteps.add(testData);
+                        }
                         
                         testSteps.add(testDescription);
                         
@@ -836,6 +845,25 @@ public class common extends userDefineTest{
         }
     }
 	
+    public static String checkForUserDefineSolution(String setText) {
+    	 String getMethodName =null;
+         String[] getMethodArgs =null;
+         
+         try {
+        	 if(setText.toString().startsWith("{") && setText.toString().endsWith("}")) {
+         		getMethodName = setText.toString().replaceAll("[{]", "").replaceAll("[}]", "");
+         		UserDefineExternalSolutions.readExternalMethodName = getMethodName;
+         		setText = (String) UserDefineExternalSolutions.runExternalMethod(getMethodArgs);
+         	}
+         }catch(IllegalArgumentException|
+        		 NullPointerException|
+                 NoSuchElementException|
+                 ElementNotInteractableException|
+                 TimeoutException|
+                 StaleElementReferenceException exp) {}
+         return setText;
+    }
+    
     public static String readTestStep(Row testStepRow, int colIndex) {
         String getTestStep = "";
         try {

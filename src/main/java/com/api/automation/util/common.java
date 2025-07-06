@@ -39,9 +39,6 @@ public class common {
 			JSONParser parser = new JSONParser();
 			
 	        JSONObject data = (JSONObject) parser.parse(reader);
-			//JSONArray data = (JSONArray) parser.parse(reader);
-	        
-	        //JSONObject x =(JSONObject) data.get(0);
 	        
 	        data.put(jsonElmName, jsonElmVal);
 	        
