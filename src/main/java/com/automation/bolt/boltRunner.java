@@ -6,7 +6,6 @@ import static com.automation.bolt.common.executeUserDefineTestStep;
 import static com.automation.bolt.common.writeTestStep;
 import static com.automation.bolt.glueCode.stepSuccess;
 import static com.automation.bolt.gui.EditRegressionSuite.comboBoxTestFlow;
-import com.automation.bolt.gui.ExecuteRegressionSuite;
 import static com.automation.bolt.gui.ExecuteRegressionSuite.stopExecution;
 import static com.automation.bolt.htmlReportCommon.concatenateHashMapDataWithNewLine;
 import static com.automation.bolt.htmlReportCommon.trTemplateEditScreenShot;
@@ -15,9 +14,8 @@ import static com.automation.bolt.htmlReportCommon.trTemplateEditStepPassed;
 import static com.automation.bolt.htmlReportCommon.trTemplateEditStepSkipped;
 import static com.automation.bolt.htmlReportCommon.trTemplateEditStepWarningKeyword;
 import static com.automation.bolt.htmlReportCommon.trTemplateEditStepWarningObject;
+
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +30,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+
+import com.automation.bolt.gui.ExecuteRegressionSuite;
 
 public class boltRunner{
     public static int testRunId;
