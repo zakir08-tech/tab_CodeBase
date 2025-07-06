@@ -57,6 +57,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.api.automation.util.UserDefineExternalSolutions;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 import java.io.FileReader;
@@ -148,13 +150,15 @@ public class glueCode {
     
     public static void keySet(WebElement elm, String setValue) {
         stepSuccess = true;
-
+        String getMethodName =null;
+        String[] getMethodArgs =null;
+        
         if(elm ==null) {
             stepSuccess = false;
             boltRunner.logError = "No test element defined to SET value "+"\""+setValue+"\"";
             return;
         }
-
+        
         try {
             elm.sendKeys(setValue);
         }catch(IllegalArgumentException|
