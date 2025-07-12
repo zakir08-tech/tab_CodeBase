@@ -1,9 +1,15 @@
 package com.automation.bolt;
 
+import java.time.Duration;
+
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 	
 public class userDefineTest extends glueCode{
 	static WebElement getStatus;
@@ -30,6 +36,28 @@ public class userDefineTest extends glueCode{
 		
 		for(int i=1; i<=barMovement;i++) {
 			slider.sendKeys(Keys.ARROW_RIGHT);
+		}
+	}
+	
+	public static void checkForRegister(String[] args){
+		glueCode gCode = new glueCode();
+		xDriver=gCode.boltDriver;
+		WebElement registerLogin =null;
+		
+		String userName = args[0];
+		String userPwd = args[1];
+		
+		boolean openRegister = false;
+		try {
+			WebDriverWait registerLoginWait = new WebDriverWait(xDriver, Duration.ofSeconds(1));
+			registerLogin = registerLoginWait.until(
+					ExpectedConditions.visibilityOfElementLocated(
+							By.xpath("//div[@aria-label='Register closed.']")));
+			openRegister =true;
+		}catch(WebDriverException exp) {}
+		
+		if(openRegister ==true) {
+			// add you login code here
 		}
 	}
 }
