@@ -641,20 +641,21 @@ public class glueCode {
     
     public static void keyUserDefine(String getMethodName, String methodArgs) {
 		try {
-			URL[] dependencyUrls = {new URL("file:/"+System.getProperty("user.dir").replaceAll("\\\\", "/")+"/target/tab.jar")};
-			classLoader = new URLClassLoader(dependencyUrls);
-			Class<?> loadedClass = classLoader.loadClass("com.automation.bolt.userDefineTest");
+			//URL[] dependencyUrls = {new URL("file:/"+System.getProperty("user.dir").replaceAll("\\\\", "/")+"/target/tab.jar")};
+			//classLoader = new URLClassLoader(dependencyUrls);
+			//Class<?> loadedClass = classLoader.loadClass("com.automation.bolt.userDefineTest");
+			Class<?> loadedClass = Class.forName("com.automation.bolt.userDefineTest");
 			//Class<?> loadedClass = classLoader.loadClass("test.automation.tab.userDefine");
 		
 			Object obj = loadedClass.getDeclaredConstructor().newInstance();
 			Method method = loadedClass.getMethod(getMethodName, String[].class);
 			String[] args =methodArgs.split(",");
 			method.invoke(obj, new Object[] {args});
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException | MalformedURLException exp) {
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException exp) {
 			stepSuccess = false;
 			
 			StringWriter sw = new StringWriter();
-			PrintWriter pw = new PrintWriter(sw);
+			PrintWriter pw = new PrintWriter(sw);	
             exp.printStackTrace(pw);
 			
 			boltRunner.logError = sw.toString();
