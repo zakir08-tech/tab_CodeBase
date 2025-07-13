@@ -1,6 +1,7 @@
 package com.automation.bolt;
 
 import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -46,14 +47,22 @@ public class userDefineTest extends glueCode{
 		
 		String userName = args[0];
 		String userPwd = args[1];
+		String getAriaLabel;
 		
 		boolean openRegister = false;
 		try {
-			WebDriverWait registerLoginWait = new WebDriverWait(xDriver, Duration.ofSeconds(1));
-			registerLogin = registerLoginWait.until(
-					ExpectedConditions.visibilityOfElementLocated(
-							By.xpath("//div[@aria-label='Register closed.']")));
-			openRegister =true;
+			List<WebElement> divList = xDriver.findElements(By.tagName("div"));
+			
+			for(WebElement divElm: divList) {
+				getAriaLabel = divElm.getAttribute("aria-label");
+				if(getAriaLabel ==null)
+					getAriaLabel ="";
+				
+				if(getAriaLabel.contentEquals("Register closed.")) {
+					openRegister =true;
+					break;
+				}
+			}	
 		}catch(WebDriverException exp) {}
 		
 		if(openRegister ==true) {
