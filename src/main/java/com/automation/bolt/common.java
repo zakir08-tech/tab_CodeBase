@@ -757,7 +757,7 @@ public class common extends userDefineTest{
             }
             
             if(gFnd !=true && !testStep.toLowerCase().contentEquals("<grouping>")) {
-            	 testData = checkForUserDefineSolution(testData);
+            	testData = checkForUserDefineSolution(testData);
             	mapIndex++;
             	mapTestSteps.put(mapIndex, testSteps);
             }
@@ -846,12 +846,20 @@ public class common extends userDefineTest{
     }
 	
     public static String checkForUserDefineSolution(String setText) {
-    	 String getMethodName =null;
-         String[] getMethodArgs =null;
+    	String getUserDefineProperties = null; 
+    	String getMethodName =null;
+        String[] getMethodArgs =null;
          
          try {
-        	 if(setText.toString().startsWith("{") && setText.toString().endsWith("}")) {
-         		getMethodName = setText.toString().replaceAll("[{]", "").replaceAll("[}]", "");
+        	 if(setText.toString().trim().startsWith("{") && setText.toString().trim().endsWith("}")) {
+        		getUserDefineProperties = setText.toString().replaceAll("\\{", "").replaceAll("\\}", "");
+         		
+        		getMethodName = getUserDefineProperties.split(":")[0];
+        		
+        		try {
+        			getMethodArgs = getUserDefineProperties.split(":")[1].split("~");
+        		}catch(ArrayIndexOutOfBoundsException exp) {}
+         		
          		UserDefineExternalSolutions.readExternalMethodName = getMethodName;
          		setText = (String) UserDefineExternalSolutions.runExternalMethod(getMethodArgs);
          	}
