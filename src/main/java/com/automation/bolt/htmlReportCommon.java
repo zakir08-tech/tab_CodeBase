@@ -31,37 +31,44 @@ public class htmlReportCommon {
     "								 <td>$testId</td>\n" +
     "								 <td>$testStep</td>\n" +
     "								 <td style=\"font-size: 1rem;\">$testDuration</td>\n" +
+    "								 <td>$testDesc</td>\n" +
     "							  </tr>";
     
     public static String trTemplateUserDefine ="							  <tr class=\"$tableStatus\">\n" +
     	    "								 <td>$testId</td>\n" +
     	    "								 <td>$testStep</td>\n" +
     	    "								 <td style=\"font-size: 1rem;\">$testDuration</td>\n" +
+    	    "								 <td>$testDesc</td>\n" +
     	    "							  </tr>";
     
     public static String trTemplateScreenShot ="							  <tr class=\"$tableStatus\">\n" +
     "                                 <td>$testId</td>\n" +
-    "                                 <td>$testStep<img src=\"$screenShotFilePath\" width=\"100%\" height=\"auto\"></td>\n" +
+    "                                 <td>$testStep<img src=\"$screenShotFilePath\" width=\"100%\" height=\"auto\" class=\"screenshot\" alt=\" \"></td>\n" +
     "								 <td style=\"font-size: 1rem;\">$testDuration</td>\n" +
+    "								 <td>$testDesc</td>\n" +
     "                              </tr>";
     
     public static String trTemplateScreenShotUserDefine ="							  <tr class=\"$tableStatus\">\n" +
     	    "                                 <td>$testId</td>\n" +
-    	    "                                 <td><img src=\"$screenShotFilePath\" width=\"100%\" height=\"auto\"></td>\n" +
+    	    "                                 <td><img src=\"$screenShotFilePath\" class=\"screenshot\" alt=\" \" width=\"100%\" height=\"auto\"></td>\n" +
+    	    "								 <td style=\"font-size: 1rem;\">$testDuration</td>\n" +
+    	    "								 <td>$testDesc</td>\n" +
     	    "                              </tr>";
 
     public static String trTemplateStepFailed ="                              <tr class=\"$tableStatus\">\n" +
     "                                 <td>$testId</td>\n" +
     "                                 <td>$testStep<br><font style=\"color:blue\">$stepError</font>\n" +
-    "								 <img src=\"$screenShotFilePath\" width=\"100%\" height=\"auto\">\n" +
+    "								 <img src=\"$screenShotFilePath\" class=\"screenshot\" alt=\" \" width=\"100%\" height=\"auto\">\n" +
     "								 </td>\n" +
     "								 <td style=\"font-size: 1rem;\">$testDuration</td>\n" +
+    "								 <td>$testDesc</td>\n" +
     "                              </tr>";
 
     public static String trTemplateKeywordWarning ="							  <tr class=\"$tableStatus\">\n" +
     "								 <td>$testId</td>\n" +
     "								 <td>$testStep</td>\n" +
     "								 <td style=\"font-size: 1rem;\">$testDuration</td>\n" +
+    "								 <td>$testDesc</td>\n" +
     "							  </tr>";
 
     public static String trTemplateOjbectWarning ="                             <tr class=\"$tableStatus\">\n" +
@@ -69,11 +76,13 @@ public class htmlReportCommon {
     "                                 <td>$testStep<br><font style=\"color:brown\">$stepError</font>\n" +
     "								 </td>\n" +
     "								 <td style=\"font-size: 1rem;\">$testDuration</td>\n" +
+    "								 <td>$testDesc</td>\n" +
     "                              </tr>";
 
     public static String trTemplateSkipped ="							  <tr class=\"$tableStatus\">\n" +
     "								 <td>$testId</td>\n" +
     "								 <td>$testStep</td>\n" +
+    "								 <td></td>\n" +
     "								 <td></td>\n" +
     "							  </tr>";
     
@@ -91,7 +100,8 @@ public class htmlReportCommon {
     "                              <tr class=\"table-dark\">\n" +
     "                                 <th style=\"width:8%; text-align: left; vertical-align: middle\">Step No.</th>\n" +
     "                                 <th style=\"text-align: left; vertical-align: middle;\">Test Step</th>\n" + 
-    "                                 <th style=\"width:15%\">Duration [min:sec:ms]</th>\n" +
+    "                                 <th style=\"width:12%\">Duration [min:sec:ms]</th>\n" +
+    "                                 <th style=\"width:15%; vertical-align: middle;\">Step Desc.</th>\n" +
     "                              </tr>\n" +
     "                           </thead>\n" +
     "                           <tbody>\n" +
@@ -136,6 +146,35 @@ public class htmlReportCommon {
     "         table-layout:fixed;\r\n" + 
     "         width:100%;\r\n" + 
     "         }"+
+    ".screenshot {\r\n"
+    + "            cursor: pointer;\r\n"
+    + "            width: 100%;\r\n"
+    + "            height: auto;\r\n"
+    + "        }"+
+    ".modal {\r\n"
+    + "            display: none;\r\n"
+    + "            position: fixed;\r\n"
+    + "            z-index: 1000;\r\n"
+    + "            left: 0;\r\n"
+    + "            top: 0;\r\n"
+    + "            width: 100%;\r\n"
+    + "            height: 100%;\r\n"
+    + "            background-color: rgba(0,0,0,0.8);\r\n"
+    + "            justify-content: center;\r\n"
+    + "            align-items: center;\r\n"
+    + "        }\r\n"
+    + "        .modal-content {\r\n"
+    + "            max-width: 90%;\r\n"
+    + "            max-height: 90%;\r\n"
+    + "        }\r\n"
+    + "        .close-btn {\r\n"
+    + "            position: absolute;\r\n"
+    + "            top: 20px;\r\n"
+    + "            right: 30px;\r\n"
+    + "            color: #fff;\r\n"
+    + "            font-size: 30px;\r\n"
+    + "            cursor: pointer;\r\n"
+    + "        }"+
     "	</style>	"+
     "   </head>\n" +
     "   <body>\n" +
@@ -156,6 +195,10 @@ public class htmlReportCommon {
     "         <canvas id=\"myChart\" style=\"max-width:600px; float: right;\"></canvas>\n" +
     "      </div>\n" +
     "      $testCaseSteps\n" +
+    "<div id=\"imageModal\" class=\"modal\">\r\n"
+    + "        <span class=\"close-btn\">×</span>\r\n"
+    + "        <img class=\"modal-content\" id=\"modalImage\">\r\n"
+    + "    </div>"+
     "      <script>\n" +
     "         var xValues = [\"Pass\", \"Fail\", \"Warning\"];\n" +
     "         var yValues = [$totalPassed, $totalFailed, $totalWarings];\n" +
@@ -182,6 +225,30 @@ public class htmlReportCommon {
     "           }\n" +
     "         });\n" +
     "      </script>\n" +
+    "<script>\r\n"
+    + "        const images = document.querySelectorAll('.screenshot');\r\n"
+    + "        const modal = document.getElementById('imageModal');\r\n"
+    + "        const modalImg = document.getElementById('modalImage');\r\n"
+    + "        const closeBtn = document.querySelector('.close-btn');\r\n"
+    + "\r\n"
+    + "        images.forEach(img => {\r\n"
+    + "            // *** Changed from 'dblclick' to 'click' ***\r\n"
+    + "            img.addEventListener('click', function() {\r\n"
+    + "                modal.style.display = 'flex';\r\n"
+    + "                modalImg.src = this.src;\r\n"
+    + "            });\r\n"
+    + "        });\r\n"
+    + "\r\n"
+    + "        closeBtn.addEventListener('click', function() {\r\n"
+    + "            modal.style.display = 'none';\r\n"
+    + "        });\r\n"
+    + "\r\n"
+    + "        modal.addEventListener('click', function(e) {\r\n"
+    + "            if (e.target === modal) {\r\n"
+    + "                modal.style.display = 'none';\r\n"
+    + "            }\r\n"
+    + "        });\r\n"
+    + "    </script>"+
     "   </body>\n" +
     "</html>";
     
@@ -343,7 +410,7 @@ public class htmlReportCommon {
          return countRun;
     }
     
-    public static String trTemplateEditStepPassed(String trTemplate, String trTestStepId, String trTestStep){
+    public static String trTemplateEditStepPassed(String trTemplate, String trTestStepId, String testDesc, String trTestStep){
         String editedTemplate =trTemplate;
         
         if(boltRunner.userDefineSteps.size() !=0) {
@@ -368,6 +435,7 @@ public class htmlReportCommon {
             editedTemplate =editedTemplate.replace("$testId", trTestStepId);
             editedTemplate =editedTemplate.replace("$testStep", trTestStep);
             editedTemplate =editedTemplate.replace("$testDuration", boltRunner.stepExecTimeInterval);
+            editedTemplate =editedTemplate.replace("$testDesc", testDesc);
 	        editedTemplate =editedTemplate + editedTemplate2;
         	
         }else {
@@ -375,6 +443,7 @@ public class htmlReportCommon {
             editedTemplate =editedTemplate.replace("$testId", trTestStepId);
             editedTemplate =editedTemplate.replace("$testStep", trTestStep);
             editedTemplate =editedTemplate.replace("$testDuration", boltRunner.stepExecTimeInterval);
+            editedTemplate =editedTemplate.replace("$testDesc", testDesc);
         }
         
         return editedTemplate;
@@ -411,7 +480,7 @@ public class htmlReportCommon {
         return editedTemplate;
     }
     
-    public static String trTemplateEditScreenShot(String trTemplate, String trTestStepId, String trTestStep, String filePath){
+    public static String trTemplateEditScreenShot(String trTemplate, String trTestStepId, String trTestStep, String trStepDesc, String filePath){
         String editedTemplate =trTemplate;
         
         editedTemplate =editedTemplate.replace("$tableStatus", "table-success");
@@ -419,6 +488,7 @@ public class htmlReportCommon {
         editedTemplate =editedTemplate.replace("$testStep", trTestStep);
         editedTemplate =editedTemplate.replace("$screenShotFilePath", filePath);
         editedTemplate =editedTemplate.replace("$testDuration", boltRunner.stepExecTimeInterval);
+        editedTemplate =editedTemplate.replace("$testDesc", trStepDesc);
                 
         return editedTemplate;
     }

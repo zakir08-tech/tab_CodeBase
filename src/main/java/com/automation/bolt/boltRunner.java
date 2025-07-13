@@ -449,12 +449,12 @@ public class boltRunner{
                                     testDescription.toLowerCase().contentEquals("take_screenshot")){
                                 
                                 trPassed =trTemplateEditScreenShot(htmlReportCommon.trTemplateScreenShot, 
-                                		testStep.getKey().toString(), 
+                                		testStep.getKey().toString(), testDescription,
                                 		common.getTestStepFromString(testStepResult), glueCode.dataUrl);  
                                 		//glueCode.screenshotPath);
                             }else{
                                 trPassed =trTemplateEditStepPassed(htmlReportCommon.trTemplatePassed, 
-                                		testStep.getKey().toString(), 
+                                		testStep.getKey().toString(), testDescription,
                                 		common.getTestStepFromString(testStepResult));
                             }
                                 
@@ -465,12 +465,12 @@ public class boltRunner{
                             String trScreenShot ="";
                             if(testRunStep.toUpperCase().contentEquals("TAKE_SCREENSHOT") || testRunStep.toUpperCase().contentEquals("ROBOT_SCREENSHOT"))
                                 trScreenShot =trTemplateEditScreenShot(htmlReportCommon.trTemplateScreenShot, 
-                                		testStep.getKey().toString(), 
+                                		testStep.getKey().toString(), testDescription,
                                 		common.getTestStepFromString(testStepResult), glueCode.dataUrl); 
                                 		//glueCode.screenshotPath);
                             else
                                 trScreenShot =trTemplateEditStepPassed(htmlReportCommon.trTemplatePassed, 
-                                		testStep.getKey().toString(), 
+                                		testStep.getKey().toString(), testDescription,
                                 		common.getTestStepFromString(testStepResult));
                             trTestSteps.put(testStep.getKey(), trScreenShot);
                         }
