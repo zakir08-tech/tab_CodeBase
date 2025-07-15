@@ -56,7 +56,7 @@ public class boltRunner{
     public static int getCurrRunId;
     public static String getSkipStep;
     public static Integer stepIndex;
-    public static Integer stepTestNumber;
+    public static Float stepTestNumber;
     public static Date stepStartTime;
     public static Date stepEndTime;
     public static Date lastStepEndTime;
@@ -170,7 +170,7 @@ public class boltRunner{
                 logError = "";
                 userDefineSteps = new LinkedHashMap<Integer, String>();
                 stepIndex =0;
-                stepTestNumber =testStep.getKey();
+                stepTestNumber =Float.valueOf(testStep.getKey());
                 
                 try{
                     testRunStep =loadTestSteps.get(1);

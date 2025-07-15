@@ -197,7 +197,7 @@ public class common extends userDefineTest{
 	
     public static void writeStepInWordDocument(String testStep) {
     	boltRunner.stepIndex++;
-    	writeTestStep(Integer.valueOf(boltRunner.stepTestNumber)+"."+
+    	writeTestStep(Float.valueOf(boltRunner.stepTestNumber)+"."+
     	Integer.valueOf(boltRunner.stepIndex),testStep,"","");
     }
     
