@@ -643,8 +643,9 @@ public class glueCode {
 		try {
 			//URL[] dependencyUrls = {new URL("file:/"+System.getProperty("user.dir").replaceAll("\\\\", "/")+"/target/tab.jar")};
 			//classLoader = new URLClassLoader(dependencyUrls);
-			//Class<?> loadedClass = classLoader.loadClass("com.automation.bolt.userDefineTest");
-			Class<?> loadedClass = Class.forName("com.automation.bolt.userDefineTest");
+			classLoader = ClassLoader.getSystemClassLoader();
+			Class<?> loadedClass = classLoader.loadClass("com.automation.bolt.userDefineTest");
+			//Class<?> loadedClass = Class.forName("com.automation.bolt.userDefineTest");
 			//Class<?> loadedClass = classLoader.loadClass("test.automation.tab.userDefine");
 		
 			Object obj = loadedClass.getDeclaredConstructor().newInstance();
