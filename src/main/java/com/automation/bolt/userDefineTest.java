@@ -1,21 +1,18 @@
 package com.automation.bolt;
 
-import java.time.Duration;
 import java.util.List;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 	
 public class userDefineTest extends glueCode{
 	static WebElement getStatus;
 	static htmlReportCommon htmlReport;
 	static glueCode gCode = new glueCode();
+	static boltRunner bRunner = new boltRunner();
 	static common con = new common();
 	static WebDriver xDriver;
 	
@@ -41,8 +38,8 @@ public class userDefineTest extends glueCode{
 	}
 	
 	public static void checkForRegister(String[] args){
-		glueCode gCode = new glueCode();
-		xDriver=gCode.boltDriver;
+		//glueCode gCode = new glueCode();
+		//xDriver=gCode.boltDriver;
 		WebElement registerLogin =null;
 		
 		String userName = args[0];
@@ -51,7 +48,7 @@ public class userDefineTest extends glueCode{
 		
 		boolean openRegister = false;
 		try {
-			List<WebElement> divList = xDriver.findElements(By.tagName("div"));
+			List<WebElement> divList = xDriver.findElements(By.tagName("div1"));
 			
 			for(WebElement divElm: divList) {
 				getAriaLabel = divElm.getAttribute("aria-label");
@@ -63,10 +60,58 @@ public class userDefineTest extends glueCode{
 					break;
 				}
 			}	
-		}catch(WebDriverException exp) {}
+		}catch(WebDriverException | NullPointerException exp) {}
 		
 		if(openRegister ==true) {
-			// add you login code here
+			// add your login code here
+		}else {
+			
+			
+			/*
+			 * boolean hardwareError = false;
+			 * 
+			 * try { List<WebElement> errorDivs = xDriver.findElements(By.tagName("div"));
+			 * 
+			 * for(WebElement elm: errorDivs) {
+			 * if(elm.getText().contentEquals("Hardware Error")) { hardwareError = true;
+			 * break; } }
+			 * 
+			 * if(hardwareError ==true) {
+			 * System.out.println("Hardware Error found, clicking OK..."); WebElement
+			 * okButton = xDriver.findElement(By.xpath("//div[@title='OK']"));
+			 * okButton.click();
+			 * 
+			 * }else { System.out.println("No Hardware Error found, continuing..."); }
+			 * }catch(WebDriverException e) {
+			 * System.out.println("Exception while checking Hardware Error: " +
+			 * e.getMessage());
+			 * 
+			 * }
+			 */
+			
+			/*
+			 * String trPassed =
+			 * htmlReport.trTemplateEditStepPassed(htmlReport.trTemplatePassed,
+			 * String.valueOf(bRunner.stepTestNumber), bRunner.testDescription,
+			 * common.getTestStepFromString(bRunner.testStepResult));
+			 * 
+			 * bRunner.trTestSteps.put(bRunner.stepTestNumber, trPassed);
+			 */
+			
+//			String trPassed = htmlReport.trTemplateEditStepPassed(htmlReport.trTemplateUserDefine, 
+//					"", 
+//					"", 
+//					"set user name");
+//			
+//			bRunner.trTestSteps.put(100, trPassed);
+//			
+//			trPassed = htmlReport.trTemplateEditStepPassed(htmlReport.trTemplateUserDefine, 
+//					"", 
+//					"", 
+//					"set user password");
+//			
+//			bRunner.trTestSteps.put(200, trPassed);
+			
 		}
 	}
 }

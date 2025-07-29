@@ -24,6 +24,7 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -89,6 +90,11 @@ public class glueCode {
             co.addArguments("--blink-settings=imagesEnabled=true");
             co.addArguments(getDriverOptions);
             
+            /*Add preference to block notifications*/
+            HashMap<String, Object> prefs = new HashMap<>();
+            prefs.put("profile.default_content_setting_values.notifications", 2); // 2 = Block
+            co.setExperimentalOption("prefs", prefs);
+            
             if(runHeadless ==true) {
             	co.addArguments("window-size=1980,960");
             	co.addArguments("--headless");
@@ -104,6 +110,11 @@ public class glueCode {
             edgeOptions.addArguments("--ignore-certificate-errors");
             edgeOptions.addArguments("--blink-settings=imagesEnabled=true");
             edgeOptions.addArguments(getDriverOptions);
+            
+            /*Add preference to block notifications*/
+            HashMap<String, Object> prefs = new HashMap<>();
+            prefs.put("profile.default_content_setting_values.notifications", 2); // 2 = Block
+            edgeOptions.setExperimentalOption("prefs", prefs);
             
             if(runHeadless ==true) {
             	edgeOptions.addArguments("window-size=1980,960");
@@ -601,12 +612,16 @@ public class glueCode {
 
         try {
             wait.until(ExpectedConditions.elementToBeClickable(elm));
+        }catch(StaleElementReferenceException exp) {
+        	if(StaleElementReferenceExceptionRetry() ==true) {
+        		stepSuccess = false;
+                boltExecutor.log.error(boltRunner.logError);
+        	}
         }catch (IllegalArgumentException|
                 NullPointerException|
                 NoSuchElementException|
                 ElementNotInteractableException|
-                TimeoutException|
-                StaleElementReferenceException exp) {
+                TimeoutException exp) {
             stepSuccess = false;
             boltRunner.logError = exp.getMessage();
             boltExecutor.log.error(exp);
@@ -615,6 +630,29 @@ public class glueCode {
             boltRunner.logError = exp.getMessage();
             boltExecutor.log.error(exp);
         }
+    }
+    
+    public static boolean StaleElementReferenceExceptionRetry() {
+    	boolean staleElmRefExp = true;
+    	
+    	int retries = 3;
+    	for (int i = 1; i <= retries; i++) {
+    		boltRunner.getElement = boltRunner.getElement(boltRunner.elmLocator, boltRunner.elmLocatorValue);
+    		try {
+    			System.out.println("StaleElementReferenceException occurred. Retrying... (" + (i + 1) + "/" + retries + ")");
+    			wait.until(ExpectedConditions.elementToBeClickable(boltRunner.getElement));
+    			staleElmRefExp = false;
+    			break;
+    		}catch(StaleElementReferenceException exp) {
+    			try {
+                    Thread.sleep(3 * 1000); // Wait before retry
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    boltRunner.logError = exp.getMessage();
+                }
+    		}
+    	}
+    	return staleElmRefExp;
     }
     
     public static void keyClick(WebElement elm) {
