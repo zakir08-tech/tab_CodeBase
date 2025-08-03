@@ -27,7 +27,7 @@ public class externalTabRun extends constants{
 	 public static Logger log = Logger.getLogger(boltExecutor.class.getName());
 	 
 	public static void main(String[] args) {
-		loadder();
+		loadder(args);
 		
 		implicitWaitTime =waitTimeInSec;
 		pageLoadTimeOut =waitTimeInSec;

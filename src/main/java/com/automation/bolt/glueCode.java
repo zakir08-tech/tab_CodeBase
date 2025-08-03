@@ -103,7 +103,7 @@ public class glueCode {
             boltDriver = new ChromeDriver(co);      
         }else if(browserType.contentEquals("edge")){
             WebDriverManager.edgedriver().setup();
-            
+          
             EdgeOptions edgeOptions = new EdgeOptions();
             edgeOptions.addArguments("--remote-allow-origins=*");
             edgeOptions.addArguments("--start-maximized");
