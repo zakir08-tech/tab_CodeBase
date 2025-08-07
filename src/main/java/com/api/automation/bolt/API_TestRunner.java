@@ -14,11 +14,13 @@ import java.util.Map.Entry;
 
 import org.apache.http.ParseException;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.log4j.PropertyConfigurator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.api.automation.util.ApiTestReport;
+import com.api.automation.util.ApiTestReport1;
 import com.api.automation.util.ConvertXmlToJson;
 import com.api.automation.util.GetTagValueFromJsonResponse;
 import com.api.automation.util.ReadPayloadFile;
@@ -26,7 +28,12 @@ import com.api.automation.util.SaveResponseAsFile;
 import com.api.automation.util.UpdateJsonPayload;
 import com.api.automation.util.VerifyValueAPICommon;
 import com.api.automation.util.common;
+import com.automation.bolt.boltExecutor;
 import com.automation.bolt.gui.ExecuteApiTest;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
@@ -70,12 +77,12 @@ public class API_TestRunner extends loadAPITestRunner {
     public static boolean getThreadStatus;
     public static boolean stepDefinitionError;
     public static String stepDefinitionErrorMsg;
-    //public static ExtentTest extentTest;
-    //public static ExtentReports extent;
-    //public static ExtentSparkReporter sparkReporter;
+    public static ExtentTest extentTest;
+    public static ExtentReports extent;
+    public static ExtentSparkReporter sparkReporter;
     
     public static void runAPItest() throws NullPointerException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException, JsonMappingException, JsonProcessingException {
-    	
+    	//PropertyConfigurator.configure(boltExecutor.class.getResourceAsStream("log4j.properties").toString());
     	/*extent = new ExtentReports();
     	sparkReporter = new ExtentSparkReporter(System.getProperty("user.dir") +"/htmlTestReport/boltTestReport.html");
     	extent.attachReporter(sparkReporter);
@@ -87,7 +94,7 @@ public class API_TestRunner extends loadAPITestRunner {
     	sparkReporter.config().setTimeStampFormat("EEE, MMMM dd,yyyy, hh:mm: a '('zzz')'");
     	sparkReporter.config().setEncoding("UTF-8");*/
     	
-    	System.out.println("running api's test!");
+    	boltApiExecutor.log.info("running api's test!");
     	
         restClient = new HttpClient();
         boolean blnJSONresponse;
@@ -116,9 +123,11 @@ public class API_TestRunner extends loadAPITestRunner {
         verifyJsonResponseAttributes = new LinkedHashMap<> ();
 
         for (Entry<Object, HashMap<Object, Object>> testRunnerEntry: ApiTestRunnerMap.entrySet()) { //for:1
-            
+             
         	finalRunStatus =true;
 			getApiTestRunId = testRunnerEntry.getKey(); //get  test run id
+			boltApiExecutor.log.info("Executing Test Run: " + getApiTestRunId);
+			 
 			getCurrRunId =0;
 			 for(int i=0; i<ExecuteApiTest.importDataFromExcelModel.getRowCount(); i++){
 			     if(ExecuteApiTest.importDataFromExcelModel.getValueAt(i, 1).toString().contentEquals(getApiTestRunId.toString())){
@@ -147,10 +156,12 @@ public class API_TestRunner extends loadAPITestRunner {
             ResultSet getQueryRes = null;
 
             getApiTestRequest = testRunnerEntry.getValue().get("Request"); //get Request type
+            boltApiExecutor.log.info("Request Type: "+getApiTestRequest);
             //extentTest = extent.createTest("creating [" + getApiTestRequest + "] request");
             
             getApiTestRequestUrl = testRunnerEntry.getValue().get("Request URL"); //get service url
             getApiTestRequestUrl =updateApiUrlWithEnvVarValue(getApiTestRequestUrl);
+            boltApiExecutor.log.info("API URL: "+getApiTestRequestUrl);
             //getApiTestRequestUrl =updateApiUrlWithJsonResponseElementReference(getApiTestRequestUrl);
             
             getExpResponseCode = testRunnerEntry.getValue().get("Expected Status"); //get response code
@@ -163,7 +174,6 @@ public class API_TestRunner extends loadAPITestRunner {
             	HashMap<Object, Object> getAPIElms =ApiTestRunnerMap.get(getApiTestRunId);
             	getAPIElms.put("AuthVal1", getAuth1);
             	ApiTestRunnerMap.put(getApiTestRunId, getAPIElms);
-            	
             }
             
             getAuth2 =testRunnerEntry.getValue().get("AuthVal2"); //get auth value 2
@@ -188,7 +198,9 @@ public class API_TestRunner extends loadAPITestRunner {
     					requestHeaders.put(key, envVal);
     				}
     			});
+            	boltApiExecutor.log.info("Header List: "+requestHeaders.toString());
             }catch(NullPointerException exp) {}
+            
             
             payloadTagElement = loadAPITestRunner.saveTagElmMap.get(getApiTestRunId); //get payload tag/element
             getSSLCertificationFlag = testRunnerEntry.getValue().get("SSL Verification"); //get ssl certification flag
@@ -215,21 +227,25 @@ public class API_TestRunner extends loadAPITestRunner {
             verifyResponseTagElement = loadAPITestRunner.saveVerifyRespTagElmMap.get(getApiTestRunId); //get payload tag/element
             getResponseElementValue = loadAPITestRunner.saveJsonElm_val.get(getApiTestRunId);
             //responseDbValidation = loadAPITestRunner.saveDbValidationMap.get(getApiTestRunId); //get database validation items
-
-            System.out.println("\nExecuting Test Run: " + getApiTestRunId);
+            
+            //System.out.println("\nExecuting Test Run: " + getApiTestRunId);
+            
             requestPayload =testRunnerEntry.getValue().get("Payload");
             getPayloadType = testRunnerEntry.getValue().get("Payload Type"); //get payload type
 
             if (payloadTagElement !=null) {
                 //requestPayload =testRunnerEntry.getValue().get("Payload");
                 requestPayload =UpdateJsonPayload.UpdateJsonTagElement(getApiTestRunId, payloadTagElement, requestPayload.toString());
+                boltApiExecutor.log.info("Payload: "+requestPayload.toString());
             }
 
             if (requestPayload != null){
-            	if(getPayloadType.toString().toLowerCase().contains("urlencoded"))
-                    requestPayload = ReadPayloadFile.readEncodedPayloadFromFile((String) requestPayload);
+            	if(getPayloadType.toString().toLowerCase().contains("urlencoded")) {
+            		requestPayload = ReadPayloadFile.readEncodedPayloadFromFile((String) requestPayload);
+            		boltApiExecutor.log.info("Payload: "+requestPayload.toString());
+            	}
             }
-
+            
             if (getApiTestRequest.toString().trim().toUpperCase().contentEquals("GET")) { //if:1; GET call
             	if (requestHeaders ==null)
             		closeableHttpRespone = restClient.getClientResponse(getApiTestRequestUrl, getSSLCertificationFlag, getBasicAuthFlag, getBasicAuthFlag);
@@ -336,7 +352,7 @@ public class API_TestRunner extends loadAPITestRunner {
             if (closeableHttpRespone != null) {
                 //retrieveResponse = RemoveBracketsFromJSONString.removeBrackets(retrieveResponse);
                 if (VerifyValueAPICommon.isJSONValid(retrieveResponse.toString()) == true) {
-                    try {
+                	try {
                     	jsonResponse = new JSONArray(retrieveResponse.toString());
                     } catch (JSONException exp) {
 						//exp.printStackTrace();
@@ -344,7 +360,7 @@ public class API_TestRunner extends loadAPITestRunner {
 							jsonResponse = new JSONArray("[" + retrieveResponse.toString() + "]");
 						else jsonResponse = new JSONArray(retrieveResponse.toString());
                     }
-
+                	//boltApiExecutor.log.info("Response: "+jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR));
                     blnJSONresponse = true;
                 } else if (VerifyValueAPICommon.isXMLValid(retrieveResponse.toString()) == true) {
                     jsonXmlResponse = ConvertXmlToJson.XMLtoJSON(retrieveResponse.toString());
@@ -360,8 +376,10 @@ public class API_TestRunner extends loadAPITestRunner {
                 	testOut_Put.put("Payload", requestPayload);
                 }
                 
-                if(getResponseElementValue !=null)
+                if(getResponseElementValue !=null) {
                 	common.getJsonElementValue(getApiTestRunId, getResponseElementValue, jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR));
+                }
+                boltApiExecutor.log.info("Response: "+jsonResponse.toString(Constants.PRETTY_PRINT_INDENT_FACTOR)); 	
             }
 
             // save the json response to the hash-map
@@ -533,7 +551,7 @@ public class API_TestRunner extends loadAPITestRunner {
         
         //generate test report
         //extent.flush();
-        ApiTestReport.GenerateApiTestReport();
+        ApiTestReport.generateApiTestReport();
 
         //email test automation report
         //EmailTestReport.emailTestReport();
@@ -560,7 +578,8 @@ public class API_TestRunner extends loadAPITestRunner {
 	            String getRespTagVal = GetTagValueFromJsonResponse.GetJsonTagElement(splitTagName, getJsonResponse);
 
                 if(getRespTagVal.contentEquals("#.")){
-		            System.out.println("required tag [" +splitTagName+ "] not found in the json response");
+                	boltApiExecutor.log.info("required tag [" +splitTagName+ "] not found in the json response");
+		            //System.out.println("required tag [" +splitTagName+ "] not found in the json response");
 		            requestHeaders.put(updateHeader.getKey(), "required tag [" +splitTagName+ "] not found in the json response");
                 }
                 else{
@@ -601,7 +620,8 @@ public class API_TestRunner extends loadAPITestRunner {
 		        Object getRespTagVal = GetTagValueFromJsonResponse.GetJsonTagElement(splitTagName, getJsonResponse);
 
 	            if(getRespTagVal.toString().contentEquals("#.")){
-	            	System.out.println("required tag [" +splitTagName+ "] not found in the json response");
+	            	boltApiExecutor.log.info("required tag [" +splitTagName+ "] not found in the json response");
+	            	//System.out.println("required tag [" +splitTagName+ "] not found in the json response");
 	            	stepDefinitionError =true;
 	            	stepDefinitionErrorMsg ="required JSON tag [" +splitTagName+ "] not available at [#" +getTestId+ "] api response";
 	            	testOut_Put.put(keyName, "{" +stepDefinitionErrorMsg+ "}");
