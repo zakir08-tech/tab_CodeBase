@@ -1683,12 +1683,16 @@ public class common extends userDefineTest{
     }
     
     public static void runTimmerFromCurrentTime(int secs){
-        Date currDate = new Date();
-        Date newDate = DateUtils.addSeconds(currDate, secs);
+        //Date currDate = new Date();
+        //Date newDate = DateUtils.addSeconds(currDate, secs);
         
-        do {
-            currDate = new Date();
-        }while(currDate.before(newDate));
+        //do {
+            //currDate = new Date();
+        //}while(currDate.before(newDate));
+        
+        try {
+            Thread.sleep(secs * 1000);
+        } catch (InterruptedException e) {/*e.printStackTrace();*/}
     }
     
     /* get keyboard keycodes */
@@ -1913,5 +1917,29 @@ public class common extends userDefineTest{
         } catch (FileNotFoundException e) {}
 
         return jsonMap;
+    }
+    
+    public static void updatePropertiesFile(String filePath, String key, String newValue) throws IOException {
+        // Initialize Properties object
+        Properties properties = new Properties();
+        
+        // Load existing properties file
+        try (FileInputStream fis = new FileInputStream(filePath)) {
+            properties.load(fis);
+        } catch (IOException e) {
+        	System.err.println("Error reading properties file: " + filePath +"\n"+ e.getMessage());
+            //throw new IOException("Error reading properties file: " + filePath, e);
+        }
+        
+        // Update the value
+        properties.setProperty(key, newValue);
+        
+        // Save changes back to file
+        try (FileOutputStream fos = new FileOutputStream(filePath)) {
+            properties.store(fos, null); // null for no comments
+        } catch (IOException e) {
+        	System.err.println("Error writing properties file: " + filePath +"\n"+ e.getMessage());
+            //throw new IOException("Error writing to properties file: " + filePath, e);
+        }
     }
 }

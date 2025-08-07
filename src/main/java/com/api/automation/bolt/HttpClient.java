@@ -354,7 +354,9 @@ import com.automation.bolt.common;
                 .setDefaultCredentialsProvider(provider)
                 //.setSSLSocketFactory(sslConnectionSocketFactory)
                 .build();
-	    	} catch (KeyManagementException | NoSuchAlgorithmException | KeyStoreException e) {}
+	    	} catch (KeyManagementException | NoSuchAlgorithmException | KeyStoreException e) {
+	    		System.err.println(e.getMessage());
+	    	}
 	    }
 	    
 	    return httpClient;

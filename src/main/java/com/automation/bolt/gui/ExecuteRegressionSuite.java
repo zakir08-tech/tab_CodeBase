@@ -1015,7 +1015,7 @@ public class ExecuteRegressionSuite extends javax.swing.JFrame {
                     if(excelFIS.getChannel().isOpen());
                         excelFIS.close();
                 }catch(NullPointerException exp){
-                    Logger.getLogger(ExecuteRegressionSuite.class.getName()).log(Level.INFO, "channel is closed", "channel is closed");
+                    //Logger.getLogger(ExecuteRegressionSuite.class.getName()).log(Level.INFO, "channel is closed", "channel is closed");
                 }
                     
                 excelFIS = new FileInputStream(excelFile); 

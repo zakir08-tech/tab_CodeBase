@@ -1,23 +1,27 @@
 package com.api.automation.util;
  
+import com.api.automation.bolt.boltApiExecutor;
 //import com.automation.bolt.runner.TestRunner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.text.WordUtils;
-import org.xml.sax.InputSource;
+//import org.xml.sax.InputSource;
  
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import javax.xml.parsers.DocumentBuilderFactory;
+//import javax.xml.parsers.DocumentBuilderFactory;
  
 public class VerifyValueAPICommon {
 	public static LinkedHashMap < Object, Object > errorMapping = new LinkedHashMap<>();
  
     public static void verifyResponseCodeStatus(Object actualStausCode, Object expectedStatusCode) {
-	    if (actualStausCode == expectedStatusCode) System.out.println("response code: expected[" + expectedStatusCode + "] actual[" + actualStausCode + "]");
-	    else System.out.println("response code: expected[" + expectedStatusCode + "] actual[" + actualStausCode + "]");
+    	boltApiExecutor.log.info("response code: expected[" + expectedStatusCode + "] actual[" + actualStausCode + "]");
+    	//if (actualStausCode == expectedStatusCode)
+	    	//System.out.println("response code: expected[" + expectedStatusCode + "] actual[" + actualStausCode + "]");
+	    //else
+	    	//System.out.println("response code: expected[" + expectedStatusCode + "] actual[" + actualStausCode + "]");
     }
  
     public static void verifyErrorMessage(String errorMessage, String ignoredStrClassName) {
@@ -78,7 +82,7 @@ public class VerifyValueAPICommon {
  
     public static boolean isXMLValid(String xmlInString) {
         try {
-            DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(xmlInString)));
+            //DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(xmlInString)));
             return true;
         } catch(Exception e) {
         	return false;

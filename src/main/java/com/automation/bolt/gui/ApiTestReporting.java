@@ -11,21 +11,25 @@ import static com.automation.bolt.htmlReportCommon.getTestCaseResultList;
 import static com.automation.bolt.htmlReportCommon.getTestCaseResultSuiteList;
 import static com.automation.bolt.htmlReportCommon.htmlTestReportPath;
 import static com.automation.bolt.htmlReportCommon.openTheFileOverDesktop;
-import static com.automation.bolt.htmlReportCommon.tesCaseResultPath;
 import static com.automation.bolt.htmlReportCommon.testCaseReportFolderEmpty;
 import static com.automation.bolt.htmlReportCommon.testCaseReportFolderExist;
 import static com.automation.bolt.htmlReportCommon.testReportFolderEmpty;
 import static com.automation.bolt.htmlReportCommon.testReportFolderExist;
+
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
+
 import javax.swing.JOptionPane;
+import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import java.util.Enumeration;
-import javax.swing.JTree;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+
+import com.automation.bolt.htmlReportCommon;
 
 /**
  *
@@ -57,7 +61,7 @@ public class ApiTestReporting extends javax.swing.JFrame {
         testReportTreeRefresh = new javax.swing.JButton();
         pnlExpandAll = new javax.swing.JPanel();
         testReportTreeExpandAll = new javax.swing.JButton();
-
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Test Reporting");
         setBackground(new java.awt.Color(51, 51, 51));
@@ -385,14 +389,14 @@ public class ApiTestReporting extends javax.swing.JFrame {
                     if(getFileName.contains(".html")){
                         getFilePath =htmlTestReportPath +"/"+ getFileName;
                     }else if(getFileName.contains(".docx")){
-                        getFilePath =tesCaseResultPath +"/"+ getFileName;
+                        getFilePath = htmlReportCommon.testCaseResultPath +"/"+ getFileName;
                     }
                     getFileStatus =openTheFileOverDesktop(getFilePath);
                     
                     if(getFileStatus ==false)
                         JOptionPane.showMessageDialog(null, "Test report does not exist now!\nrefresh test reporting tree.", "Alert", JOptionPane.WARNING_MESSAGE);
                 }
-            }catch(NullPointerException exp){}
+            }catch(NullPointerException | IOException exp){}
         }
     }//GEN-LAST:event_treeTestReportingMouseClicked
 
@@ -412,14 +416,14 @@ public class ApiTestReporting extends javax.swing.JFrame {
                     if(getFileName.contains(".html")){
                         getFilePath =htmlTestReportPath +"/"+ getFileName;
                     }else if(getFileName.contains(".docx")){
-                        getFilePath =tesCaseResultPath +"/"+ getFileName;
+                        getFilePath =htmlReportCommon.testCaseResultPath +"/"+ getFileName;
                     }
                     getFileStatus =openTheFileOverDesktop(getFilePath);
                     
                     if(getFileStatus ==false)
                         JOptionPane.showMessageDialog(null, "Test report does not exist now!\nrefresh test reporting tree.", "Alert", JOptionPane.WARNING_MESSAGE);
                 }
-            }catch(NullPointerException exp){}
+            }catch(NullPointerException | IOException exp){}
         }
     }//GEN-LAST:event_treeTestReportingKeyPressed
 
@@ -529,5 +533,6 @@ public class ApiTestReporting extends javax.swing.JFrame {
     public static javax.swing.JButton testReportTreeExpandAll;
     public static javax.swing.JButton testReportTreeRefresh;
     public static javax.swing.JTree treeTestReporting;
+    
     // End of variables declaration//GEN-END:variables
 }

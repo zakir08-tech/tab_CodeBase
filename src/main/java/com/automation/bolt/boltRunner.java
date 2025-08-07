@@ -86,7 +86,7 @@ public class boltRunner{
     public static LinkedHashMap<Integer, String> trTestCards= new LinkedHashMap<Integer, String>();
     public static LinkedHashMap<Integer, String> userDefineSteps = new LinkedHashMap<Integer, String>();
     
-    public static LinkedHashMap<Integer, String> testResult = new LinkedHashMap<Integer, String>();
+    public static LinkedHashMap<Integer, Object> testResult = new LinkedHashMap<Integer, Object>();
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void boltTestRunner() throws InterruptedException, IOException {
@@ -115,8 +115,8 @@ public class boltRunner{
             getTestId =loadTestSteps.get(0);
             getTestDesc =loadTestSteps.get(4);
                 
-            boltExecutor.log.info("");
-            boltExecutor.log.info("......running test "+testRunId);
+            //boltExecutor.log.info("");
+            boltExecutor.log.info("......running test: "+testRunId);
             
             getCurrRunId =0;
             for(int i=0; i<ExecuteRegressionSuite.importDataFromExcelModel.getRowCount(); i++){
@@ -272,7 +272,7 @@ public class boltRunner{
                                     common.writeTestStepWithResult(common.docx, testStepResult,"WARNING",testRunStep);
                                     common.writeTestStepWithResult(common.docx, logError,"ERROR",testRunStep);
                                     
-                                    String trWarning =trTemplateEditStepWarningObject(htmlReportCommon.trTemplateOjbectWarning, testStep.getKey().toString(), common.getTestStepFromString(testStepResult), logError);
+                                    String trWarning =trTemplateEditStepWarningObject(htmlReportCommon.trTemplateObjectWarning, testStep.getKey().toString(), common.getTestStepFromString(testStepResult), logError);
                                     trTestSteps.put(testStep.getKey(), trWarning);
                                     
                                     boltExecutor.log.warn(testStepResult+ ": WARNING");
@@ -502,11 +502,13 @@ public class boltRunner{
             getTestFlow.put(runTestFlow.getKey(), getTestStep);
             resTestFlow.put(runTestFlow.getKey(), resTestStep);
             failTestFlow.put(runTestFlow.getKey(), failTestStep);
+            
             try{
                 glueCode.boltDriver.quit();
             }catch(Exception exp){
                 boltExecutor.log.error("web driver error: " +exp.getMessage());
             }
+            
             common.saveAndCloseDocFile();
             trTestCards.put(Integer.valueOf(getTestId), cardTestCase);
         }
