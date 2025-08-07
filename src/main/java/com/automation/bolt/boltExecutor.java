@@ -30,8 +30,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.WebDriverException;
 
 import com.automation.bolt.gui.ExecuteRegressionSuite;
@@ -39,7 +42,8 @@ import com.automation.bolt.gui.ExecuteRegressionSuite;
 import io.github.bonigarcia.wdm.config.WebDriverManagerException;
 
 public class boltExecutor extends Thread {
-    static Logger log = Logger.getLogger(boltExecutor.class.getName());
+    //static Logger log = Logger.getLogger(boltExecutor.class.getName());
+    public static org.apache.logging.log4j.Logger log = LogManager.getLogger(boltExecutor.class);
     public static boltRunner bRunner = new boltRunner();
     public static ExecuteRegressionSuite exeRunner = new ExecuteRegressionSuite();
     public static boolean testRunInProgress;
@@ -60,7 +64,13 @@ public class boltExecutor extends Thread {
    
     @Override
     public void run() {
-    	PropertyConfigurator.configure(boltExecutor.class.getResourceAsStream("log4j.properties"));
+    	// Configure Log4j with a basic console appender
+        BasicConfigurator.configure();
+        // Optionally set the logging level for FreeMarker
+        Logger.getLogger("freemarker.cache").setLevel(Level.INFO);
+        
+    	//final org.apache.logging.log4j.Logger logger = LogManager.getLogger(boltExecutor.class);
+    	//PropertyConfigurator.configure(boltExecutor.class.getResourceAsStream("log4j.properties"));
         //PropertyConfigurator.configure(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/config/log4j.properties");
         testRunInProgress =true;
         bRunner = new boltRunner();
@@ -123,7 +133,7 @@ public class boltExecutor extends Thread {
         trTestSteps =new LinkedHashMap<Integer, String>();
         trTestCase =new LinkedHashMap<Integer, String>();
         trTestCards =new LinkedHashMap<Integer, String>();
-        boltRunner.testResult =new LinkedHashMap<Integer, String>();
+        boltRunner.testResult =new LinkedHashMap<Integer, Object>();
             
         bttnStartTestRun.setEnabled(true);
         bttnRefreshTestRun.setEnabled(true);

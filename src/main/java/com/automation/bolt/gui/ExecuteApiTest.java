@@ -637,7 +637,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
                     if(excelFIS.getChannel().isOpen());
                         excelFIS.close();
                 }catch(NullPointerException exp){
-                    Logger.getLogger(ExecuteApiTest.class.getName()).log(Level.INFO, "channel is closed", "channel is closed");
+                    //Logger.getLogger(ExecuteApiTest.class.getName()).log(Level.INFO, "channel is closed", "channel is closed");
                 }
                     
                 excelFIS = new FileInputStream(excelFile); 
@@ -1352,7 +1352,7 @@ public class ExecuteApiTest extends javax.swing.JFrame {
     public static JButton bttnStopTestRun;
     public static JCheckBox chkBoxFilterFailTest;
     public static JCheckBox chkBoxSelectDeselectAllRun;
-    public JLabel lblTestTypeTag;
+    public static JLabel lblTestTypeTag;
     public JPanel pnlHeader;
     public static JScrollPane scrollExecuteRegSuite;
     public static JTable tabExecuteRegSuite;

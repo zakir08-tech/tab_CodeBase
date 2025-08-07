@@ -417,6 +417,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="test type: @&lt;tag_name&gt;"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+      </AuxValues>
     </Component>
     <Container class="javax.swing.JPanel" name="pnlHeader">
       <Properties>

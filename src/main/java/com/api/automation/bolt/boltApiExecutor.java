@@ -8,14 +8,19 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
+import com.automation.bolt.boltExecutor;
 import com.automation.bolt.boltRunner;
 import com.automation.bolt.gui.ExecuteApiTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class boltApiExecutor extends Thread {
-	static Logger log = Logger.getLogger(boltApiExecutor.class.getName());
+	//static Logger log = Logger.getLogger(boltApiExecutor.class.getName());
+	public static org.apache.logging.log4j.Logger log = LogManager.getLogger(boltExecutor.class);
 	public static boltRunner bRunner = new boltRunner();
 	public static loadAPITestRunner apiTestLoader = new loadAPITestRunner();
 	public static API_TestRunner apiRunner = new API_TestRunner();
@@ -39,7 +44,12 @@ public class boltApiExecutor extends Thread {
 
 	@Override
 	public void run() {
-		// PropertyConfigurator.configure(boltApiExecutor.class.getResourceAsStream("log4j.properties"));
+		// Configure Log4j with a basic console appender
+        BasicConfigurator.configure();
+        // Optionally set the logging level for FreeMarker
+        Logger.getLogger("freemarker.cache").setLevel(Level.INFO);
+        
+		//PropertyConfigurator.configure(boltApiExecutor.class.getResourceAsStream("log4j.properties"));
 		// PropertyConfigurator.configure(System.getProperty("user.dir").replaceAll("\\\\",
 		// "/")+"/config/log4j.properties");
 		testRunInProgress = true;
@@ -51,7 +61,7 @@ public class boltApiExecutor extends Thread {
 				| JsonProcessingException e) {
 			throw new RuntimeException(e);
 		}
-
+		
 		bttnStartTestRun.setEnabled(true);
 		bttnRefreshTestRun.setEnabled(true);
 		chkBoxFilterFailTest.setEnabled(true);

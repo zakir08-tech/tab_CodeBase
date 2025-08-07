@@ -14,7 +14,7 @@ public class constants {
 	public static String driverPathJSONfile =userDir +"/config/driverPath.json";
         
     public static void loadder(String[] args) {
-    	PropertyConfigurator.configure(boltExecutor.class.getResourceAsStream("log4j.properties"));
+    	//PropertyConfigurator.configure(boltExecutor.class.getResourceAsStream("log4j.properties").toString());
     	common.readConfigProperties();
     	externalRun =true;
     	

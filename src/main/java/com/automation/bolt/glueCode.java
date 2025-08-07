@@ -660,8 +660,8 @@ public class glueCode {
             wait.until(ExpectedConditions.elementToBeClickable(elm));
             //Actions act = new Actions(boltDriver);
             //act.moveToElement(elm).click().build().perform();
-            elm.click();
-            //((JavascriptExecutor) boltDriver).executeScript("arguments[0].click();", elm);
+            //elm.click();
+            ((JavascriptExecutor) boltDriver).executeScript("arguments[0].click();", elm);
         }catch(NullPointerException|
                 NoSuchElementException|
                 ElementNotInteractableException|
