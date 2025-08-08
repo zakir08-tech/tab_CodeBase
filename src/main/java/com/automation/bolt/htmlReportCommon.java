@@ -48,7 +48,7 @@ public class htmlReportCommon {
     public static final String trTemplateScreenShot = """
             <tr class="$tableStatus">
                 <td>$testId</td>
-                <td>$testStep<img src="$screenShotFilePath" width="100%" height="auto" class="screenshot" alt=" "></td>
+                <td>$testStep<img src="$screenShotFilePath" width="100%" height="auto" class="screenshot" alt="Screenshot"></td>
                 <td style="font-size: 1rem;">$testDuration</td>
                 <td>$testDesc</td>
             </tr>""";
@@ -56,7 +56,7 @@ public class htmlReportCommon {
     public static final String trTemplateScreenShotUserDefine = """
             <tr class="$tableStatus">
                 <td>$testId</td>
-                <td><img src="$screenShotFilePath" class="screenshot" alt=" " width="100%" height="auto"></td>
+                <td><img src="$screenShotFilePath" class="screenshot" alt="Screenshot" width="100%" height="auto"></td>
                 <td style="font-size: 1rem;">$testDuration</td>
                 <td>$testDesc</td>
             </tr>""";
@@ -65,7 +65,7 @@ public class htmlReportCommon {
             <tr class="$tableStatus">
                 <td>$testId</td>
                 <td>$testStep<br><font style="color:#87ceeb">$stepError</font>
-                <img src="$screenShotFilePath" class="screenshot" alt=" " width="100%" height="auto">
+                <img src="$screenShotFilePath" class="screenshot" alt="Screenshot" width="100%" height="auto">
                 </td>
                 <td style="font-size: 1rem;">$testDuration</td>
                 <td>$testDesc</td>
@@ -98,8 +98,8 @@ public class htmlReportCommon {
 
     public static final String trTemplateCard = """
             <div class="card">
-                <div class="card-header" style="background-color: $testResultColor; color: #ffffff">
-                    <a class="collapsed btn" data-bs-toggle="collapse" href="#TestCase-$collapseIndex" style="width:100%; color: #ffffff">
+                <div class="card-header" style="background-color: $testResultColor; color: #000000">
+                    <a class="collapsed btn" data-bs-toggle="collapse" href="#TestCase-$collapseIndex" style="width:100%; color: #000000">
                         <h6 align="left">$testDescription</h6>
                     </a>
                 </div>
@@ -145,6 +145,7 @@ public class htmlReportCommon {
                         <meta charset="UTF-8">
                         <meta name="viewport" content="width=device-width, initial-scale=1">
                         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+                        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
                         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
                         <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
@@ -156,9 +157,13 @@ public class htmlReportCommon {
                             body {
                                 background-color: #1a1a1a;
                                 color: #e0e0e0;
+                                min-height: 100vh;
+                                margin: 0;
+                            }
+                            .content-wrapper {
                                 transform: scale(0.9);
                                 transform-origin: top center;
-                                min-height: 100vh;
+                                width: 100%;
                                 display: flex;
                                 flex-direction: column;
                                 align-items: center;
@@ -166,17 +171,23 @@ public class htmlReportCommon {
                             .container-lg {
                                 background-color: #2c2c2c;
                                 border: 1px solid #444;
+                                width: 100%;
                             }
                             table {
                                 table-layout: fixed;
                                 width: 100%;
                             }
-                            .table-dark tbody tr {
-                                color: #000000;
-                                border: 1px solid #6c757d;
+                            .card .table-dark {
+                                border-collapse: collapse;
                             }
-                            .table-dark td {
-                                border: 1px solid #6c757d;
+                            .card .table-dark thead th {
+                                color: #ffffff;
+                                border: none !important;
+                            }
+                            .card .table-dark tbody tr,
+                            .card .table-dark td {
+                                color: #000000;
+                                border: none !important;
                             }
                             .table-success {
                                 background-color: #92D192 !important;
@@ -198,65 +209,158 @@ public class htmlReportCommon {
                                 width: 100%;
                                 height: auto;
                                 border: 1px solid #444;
+                                transition: opacity 0.3s;
+                            }
+                            .screenshot:hover {
+                                opacity: 0.8;
                             }
                             .modal {
                                 display: none;
                                 position: fixed;
-                                z-index: 1000;
-                                left: 0;
-                                top: 0;
-                                width: 100%;
+                                top: 50%;
+                                left: 50%;
+                                transform: translate(-50%, -50%) !important;
+                                width: 100vw;
                                 height: 100%;
-                                background-color: rgba(0,0,0,0.9);
+                                min-height: 100vh;
+                                background-color: rgba(0,0,0,0.85);
+                                z-index: 100000;
+                                margin: 0;
+                                padding: 0;
+                                box-sizing: border-box;
+                                will-change: transform, opacity;
+                                overflow: auto;
+                                display: flex;
+                                flex-direction: column;
                                 justify-content: center;
                                 align-items: center;
                             }
                             .modal-content {
-                                max-width: 90%;
-                                max-height: 90%;
-                                border: 2px solid #444;
+                                max-width: 90vw;
+                                max-height: 90vh;
+                                width: auto;
+                                height: auto;
+                                object-fit: contain;
+                                border: 2px solid #666;
+                                border-radius: 8px;
+                                box-shadow: 0 4px 8px rgba(0,0,0,0.3);
                             }
                             .close-btn {
-                                position: absolute;
+                                position: fixed;
                                 top: 20px;
                                 right: 30px;
-                                color: #fff;
-                                font-size: 30px;
+                                color: #ffffff;
+                                font-size: 40px;
+                                font-weight: bold;
                                 cursor: pointer;
+                                transition: color 0.3s;
+                                z-index: 100001;
+                                background-color: rgba(0,0,0,0.5);
+                                padding: 5px 10px;
+                                border-radius: 5px;
+                                line-height: 1;
+                            }
+                            .close-btn:hover {
+                                color: #ff4d4d;
+                            }
+                            .modal-caption {
+                                color: #fff;
+                                text-align: center;
+                                margin-top: 10px;
+                                font-size: 1rem;
+                                font-family: 'Noto Sans', sans-serif;
                             }
                             .filter-btn {
                                 margin: 5px;
+                                padding: 0.25rem 0.5rem;
+                                font-size: 0.8rem;
+                            }
+                            .card-header {
+                                font-family: 'Noto Sans', sans-serif;
+                                font-weight: 700;
+                                padding: 0.4rem 0.8rem; /* Reduced padding to decrease height by ~20% */
+                            }
+                            .back-to-top {
+                                position: fixed;
+                                bottom: 20px;
+                                right: 20px;
+                                background-color: #ff4d4d;
+                                color: #ffffff;
+                                border: none;
+                                border-radius: 50%;
+                                width: 50px;
+                                height: 50px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                cursor: pointer;
+                                font-size: 1.2rem;
+                                z-index: 1000;
+                                transition: opacity 0.3s;
+                                opacity: 0.7;
+                            }
+                            .back-to-top:hover {
+                                opacity: 1;
                             }
                         </style>
                     </head>
                     <body>
-                        <div class="container-lg mt-3" style="width: 100%;">
-                            <h4><b>Bo<i class="fa fa-bolt" style="font-size:18px;animation-name:example; position:relative; animation-duration:2s; animation-iteration-count:infinite"></i>t</b></h4>
-                            <h6 style="color: #ff4d4d">Test Automation Accelerator</h6>
-                        </div>
-                        <div class="container-lg mt-3 border" style="width: 100%; height:330px; background-color: #2c2c2c">
-                            <div style="float: left">
-                                <p><br>Test Run Date: <font style="color: #bb86fc"><b>$runDate </b></font><font style="color: #ff8f00"><b>$runTime</b></font></p>
-                                <p>Total Run: <font style="color: #03a9f4"><b>$totalRun</b></font></p>
-                                <p>Passed: <font style="color: #92D192"><b>$totalPassed</b></font></p>
-                                <p>Failed: <font style="color: #D96F6F"><b>$totalFailed</b></font></p>
-                                <p>Warning: <font style="color: #ff8f00"><b>$totalWarnings</b></font></p>
-                                <p>Run Time: <font style="color: #d81b60"><b>$totalHrs</b></font> hrs <font style="color: #ff8f00"><b>$totalMins</b></font> mins <font style="color: #03a9f4"><b>$totalSec</b></font> sec</p>
-                                <p>Test Suite: <font style="color: #f4d03f"><b>$testSuiteName</b></font></p>
+                        <div class="content-wrapper">
+                            <div class="container-lg mt-3">
+                                <h4><b>Bo<i class="fa fa-bolt" style="font-size:18px;animation-name:example; position:relative; animation-duration:2s; animation-iteration-count:infinite"></i>t</b></h4>
+                                <h6 style="color: #ff4d4d">Test Automation Accelerator</h6>
                             </div>
-                            <canvas id="myChart" style="max-width:300px; float: right; background-color: #2c2c2c; border-radius: 8px;"></canvas>
+                            <div class="container-lg mt-3 border" style="height:165px; background-color: #2c2c2c">
+                                <div style="float: left">
+                                    <p style="font-size: 0.85rem; margin: 0; padding: 0;">Test Run Date: <font style="color: #bb86fc"><b>$runDate </b></font><font style="color: #ff8f00"><b>$runTime</b></font></p>
+                                    <p style="font-size: 0.85rem; margin: 0; padding: 0;">Total Run: <font style="color: #03a9f4"><b>$totalRun</b></font></p>
+                                    <p style="font-size: 0.85rem; margin: 0; padding: 0;">Passed: <font style="color: #92D192"><b>$totalPassed</b></font></p>
+                                    <p style="font-size: 0.85rem; margin: 0; padding: 0;">Failed: <font style="color: #D96F6F"><b>$totalFailed</b></font></p>
+                                    <p style="font-size: 0.85rem; margin: 0; padding: 0;">Warning: <font style="color: #ff8f00"><b>$totalWarnings</b></font></p>
+                                    <p style="font-size: 0.85rem; margin: 0; padding: 0;">Run Time: <font style="color: #d81b60"><b>$totalHrs</b></font> hrs <font style="color: #ff8f00"><b>$totalMins</b></font> mins <font style="color: #03a9f4"><b>$totalSec</b></font> sec</p>
+                                    <p style="font-size: 0.85rem; margin: 0; padding: 0;">Test Suite: <font style="color: #f4d03f"><b>$testSuiteName</b></font></p>
+                                </div>
+                                <canvas id="myChart" style="max-width:300px; float: right; background-color: #2c2c2c; border-radius: 8px;"></canvas>
+                            </div>
+                            <div class="container-lg mt-3">
+                                <button id="showPass" class="btn btn-outline-success filter-btn btn-sm">Show Pass</button>
+                                <button id="showFail" class="btn btn-outline-danger filter-btn btn-sm">Show Fail</button>
+                                <button id="showAll" class="btn btn-outline-light filter-btn btn-sm">Show All</button>
+                            </div>
+                            $testCaseSteps
                         </div>
-                        <div class="container-lg mt-3" style="width: 100%;">
-                            <button id="showPass" class="btn btn-outline-success filter-btn">Show Pass</button>
-                            <button id="showFail" class="btn btn-outline-danger filter-btn">Show Fail</button>
-                            <button id="showAll" class="btn btn-outline-light filter-btn">Show All</button>
-                        </div>
-                        $testCaseSteps
-                        <div id="imageModal" class="modal">
-                            <span class="close-btn">×</span>
+                        <button class="back-to-top" title="Back to Top">↑</button>
+                        <div id="imageModal" class="modal" style="display: none;">
+                            <span class="close-btn" aria-label="Close">&times;</span>
                             <img class="modal-content" id="modalImage">
+                            <div class="modal-caption" id="modalCaption">Screenshot</div>
                         </div>
                         <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const modal = document.getElementById('imageModal');
+                                modal.style.display = 'none'; // Ensure modal is hidden on load
+                                const backToTopBtn = document.querySelector('.back-to-top');
+                                backToTopBtn.addEventListener('click', function() {
+                                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                                });
+
+                                // Add scroll into view for card headers and previous card
+                                const cardHeaders = document.querySelectorAll('.card-header a[data-bs-toggle="collapse"]');
+                                cardHeaders.forEach(header => {
+                                    header.addEventListener('click', function() {
+                                        const card = this.closest('.card');
+                                        const previousCard = card.previousElementSibling;
+                                        setTimeout(() => {
+                                            if (previousCard && previousCard.classList.contains('card')) {
+                                                previousCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                            } else {
+                                                card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                            }
+                                        }, 300); // Delay to allow collapse animation to start
+                                    });
+                                });
+                            });
+
                             var xValues = ["Pass", "Fail", "Warning"];
                             var yValues = [$totalPassed, $totalFailed, $totalWarnings];
                             var barColors = [
@@ -286,26 +390,38 @@ public class htmlReportCommon {
                                     }
                                 }
                             });
-                        </script>
-                        <script>
+
                             // Screenshot modal handling
                             const images = document.querySelectorAll('.screenshot');
                             const modal = document.getElementById('imageModal');
                             const modalImg = document.getElementById('modalImage');
+                            const modalCaption = document.getElementById('modalCaption');
                             const closeBtn = document.querySelector('.close-btn');
+
                             images.forEach(img => {
                                 img.addEventListener('click', function() {
                                     modal.style.display = 'flex';
                                     modalImg.src = this.src;
+                                    modalCaption.textContent = this.alt || 'Screenshot';
+                                    document.body.style.overflow = 'hidden';
                                 });
                             });
+
                             closeBtn.addEventListener('click', function() {
                                 modal.style.display = 'none';
+                                document.body.style.overflow = 'auto';
                             });
+
                             modal.addEventListener('click', function(e) {
                                 if (e.target === modal) {
                                     modal.style.display = 'none';
+                                    document.body.style.overflow = 'auto';
                                 }
+                            });
+
+                            // Prevent modal content click from closing the modal
+                            modalImg.addEventListener('click', function(e) {
+                                e.stopPropagation();
                             });
 
                             // Test case filtering and collapsing
@@ -356,6 +472,7 @@ public class htmlReportCommon {
     }
 
     public static String htmlTestReportHardStop = "";
+
     // endregion
 
     // region File Paths and Formatters
@@ -369,7 +486,7 @@ public class htmlReportCommon {
     public static boolean testReportFolderExist;
     public static boolean testReportFolderEmpty;
     public static boolean testCaseReportFolderExist;
-    public static boolean testCaseReportFolderEmpty;
+    public static boolean testCaseReportEmpty;
     public static boltRunner bRunner;
     public static Integer stepIndex = 0;
     // endregion
@@ -437,6 +554,7 @@ public class htmlReportCommon {
                         <meta charset="utf-8">
                         <meta name="viewport" content="width=device-width, initial-scale=1">
                         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+                        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
                         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
                         <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
@@ -451,9 +569,13 @@ public class htmlReportCommon {
                             body {
                                 background-color: #1a1a1a;
                                 color: #e0e0e0;
+                                min-height: 100vh;
+                                margin: 0;
+                            }
+                            .content-wrapper {
                                 transform: scale(0.9);
                                 transform-origin: top center;
-                                min-height: 100vh;
+                                width: 100%;
                                 display: flex;
                                 flex-direction: column;
                                 align-items: center;
@@ -461,17 +583,23 @@ public class htmlReportCommon {
                             .container-lg {
                                 background-color: #2c2c2c;
                                 border: 1px solid #444;
+                                width: 100%;
                             }
                             table {
                                 table-layout: fixed;
                                 width: 100%;
                             }
-                            .table-dark tbody tr {
-                                color: #000000;
-                                border: 1px solid #6c757d;
+                            .card .table-dark {
+                                border-collapse: collapse;
                             }
-                            .table-dark td {
-                                border: 1px solid #6c757d;
+                            .card .table-dark thead th {
+                                color: #ffffff;
+                                border: none !important;
+                            }
+                            .card .table-dark tbody tr,
+                            .card .table-dark td {
+                                color: #000000;
+                                border: none !important;
                             }
                             .table-success {
                                 background-color: #92D192 !important;
@@ -493,65 +621,158 @@ public class htmlReportCommon {
                                 width: 100%;
                                 height: auto;
                                 border: 1px solid #444;
+                                transition: opacity 0.3s;
+                            }
+                            .screenshot:hover {
+                                opacity: 0.8;
                             }
                             .modal {
                                 display: none;
                                 position: fixed;
-                                z-index: 1000;
-                                left: 0;
-                                top: 0;
-                                width: 100%;
+                                top: 50%;
+                                left: 50%;
+                                transform: translate(-50%, -50%) !important;
+                                width: 100vw;
                                 height: 100%;
-                                background-color: rgba(0,0,0,0.9);
+                                min-height: 100vh;
+                                background-color: rgba(0,0,0,0.85);
+                                z-index: 100000;
+                                margin: 0;
+                                padding: 0;
+                                box-sizing: border-box;
+                                will-change: transform, opacity;
+                                overflow: auto;
+                                display: flex;
+                                flex-direction: column;
                                 justify-content: center;
                                 align-items: center;
                             }
                             .modal-content {
-                                max-width: 90%;
-                                max-height: 90%;
-                                border: 2px solid #444;
+                                max-width: 90vw;
+                                max-height: 90vh;
+                                width: auto;
+                                height: auto;
+                                object-fit: contain;
+                                border: 2px solid #666;
+                                border-radius: 8px;
+                                box-shadow: 0 4px 8px rgba(0,0,0,0.3);
                             }
                             .close-btn {
-                                position: absolute;
+                                position: fixed;
                                 top: 20px;
                                 right: 30px;
-                                color: #fff;
-                                font-size: 30px;
+                                color: #ffffff;
+                                font-size: 40px;
+                                font-weight: bold;
                                 cursor: pointer;
+                                transition: color 0.3s;
+                                z-index: 100001;
+                                background-color: rgba(0,0,0,0.5);
+                                padding: 5px 10px;
+                                border-radius: 5px;
+                                line-height: 1;
+                            }
+                            .close-btn:hover {
+                                color: #ff4d4d;
+                            }
+                            .modal-caption {
+                                color: #fff;
+                                text-align: center;
+                                margin-top: 10px;
+                                font-size: 1rem;
+                                font-family: 'Noto Sans', sans-serif;
                             }
                             .filter-btn {
                                 margin: 5px;
+                                padding: 0.25rem 0.5rem;
+                                font-size: 0.8rem;
+                            }
+                            .card-header {
+                                font-family: 'Noto Sans', sans-serif;
+                                font-weight: 700;
+                                padding: 0.4rem 0.8rem; /* Reduced padding to decrease height by ~20% */
+                            }
+                            .back-to-top {
+                                position: fixed;
+                                bottom: 20px;
+                                right: 20px;
+                                background-color: #ff4d4d;
+                                color: #ffffff;
+                                border: none;
+                                border-radius: 50%;
+                                width: 50px;
+                                height: 50px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                cursor: pointer;
+                                font-size: 1.2rem;
+                                z-index: 1000;
+                                transition: opacity 0.3s;
+                                opacity: 0.7;
+                            }
+                            .back-to-top:hover {
+                                opacity: 1;
                             }
                         </style>
                     </head>
                     <body>
-                        <div class="container-lg mt-3" style="width: 100%;">
-                            <h4><b>Bo<i class="fa fa-bolt" style="font-size:18px;animation-name:example; position:relative; animation-duration:2s; animation-iteration-count:infinite"></i>t</b></h4>
-                            <h6 style="color: #ff4d4d">Test Automation Accelerator</h6>
-                        </div>
-                        <div class="container-lg mt-3 border" style="width: 100%; height:330px; background-color: #2c2c2c">
-                            <div style="float: left">
-                                <p><br>Test Run Date: <font style="color: #bb86fc"><b>$runDate </b></font><font style="color: #ff8f00"><b>$runTime</b></font></p>
-                                <p>Total Run: <font style="color: #03a9f4"><b>$totalRun</b></font></p>
-                                <p>Passed: <font style="color: #92D192"><b>$totalPassed</b></font></p>
-                                <p>Failed: <font style="color: #D96F6F"><b>$totalFailed</b></font></p>
-                                <p>Warning: <font style="color: #ff8f00"><b>$totalWarnings</b></font></p>
-                                <p>Run Time: <font style="color: #d81b60"><b>$totalHrs</b></font> hrs <font style="color: #ff8f00"><b>$totalMins</b></font> mins <font style="color: #03a9f4"><b>$totalSec</b></font> sec</p>
-                                <p>Test Suite: <font style="color: #f4d03f"><b>$testSuiteName</b></font></p>
+                        <div class="content-wrapper">
+                            <div class="container-lg mt-3">
+                                <h4><b>Bo<i class="fa fa-bolt" style="font-size:18px;animation-name:example; position:relative; animation-duration:2s; animation-iteration-count:infinite"></i>t</b></h4>
+                                <h6 style="color: #ff4d4d">Test Automation Accelerator</h6>
                             </div>
-                            <canvas id="myChart" style="max-width:300px; float: right; background-color: #2c2c2c; border-radius: 8px;"></canvas>
+                            <div class="container-lg mt-3 border" style="height:165px; background-color: #2c2c2c">
+                                <div style="float: left">
+                                    <p style="font-size: 0.85rem; margin: 0; padding: 0;">Test Run Date: <font style="color: #bb86fc"><b>$runDate </b></font><font style="color: #ff8f00"><b>$runTime</b></font></p>
+                                    <p style="font-size: 0.85rem; margin: 0; padding: 0;">Total Run: <font style="color: #03a9f4"><b>$totalRun</b></font></p>
+                                    <p style="font-size: 0.85rem; margin: 0; padding: 0;">Passed: <font style="color: #92D192"><b>$totalPassed</b></font></p>
+                                    <p style="font-size: 0.85rem; margin: 0; padding: 0;">Failed: <font style="color: #D96F6F"><b>$totalFailed</b></font></p>
+                                    <p style="font-size: 0.85rem; margin: 0; padding: 0;">Warning: <font style="color: #ff8f00"><b>$totalWarnings</b></font></p>
+                                    <p style="font-size: 0.85rem; margin: 0; padding: 0;">Run Time: <font style="color: #d81b60"><b>$totalHrs</b></font> hrs <font style="color: #ff8f00"><b>$totalMins</b></font> mins <font style="color: #03a9f4"><b>$totalSec</b></font> sec</p>
+                                    <p style="font-size: 0.85rem; margin: 0; padding: 0;">Test Suite: <font style="color: #f4d03f"><b>$testSuiteName</b></font></p>
+                                </div>
+                                <canvas id="myChart" style="max-width:300px; float: right; background-color: #2c2c2c; border-radius: 8px;"></canvas>
+                            </div>
+                            <div class="container-lg mt-3">
+                                <button id="showPass" class="btn btn-outline-success filter-btn btn-sm">Show Pass</button>
+                                <button id="showFail" class="btn btn-outline-danger filter-btn btn-sm">Show Fail</button>
+                                <button id="showAll" class="btn btn-outline-light filter-btn btn-sm">Show All</button>
+                            </div>
+                            $testCaseSteps
                         </div>
-                        <div class="container-lg mt-3" style="width: 100%;">
-                            <button id="showPass" class="btn btn-outline-success filter-btn">Show Pass</button>
-                            <button id="showFail" class="btn btn-outline-danger filter-btn">Show Fail</button>
-                            <button id="showAll" class="btn btn-outline-light filter-btn">Show All</button>
-                        </div>
-                        $testCaseSteps
-                        <div id="imageModal" class="modal">
-                            <span class="close-btn">×</span>
+                        <button class="back-to-top" title="Back to Top">↑</button>
+                        <div id="imageModal" class="modal" style="display: none;">
+                            <span class="close-btn" aria-label="Close">&times;</span>
                             <img class="modal-content" id="modalImage">
+                            <div class="modal-caption" id="modalCaption">Screenshot</div>
                         </div>
                         <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const modal = document.getElementById('imageModal');
+                                modal.style.display = 'none'; // Ensure modal is hidden on load
+                                const backToTopBtn = document.querySelector('.back-to-top');
+                                backToTopBtn.addEventListener('click', function() {
+                                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                                });
+
+                                // Add scroll into view for card headers and previous card
+                                const cardHeaders = document.querySelectorAll('.card-header a[data-bs-toggle="collapse"]');
+                                cardHeaders.forEach(header => {
+                                    header.addEventListener('click', function() {
+                                        const card = this.closest('.card');
+                                        const previousCard = card.previousElementSibling;
+                                        setTimeout(() => {
+                                            if (previousCard && previousCard.classList.contains('card')) {
+                                                previousCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                            } else {
+                                                card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                            }
+                                        }, 300); // Delay to allow collapse animation to start
+                                    });
+                                });
+                            });
+
                             var xValues = ["Pass", "Fail", "Warning"];
                             var yValues = [$totalPassed, $totalFailed, $totalWarnings];
                             var barColors = [
@@ -581,26 +802,38 @@ public class htmlReportCommon {
                                     }
                                 }
                             });
-                        </script>
-                        <script>
+
                             // Screenshot modal handling
                             const images = document.querySelectorAll('.screenshot');
                             const modal = document.getElementById('imageModal');
                             const modalImg = document.getElementById('modalImage');
+                            const modalCaption = document.getElementById('modalCaption');
                             const closeBtn = document.querySelector('.close-btn');
+
                             images.forEach(img => {
                                 img.addEventListener('click', function() {
                                     modal.style.display = 'flex';
                                     modalImg.src = this.src;
+                                    modalCaption.textContent = this.alt || 'Screenshot';
+                                    document.body.style.overflow = 'hidden';
                                 });
                             });
+
                             closeBtn.addEventListener('click', function() {
                                 modal.style.display = 'none';
+                                document.body.style.overflow = 'auto';
                             });
+
                             modal.addEventListener('click', function(e) {
                                 if (e.target === modal) {
                                     modal.style.display = 'none';
+                                    document.body.style.overflow = 'auto';
                                 }
+                            });
+
+                            // Prevent modal content click from closing the modal
+                            modalImg.addEventListener('click', function(e) {
+                                e.stopPropagation();
                             });
 
                             // Test case filtering and collapsing
@@ -847,8 +1080,7 @@ public class htmlReportCommon {
     }
 
     /**
-     * Edits the card template for a test case, setting the background color based on the test result
-     * and formatting the description with italics after the first closing bracket.
+     * Edits the card template for a test case, setting the background color based on the test result.
      *
      * @param trTemplate      The card template string to edit.
      * @param trTestResult    The test result ("PASS", "FAIL", "WARNING").
@@ -859,20 +1091,14 @@ public class htmlReportCommon {
     public static String trTemplateEditCard(String trTemplate, String trTestResult, String trTestId,
             String trTestDesc) {
         var backgroundColor = switch (trTestResult) {
-            case "PASS" -> "#92D192"; // Soft green for PASS, uniform black text (#000000), lighter row and td separators (#6c757d)
-            case "FAIL" -> "#D96F6F"; // Muted red for FAIL, uniform black text (#000000), lighter row and td separators (#6c757d)
-            case "WARNING" -> "#ff8f00"; // Orange for WARNING, uniform black text (#000000), lighter row and td separators (#6c757d)
-            default -> "#616161"; // Fallback, uniform black text (#000000), lighter row and td separators (#6c757d)
+            case "PASS" -> "#92D192"; // Soft green for PASS
+            case "FAIL" -> "#D96F6F"; // Muted red for FAIL
+            case "WARNING" -> "#ff8f00"; // Orange for WARNING
+            default -> "#616161"; // Fallback
         };
         var editedTemplate = trTemplate;
         editedTemplate = editedTemplate.replace("$testResultColor", backgroundColor);
         editedTemplate = editedTemplate.replace("$collapseIndex", trTestId);
-
-        // Split description at first ']' and wrap the rest in <i> tags
-        var indexCount = trTestDesc.indexOf(']') + 1;
-        if (indexCount > 0 && indexCount < trTestDesc.length()) {
-            trTestDesc = trTestDesc.substring(0, indexCount) + "<i>" + trTestDesc.substring(indexCount) + "</i>";
-        }
         editedTemplate = editedTemplate.replace("$testDescription", trTestDesc);
         return editedTemplate;
     }
@@ -897,7 +1123,7 @@ public class htmlReportCommon {
      * @return A map of suite indices to suite names.
      */
     public static LinkedHashMap<Integer, String> getSuiteList() {
-        var testSuties = new LinkedHashMap<Integer, String>();
+        var testSuites = new LinkedHashMap<Integer, String>();
         var suiteCount = 0;
         var getNewFileName = "";
         testReportFolderExist = true;
@@ -908,23 +1134,23 @@ public class htmlReportCommon {
             JOptionPane.showMessageDialog(null, "Required folder [htmlTestReport] not found!", "Alert",
                     JOptionPane.WARNING_MESSAGE);
             testReportFolderExist = false;
-            return testSuties;
+            return testSuites;
         }
         var listOfFiles = folder.listFiles();
         if (listOfFiles == null || listOfFiles.length == 0) {
             testReportFolderEmpty = true;
-            return testSuties;
+            return testSuites;
         }
         for (var file : listOfFiles) {
             if (file.isFile()) {
                 var getFileName = file.getName().split("[~]")[0];
                 if (!getFileName.equals(getNewFileName) && !getFileName.isEmpty()) {
                     getNewFileName = getFileName;
-                    testSuties.put(++suiteCount, getNewFileName);
+                    testSuites.put(++suiteCount, getNewFileName);
                 }
             }
         }
-        return testSuties;
+        return testSuites;
     }
 
     /**
@@ -933,37 +1159,37 @@ public class htmlReportCommon {
      * @return A map of suite indices to suite names.
      */
     public static LinkedHashMap<Integer, String> getTestCaseResultSuiteList() {
-        var testSuties = new LinkedHashMap<Integer, String>();
+        var testSuites = new LinkedHashMap<Integer, String>();
         var suiteCount = 0;
         var getNewFileName = "";
         testCaseReportFolderExist = true;
-        testCaseReportFolderEmpty = false;
+        testCaseReportEmpty = false;
 
         var folder = new File(testCaseResultPath);
         if (!folder.exists()) {
             JOptionPane.showMessageDialog(null, "Required folder [testResults] not found!", "Alert",
                     JOptionPane.WARNING_MESSAGE);
             testCaseReportFolderExist = false;
-            return testSuties;
+            return testSuites;
         }
         var listOfFiles = folder.listFiles();
         if (listOfFiles == null || listOfFiles.length == 0) {
-            testCaseReportFolderEmpty = true;
-            return testSuties;
+            testCaseReportEmpty = true;
+            return testSuites;
         }
         for (var file : listOfFiles) {
             if (file.isFile()) {
                 var getFileName = file.getName().split("[~]")[0];
                 if (!getFileName.equals(getNewFileName) && !getFileName.equals("~$") && !getFileName.isEmpty()) {
                     getNewFileName = getFileName;
-                    testSuties.put(++suiteCount, getNewFileName);
+                    testSuites.put(++suiteCount, getNewFileName);
                 }
             }
         }
-        if (testSuties.isEmpty()) {
-            testCaseReportFolderEmpty = true;
+        if (testSuites.isEmpty()) {
+            testCaseReportEmpty = true;
         }
-        return testSuties;
+        return testSuites;
     }
 
     /**
@@ -975,7 +1201,7 @@ public class htmlReportCommon {
     public static LinkedHashMap<Date, String> getTestDateList() {
         var testCaseResultDate = new LinkedHashMap<Date, String>();
         testCaseReportFolderExist = true;
-        testCaseReportFolderEmpty = false;
+        testCaseReportEmpty = false;
 
         var folder = new File(testCaseResultPath);
         if (!folder.exists()) {
@@ -986,7 +1212,7 @@ public class htmlReportCommon {
         }
         var listOfFiles = folder.listFiles();
         if (listOfFiles == null || listOfFiles.length == 0) {
-            testCaseReportFolderEmpty = true;
+            testCaseReportEmpty = true;
             return testCaseResultDate;
         }
         Arrays.sort(listOfFiles, Comparator.comparingLong(File::lastModified).reversed());

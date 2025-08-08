@@ -11,7 +11,6 @@ import static com.automation.bolt.htmlReportCommon.getTestCaseResultList;
 import static com.automation.bolt.htmlReportCommon.getTestCaseResultSuiteList;
 import static com.automation.bolt.htmlReportCommon.htmlTestReportPath;
 import static com.automation.bolt.htmlReportCommon.openTheFileOverDesktop;
-import static com.automation.bolt.htmlReportCommon.testCaseReportFolderEmpty;
 import static com.automation.bolt.htmlReportCommon.testCaseReportFolderExist;
 import static com.automation.bolt.htmlReportCommon.testReportFolderEmpty;
 import static com.automation.bolt.htmlReportCommon.testReportFolderExist;
@@ -300,7 +299,7 @@ public class ApiTestReporting extends javax.swing.JFrame {
         treeNode.add(htmlRepNode);
         
         /*add test case reports to the reporting tree*/
-        if(testCaseReportFolderExist ==true && testCaseReportFolderEmpty ==false){
+        if(testCaseReportFolderExist ==true && testReportFolderEmpty ==false){
             for (Entry<Integer, String> entry : testCaseSuties.entrySet()) {
                 String getSuiteName =entry.getValue();
                 DefaultMutableTreeNode htmlTestResultNode = new DefaultMutableTreeNode(getSuiteName);
@@ -357,7 +356,7 @@ public class ApiTestReporting extends javax.swing.JFrame {
         treeNode.add(htmlRepNode);
         
         /*add test case reports to the reporting tree*/
-        if(testCaseReportFolderExist ==true && testCaseReportFolderEmpty ==false){
+        if(testCaseReportFolderExist ==true && testReportFolderEmpty ==false){
             for (Entry<Integer, String> entry : testCaseSuties.entrySet()) {
                 String getSuiteName =entry.getValue();
                 DefaultMutableTreeNode htmlTestResultNode = new DefaultMutableTreeNode(getSuiteName);
