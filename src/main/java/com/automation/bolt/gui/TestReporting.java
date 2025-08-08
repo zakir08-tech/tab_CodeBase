@@ -5,34 +5,30 @@
  */
 package com.automation.bolt.gui;
 
-import com.automation.bolt.constants;
-import com.automation.bolt.htmlReportCommon;
-
 import static com.automation.bolt.htmlReportCommon.getHtmlTestReportList;
 import static com.automation.bolt.htmlReportCommon.getSuiteList;
 import static com.automation.bolt.htmlReportCommon.getTestCaseResultList;
 import static com.automation.bolt.htmlReportCommon.getTestCaseResultSuiteList;
 import static com.automation.bolt.htmlReportCommon.htmlTestReportPath;
 import static com.automation.bolt.htmlReportCommon.openTheFileOverDesktop;
-import static com.automation.bolt.htmlReportCommon.testCaseResultPath;
-import static com.automation.bolt.htmlReportCommon.testCaseReportFolderEmpty;
 import static com.automation.bolt.htmlReportCommon.testCaseReportFolderExist;
 import static com.automation.bolt.htmlReportCommon.testReportFolderEmpty;
 import static com.automation.bolt.htmlReportCommon.testReportFolderExist;
-import com.automation.bolt.renderer.*;
-import java.awt.Image;
-import java.awt.Toolkit;
+
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
+
 import javax.swing.JOptionPane;
+import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import java.util.Enumeration;
-import javax.swing.JTree;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+
+import com.automation.bolt.htmlReportCommon;
 
 /**
  *
@@ -324,7 +320,7 @@ public class TestReporting extends javax.swing.JFrame {
         treeNode.add(htmlRepNode);
         
         /*add test case reports to the reporting tree*/
-        if(testCaseReportFolderExist ==true && testCaseReportFolderEmpty ==false){
+        if(testCaseReportFolderExist ==true && testReportFolderEmpty ==false){
             for (Entry<Integer, String> entry : testCaseSuties.entrySet()) {
                 String getSuiteName =entry.getValue();
                 DefaultMutableTreeNode htmlTestResultNode = new DefaultMutableTreeNode(getSuiteName);
@@ -381,7 +377,7 @@ public class TestReporting extends javax.swing.JFrame {
         treeNode.add(htmlRepNode);
         
         /*add test case reports to the reporting tree*/
-        if(testCaseReportFolderExist ==true && testCaseReportFolderEmpty ==false){
+        if(testCaseReportFolderExist ==true && testReportFolderEmpty ==false){
             for (Entry<Integer, String> entry : testCaseSuties.entrySet()) {
                 String getSuiteName =entry.getValue();
                 DefaultMutableTreeNode htmlTestResultNode = new DefaultMutableTreeNode(getSuiteName);

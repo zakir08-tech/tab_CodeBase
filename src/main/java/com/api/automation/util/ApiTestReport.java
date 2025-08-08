@@ -17,8 +17,6 @@ import org.json.JSONObject;
 import com.api.automation.bolt.API_TestRunner;
 import com.api.automation.bolt.loadAPITestRunner;
 import com.automation.bolt.constants;
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -35,9 +33,7 @@ public class ApiTestReport {
     private static final String TEXT_DANGER = "text-danger";
 
     private static String testAutomationReportPath;
-    private static ExtentReports extent;
-    private static ExtentTest extentTest;
-
+    
     public static void generateApiTestReport() {
         ensureReportDirectoryExists();
         String reportTimestamp = FILE_TIMESTAMP_FORMAT.format(new Date()).toLowerCase().replaceAll(":", "-");
@@ -145,22 +141,22 @@ public class ApiTestReport {
         return String.join("",
             buildHtmlHeader(),
             buildHtmlBodyStart(reportData),
-            htmlTable.toString(),
-            buildHtmlBodyMiddle(htmlDetails.toString()),
+            buildHtmlBodyMiddle(htmlTable.toString(), htmlDetails.toString()),
             buildHtmlBodyEnd(reportData)
         );
     }
 
     private static String buildHtmlTableRow(TestCaseData testCase) {
+        String status = testCase.passCount > 0 && testCase.failCount == 0 ? "pass" : "fail";
         return String.format(
-            "<tr style=\"background-color: #2a2a2a;\">" +
+            "<tr style=\"background-color: #2a2a2a;\" data-status=\"%s\">" +
             "<td><b style=\"color: #e0e0e0; font-size: 12px;\">%s</b></td>" +
             "<td><i style=\"color: #ffab91; font-size: 12px;\">%s</i></td>" +
             "<td><button type=\"button\" class=\"%s\" style=\"font-size: 10px; border-radius: 4px;\" data-bs-toggle=\"modal\" data-bs-target=\"#summaryModal\" onclick=\"scrollWin('%s')\" aria-label=\"View details for %s\"><b>%s</b></button></td>" +
             "<td data-bs-container=\"body\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"Expected Status: %s\" style=\"color: #64b5f6; font-size: 12px;\">%s</td>" +
             "<td data-bs-toggle=\"tooltip\" data-bs-container=\"body\" title=\"%s\" style=\"color: %s; font-size: 12px;\"><b>%s</b></td>" +
             "</tr>",
-            testCase.runId, testCase.testSummary, testCase.buttonColor, testCase.runId, 
+            status, testCase.runId, testCase.testSummary, testCase.buttonColor, testCase.runId, 
             testCase.runId, testCase.request, testCase.expectedStatus, testCase.requestUrl, 
             testCase.statusCodePhrase, 
             testCase.textResponseColor.equals("text-success") ? "#2ecc71" : "#e74c3c", 
@@ -402,6 +398,10 @@ public class ApiTestReport {
                     .close-btn:hover, .nav-btn:hover { 
                         background-color: #757575; 
                     }
+                    .filter-btn {
+                        margin-right: 5px;
+                        font-size: 10px;
+                    }
                     /* Responsive design */
                     .table-responsive { 
                         overflow-x: auto; 
@@ -433,6 +433,10 @@ public class ApiTestReport {
                         }
                         .modal-body {
                             max-height: 50vh;
+                        }
+                        .filter-btn {
+                            font-size: 9px;
+                            padding: 2px 6px;
                         }
                     }
                     @media (max-width: 576px) {
@@ -468,6 +472,10 @@ public class ApiTestReport {
                         }
                         .modal-body {
                             max-height: 40vh;
+                        }
+                        .filter-btn {
+                            font-size: 8px;
+                            padding: 2px 5px;
                         }
                     }
                     /* Chart styling */
@@ -515,7 +523,17 @@ public class ApiTestReport {
                         </div>
                     </div>
                     <div class="card bg-dark border-secondary" id="panelPanelPrimary">
+                        <div style="padding: 10px;">
+                            <button type="button" class="btn btn-success btn-sm filter-btn" onclick="filterTests('pass')" aria-label="Show passed test cases">Show Pass</button>
+                            <button type="button" class="btn btn-danger btn-sm filter-btn" onclick="filterTests('fail')" aria-label="Show failed test cases">Show Fail</button>
+                            <button type="button" class="btn btn-secondary btn-sm filter-btn" onclick="filterTests('all')" aria-label="Show all test cases">Show All</button>
+                        </div>
                         <div class="card-body">
+            """, DATE_FORMAT.format(new Date()), API_TestRunner.executionTime, reportData.totalFailCount, reportData.totalPassCount);
+    }
+
+    private static String buildHtmlBodyMiddle(String htmlTable, String htmlDetails) {
+        return String.format("""
                             <div class="table-responsive" id="scrollable">
                                 <table class="table table-bordered">
                                     <thead>
@@ -528,11 +546,7 @@ public class ApiTestReport {
                                         </tr>
                                     </thead>
                                     <tbody>
-            """, DATE_FORMAT.format(new Date()), API_TestRunner.executionTime, reportData.totalFailCount, reportData.totalPassCount);
-    }
-
-    private static String buildHtmlBodyMiddle(String htmlDetails) {
-        return String.format("""
+                                        %s
                                     </tbody>
                                 </table>
                             </div>
@@ -560,24 +574,31 @@ public class ApiTestReport {
                             </div>
                         </div>
                     </div>
-            """, htmlDetails);
+            """, htmlTable, htmlDetails);
     }
 
     private static String buildHtmlBodyEnd(ReportData reportData) {
         StringBuilder testCaseIds = new StringBuilder();
         StringBuilder testCaseDescriptions = new StringBuilder();
+        StringBuilder testCaseStatuses = new StringBuilder();
         testCaseIds.append("[");
         testCaseDescriptions.append("[");
+        testCaseStatuses.append("[");
         for (int i = 0; i < reportData.testCases.size(); i++) {
-            testCaseIds.append("\"").append(reportData.testCases.get(i).runId).append("\"");
-            testCaseDescriptions.append("\"").append(reportData.testCases.get(i).testSummary.replace("\"", "\\\"")).append("\"");
+            TestCaseData testCase = reportData.testCases.get(i);
+            String status = testCase.passCount > 0 && testCase.failCount == 0 ? "pass" : "fail";
+            testCaseIds.append("\"").append(testCase.runId).append("\"");
+            testCaseDescriptions.append("\"").append(testCase.testSummary.replace("\"", "\\\"")).append("\"");
+            testCaseStatuses.append("\"").append(status).append("\"");
             if (i < reportData.testCases.size() - 1) {
                 testCaseIds.append(",");
                 testCaseDescriptions.append(",");
+                testCaseStatuses.append(",");
             }
         }
         testCaseIds.append("]");
         testCaseDescriptions.append("]");
+        testCaseStatuses.append("]");
         return String.format("""
                 </div>
                 <script>
@@ -588,6 +609,7 @@ public class ApiTestReport {
                         });
                         console.log('Test case IDs:', %s);
                         console.log('Test case descriptions:', %s);
+                        console.log('Test case statuses:', %s);
                         // Initialize Chart.js
                         var ctx = document.getElementById('passFailChart').getContext('2d');
                         new Chart(ctx, {
@@ -649,35 +671,55 @@ public class ApiTestReport {
                             keyboard: false
                         });
                     });
-                    var testCaseIds = %s;
-                    var testCaseDescriptions = %s;
+                    var allTestCaseIds = %s;
+                    var allTestCaseDescriptions = %s;
+                    var allTestCaseStatuses = %s;
+                    var filteredTestCaseIds = allTestCaseIds;
+                    var filteredTestCaseDescriptions = allTestCaseDescriptions;
                     var currentRecordIndex = 0;
+                    var currentFilter = 'all';
+                    function updateFilteredTestCases(status) {
+                        if (status === 'all') {
+                            filteredTestCaseIds = allTestCaseIds;
+                            filteredTestCaseDescriptions = allTestCaseDescriptions;
+                        } else {
+                            filteredTestCaseIds = [];
+                            filteredTestCaseDescriptions = [];
+                            for (var i = 0; i < allTestCaseIds.length; i++) {
+                                if (allTestCaseStatuses[i] === status) {
+                                    filteredTestCaseIds.push(allTestCaseIds[i]);
+                                    filteredTestCaseDescriptions.push(allTestCaseDescriptions[i]);
+                                }
+                            }
+                        }
+                        currentRecordIndex = 0;
+                    }
                     function scrollWin(runId) {
-                        console.log('scrollWin called with runId:', runId, 'currentRecordIndex:', currentRecordIndex);
-                        currentRecordIndex = testCaseIds.indexOf(runId) >= 0 ? testCaseIds.indexOf(runId) : 0;
+                        console.log('scrollWin called with runId:', runId, 'currentRecordIndex:', currentRecordIndex, 'currentFilter:', currentFilter);
+                        currentRecordIndex = filteredTestCaseIds.indexOf(runId) >= 0 ? filteredTestCaseIds.indexOf(runId) : 0;
                         showRecord(currentRecordIndex);
                         var summaryModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('summaryModal'));
                         summaryModal.show();
                     }
                     function showRecord(index) {
-                        console.log('showRecord called with index:', index);
-                        for (var i = 0; i < testCaseIds.length; i++) {
-                            var elem = document.getElementById('demo' + testCaseIds[i]);
+                        console.log('showRecord called with index:', index, 'currentFilter:', currentFilter);
+                        for (var i = 0; i < allTestCaseIds.length; i++) {
+                            var elem = document.getElementById('demo' + allTestCaseIds[i]);
                             if (elem) {
-                                elem.style.display = i === index ? 'block' : 'none';
-                                elem.setAttribute('aria-expanded', i === index ? 'true' : 'false');
+                                elem.style.display = filteredTestCaseIds.indexOf(allTestCaseIds[i]) === index ? 'block' : 'none';
+                                elem.setAttribute('aria-expanded', filteredTestCaseIds.indexOf(allTestCaseIds[i]) === index ? 'true' : 'false');
                             }
                         }
                         document.getElementById('prevBtn').style.display = index > 0 ? 'block' : 'none';
-                        document.getElementById('nextBtn').style.display = index < testCaseIds.length - 1 ? 'block' : 'none';
+                        document.getElementById('nextBtn').style.display = index < filteredTestCaseIds.length - 1 ? 'block' : 'none';
                         // Update modal title with Run ID and Test Description
                         var modalTitle = document.getElementById('summaryModalLabel');
-                        modalTitle.innerHTML = 'API Test Summary - Run ID: ' + testCaseIds[index] + ' (' + testCaseDescriptions[index] + ')';
+                        modalTitle.innerHTML = 'API Test Summary - Run ID: ' + filteredTestCaseIds[index] + ' (' + filteredTestCaseDescriptions[index] + ')';
                         // Scroll to top of modal body
                         document.querySelector('.modal-body').scrollTop = 0;
                     }
                     function nextRecord() {
-                        if (currentRecordIndex < testCaseIds.length - 1) {
+                        if (currentRecordIndex < filteredTestCaseIds.length - 1) {
                             currentRecordIndex++;
                             showRecord(currentRecordIndex);
                         }
@@ -691,8 +733,8 @@ public class ApiTestReport {
                     function closePanel() {
                         var summaryModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('summaryModal'));
                         summaryModal.hide();
-                        for (var i = 0; i < testCaseIds.length; i++) {
-                            var elem = document.getElementById('demo' + testCaseIds[i]);
+                        for (var i = 0; i < allTestCaseIds.length; i++) {
+                            var elem = document.getElementById('demo' + allTestCaseIds[i]);
                             if (elem) {
                                 elem.style.display = 'none';
                                 elem.setAttribute('aria-expanded', 'false');
@@ -700,6 +742,23 @@ public class ApiTestReport {
                         }
                         document.getElementById('prevBtn').style.display = 'none';
                         document.getElementById('nextBtn').style.display = 'none';
+                    }
+                    function filterTests(status) {
+                        currentFilter = status;
+                        var rows = document.querySelectorAll('table tbody tr');
+                        rows.forEach(function(row) {
+                            if (status === 'all') {
+                                row.style.display = '';
+                            } else {
+                                row.style.display = row.getAttribute('data-status') === status ? '' : 'none';
+                            }
+                        });
+                        updateFilteredTestCases(status);
+                        // Reset modal if open
+                        var summaryModal = bootstrap.Modal.getInstance(document.getElementById('summaryModal'));
+                        if (summaryModal) {
+                            closePanel();
+                        }
                     }
                     window.onscroll = function() {scrollFunction()};
                     function scrollFunction() {
@@ -713,10 +772,12 @@ public class ApiTestReport {
                         document.body.scrollTop = 0;
                         document.documentElement.scrollTop = 0;
                     }
+                    // Initialize filtered test cases
+                    updateFilteredTestCases('all');
                 </script>
             </body>
             </html>
-        """, testCaseIds.toString(), testCaseDescriptions.toString(), reportData.totalPassCount, reportData.totalFailCount, testCaseIds.toString(), testCaseDescriptions.toString());
+        """, testCaseIds.toString(), testCaseDescriptions.toString(), testCaseStatuses.toString(), reportData.totalPassCount, reportData.totalFailCount, testCaseIds.toString(), testCaseDescriptions.toString(), testCaseStatuses.toString());
     }
 
     private static void saveTestReport(String htmlContent) {
