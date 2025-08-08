@@ -13,9 +13,10 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import static com.automation.bolt.gui.ExecuteRegressionSuite.arrTestId;
 import static com.automation.bolt.gui.ExecuteRegressionSuite.excelFile;
@@ -97,7 +98,7 @@ public class htmlReportCommon {
             </tr>""";
 
     public static final String trTemplateCard = """
-            <div class="card">
+            <div class="card" data-test-id="$collapseIndex">
                 <div class="card-header" style="background-color: $testResultColor; color: #000000">
                     <a class="collapsed btn" data-bs-toggle="collapse" href="#TestCase-$collapseIndex" style="width:100%; color: #000000">
                         <h6 align="left">$testDescription</h6>
@@ -275,6 +276,24 @@ public class htmlReportCommon {
                                 padding: 0.25rem 0.5rem;
                                 font-size: 0.8rem;
                             }
+                            .dropdown-menu {
+                                background-color: #2c2c2c;
+                                border: 1px solid #444;
+                            }
+                            .dropdown-item {
+                                color: #e0e0e0;
+                                display: flex;
+                                align-items: center;
+                                gap: 5px;
+                                padding: 0.5rem 1rem;
+                            }
+                            .dropdown-item:hover {
+                                background-color: #3a3a3a;
+                            }
+                            .dropdown-item input[type="checkbox"] {
+                                accent-color: #ff4d4d;
+                                cursor: pointer;
+                            }
                             .card-header {
                                 font-family: 'Noto Sans', sans-serif;
                                 font-weight: 700;
@@ -326,6 +345,14 @@ public class htmlReportCommon {
                                 <button id="showPass" class="btn btn-outline-success filter-btn btn-sm">Show Pass</button>
                                 <button id="showFail" class="btn btn-outline-danger filter-btn btn-sm">Show Fail</button>
                                 <button id="showAll" class="btn btn-outline-light filter-btn btn-sm">Show All</button>
+                                <div class="dropdown d-inline-block">
+                                    <button class="btn btn-outline-light filter-btn btn-sm dropdown-toggle" type="button" id="testIdDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                        All Tests
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="testIdDropdown">
+                                        $testIdOptions
+                                    </ul>
+                                </div>
                             </div>
                             $testCaseSteps
                         </div>
@@ -359,111 +386,183 @@ public class htmlReportCommon {
                                         }, 300); // Delay to allow collapse animation to start
                                     });
                                 });
-                            });
 
-                            var xValues = ["Pass", "Fail", "Warning"];
-                            var yValues = [$totalPassed, $totalFailed, $totalWarnings];
-                            var barColors = [
-                                "#92D192",
-                                "#D96F6F",
-                                "#ff8f00"
-                            ];
-                            new Chart("myChart", {
-                                type: "doughnut",
-                                data: {
-                                    labels: xValues,
-                                    datasets: [{
-                                        backgroundColor: barColors,
-                                        data: yValues
-                                    }]
-                                },
-                                options: {
-                                    title: {
-                                        display: true,
-                                        text: "Test Run Graph Summary",
-                                        color: "#e0e0e0"
+                                var xValues = ["Pass", "Fail", "Warning"];
+                                var yValues = [$totalPassed, $totalFailed, $totalWarnings];
+                                var barColors = [
+                                    "#92D192",
+                                    "#D96F6F",
+                                    "#ff8f00"
+                                ];
+                                new Chart("myChart", {
+                                    type: "doughnut",
+                                    data: {
+                                        labels: xValues,
+                                        datasets: [{
+                                            backgroundColor: barColors,
+                                            data: yValues
+                                        }]
                                     },
-                                    legend: {
-                                        labels: {
-                                            fontColor: "#e0e0e0"
+                                    options: {
+                                        title: {
+                                            display: true,
+                                            text: "Test Run Graph Summary",
+                                            color: "#e0e0e0"
+                                        },
+                                        legend: {
+                                            labels: {
+                                                fontColor: "#e0e0e0"
+                                            }
                                         }
                                     }
-                                }
-                            });
-
-                            // Screenshot modal handling
-                            const images = document.querySelectorAll('.screenshot');
-                            const modal = document.getElementById('imageModal');
-                            const modalImg = document.getElementById('modalImage');
-                            const modalCaption = document.getElementById('modalCaption');
-                            const closeBtn = document.querySelector('.close-btn');
-
-                            images.forEach(img => {
-                                img.addEventListener('click', function() {
-                                    modal.style.display = 'flex';
-                                    modalImg.src = this.src;
-                                    modalCaption.textContent = this.alt || 'Screenshot';
-                                    document.body.style.overflow = 'hidden';
                                 });
-                            });
 
-                            closeBtn.addEventListener('click', function() {
-                                modal.style.display = 'none';
-                                document.body.style.overflow = 'auto';
-                            });
+                                // Screenshot modal handling
+                                const images = document.querySelectorAll('.screenshot');
+                                const modalImg = document.getElementById('modalImage');
+                                const modalCaption = document.getElementById('modalCaption');
+                                const closeBtn = document.querySelector('.close-btn');
 
-                            modal.addEventListener('click', function(e) {
-                                if (e.target === modal) {
+                                images.forEach(img => {
+                                    img.addEventListener('click', function() {
+                                        modal.style.display = 'flex';
+                                        modalImg.src = this.src;
+                                        modalCaption.textContent = this.alt || 'Screenshot';
+                                        document.body.style.overflow = 'hidden';
+                                    });
+                                });
+
+                                closeBtn.addEventListener('click', function() {
                                     modal.style.display = 'none';
                                     document.body.style.overflow = 'auto';
+                                });
+
+                                modal.addEventListener('click', function(e) {
+                                    if (e.target === modal) {
+                                        modal.style.display = 'none';
+                                        document.body.style.overflow = 'auto';
+                                    }
+                                });
+
+                                // Prevent modal content click from closing the modal
+                                modalImg.addEventListener('click', function(e) {
+                                    e.stopPropagation();
+                                });
+
+                                // Test case filtering and collapsing
+                                const showPassBtn = document.getElementById('showPass');
+                                const showFailBtn = document.getElementById('showFail');
+                                const showAllBtn = document.getElementById('showAll');
+                                const testIdCheckboxes = document.querySelectorAll('.dropdown-menu input[type="checkbox"]');
+                                const testCards = document.querySelectorAll('.card');
+                                const dropdownButton = document.getElementById('testIdDropdown');
+
+                                function updateDropdownButtonText() {
+                                    const allCheckbox = document.querySelector('.dropdown-menu input[value="all"]');
+                                    const testIdCheckboxesArray = Array.from(testIdCheckboxes).filter(cb => cb.value !== 'all');
+                                    const selectedTestIds = testIdCheckboxesArray.filter(cb => cb.checked).map(cb => cb.value);
+                                    if (allCheckbox.checked || selectedTestIds.length === 0) {
+                                        dropdownButton.textContent = 'All Tests';
+                                    } else {
+                                        dropdownButton.textContent = selectedTestIds.length > 2 
+                                            ? `Selected: ${selectedTestIds.length} Tests`
+                                            : `Selected: ${selectedTestIds.join(', ')}`;
+                                    }
                                 }
-                            });
 
-                            // Prevent modal content click from closing the modal
-                            modalImg.addEventListener('click', function(e) {
-                                e.stopPropagation();
-                            });
+                                function collapseAllCards() {
+                                    testCards.forEach(card => {
+                                        const collapseElement = card.querySelector('.collapse');
+                                        collapseElement.classList.remove('show');
+                                    });
+                                }
 
-                            // Test case filtering and collapsing
-                            const showPassBtn = document.getElementById('showPass');
-                            const showFailBtn = document.getElementById('showFail');
-                            const showAllBtn = document.getElementById('showAll');
-                            const testCards = document.querySelectorAll('.card');
+                                function updateTestCardVisibility() {
+                                    collapseAllCards();
+                                    const allCheckbox = document.querySelector('.dropdown-menu input[value="all"]');
+                                    const testIdCheckboxesArray = Array.from(testIdCheckboxes).filter(cb => cb.value !== 'all');
+                                    const selectedTestIds = testIdCheckboxesArray.filter(cb => cb.checked).map(cb => cb.value);
 
-                            function collapseAllCards() {
-                                testCards.forEach(card => {
-                                    const collapseElement = card.querySelector('.collapse');
-                                    collapseElement.classList.remove('show');
+                                    if (allCheckbox.checked || selectedTestIds.length === 0) {
+                                        testCards.forEach(card => {
+                                            card.style.display = 'block';
+                                        });
+                                    } else {
+                                        testCards.forEach(card => {
+                                            card.style.display = selectedTestIds.includes(card.getAttribute('data-test-id')) ? 'block' : 'none';
+                                        });
+                                    }
+                                    updateDropdownButtonText();
+                                }
+
+                                testIdCheckboxes.forEach(checkbox => {
+                                    checkbox.addEventListener('change', function() {
+                                        const allCheckbox = document.querySelector('.dropdown-menu input[value="all"]');
+                                        const testIdCheckboxesArray = Array.from(testIdCheckboxes).filter(cb => cb.value !== 'all');
+
+                                        if (this.value === 'all') {
+                                            testIdCheckboxesArray.forEach(cb => cb.checked = this.checked);
+                                        } else if (testIdCheckboxesArray.some(cb => !cb.checked)) {
+                                            allCheckbox.checked = false;
+                                        } else {
+                                            allCheckbox.checked = true;
+                                        }
+
+                                        updateTestCardVisibility();
+                                    });
                                 });
-                            }
 
-                            showPassBtn.addEventListener('click', function() {
-                                collapseAllCards();
-                                testCards.forEach(card => {
-                                    const header = card.querySelector('.card-header');
-                                    card.style.display = header.style.backgroundColor === 'rgb(146, 209, 146)' ? 'block' : 'none';
+                                // Close dropdown when clicking outside
+                                document.addEventListener('click', function(event) {
+                                    const dropdown = document.querySelector('.dropdown');
+                                    if (!dropdown.contains(event.target)) {
+                                        const dropdownMenu = document.querySelector('.dropdown-menu');
+                                        if (dropdownMenu.classList.contains('show')) {
+                                            dropdownMenu.classList.remove('show');
+                                            dropdownButton.setAttribute('aria-expanded', 'false');
+                                        }
+                                    }
                                 });
-                            });
 
-                            showFailBtn.addEventListener('click', function() {
-                                collapseAllCards();
-                                testCards.forEach(card => {
-                                    const header = card.querySelector('.card-header');
-                                    card.style.display = header.style.backgroundColor === 'rgb(217, 111, 111)' ? 'block' : 'none';
+                                showPassBtn.addEventListener('click', function() {
+                                    collapseAllCards();
+                                    testIdCheckboxes.forEach(cb => cb.checked = false);
+                                    document.querySelector('.dropdown-menu input[value="all"]').checked = true;
+                                    testCards.forEach(card => {
+                                        const header = card.querySelector('.card-header');
+                                        card.style.display = header.style.backgroundColor === 'rgb(146, 209, 146)' ? 'block' : 'none';
+                                    });
+                                    updateDropdownButtonText();
                                 });
-                            });
 
-                            showAllBtn.addEventListener('click', function() {
+                                showFailBtn.addEventListener('click', function() {
+                                    collapseAllCards();
+                                    testIdCheckboxes.forEach(cb => cb.checked = false);
+                                    document.querySelector('.dropdown-menu input[value="all"]').checked = true;
+                                    testCards.forEach(card => {
+                                        const header = card.querySelector('.card-header');
+                                        card.style.display = header.style.backgroundColor === 'rgb(217, 111, 111)' ? 'block' : 'none';
+                                    });
+                                    updateDropdownButtonText();
+                                });
+
+                                showAllBtn.addEventListener('click', function() {
+                                    collapseAllCards();
+                                    testIdCheckboxes.forEach(cb => cb.checked = false);
+                                    document.querySelector('.dropdown-menu input[value="all"]').checked = true;
+                                    testCards.forEach(card => {
+                                        card.style.display = 'block';
+                                    });
+                                    updateDropdownButtonText();
+                                });
+
+                                // Initialize with all test cases visible and collapsed
                                 collapseAllCards();
                                 testCards.forEach(card => {
                                     card.style.display = 'block';
                                 });
-                            });
-
-                            // Initialize with all test cases visible and collapsed
-                            collapseAllCards();
-                            testCards.forEach(card => {
-                                card.style.display = 'block';
+                                document.querySelector('.dropdown-menu input[value="all"]').checked = true;
+                                updateDropdownButtonText();
                             });
                         </script>
                     </body>
@@ -497,7 +596,7 @@ public class htmlReportCommon {
      * @param addStep The test step description to add.
      */
     public static void writeStepInHtmlReport(String addStep) {
-        boltRunner.userDefineSteps.put(stepIndex++, addStep);
+        bRunner.userDefineSteps.put(stepIndex++, addStep);
     }
 
     /**
@@ -505,7 +604,41 @@ public class htmlReportCommon {
      */
     public static void attachScreenShotInHtmlReport() {
         glueCode.keyTakeScreenShot();
-        boltRunner.userDefineSteps.put(stepIndex++, "~take~screenshot~" + glueCode.screenshotPath);
+        bRunner.userDefineSteps.put(stepIndex++, "~take~screenshot~" + glueCode.screenshotPath);
+    }
+
+    /**
+     * Generates HTML checkbox items for test IDs within a dropdown menu.
+     *
+     * @return A string containing HTML <li> elements with checkboxes for test IDs.
+     */
+    public static String generateTestIdOptions() {
+        StringBuilder options = new StringBuilder("<li><label class=\"dropdown-item\"><input type=\"checkbox\" value=\"all\" checked> All Tests</label></li>");
+        ArrayList<String> testIds = new ArrayList<>();
+
+        // Try to get test IDs from bRunner.testResult
+        if (bRunner != null && bRunner.testResult != null && !bRunner.testResult.isEmpty()) {
+            for (Object testId : bRunner.testResult.keySet()) {
+                testIds.add(testId.toString());
+            }
+        } else {
+            // Fallback to arrTestId if bRunner.testResult is unavailable
+            if (arrTestId != null && !arrTestId.isEmpty()) {
+                testIds.addAll(arrTestId);
+            }
+        }
+
+        // Sort test IDs for consistent display
+        if (!testIds.isEmpty()) {
+            Collections.sort(testIds);
+            for (String testId : testIds) {
+                options.append(String.format("<li><label class=\"dropdown-item\"><input type=\"checkbox\" value=\"%s\"> Test ID: %s</label></li>", testId, testId));
+            }
+        } else {
+            System.err.println("Warning: No test IDs found in bRunner.testResult or arrTestId for dropdown menu");
+        }
+
+        return options.toString();
     }
 
     /**
@@ -533,6 +666,7 @@ public class htmlReportCommon {
         editedTemplate = editedTemplate.replace("$totalMins", runMins);
         editedTemplate = editedTemplate.replace("$totalSec", runSecs);
         editedTemplate = editedTemplate.replace("$testSuiteName", excelFile.getName());
+        editedTemplate = editedTemplate.replace("$testIdOptions", generateTestIdOptions());
         return editedTemplate;
     }
 
@@ -687,6 +821,24 @@ public class htmlReportCommon {
                                 padding: 0.25rem 0.5rem;
                                 font-size: 0.8rem;
                             }
+                            .dropdown-menu {
+                                background-color: #2c2c2c;
+                                border: 1px solid #444;
+                            }
+                            .dropdown-item {
+                                color: #e0e0e0;
+                                display: flex;
+                                align-items: center;
+                                gap: 5px;
+                                padding: 0.5rem 1rem;
+                            }
+                            .dropdown-item:hover {
+                                background-color: #3a3a3a;
+                            }
+                            .dropdown-item input[type="checkbox"] {
+                                accent-color: #ff4d4d;
+                                cursor: pointer;
+                            }
                             .card-header {
                                 font-family: 'Noto Sans', sans-serif;
                                 font-weight: 700;
@@ -738,6 +890,14 @@ public class htmlReportCommon {
                                 <button id="showPass" class="btn btn-outline-success filter-btn btn-sm">Show Pass</button>
                                 <button id="showFail" class="btn btn-outline-danger filter-btn btn-sm">Show Fail</button>
                                 <button id="showAll" class="btn btn-outline-light filter-btn btn-sm">Show All</button>
+                                <div class="dropdown d-inline-block">
+                                    <button class="btn btn-outline-light filter-btn btn-sm dropdown-toggle" type="button" id="testIdDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                        All Tests
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="testIdDropdown">
+                                        $testIdOptions
+                                    </ul>
+                                </div>
                             </div>
                             $testCaseSteps
                         </div>
@@ -771,111 +931,183 @@ public class htmlReportCommon {
                                         }, 300); // Delay to allow collapse animation to start
                                     });
                                 });
-                            });
 
-                            var xValues = ["Pass", "Fail", "Warning"];
-                            var yValues = [$totalPassed, $totalFailed, $totalWarnings];
-                            var barColors = [
-                                "#92D192",
-                                "#D96F6F",
-                                "#ff8f00"
-                            ];
-                            new Chart("myChart", {
-                                type: "doughnut",
-                                data: {
-                                    labels: xValues,
-                                    datasets: [{
-                                        backgroundColor: barColors,
-                                        data: yValues
-                                    }]
-                                },
-                                options: {
-                                    title: {
-                                        display: true,
-                                        text: "Test Run Graph Summary",
-                                        color: "#e0e0e0"
+                                var xValues = ["Pass", "Fail", "Warning"];
+                                var yValues = [$totalPassed, $totalFailed, $totalWarnings];
+                                var barColors = [
+                                    "#92D192",
+                                    "#D96F6F",
+                                    "#ff8f00"
+                                ];
+                                new Chart("myChart", {
+                                    type: "doughnut",
+                                    data: {
+                                        labels: xValues,
+                                        datasets: [{
+                                            backgroundColor: barColors,
+                                            data: yValues
+                                        }]
                                     },
-                                    legend: {
-                                        labels: {
-                                            fontColor: "#e0e0e0"
+                                    options: {
+                                        title: {
+                                            display: true,
+                                            text: "Test Run Graph Summary",
+                                            color: "#e0e0e0"
+                                        },
+                                        legend: {
+                                            labels: {
+                                                fontColor: "#e0e0e0"
+                                            }
                                         }
                                     }
-                                }
-                            });
-
-                            // Screenshot modal handling
-                            const images = document.querySelectorAll('.screenshot');
-                            const modal = document.getElementById('imageModal');
-                            const modalImg = document.getElementById('modalImage');
-                            const modalCaption = document.getElementById('modalCaption');
-                            const closeBtn = document.querySelector('.close-btn');
-
-                            images.forEach(img => {
-                                img.addEventListener('click', function() {
-                                    modal.style.display = 'flex';
-                                    modalImg.src = this.src;
-                                    modalCaption.textContent = this.alt || 'Screenshot';
-                                    document.body.style.overflow = 'hidden';
                                 });
-                            });
 
-                            closeBtn.addEventListener('click', function() {
-                                modal.style.display = 'none';
-                                document.body.style.overflow = 'auto';
-                            });
+                                // Screenshot modal handling
+                                const images = document.querySelectorAll('.screenshot');
+                                const modalImg = document.getElementById('modalImage');
+                                const modalCaption = document.getElementById('modalCaption');
+                                const closeBtn = document.querySelector('.close-btn');
 
-                            modal.addEventListener('click', function(e) {
-                                if (e.target === modal) {
+                                images.forEach(img => {
+                                    img.addEventListener('click', function() {
+                                        modal.style.display = 'flex';
+                                        modalImg.src = this.src;
+                                        modalCaption.textContent = this.alt || 'Screenshot';
+                                        document.body.style.overflow = 'hidden';
+                                    });
+                                });
+
+                                closeBtn.addEventListener('click', function() {
                                     modal.style.display = 'none';
                                     document.body.style.overflow = 'auto';
+                                });
+
+                                modal.addEventListener('click', function(e) {
+                                    if (e.target === modal) {
+                                        modal.style.display = 'none';
+                                        document.body.style.overflow = 'auto';
+                                    }
+                                });
+
+                                // Prevent modal content click from closing the modal
+                                modalImg.addEventListener('click', function(e) {
+                                    e.stopPropagation();
+                                });
+
+                                // Test case filtering and collapsing
+                                const showPassBtn = document.getElementById('showPass');
+                                const showFailBtn = document.getElementById('showFail');
+                                const showAllBtn = document.getElementById('showAll');
+                                const testIdCheckboxes = document.querySelectorAll('.dropdown-menu input[type="checkbox"]');
+                                const testCards = document.querySelectorAll('.card');
+                                const dropdownButton = document.getElementById('testIdDropdown');
+
+                                function updateDropdownButtonText() {
+                                    const allCheckbox = document.querySelector('.dropdown-menu input[value="all"]');
+                                    const testIdCheckboxesArray = Array.from(testIdCheckboxes).filter(cb => cb.value !== 'all');
+                                    const selectedTestIds = testIdCheckboxesArray.filter(cb => cb.checked).map(cb => cb.value);
+                                    if (allCheckbox.checked || selectedTestIds.length === 0) {
+                                        dropdownButton.textContent = 'All Tests';
+                                    } else {
+                                        dropdownButton.textContent = selectedTestIds.length > 2 
+                                            ? `Selected: ${selectedTestIds.length} Tests`
+                                            : `Selected: ${selectedTestIds.join(', ')}`;
+                                    }
                                 }
-                            });
 
-                            // Prevent modal content click from closing the modal
-                            modalImg.addEventListener('click', function(e) {
-                                e.stopPropagation();
-                            });
+                                function collapseAllCards() {
+                                    testCards.forEach(card => {
+                                        const collapseElement = card.querySelector('.collapse');
+                                        collapseElement.classList.remove('show');
+                                    });
+                                }
 
-                            // Test case filtering and collapsing
-                            const showPassBtn = document.getElementById('showPass');
-                            const showFailBtn = document.getElementById('showFail');
-                            const showAllBtn = document.getElementById('showAll');
-                            const testCards = document.querySelectorAll('.card');
+                                function updateTestCardVisibility() {
+                                    collapseAllCards();
+                                    const allCheckbox = document.querySelector('.dropdown-menu input[value="all"]');
+                                    const testIdCheckboxesArray = Array.from(testIdCheckboxes).filter(cb => cb.value !== 'all');
+                                    const selectedTestIds = testIdCheckboxesArray.filter(cb => cb.checked).map(cb => cb.value);
 
-                            function collapseAllCards() {
-                                testCards.forEach(card => {
-                                    const collapseElement = card.querySelector('.collapse');
-                                    collapseElement.classList.remove('show');
+                                    if (allCheckbox.checked || selectedTestIds.length === 0) {
+                                        testCards.forEach(card => {
+                                            card.style.display = 'block';
+                                        });
+                                    } else {
+                                        testCards.forEach(card => {
+                                            card.style.display = selectedTestIds.includes(card.getAttribute('data-test-id')) ? 'block' : 'none';
+                                        });
+                                    }
+                                    updateDropdownButtonText();
+                                }
+
+                                testIdCheckboxes.forEach(checkbox => {
+                                    checkbox.addEventListener('change', function() {
+                                        const allCheckbox = document.querySelector('.dropdown-menu input[value="all"]');
+                                        const testIdCheckboxesArray = Array.from(testIdCheckboxes).filter(cb => cb.value !== 'all');
+
+                                        if (this.value === 'all') {
+                                            testIdCheckboxesArray.forEach(cb => cb.checked = this.checked);
+                                        } else if (testIdCheckboxesArray.some(cb => !cb.checked)) {
+                                            allCheckbox.checked = false;
+                                        } else {
+                                            allCheckbox.checked = true;
+                                        }
+
+                                        updateTestCardVisibility();
+                                    });
                                 });
-                            }
 
-                            showPassBtn.addEventListener('click', function() {
-                                collapseAllCards();
-                                testCards.forEach(card => {
-                                    const header = card.querySelector('.card-header');
-                                    card.style.display = header.style.backgroundColor === 'rgb(146, 209, 146)' ? 'block' : 'none';
+                                // Close dropdown when clicking outside
+                                document.addEventListener('click', function(event) {
+                                    const dropdown = document.querySelector('.dropdown');
+                                    if (!dropdown.contains(event.target)) {
+                                        const dropdownMenu = document.querySelector('.dropdown-menu');
+                                        if (dropdownMenu.classList.contains('show')) {
+                                            dropdownMenu.classList.remove('show');
+                                            dropdownButton.setAttribute('aria-expanded', 'false');
+                                        }
+                                    }
                                 });
-                            });
 
-                            showFailBtn.addEventListener('click', function() {
-                                collapseAllCards();
-                                testCards.forEach(card => {
-                                    const header = card.querySelector('.card-header');
-                                    card.style.display = header.style.backgroundColor === 'rgb(217, 111, 111)' ? 'block' : 'none';
+                                showPassBtn.addEventListener('click', function() {
+                                    collapseAllCards();
+                                    testIdCheckboxes.forEach(cb => cb.checked = false);
+                                    document.querySelector('.dropdown-menu input[value="all"]').checked = true;
+                                    testCards.forEach(card => {
+                                        const header = card.querySelector('.card-header');
+                                        card.style.display = header.style.backgroundColor === 'rgb(146, 209, 146)' ? 'block' : 'none';
+                                    });
+                                    updateDropdownButtonText();
                                 });
-                            });
 
-                            showAllBtn.addEventListener('click', function() {
+                                showFailBtn.addEventListener('click', function() {
+                                    collapseAllCards();
+                                    testIdCheckboxes.forEach(cb => cb.checked = false);
+                                    document.querySelector('.dropdown-menu input[value="all"]').checked = true;
+                                    testCards.forEach(card => {
+                                        const header = card.querySelector('.card-header');
+                                        card.style.display = header.style.backgroundColor === 'rgb(217, 111, 111)' ? 'block' : 'none';
+                                    });
+                                    updateDropdownButtonText();
+                                });
+
+                                showAllBtn.addEventListener('click', function() {
+                                    collapseAllCards();
+                                    testIdCheckboxes.forEach(cb => cb.checked = false);
+                                    document.querySelector('.dropdown-menu input[value="all"]').checked = true;
+                                    testCards.forEach(card => {
+                                        card.style.display = 'block';
+                                    });
+                                    updateDropdownButtonText();
+                                });
+
+                                // Initialize with all test cases visible and collapsed
                                 collapseAllCards();
                                 testCards.forEach(card => {
                                     card.style.display = 'block';
                                 });
-                            });
-
-                            // Initialize with all test cases visible and collapsed
-                            collapseAllCards();
-                            testCards.forEach(card => {
-                                card.style.display = 'block';
+                                document.querySelector('.dropdown-menu input[value="all"]').checked = true;
+                                updateDropdownButtonText();
                             });
                         </script>
                     </body>
@@ -892,8 +1124,8 @@ public class htmlReportCommon {
      */
     public static int getTheStatusCount(String testRunStatus) {
         var count = 0;
-        for (var testId : boltRunner.testResult.keySet()) {
-            var value = boltRunner.testResult.get(testId).toString();
+        for (var testId : bRunner.testResult.keySet()) {
+            var value = bRunner.testResult.get(testId).toString();
             if (value.equals(testRunStatus)) {
                 count++;
             }
@@ -933,9 +1165,9 @@ public class htmlReportCommon {
     public static String trTemplateEditStepPassed(String trTemplate, String trTestStepId, String testDesc,
             String trTestStep) {
         var editedTemplate = trTemplate;
-        if (!boltRunner.userDefineSteps.isEmpty()) {
+        if (!bRunner.userDefineSteps.isEmpty()) {
             var userSteps = new StringBuilder();
-            for (var entrySteps : boltRunner.userDefineSteps.entrySet()) {
+            for (var entrySteps : bRunner.userDefineSteps.entrySet()) {
                 var stepTemplate = entrySteps.getValue().contains("~take~screenshot~")
                         ? trTemplateScreenShotUserDefine
                         : trTemplateUserDefine;
@@ -949,14 +1181,14 @@ public class htmlReportCommon {
             editedTemplate = editedTemplate.replace("$tableStatus", "table-success");
             editedTemplate = editedTemplate.replace("$testId", trTestStepId);
             editedTemplate = editedTemplate.replace("$testStep", trTestStep);
-            editedTemplate = editedTemplate.replace("$testDuration", boltRunner.stepExecTimeInterval);
+            editedTemplate = editedTemplate.replace("$testDuration", bRunner.stepExecTimeInterval);
             editedTemplate = editedTemplate.replace("$testDesc", testDesc);
             editedTemplate += userSteps.toString();
         } else {
             editedTemplate = editedTemplate.replace("$tableStatus", "table-success");
             editedTemplate = editedTemplate.replace("$testId", trTestStepId);
             editedTemplate = editedTemplate.replace("$testStep", trTestStep);
-            editedTemplate = editedTemplate.replace("$testDuration", boltRunner.stepExecTimeInterval);
+            editedTemplate = editedTemplate.replace("$testDuration", bRunner.stepExecTimeInterval);
             editedTemplate = editedTemplate.replace("$testDesc", testDesc);
         }
         return editedTemplate;
@@ -1030,7 +1262,7 @@ public class htmlReportCommon {
         editedTemplate = editedTemplate.replace("$testId", trTestStepId);
         editedTemplate = editedTemplate.replace("$testStep", trTestStep);
         editedTemplate = editedTemplate.replace("$screenShotFilePath", filePath);
-        editedTemplate = editedTemplate.replace("$testDuration", boltRunner.stepExecTimeInterval);
+        editedTemplate = editedTemplate.replace("$testDuration", bRunner.stepExecTimeInterval);
         editedTemplate = editedTemplate.replace("$testDesc", trStepDesc);
         return editedTemplate;
     }
@@ -1048,9 +1280,9 @@ public class htmlReportCommon {
     public static String trTemplateEditStepFailed(String trTemplate, String trTestStepId, String trTestStep,
             String stepError, String filePath) {
         var editedTemplate = trTemplate;
-        if (!boltRunner.userDefineSteps.isEmpty()) {
+        if (!bRunner.userDefineSteps.isEmpty()) {
             var userSteps = new StringBuilder();
-            for (var entrySteps : boltRunner.userDefineSteps.entrySet()) {
+            for (var entrySteps : bRunner.userDefineSteps.entrySet()) {
                 var stepTemplate = entrySteps.getValue().contains("~take~screenshot~")
                         ? trTemplateScreenShotUserDefine
                         : trTemplateUserDefine;
@@ -1066,7 +1298,7 @@ public class htmlReportCommon {
             editedTemplate = editedTemplate.replace("$testStep", trTestStep);
             editedTemplate = editedTemplate.replace("$stepError", stepError);
             editedTemplate = editedTemplate.replace("$screenShotFilePath", filePath);
-            editedTemplate = editedTemplate.replace("$testDuration", boltRunner.stepExecTimeInterval);
+            editedTemplate = editedTemplate.replace("$testDuration", bRunner.stepExecTimeInterval);
             editedTemplate += userSteps.toString();
         } else {
             editedTemplate = editedTemplate.replace("$tableStatus", "table-danger");
