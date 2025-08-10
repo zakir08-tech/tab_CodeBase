@@ -31,6 +31,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
@@ -44,7 +45,8 @@ import java.awt.Dimension;
  * @author zakir
  */
 public class CreateTestSuite extends javax.swing.JFrame {
-    public static DefaultTableModel createSuiteTabModel =new DefaultTableModel();
+	public static WebElementExtractor extractor;
+	public static DefaultTableModel createSuiteTabModel =new DefaultTableModel();
     public static DefaultTableModel createORTabModel =new DefaultTableModel();
     
     public static JComboBox<String> cBoxtestFlow =new JComboBox<String>();
@@ -180,6 +182,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
         bttnAddStepDown = new javax.swing.JButton();
         bttnSaveSuite = new javax.swing.JButton();
         bttnAddNewTestSuite = new javax.swing.JButton();
+        bttnExtractWebElm = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create Test Suite");
@@ -529,76 +532,109 @@ public class CreateTestSuite extends javax.swing.JFrame {
                                             }
                                         });
 
-                                        jDesktopPane1.setLayer(bttnAddTestElement, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                        jDesktopPane1.setLayer(bttnAddNewTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                        jDesktopPane1.setLayer(bttnDeleteTestElm, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                        jDesktopPane1.setLayer(bttnDeleteTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                        jDesktopPane1.setLayer(bttnAddStepUp, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                        jDesktopPane1.setLayer(bttnAddStepDown, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                        jDesktopPane1.setLayer(bttnSaveSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                                        jDesktopPane1.setLayer(bttnAddNewTestSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                        bttnExtractWebElm.setBackground(new java.awt.Color(0, 0, 0));
+                                        bttnExtractWebElm.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+                                        bttnExtractWebElm.setForeground(new java.awt.Color(255, 255, 255));
+                                        bttnExtractWebElm.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir").replaceAll("\\\\", "/")+"/icons/inspectWebElm.png"));
+                                            bttnExtractWebElm.setToolTipText("delete test element");
+                                            bttnExtractWebElm.setActionCommand("OpenRegressionSuite");
+                                            bttnExtractWebElm.setBorder(null);
+                                            bttnExtractWebElm.setBorderPainted(false);
+                                            bttnExtractWebElm.setContentAreaFilled(false);
+                                            bttnExtractWebElm.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                                            bttnExtractWebElm.setOpaque(true);
+                                            bttnExtractWebElm.setRequestFocusEnabled(false);
+                                            bttnExtractWebElm.setRolloverEnabled(false);
+                                            bttnExtractWebElm.addMouseListener(new java.awt.event.MouseAdapter() {
+                                                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                                                    bttnExtractWebElmMouseEntered(evt);
+                                                }
+                                                public void mouseExited(java.awt.event.MouseEvent evt) {
+                                                    bttnExtractWebElmMouseExited(evt);
+                                                }
+                                            });
+                                            bttnExtractWebElm.addActionListener(new java.awt.event.ActionListener() {
+                                                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                                    bttnExtractWebElmActionPerformed(evt);
+                                                }
+                                            });
 
-                                        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-                                        jDesktopPane1.setLayout(jDesktopPane1Layout);
-                                        jDesktopPane1Layout.setHorizontalGroup(
-                                            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                                                .addGap(1, 1, 1)
-                                                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(bttnAddTestElement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(bttnDeleteTestElm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(bttnAddStepUp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(bttnAddStepDown, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(bttnSaveSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
-                                                .addGap(1, 1, 1))
-                                        );
-                                        jDesktopPane1Layout.setVerticalGroup(
-                                            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                                                .addGap(20, 20, 20)
-                                                .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(bttnAddStepUp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(bttnAddStepDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(bttnSaveSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
-                                                .addComponent(bttnAddTestElement, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(bttnDeleteTestElm, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(109, 109, 109))
-                                        );
+                                            jDesktopPane1.setLayer(bttnAddTestElement, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                            jDesktopPane1.setLayer(bttnAddNewTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                            jDesktopPane1.setLayer(bttnDeleteTestElm, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                            jDesktopPane1.setLayer(bttnDeleteTestStep, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                            jDesktopPane1.setLayer(bttnAddStepUp, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                            jDesktopPane1.setLayer(bttnAddStepDown, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                            jDesktopPane1.setLayer(bttnSaveSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                            jDesktopPane1.setLayer(bttnAddNewTestSuite, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                                            jDesktopPane1.setLayer(bttnExtractWebElm, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-                                        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-                                        getContentPane().setLayout(layout);
-                                        layout.setHorizontalGroup(
-                                            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+                                            jDesktopPane1.setLayout(jDesktopPane1Layout);
+                                            jDesktopPane1Layout.setHorizontalGroup(
+                                                jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                                                    .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(bttnExtractWebElm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                                            .addGap(1, 1, 1)
+                                                            .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addComponent(bttnAddTestElement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(bttnDeleteTestElm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(bttnAddStepUp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(bttnAddStepDown, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(bttnSaveSuite, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))))
+                                                    .addGap(1, 1, 1))
+                                            );
+                                            jDesktopPane1Layout.setVerticalGroup(
+                                                jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                                                    .addGap(20, 20, 20)
+                                                    .addComponent(bttnAddNewTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(bttnAddStepUp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(bttnAddStepDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(bttnDeleteTestStep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(bttnSaveSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(bttnAddNewTestSuite, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
+                                                    .addComponent(bttnAddTestElement, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(bttnDeleteTestElm, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(bttnExtractWebElm, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(73, 73, 73))
+                                            );
+
+                                            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                                            getContentPane().setLayout(layout);
+                                            layout.setHorizontalGroup(
+                                                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                    .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addGap(0, 0, 0)
+                                                    .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            );
+                                            layout.setVerticalGroup(
+                                                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGap(0, 0, 0)
-                                                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        );
-                                        layout.setVerticalGroup(
-                                            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(pnlCreateTestSuite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jDesktopPane1)
-                                                .addGap(1, 1, 1))
-                                        );
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(jDesktopPane1)
+                                                    .addGap(1, 1, 1))
+                                            );
 
-                                        getAccessibleContext().setAccessibleParent(this);
+                                            getAccessibleContext().setAccessibleParent(this);
 
-                                        setSize(new java.awt.Dimension(1019, 554));
-                                        setLocationRelativeTo(null);
-                                    }// </editor-fold>//GEN-END:initComponents
+                                            setSize(new java.awt.Dimension(1019, 554));
+                                            setLocationRelativeTo(null);
+                                        }// </editor-fold>//GEN-END:initComponents
 
     private void bttnAddTestElementMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddTestElementMouseEntered
         bttnAddTestElement.setBackground(new java.awt.Color(250, 128, 114));
@@ -1367,6 +1403,34 @@ public class CreateTestSuite extends javax.swing.JFrame {
     private void tableAddTestFlowKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableAddTestFlowKeyReleased
         common.checkForDuplicateTestId(createSuiteTabModel, tableAddTestFlow, editableRow, testIdTxt);
     }//GEN-LAST:event_tableAddTestFlowKeyReleased
+
+    private void bttnExtractWebElmMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnExtractWebElmMouseEntered
+    	bttnExtractWebElm.setBackground(new java.awt.Color(250, 128, 114));
+    	bttnExtractWebElm.setForeground(new java.awt.Color(0,0,0));
+    }//GEN-LAST:event_bttnExtractWebElmMouseEntered
+
+    private void bttnExtractWebElmMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnExtractWebElmMouseExited
+    	bttnExtractWebElm.setBackground(new java.awt.Color(0,0,0));
+    	bttnExtractWebElm.setForeground(new java.awt.Color(255,255,255));
+    }//GEN-LAST:event_bttnExtractWebElmMouseExited
+
+    private void bttnExtractWebElmActionPerformed(java.awt.event.ActionEvent evt) {
+    	//GEN-FIRST:event_bttnExtractWebElmActionPerformed
+    	SwingUtilities.invokeLater(() -> {
+            //if (extractor == null) {
+                try {
+                    extractor = new WebElementExtractor();
+                    System.out.println("WebElementExtractor launched successfully");
+                } catch (Exception ex) {
+                    System.err.println("Error launching WebElementExtractor: " + ex.getMessage());
+                    //JOptionPane.showMessageDialog(frame, 
+                        //"Failed to launch Web Element Extractor: " + ex.getMessage(),
+                        //"Error",
+                        //JOptionPane.ERROR_MESSAGE);
+                }  
+        });
+    	//objWebElmExtractor.setFocusable(true);
+    }//GEN-LAST:event_bttnExtractWebElmActionPerformed
     
     public static boolean checkElementExistInTheList(String listItem){
         boolean itemExist =false;
@@ -1433,6 +1497,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
     public javax.swing.JButton bttnAddTestElement;
     public javax.swing.JButton bttnDeleteTestElm;
     public javax.swing.JButton bttnDeleteTestStep;
+    public javax.swing.JButton bttnExtractWebElm;
     public static javax.swing.JButton bttnSaveSuite;
     public javax.swing.JDesktopPane jDesktopPane1;
     public javax.swing.JLabel lblObjectRepository;

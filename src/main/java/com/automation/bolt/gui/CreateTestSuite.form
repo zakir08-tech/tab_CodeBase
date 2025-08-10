@@ -284,17 +284,22 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="bttnAddTestElement" max="32767" attributes="0"/>
-                      <Component id="bttnDeleteTestElm" alignment="0" max="32767" attributes="0"/>
-                      <Component id="bttnDeleteTestStep" alignment="0" max="32767" attributes="0"/>
-                      <Component id="bttnAddStepUp" alignment="0" max="32767" attributes="0"/>
-                      <Component id="bttnAddStepDown" alignment="0" max="32767" attributes="0"/>
-                      <Component id="bttnSaveSuite" alignment="1" max="32767" attributes="0"/>
-                      <Component id="bttnAddNewTestSuite" alignment="0" max="32767" attributes="0"/>
-                      <Component id="bttnAddNewTestStep" alignment="1" pref="35" max="32767" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="bttnExtractWebElm" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="bttnAddTestElement" max="32767" attributes="0"/>
+                              <Component id="bttnDeleteTestElm" alignment="0" max="32767" attributes="0"/>
+                              <Component id="bttnDeleteTestStep" alignment="0" max="32767" attributes="0"/>
+                              <Component id="bttnAddStepUp" alignment="0" max="32767" attributes="0"/>
+                              <Component id="bttnAddStepDown" alignment="0" max="32767" attributes="0"/>
+                              <Component id="bttnSaveSuite" alignment="1" max="32767" attributes="0"/>
+                              <Component id="bttnAddNewTestSuite" alignment="0" max="32767" attributes="0"/>
+                              <Component id="bttnAddNewTestStep" alignment="1" pref="35" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
                   <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
               </Group>
@@ -315,11 +320,13 @@
                   <Component id="bttnSaveSuite" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="bttnAddNewTestSuite" min="-2" pref="30" max="-2" attributes="0"/>
-                  <EmptySpace pref="141" max="32767" attributes="0"/>
+                  <EmptySpace pref="140" max="32767" attributes="0"/>
                   <Component id="bttnAddTestElement" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="bttnDeleteTestElm" min="-2" pref="30" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="bttnExtractWebElm" min="-2" pref="30" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -610,6 +617,41 @@
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="bttnExtractWebElm">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="0" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Consolas" size="14" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(System.getProperty(&quot;user.dir&quot;).replaceAll(&quot;\\\\&quot;, &quot;/&quot;)+&quot;/icons/inspectWebElm.png&quot;)" type="code"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="delete test element"/>
+            <Property name="actionCommand" type="java.lang.String" value="OpenRegressionSuite"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
+            </Property>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="contentAreaFilled" type="boolean" value="false"/>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="opaque" type="boolean" value="true"/>
+            <Property name="requestFocusEnabled" type="boolean" value="false"/>
+            <Property name="rolloverEnabled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bttnExtractWebElmMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bttnExtractWebElmMouseExited"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bttnExtractWebElmActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
       </SubComponents>
