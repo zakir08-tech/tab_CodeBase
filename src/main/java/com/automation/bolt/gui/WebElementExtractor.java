@@ -1,5 +1,46 @@
 package com.automation.bolt.gui;
 
+import java.awt.BasicStroke;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.geom.RoundRectangle2D;
+import java.util.HashMap;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
+
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -8,18 +49,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import com.automation.bolt.constants;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.text.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.geom.RoundRectangle2D;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.concurrent.CompletableFuture;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Clipboard;
 
 public class WebElementExtractor {
     private WebElementDetailsExtractor extractor = null;
@@ -31,26 +60,34 @@ public class WebElementExtractor {
     private CustomButton inspectButton;
     private CustomButton loadButton;
     public JFrame frame;
+    private final AtomicBoolean polling = new AtomicBoolean(true);
 
     // Custom button class for enhanced appearance
     private static class CustomButton extends JButton {
         protected Color defaultColor = Color.BLACK;
         protected Color hoverColor = new Color(250, 128, 114);
         protected Color disabledColor = new Color(50, 50, 50);
-        protected Color borderColor = new Color(250, 128, 114);
+        protected Color borderColor = null;
+        protected Color borderHoverColor = null;
         protected boolean isHovered = false;
         protected boolean isDisabled = false;
         private int arc = 8;
         private int shadowOffset = 1;
 
         public CustomButton(String text) {
-            this(text, 12, 1);
+            this(text, 12, 1, null, null);
         }
 
         public CustomButton(String text, int arc, int shadowOffset) {
+            this(text, arc, shadowOffset, null, null);
+        }
+
+        public CustomButton(String text, int arc, int shadowOffset, Color borderColor, Color borderHoverColor) {
             super(text);
             this.arc = arc;
             this.shadowOffset = shadowOffset;
+            this.borderColor = borderColor;
+            this.borderHoverColor = borderHoverColor;
             setOpaque(false);
             setContentAreaFilled(false);
             setBorderPainted(false);
@@ -78,6 +115,11 @@ public class WebElementExtractor {
             repaint();
         }
 
+        public void setBackgroundColor(Color color) {
+            this.defaultColor = color;
+            repaint();
+        }
+
         @Override
         protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g.create();
@@ -90,9 +132,11 @@ public class WebElementExtractor {
                 g2.setColor(isHovered ? hoverColor : defaultColor);
             }
             g2.fill(new RoundRectangle2D.Float(0, 0, getWidth() - shadowOffset, getHeight() - shadowOffset, arc, arc));
-            g2.setColor(borderColor);
-            g2.setStroke(new BasicStroke(1.5f));
-            g2.draw(new RoundRectangle2D.Float(0, 0, getWidth() - shadowOffset, getHeight() - shadowOffset, arc, arc));
+            if (borderColor != null) {
+                g2.setColor(isHovered && borderHoverColor != null ? borderHoverColor : borderColor);
+                g2.setStroke(new BasicStroke(1.5f));
+                g2.draw(new RoundRectangle2D.Float(0, 0, getWidth() - shadowOffset, getHeight() - shadowOffset, arc, arc));
+            }
             super.paintComponent(g);
             g2.dispose();
         }
@@ -111,16 +155,17 @@ public class WebElementExtractor {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(800, 600);
 
-        // Create output area as JTextPane with updated background
+        // Initialize output area with Devanagari-compatible font
         outputArea = new JTextPane();
         outputArea.setEditable(false);
-        outputArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
+        String devanagariFont = getAvailableDevanagariFont();
+        outputArea.setFont(new Font(devanagariFont, Font.PLAIN, 14));
         outputArea.setBackground(new Color(51, 51, 51));
         outputArea.setOpaque(true);
         outputArea.setForeground(Color.WHITE);
         StyledDocument doc = outputArea.getStyledDocument();
         SimpleAttributeSet attrs = new SimpleAttributeSet();
-        StyleConstants.setFontFamily(attrs, "Monospaced");
+        StyleConstants.setFontFamily(attrs, devanagariFont);
         StyleConstants.setFontSize(attrs, 14);
         StyleConstants.setForeground(attrs, Color.WHITE);
         try {
@@ -136,7 +181,7 @@ public class WebElementExtractor {
         centerFrameOnScreen(frame);
 
         try {
-        	Image titleIcon = Toolkit.getDefaultToolkit().getImage(constants.userDir+"/icons/bolt.jpg");
+            Image titleIcon = Toolkit.getDefaultToolkit().getImage(constants.userDir + "/icons/bolt.jpg");
             frame.setIconImage(titleIcon);
         } catch (IllegalArgumentException e) {
             System.out.println("Icon not found, using default: " + e.getMessage());
@@ -144,7 +189,7 @@ public class WebElementExtractor {
 
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new FlowLayout());
-        inputPanel.setBackground(new Color(245, 245, 245));
+        inputPanel.setBackground(new Color(230, 235, 240));
 
         urlField = new JTextField("https://example.com", 30);
         urlField.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -176,6 +221,7 @@ public class WebElementExtractor {
             co.addArguments("--start-maximized");
             co.addArguments("--ignore-certificate-errors");
             co.addArguments("--blink-settings=imagesEnabled=true");
+            co.addArguments("--lang=en-US"); // Ensure UTF-8 support
             HashMap<String, Object> prefs = new HashMap<>();
             prefs.put("profile.default_content_setting_values.notifications", 2);
             co.setExperimentalOption("prefs", prefs);
@@ -196,6 +242,7 @@ public class WebElementExtractor {
             System.out.println("Toggle Inspect button clicked");
             inspectMode = !inspectMode;
             inspectButton.setDisabled(!inspectMode);
+            inspectButton.setBackgroundColor(inspectMode ? new Color(34, 139, 34) : Color.BLACK);
             appendToOutputArea((inspectMode ? "Inspect Mode: Click an element in the browser (ensure browser window is focused)" : "\nInspect Mode: Disabled") + "\n");
             System.out.println("Inspect Mode Toggled: " + inspectMode);
             toggleInspectMode(inspectMode);
@@ -218,6 +265,7 @@ public class WebElementExtractor {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
                 System.out.println("Closing WebElementExtractor frame");
+                polling.set(false);
                 if (driver != null) {
                     try {
                         if (inspectMode) {
@@ -233,6 +281,8 @@ public class WebElementExtractor {
             }
         });
 
+        startBrowserPolling();
+
         frame.setVisible(true);
         System.out.println("GUI frame displayed");
 
@@ -244,6 +294,18 @@ public class WebElementExtractor {
         });
 
         appendToOutputArea("Application Started\nInspect Mode: Disabled\n");
+    }
+
+    private String getAvailableDevanagariFont() {
+        String[] devanagariFonts = {"Mangal", "Noto Sans Devanagari", "Arial Unicode MS"};
+        for (String font : devanagariFonts) {
+            if (Font.getFont(font) != null) {
+                System.out.println("Using font: " + font);
+                return font;
+            }
+        }
+        System.out.println("Warning: No Devanagari font found, falling back to default");
+        return "Dialog"; // Fallback to system default
     }
 
     private void centerFrameOnScreen(JFrame frame) {
@@ -260,9 +322,11 @@ public class WebElementExtractor {
             try {
                 StyledDocument doc = outputArea.getStyledDocument();
                 SimpleAttributeSet attrs = new SimpleAttributeSet();
-                StyleConstants.setFontFamily(attrs, "Monospaced");
+                String devanagariFont = getAvailableDevanagariFont();
+                StyleConstants.setFontFamily(attrs, devanagariFont);
                 StyleConstants.setFontSize(attrs, 14);
                 StyleConstants.setForeground(attrs, Color.WHITE);
+                System.out.println("Appending text: " + text); // Debug the raw text
                 doc.insertString(doc.getLength(), text, attrs);
                 outputArea.setCaretPosition(doc.getLength());
             } catch (BadLocationException e) {
@@ -276,7 +340,8 @@ public class WebElementExtractor {
             try {
                 StyledDocument doc = outputArea.getStyledDocument();
                 SimpleAttributeSet attrs = new SimpleAttributeSet();
-                StyleConstants.setFontFamily(attrs, "Monospaced");
+                String devanagariFont = getAvailableDevanagariFont();
+                StyleConstants.setFontFamily(attrs, devanagariFont);
                 StyleConstants.setFontSize(attrs, 14);
                 StyleConstants.setForeground(attrs, Color.WHITE);
 
@@ -288,7 +353,7 @@ public class WebElementExtractor {
                 for (String line : lines) {
                     if (line.startsWith("relativeXPath:")) {
                         relativeXPath = line.substring("relativeXPath:".length()).trim();
-                        CustomButton copyButton = new CustomButton("Copy", 8, 1);
+                        CustomButton copyButton = new CustomButton("Copy", 8, 1, new Color(250, 128, 114), new Color(250, 128, 114));
                         copyButton.setFont(new Font("Arial", Font.PLAIN, 10));
                         copyButton.setMargin(new Insets(2, 4, 2, 4));
                         copyButton.setForeground(Color.WHITE);
@@ -299,13 +364,24 @@ public class WebElementExtractor {
                             clipboard.setContents(selection, null);
                             appendToOutputArea("Copied to clipboard: " + finalXPath + "\n");
                         });
+                        CustomButton addButton = new CustomButton("Add", 8, 1, new Color(250, 128, 114), new Color(250, 128, 114));
+                        addButton.setFont(new Font("Arial", Font.PLAIN, 10));
+                        addButton.setMargin(new Insets(2, 4, 2, 4));
+                        addButton.setForeground(Color.WHITE);
+                        addButton.addActionListener(e -> {
+                            appendToOutputArea("Element added to the repository\n");
+                        });
                         Style buttonStyle = doc.addStyle("button" + System.currentTimeMillis(), null);
                         StyleConstants.setComponent(buttonStyle, copyButton);
                         doc.insertString(doc.getLength(), " ", buttonStyle);
-                        doc.insertString(doc.getLength(), "relativeXPath: " + relativeXPath + "\n", attrs);
+                        doc.insertString(doc.getLength(), " ", attrs);
+                        Style addButtonStyle = doc.addStyle("addButton" + System.currentTimeMillis(), null);
+                        StyleConstants.setComponent(addButtonStyle, addButton);
+                        doc.insertString(doc.getLength(), " ", addButtonStyle);
+                        doc.insertString(doc.getLength(), " relativeXPath: " + relativeXPath + "\n", attrs);
                     } else if (line.startsWith("absoluteXPath:")) {
                         absoluteXPath = line.substring("absoluteXPath:".length()).trim();
-                        CustomButton copyButton = new CustomButton("Copy", 8, 1);
+                        CustomButton copyButton = new CustomButton("Copy", 8, 1, new Color(250, 128, 114), new Color(250, 128, 114));
                         copyButton.setFont(new Font("Arial", Font.PLAIN, 10));
                         copyButton.setMargin(new Insets(2, 4, 2, 4));
                         copyButton.setForeground(Color.WHITE);
@@ -316,10 +392,21 @@ public class WebElementExtractor {
                             clipboard.setContents(selection, null);
                             appendToOutputArea("Copied to clipboard: " + finalXPath + "\n");
                         });
+                        CustomButton addButton = new CustomButton("Add", 8, 1, new Color(250, 128, 114), new Color(250, 128, 114));
+                        addButton.setFont(new Font("Arial", Font.PLAIN, 10));
+                        addButton.setMargin(new Insets(2, 4, 2, 4));
+                        addButton.setForeground(Color.WHITE);
+                        addButton.addActionListener(e -> {
+                            appendToOutputArea("Element added to the repository\n");
+                        });
                         Style buttonStyle = doc.addStyle("button" + System.currentTimeMillis(), null);
                         StyleConstants.setComponent(buttonStyle, copyButton);
                         doc.insertString(doc.getLength(), " ", buttonStyle);
-                        doc.insertString(doc.getLength(), "absoluteXPath: " + absoluteXPath + "\n", attrs);
+                        doc.insertString(doc.getLength(), " ", attrs);
+                        Style addButtonStyle = doc.addStyle("addButton" + System.currentTimeMillis(), null);
+                        StyleConstants.setComponent(addButtonStyle, addButton);
+                        doc.insertString(doc.getLength(), " ", addButtonStyle);
+                        doc.insertString(doc.getLength(), " absoluteXPath: " + absoluteXPath + "\n", attrs);
                     } else {
                         doc.insertString(doc.getLength(), line + "\n", attrs);
                     }
@@ -351,6 +438,7 @@ public class WebElementExtractor {
                 if (inspectMode) {
                     inspectMode = false;
                     inspectButton.setDisabled(true);
+                    inspectButton.setBackgroundColor(Color.BLACK);
                     SwingUtilities.invokeLater(() -> {
                         appendToOutputArea("\nInspect Mode: Disabled\n");
                         loadButton.setText("Load URL");
@@ -411,72 +499,56 @@ public class WebElementExtractor {
                     "  window.escapeText = function(text) {" +
                     "    try {" +
                     "      if (!text) return '';" +
-                    "      return text.replace(/'/g, \"\\\\'\").replace(/\"/g, \"\\\\\\\"\");" +
+                    "      return text.replace(/'/g, \"\\\\'\").replace(/\\\"/g, \"\\\\\\\"\");" +
                     "    } catch (err) {" +
                     "      console.error('escapeText error: ' + err.message);" +
                     "      return '';" +
                     "    }" +
                     "  };" +
+                    "  window.hasSpacesOrNewlines = function(value) {" +
+                    "    try {" +
+                    "      if (!value) return false;" +
+                    "      return /^\\s|\\s$|[\\n\\r]/.test(value);" +
+                    "    } catch (err) {" +
+                    "      console.error('hasSpacesOrNewlines error: ' + err.message);" +
+                    "      return false;" +
+                    "    }" +
+                    "  };" +
+                    "  window.normalizeText = function(text) {" +
+                    "    try {" +
+                    "      if (!text) return '';" +
+                    "      return text.replace(/[\\n\\r]+/g, ' ').replace(/\\s+/g, ' ');" +
+                    "    } catch (err) {" +
+                    "      console.error('normalizeText error: ' + err.message);" +
+                    "      return '';" +
+                    "    }" +
+                    "  };" +
                     "  window.getCssSelector = function(element) {" +
                     "    try {" +
-                    "      console.log('getCssSelector called for element: ' + (element.tagName || 'unknown'));" +
                     "      if (!element || !element.tagName) return '';" +
                     "      var path = [];" +
                     "      var current = element;" +
                     "      while (current && current.nodeType === 1) {" +
-                    "        var selector = '';" +
-                    "        if (current.id) {" +
-                    "          selector = '#' + current.id;" +
-                    "          path.unshift(selector);" +
-                    "          break;" +
-                    "        }" +
-                    "        var tag = current.tagName.toLowerCase();" +
-                    "        selector = tag;" +
-                    "        if (current.className && current.className.trim()) {" +
-                    "          var classes = current.className.trim().split(/\\s+/).map(function(cls) {" +
-                    "            return '.' + cls.replace(/[^\\w-]/g, '\\\\$&');" +
-                    "          }).join('');" +
-                    "          var classSelector = tag + classes;" +
-                    "          var classPath = path.slice();" +
-                    "          classPath.unshift(classSelector);" +
-                    "          try {" +
-                    "            var testClassSelector = classPath.join(' > ');" +
-                    "            if (document.querySelectorAll(testClassSelector).length === 1) {" +
-                    "              path = classPath;" +
-                    "              break;" +
-                    "            }" +
-                    "          } catch (err) {" +
-                    "            console.log('Class selector test error: ' + err.message);" +
-                    "          }" +
-                    "        }" +
+                    "        var selector = current.tagName.toLowerCase();" +
                     "        var siblings = current.parentNode ? Array.from(current.parentNode.children).filter(function(child) {" +
                     "          return child.tagName === current.tagName;" +
                     "        }) : [];" +
                     "        if (siblings.length > 1) {" +
                     "          var index = siblings.indexOf(current) + 1;" +
-                    "          selector = tag + ':nth-of-type(' + index + ')';" +
+                    "          selector += ':nth-of-type(' + index + ')';" +
                     "        }" +
                     "        path.unshift(selector);" +
-                    "        try {" +
-                    "          var testSelector = path.join(' > ');" +
-                    "            if (document.querySelectorAll(testSelector).length === 1) {" +
-                    "              break;" +
-                    "            }" +
-                    "        } catch (err) {" +
-                    "          console.log('Selector test error: ' + err.message);" +
-                    "        }" +
                     "        current = current.parentNode;" +
                     "        if (path.length > 3) break;" +
                     "      }" +
                     "      return path.join(' > ') || element.tagName.toLowerCase();" +
                     "    } catch (err) {" +
-                    "      console.error('getCssSelector error: ' + err.message + ' at line ' + (err.lineNumber || 'unknown'));" +
+                    "      console.error('getCssSelector error: ' + err.message);" +
                     "      return '';" +
                     "    }" +
                     "  };" +
                     "  window.getAbsoluteXPath = function(element) {" +
                     "    try {" +
-                    "      console.log('getAbsoluteXPath called');" +
                     "      if (!element || !element.tagName) return '';" +
                     "      var paths = [];" +
                     "      var current = element;" +
@@ -498,33 +570,35 @@ public class WebElementExtractor {
                     "      }" +
                     "      return paths.length ? '/html' + (paths.length ? '/' + paths.join('/') : '') : '';" +
                     "    } catch (err) {" +
-                    "      console.error('getAbsoluteXPath error: ' + err.message + ' at line ' + (err.lineNumber || 'unknown'));" +
+                    "      console.error('getAbsoluteXPath error: ' + err.message);" +
                     "      return '';" +
                     "    }" +
                     "  };" +
                     "  window.getRelativeXPath = function(element) {" +
                     "    try {" +
-                    "      console.log('getRelativeXPath called');" +
                     "      if (!element || !element.tagName) return '';" +
                     "      var tag = element.tagName.toLowerCase();" +
-                    "      if (element.id) return '//' + tag + '[@id=\"' + element.id + '\"]';" +
-                    "      if (element.name && element.name.trim()) return '//' + tag + '[@name=\"' + element.name + '\"]';" +
+                    "      var predicates = [];" +
+                    "      if (element.id && element.id.trim()) {" +
+                    "        var idValue = element.id;" +
+                    "        var escapedId = window.escapeText(idValue);" +
+                    "        predicates.push('@id=\\'' + escapedId + '\\'');" +
+                    "      }" +
                     "      if (element.className && element.className.trim()) {" +
-                    "        var className = element.className.trim().replace(/\\s+/g, ' ');" +
-                    "        var xpath = '//' + tag + '[@class=\"' + className + '\"]';" +
-                    "        try {" +
-                    "          var nodes = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);" +
-                    "          if (nodes.snapshotLength === 1) return xpath;" +
-                    "        } catch (err) {" +
-                    "          console.log('XPath class test error: ' + err.message);" +
-                    "        }" +
+                    "        var classValue = element.className;" +
+                    "        var escapedClass = window.escapeText(classValue);" +
+                    "        predicates.push('@class=\\'' + escapedClass + '\\'');" +
                     "      }" +
-                    "      var text = element.textContent ? element.textContent.trim() : '';" +
-                    "      if (text && text.length > 3) {" +
-                    "        var escapedText = window.escapeText(text);" +
-                    "        return '//' + tag + '[contains(text(),\"' + escapedText + '\"]';" +
+                    "      var text = element.textContent ? window.normalizeText(element.textContent) : '';" +
+                    "      if (text && text.trim().length > 0) {" +
+                    "        var escapedText = window.escapeText(text.trim());" +
+                    "        predicates.push('contains(normalize-space(text()),\\'' + escapedText + '\\')');" +
                     "      }" +
-                    "      return '//' + tag;" +
+                    "      var xpath = '//' + tag;" +
+                    "      if (predicates.length > 0) {" +
+                    "        xpath += '[' + predicates.join(' and ') + ']';" +
+                    "      }" +
+                    "      return xpath;" +
                     "    } catch (err) {" +
                     "      console.error('getRelativeXPath error: ' + err.message);" +
                     "      return '';" +
@@ -532,20 +606,19 @@ public class WebElementExtractor {
                     "  };" +
                     "  window.elementCapture = function(e) {" +
                     "    try {" +
-                    "      console.log('elementCapture triggered for element: ' + (e.target.tagName || 'unknown'));" +
                     "      e.preventDefault();" +
                     "      e.stopPropagation();" +
                     "      var el = e.target;" +
+                    "      var normalizedText = el.textContent ? window.normalizeText(el.textContent.substring(0, 50)) : '';" +
                     "      var details = {" +
                     "        tagName: el.tagName ? el.tagName.toLowerCase() : ''," +
-                    "        text: el.textContent ? el.textContent.trim().replace(/\\s+/g, ' ').substring(0, 50) : ''," +
+                    "        text: normalizedText," +
                     "        id: el.id || ''," +
                     "        class: el.className || ''," +
                     "        cssSelector: window.getCssSelector(el)," +
                     "        absoluteXPath: window.getAbsoluteXPath(el)," +
                     "        relativeXPath: window.getRelativeXPath(el)" +
                     "      };" +
-                    "      console.log('Captured details: ' + JSON.stringify(details));" +
                     "      window.elementDetails = details;" +
                     "      return JSON.stringify(details);" +
                     "    } catch (err) {" +
@@ -569,9 +642,7 @@ public class WebElementExtractor {
                     "  };" +
                     "  window.checkListeners = function() {" +
                     "    try {" +
-                    "      var status = !!window.elementCapture;" +
-                    "      console.log('checkListeners: ' + status);" +
-                    "      return status;" +
+                    "      return !!window.elementCapture;" +
                     "    } catch (err) {" +
                     "      console.error('checkListeners error: ' + err.message);" +
                     "      return false;" +
@@ -593,7 +664,7 @@ public class WebElementExtractor {
                     "  return { status: 'Error: ' + err.message + ' at line ' + (err.lineNumber || 'unknown') + ' stack: ' + (err.stack || 'no stack') };" +
                     "}"
                 );
-                System.out.println("Event listeners initialized: " + (initResult != null ? initResult.toString() : "null"));
+                System.out.println("initResult: " + (initResult != null ? initResult.toString() : "null"));
                 if (initResult == null || initResult.toString().contains("Error:")) {
                     String errorMsg = initResult != null ? initResult.toString() : "Initialization result is null";
                     appendToOutputArea("Failed to initialize listeners: " + errorMsg + "\n");
@@ -624,14 +695,13 @@ public class WebElementExtractor {
                             "try {" +
                             "  console.log('Polling elementDetails...');" +
                             "  var result = window.elementDetails;" +
-                            "  console.log('elementDetails: ' + (result ? JSON.stringify(result) : 'null'));" +
                             "  if (result) {" +
                             "    window.elementDetails = null;" +
                             "    return { details: JSON.stringify(result) };" +
                             "  }" +
                             "  return { details: null };" +
                             "} catch (err) {" +
-                            "  console.log('Poll error: ' + err.message);" +
+                            "  console.error('Poll error: ' + err.message);" +
                             "  return { details: 'Error: ' + err.message };" +
                             "}"
                         );
@@ -643,7 +713,7 @@ public class WebElementExtractor {
                         final String finalDetails = details;
                         if (finalDetails != null && !finalDetails.isEmpty() && !finalDetails.startsWith("Error:") && !finalDetails.equals("null")) {
                             String parsedDetails = extractor.extractElementDetails(finalDetails);
-                            System.out.println("Parsed details: " + (parsedDetails != null ? parsedDetails.replace("\n", "\\n") : "null"));
+                            System.out.println("Raw parsed details: " + (parsedDetails != null ? parsedDetails : "null")); // Debug raw text
                             if (parsedDetails != null && !parsedDetails.trim().isEmpty() && !parsedDetails.contains("No valid element details parsed")) {
                                 String elementId = "Element_" + System.currentTimeMillis();
                                 extractor.storeInRepository(elementId, parsedDetails);
@@ -667,6 +737,44 @@ public class WebElementExtractor {
                 System.out.println("Error initializing listeners: " + ex.getMessage());
                 ex.printStackTrace();
                 appendToOutputArea("Error initializing listeners: " + ex.getMessage() + "\n");
+            }
+        });
+    }
+
+    private boolean isBrowserOpen() {
+        if (driver == null) {
+            return false;
+        }
+        try {
+            driver.getWindowHandle();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Browser window is closed or unavailable: " + e.getMessage());
+            return false;
+        }
+    }
+
+    private void startBrowserPolling() {
+        CompletableFuture.runAsync(() -> {
+            while (polling.get() && driver != null) {
+                try {
+                    if (!isBrowserOpen()) {
+                        System.out.println("Browser window closed, closing JFrame");
+                        SwingUtilities.invokeLater(() -> {
+                            appendToOutputArea("Browser window closed, shutting down application\n");
+                            if (inspectMode) {
+                                toggleInspectMode(false);
+                            }
+                            frame.dispose();
+                            polling.set(false);
+                        });
+                        break;
+                    }
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println("Browser polling interrupted: " + e.getMessage());
+                    break;
+                }
             }
         });
     }
