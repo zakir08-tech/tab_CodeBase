@@ -749,12 +749,12 @@ public class common extends userDefineTest{
             testSteps.add(testData);
             testSteps.add(testDescription);
                     
-            if(!nextRowData.isEmpty()) {
-                if(!nextRowData.contentEquals("#")){
-                	mapTestSteps.put(mapIndex, testSteps);
-                    break;
-                }
-            }
+            //if(!nextRowData.isEmpty()) {
+                //if(!nextRowData.contentEquals("#")){
+                	//mapTestSteps.put(mapIndex, testSteps);
+                    //break;
+                //}
+            //}
             
             if(gFnd !=true && !testStep.toLowerCase().contentEquals("<grouping>")) {
             	testData = checkForUserDefineSolution(testData);
@@ -841,6 +841,13 @@ public class common extends userDefineTest{
             	}
             	groupingTestSteps = new ArrayList<String>();
         		gFnd =false;
+            }
+            
+            if(!nextRowData.isEmpty()) {
+                if(!nextRowData.contentEquals("#")){
+                	mapTestSteps.put(mapIndex, testSteps);
+                    break;
+                }
             }
         }
     }

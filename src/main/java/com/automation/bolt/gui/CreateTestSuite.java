@@ -30,6 +30,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -45,8 +46,8 @@ import java.awt.Dimension;
  * @author zakir
  */
 public class CreateTestSuite extends javax.swing.JFrame {
-	public static WebElementExtractor extractor;
-	public static DefaultTableModel createSuiteTabModel =new DefaultTableModel();
+    public static WebElementInspector extractor;
+    public static DefaultTableModel createSuiteTabModel =new DefaultTableModel();
     public static DefaultTableModel createORTabModel =new DefaultTableModel();
     
     public static JComboBox<String> cBoxtestFlow =new JComboBox<String>();
@@ -95,6 +96,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
     public static boolean fileSaved;
     public static JFileChooser excelFileExport;
     public static int getEditingRow;
+    public WebElementInspector webElmInspector = new WebElementInspector();
     
     /**
      * Creates new form CreateTestSuite
@@ -235,13 +237,8 @@ public class CreateTestSuite extends javax.swing.JFrame {
         tableAddTestFlow.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         tableAddTestFlow.setForeground(new java.awt.Color(255, 255, 255));
         tableAddTestFlow.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Test ID", "Test Step", "Test Flow", "Test Element", "Test Data", "Test Description"
-            }
-        ) {
+            new Object [][] {},
+            new String [] {"Test ID", "Test Step", "Test Flow", "Test Element", "Test Data", "Test Description"}) {
             boolean[] canEdit = new boolean [] {
                 true, false, true, true, true, true
             };
@@ -681,8 +678,36 @@ public class CreateTestSuite extends javax.swing.JFrame {
         this.setIconImage(titleIcon);
         setTableColWidthForCreateRegSuiteTable();
         fileSaved =false;
+        
+        /*createORTabModel.addRow(new Object[] {"add_element_list_here",null,null});
+        tableAddOR.setColumnSelectionInterval(0, 0);
+        tableAddOR.setRowSelectionInterval(tableAddOR.getRowCount()-1,tableAddOR.getRowCount()-1);
+        tableAddOR.scrollRectToVisible(tableAddOR.getCellRect(tableAddOR.getRowCount()-1,-1, true));
+        tableAddOR.editCellAt(tableAddOR.getRowCount()-1, 0);
+        tableAddOR.requestFocus();
+        elmNameTxt.requestFocusInWindow();
+        
+        tabOutFromEditingColumn(getElmRepoCellEditorStatus, tableAddOR, getRepoCellxPoint, getRepoCellyPoint, getElmRepoSelectedRow);
+        retrieveTestElmList();
+        keywordList(cBoxtestFlow);
+        bttnAddNewTestStep.doClick();
+        clickJTableCell(tableAddTestFlow,0,2);
+        cBoxtestFlow.requestFocusInWindow();
+        clickJTableCell(tableAddTestFlow,0,3);
+        coBoxObjectRepo.requestFocusInWindow();
+        bttnDeleteTestStep.doClick();*/
     }//GEN-LAST:event_formWindowOpened
-
+    
+    public void clickJTableCell(JTable table, int row, int column) {
+	    // Select the cell
+	    table.setRowSelectionInterval(row, row);
+	    table.setColumnSelectionInterval(column, column);
+	    
+	    // Simulate a click by requesting focus and triggering a mouse event
+	    table.requestFocus();
+	    table.editCellAt(row, column); // Initiates editing or focuses the cell
+    }
+    
     private void bttnAddNewTestStepMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttnAddNewTestStepMouseEntered
         bttnAddNewTestStep.setBackground(new java.awt.Color(250, 128, 114));
         bttnAddNewTestStep.setForeground(new java.awt.Color(0,0,0));
@@ -1322,7 +1347,6 @@ public class CreateTestSuite extends javax.swing.JFrame {
     }
         
     private void tableAddTestFlowMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableAddTestFlowMousePressed
-        
         getElmRepoSelectedRow =tableAddOR.getSelectedRow();
         tabOutFromEditingColumn(getElmRepoCellEditorStatus, tableAddOR, getRepoCellxPoint, getRepoCellyPoint, getElmRepoSelectedRow);
        
@@ -1331,6 +1355,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
          
         int getCurRow = tableAddTestFlow.convertRowIndexToModel(tableAddTestFlow.rowAtPoint(evt.getPoint()));
         int gerCurrCol = tableAddTestFlow.convertColumnIndexToModel(tableAddTestFlow.columnAtPoint(evt.getPoint()));
+        
         getTestFlowSelectedRow =getCurRow;
         getFlowCellxPoint =tableAddTestFlow.rowAtPoint(evt.getPoint());
         getFlowCellyPoint =tableAddTestFlow.columnAtPoint(evt.getPoint());
@@ -1415,20 +1440,26 @@ public class CreateTestSuite extends javax.swing.JFrame {
     }//GEN-LAST:event_bttnExtractWebElmMouseExited
 
     private void bttnExtractWebElmActionPerformed(java.awt.event.ActionEvent evt) {
+    	//SwingUtilities.invokeLater(WebElementInspector::new);
+    	
+        webElmInspector.setVisible(true);
     	//GEN-FIRST:event_bttnExtractWebElmActionPerformed
-    	SwingUtilities.invokeLater(() -> {
-            //if (extractor == null) {
+    	/*SwingUtilities.invokeLater(() -> {
+            if (extractor == null) {
                 try {
-                    extractor = new WebElementExtractor();
-                    System.out.println("WebElementExtractor launched successfully");
+                    extractor = new WebElementInspector();
+                    System.out.println("WebElementInspector launched successfully");
                 } catch (Exception ex) {
-                    System.err.println("Error launching WebElementExtractor: " + ex.getMessage());
+                    System.err.println("Error launching WebElementInspector: " + ex.getMessage());
                     //JOptionPane.showMessageDialog(frame, 
                         //"Failed to launch Web Element Extractor: " + ex.getMessage(),
                         //"Error",
                         //JOptionPane.ERROR_MESSAGE);
-                }  
-        });
+                }
+    		}else {
+    			extractor.setFocusable(true);
+    		}
+        });*/
     	//objWebElmExtractor.setFocusable(true);
     }//GEN-LAST:event_bttnExtractWebElmActionPerformed
     
@@ -1444,6 +1475,17 @@ public class CreateTestSuite extends javax.swing.JFrame {
             }
         }
         return itemExist;
+    }
+    
+    public static void addWebElementToRepository(String elementId,String finalXPath) {
+    	createORTabModel.addRow(new Object[] {elementId,null,finalXPath});
+        tableAddOR.setColumnSelectionInterval(0, 0);
+        tableAddOR.setRowSelectionInterval(tableAddOR.getRowCount()-1,tableAddOR.getRowCount()-1);
+        tableAddOR.scrollRectToVisible(tableAddOR.getCellRect(tableAddOR.getRowCount()-1,-1, true));
+        tableAddOR.editCellAt(tableAddOR.getRowCount()-1, 0);
+        tableAddOR.requestFocus();
+        elmNameTxt.requestFocusInWindow();
+        retrieveTestElmList();
     }
     
     public static void setTableColWidthForCreateRegSuiteTable(){
@@ -1479,10 +1521,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(CreateTestSuite.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-         //</editor-fold>
-         
-        //</editor-fold>
-
+       
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             new CreateTestSuite().setVisible(true);
@@ -1494,7 +1533,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
     public static javax.swing.JButton bttnAddNewTestSuite;
     public static javax.swing.JButton bttnAddStepDown;
     public static javax.swing.JButton bttnAddStepUp;
-    public javax.swing.JButton bttnAddTestElement;
+    public static javax.swing.JButton bttnAddTestElement;
     public javax.swing.JButton bttnDeleteTestElm;
     public javax.swing.JButton bttnDeleteTestStep;
     public javax.swing.JButton bttnExtractWebElm;
