@@ -39,6 +39,7 @@ import javax.swing.JTextPane;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+import javax.swing.plaf.basic.BasicTextPaneUI;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.Style;
@@ -71,6 +72,11 @@ public class WebElementInspector extends javax.swing.JFrame {
     public WebElementInspector() {
         extractor = new WebElementDetailsExtractorImpl();
         initComponents();
+        outputArea.setOpaque(true);
+        outputArea.setBackground(new java.awt.Color(0, 0, 0));
+        outputArea.setForeground(new java.awt.Color(255, 255, 255));
+        outputArea.setCaretColor(new java.awt.Color(255, 255, 255));
+        outputArea.setUI(new BasicTextPaneUI()); // Use basic UI to avoid Nimbus overrides
     }
     
     /**
@@ -91,7 +97,8 @@ public class WebElementInspector extends javax.swing.JFrame {
         clearButton = new JButton();
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Edit Test Suite");
+        setTitle("Web Element Inspector");
+        setBackground(new Color(0, 0, 0));
         setBounds(new Rectangle(0, 0, 973, 500));
         setIconImages(null);
         setMinimumSize(new Dimension(851, 328));
@@ -102,7 +109,7 @@ public class WebElementInspector extends javax.swing.JFrame {
             }
         });
 
-        urlField.setBackground(new Color(51, 51, 51));
+        urlField.setBackground(new Color(0, 0, 0));
         urlField.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
         urlField.setForeground(new Color(255, 255, 255));
         urlField.setHorizontalAlignment(JTextField.LEFT);
@@ -124,6 +131,7 @@ public class WebElementInspector extends javax.swing.JFrame {
         outputArea.setEditable(false);
         outputArea.setBackground(new Color(0, 0, 0));
         outputArea.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+        outputArea.setForeground(new Color(255, 153, 153));
         outputArea.setFocusable(false);
         scrollPane.setViewportView(outputArea);
 
@@ -265,7 +273,7 @@ public class WebElementInspector extends javax.swing.JFrame {
         }
     }                                          
 
-    private void inspectButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_inspectButtonActionPerformed
+    private void inspectButtonActionPerformed(ActionEvent evt) {//GEN-First:event_inspectButtonActionPerformed
         System.out.println("Toggle Inspect button clicked");
         inspectMode = !inspectMode;
         inspectButton.setBackground(inspectMode ? new Color(34, 139, 34) : new Color(0, 0, 0));
@@ -273,9 +281,9 @@ public class WebElementInspector extends javax.swing.JFrame {
         appendToOutputArea((inspectMode ? "Inspect Mode: Click an element in the browser (ensure browser window is focused)" : "\nInspect Mode: Disabled") + "\n");
         System.out.println("Inspect Mode Toggled: " + inspectMode);
         toggleInspectMode(inspectMode);
-    }//GEN-LAST:event_inspectButtonActionPerformed
+    }                                             
 
-    private void clearButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+    private void clearButtonActionPerformed(ActionEvent evt) {//GEN-First:event_clearButtonActionPerformed
         System.out.println("Clear button clicked");
         SwingUtilities.invokeLater(() -> {
             try {
@@ -285,55 +293,57 @@ public class WebElementInspector extends javax.swing.JFrame {
                 String devanagariFont = getAvailableDevanagariFont();
                 StyleConstants.setFontFamily(attrs, devanagariFont);
                 StyleConstants.setFontSize(attrs, 14);
-                StyleConstants.setForeground(attrs, new Color(255, 255, 255));
-                StyleConstants.setBackground(attrs, new Color(0, 0, 0));
+                //StyleConstants.setForeground(attrs, new Color(255, 255, 255)); // White foreground
+                //StyleConstants.setBackground(attrs, new Color(0, 0, 0)); // Black background
                 doc.setCharacterAttributes(0, doc.getLength(), attrs, true);
+                outputArea.setBackground(new Color(0, 0, 0)); // Reinforce black background
+                outputArea.setForeground(new Color(255, 255, 255)); // Reinforce white foreground
                 System.out.println("Output area cleared");
             } catch (Exception e) {
                 System.out.println("Error clearing outputArea: " + e.getMessage());
                 appendToOutputArea("Error clearing outputArea: " + e.getMessage() + "\n");
             }
         });
-    }//GEN-LAST:event_clearButtonActionPerformed
+    }                                           
 
-    private void urlFieldActionPerformed(ActionEvent evt) {//GEN-FIRST:event_urlFieldActionPerformed
+    private void urlFieldActionPerformed(ActionEvent evt) {//GEN-First:event_urlFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_urlFieldActionPerformed
+    }                                        
 
-    private void loadButtonMouseEntered(MouseEvent evt) {//GEN-FIRST:event_loadButtonMouseEntered
+    private void loadButtonMouseEntered(MouseEvent evt) {//GEN-First:event_loadButtonMouseEntered
         loadButton.setBackground(new java.awt.Color(250, 128, 114));
         loadButton.setForeground(new java.awt.Color(0,0,0));
-    }//GEN-LAST:event_loadButtonMouseEntered
+    }                                       
 
-    private void loadButtonMouseExited(MouseEvent evt) {//GEN-FIRST:event_loadButtonMouseExited
+    private void loadButtonMouseExited(MouseEvent evt) {//GEN-First:event_loadButtonMouseExited
         loadButton.setBackground(new java.awt.Color(0,0,0));
         loadButton.setForeground(new java.awt.Color(255,255,255));
-    }//GEN-LAST:event_loadButtonMouseExited
+    }                                      
 
-    private void clearButtonMouseEntered(MouseEvent evt) {//GEN-FIRST:event_clearButtonMouseEntered
+    private void clearButtonMouseEntered(MouseEvent evt) {//GEN-First:event_clearButtonMouseEntered
         clearButton.setBackground(new java.awt.Color(250, 128, 114));
         clearButton.setForeground(new java.awt.Color(0,0,0));
-    }//GEN-LAST:event_clearButtonMouseEntered
+    }                                        
 
-    private void clearButtonMouseExited(MouseEvent evt) {//GEN-FIRST:event_clearButtonMouseExited
+    private void clearButtonMouseExited(MouseEvent evt) {//GEN-First:event_clearButtonMouseExited
        clearButton.setBackground(new java.awt.Color(0,0,0));
        clearButton.setForeground(new java.awt.Color(255,255,255));
-    }//GEN-LAST:event_clearButtonMouseExited
+    }                                       
 
-    private void inspectButtonMouseEntered(MouseEvent evt) {//GEN-FIRST:event_inspectButtonMouseEntered
+    private void inspectButtonMouseEntered(MouseEvent evt) {//GEN-First:event_inspectButtonMouseEntered
         inspectButton.setBackground(new java.awt.Color(250, 128, 114));
         inspectButton.setForeground(new java.awt.Color(0, 0, 0));
-    }//GEN-LAST:event_inspectButtonMouseEntered
+    }                                          
 
-    private void inspectButtonMouseExited(MouseEvent evt) {//GEN-FIRST:event_inspectButtonMouseExited
+    private void inspectButtonMouseExited(MouseEvent evt) {//GEN-First:event_inspectButtonMouseExited
         inspectButton.setBackground(inspectMode ? new java.awt.Color(34, 139, 34) : new java.awt.Color(0, 0, 0));
         inspectButton.setForeground(new java.awt.Color(255, 255, 255));
-    }//GEN-LAST:event_inspectButtonMouseExited
+    }                                         
 
-    private void formWindowOpened(WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+    private void formWindowOpened(WindowEvent evt) {//GEN-First:event_formWindowOpened
         Image titleIcon = Toolkit.getDefaultToolkit().getImage(constants.userDir+"/icons/bolt.jpg");
         this.setIconImage(titleIcon);
-    }//GEN-LAST:event_formWindowOpened
+    }                                 
     
     private void loadUrl(String url) {
         CompletableFuture.runAsync(() -> {
@@ -343,8 +353,8 @@ public class WebElementInspector extends javax.swing.JFrame {
                 SwingUtilities.invokeLater(() -> {
                     // Set outputArea and scrollPane background to black and text color to white
                     outputArea.setOpaque(true);
-                    outputArea.setBackground(new Color(0, 0, 0));
-                    outputArea.setForeground(new Color(255, 255, 255));
+                    outputArea.setBackground(new Color(0, 0, 0)); // Reinforce black background
+                    outputArea.setForeground(new Color(255, 255, 255)); // Reinforce white foreground
                     scrollPane.setBackground(new Color(0, 0, 0));
                     scrollPane.setForeground(new Color(255, 255, 255));
                     scrollPane.getViewport().setBackground(new Color(0, 0, 0));
@@ -353,8 +363,8 @@ public class WebElementInspector extends javax.swing.JFrame {
                     String devanagariFont = getAvailableDevanagariFont();
                     StyleConstants.setFontFamily(attrs, devanagariFont);
                     StyleConstants.setFontSize(attrs, 14);
-                    StyleConstants.setForeground(attrs, new Color(255, 255, 255));
-                    StyleConstants.setBackground(attrs, new Color(0, 0, 0));
+                    //StyleConstants.setForeground(attrs, new Color(255, 255, 255)); // White foreground
+                    //StyleConstants.setBackground(attrs, new Color(0, 0, 0)); // Black background
                     doc.setCharacterAttributes(0, doc.getLength(), attrs, true);
                     
                     appendToOutputArea("Loaded URL: " + url + "\n");
@@ -399,11 +409,13 @@ public class WebElementInspector extends javax.swing.JFrame {
                 String devanagariFont = getAvailableDevanagariFont();
                 StyleConstants.setFontFamily(attrs, devanagariFont);
                 StyleConstants.setFontSize(attrs, 14);
-                StyleConstants.setForeground(attrs, new Color(255, 255, 255));
-                StyleConstants.setBackground(attrs, new Color(0, 0, 0));
+                //StyleConstants.setForeground(attrs, new Color(255, 255, 255)); // White foreground
+                //StyleConstants.setBackground(attrs, new Color(0, 0, 0)); // Black background
                 System.out.println("Appending text: " + text); // Debug the raw text
                 doc.insertString(doc.getLength(), text, attrs);
                 outputArea.setCaretPosition(doc.getLength());
+                outputArea.setBackground(new Color(0, 0, 0)); // Reinforce black background
+                outputArea.setForeground(new Color(255, 255, 255)); // Reinforce white foreground
             } catch (BadLocationException e) {
                 System.out.println("Error appending to outputArea: " + e.getMessage());
             }
@@ -711,8 +723,8 @@ public class WebElementInspector extends javax.swing.JFrame {
                 String devanagariFont = getAvailableDevanagariFont();
                 StyleConstants.setFontFamily(attrs, devanagariFont);
                 StyleConstants.setFontSize(attrs, 14);
-                StyleConstants.setForeground(attrs, new Color(255, 255, 255));
-                StyleConstants.setBackground(attrs, new Color(0, 0, 0));
+                //StyleConstants.setForeground(attrs, new Color(255, 255, 255)); // White foreground
+                //StyleConstants.setBackground(attrs, new Color(0, 0, 0)); // Black background
 
                 doc.insertString(doc.getLength(), "\n----\nStored in repository as: " + elementId + "\nElement Details:\n", attrs);
 
@@ -768,6 +780,7 @@ public class WebElementInspector extends javax.swing.JFrame {
                         addButton.setForeground(Color.WHITE);
                         addButton.addActionListener(e -> {
                             appendToOutputArea("Element added to the repository\n");
+                            CreateTestSuite.addWebElementToRepository(elementId, finalXPath);
                         });
                         Style buttonStyle = doc.addStyle("button" + System.currentTimeMillis(), null);
                         StyleConstants.setComponent(buttonStyle, copyButton);
@@ -782,6 +795,8 @@ public class WebElementInspector extends javax.swing.JFrame {
                     }
                 }
                 outputArea.setCaretPosition(doc.getLength());
+                outputArea.setBackground(new Color(0, 0, 0)); // Reinforce black background
+                outputArea.setForeground(new Color(255, 255, 255)); // Reinforce white foreground
             } catch (BadLocationException e) {
                 System.out.println("Error appending element details: " + e.getMessage());
             }
