@@ -1485,7 +1485,7 @@ public class CreateTestSuite extends javax.swing.JFrame {
         tableAddOR.editCellAt(tableAddOR.getRowCount()-1, 0);
         tableAddOR.requestFocus();
         elmNameTxt.requestFocusInWindow();
-        retrieveTestElmList();
+        //retrieveTestElmList();
     }
     
     public static void setTableColWidthForCreateRegSuiteTable(){
