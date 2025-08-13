@@ -36,6 +36,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.JSeparator;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
@@ -203,22 +204,23 @@ public class WebElementInspector extends javax.swing.JFrame {
                 .addGap(1, 1, 1))
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(urlLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(urlField, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(loadButton)
-                            .addComponent(inspectButton)
-                            .addComponent(clearButton))))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
-                .addGap(1, 1, 1))
-        );
+                .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(12, 12, 12)
+                            .addComponent(urlLabel))
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(urlField, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(loadButton)
+                                .addComponent(inspectButton)
+                                .addComponent(clearButton))))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
+                    .addGap(1, 1, 1))
+            );
+
 
         getAccessibleContext().setAccessibleParent(this);
 
@@ -226,7 +228,7 @@ public class WebElementInspector extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loadButtonActionPerformed(ActionEvent evt) {//GEN-First:event_loadButtonActionPerformed
+    private void loadButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
         System.out.println("Load URL button clicked: " + urlField.getText());
         
         // Disable all buttons immediately on the EDT
@@ -306,7 +308,7 @@ public class WebElementInspector extends javax.swing.JFrame {
         });
     }                                           
 
-    private void urlFieldActionPerformed(ActionEvent evt) {//GEN-First:event_urlFieldActionPerformed
+    private void urlFieldActionPerformed(ActionEvent evt) {//GEN-FIRST:event_urlFieldActionPerformed
         // TODO add your handling code here:
     }                                        
 
@@ -320,12 +322,12 @@ public class WebElementInspector extends javax.swing.JFrame {
         loadButton.setForeground(new java.awt.Color(255,255,255));
     }                                      
 
-    private void clearButtonMouseEntered(MouseEvent evt) {//GEN-First:event_clearButtonMouseEntered
+    private void clearButtonMouseEntered(MouseEvent evt) {//GEN-FIRST:event_clearButtonMouseEntered
         clearButton.setBackground(new java.awt.Color(250, 128, 114));
         clearButton.setForeground(new java.awt.Color(0,0,0));
     }                                        
 
-    private void clearButtonMouseExited(MouseEvent evt) {//GEN-First:event_clearButtonMouseExited
+    private void clearButtonMouseExited(MouseEvent evt) {//GEN-FIRST:event_clearButtonMouseExited
        clearButton.setBackground(new java.awt.Color(0,0,0));
        clearButton.setForeground(new java.awt.Color(255,255,255));
     }                                       
@@ -340,7 +342,7 @@ public class WebElementInspector extends javax.swing.JFrame {
         inspectButton.setForeground(new java.awt.Color(255, 255, 255));
     }                                         
 
-    private void formWindowOpened(WindowEvent evt) {//GEN-First:event_formWindowOpened
+    private void formWindowOpened(WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         Image titleIcon = Toolkit.getDefaultToolkit().getImage(constants.userDir+"/icons/bolt.jpg");
         this.setIconImage(titleIcon);
     }                                 
@@ -726,7 +728,16 @@ public class WebElementInspector extends javax.swing.JFrame {
                 //StyleConstants.setForeground(attrs, new Color(255, 255, 255)); // White foreground
                 //StyleConstants.setBackground(attrs, new Color(0, 0, 0)); // Black background
 
-                doc.insertString(doc.getLength(), "\n----\nStored in repository as: " + elementId + "\nElement Details:\n", attrs);
+                // Insert a JSeparator to mimic an HTML <hr> separator
+                JSeparator separator = new JSeparator(JSeparator.HORIZONTAL);
+                separator.setForeground(new Color(255, 153, 153)); // Match outputArea text color
+                separator.setBackground(new Color(0, 0, 0)); // Match outputArea background
+                separator.setPreferredSize(new Dimension(outputArea.getWidth() - 20, 2)); // Adjust width to fit
+                Style separatorStyle = doc.addStyle("separator" + System.currentTimeMillis(), null);
+                StyleConstants.setComponent(separatorStyle, separator);
+                doc.insertString(doc.getLength(), "\n", attrs); // Add newline before separator
+                doc.insertString(doc.getLength(), " ", separatorStyle); // Insert separator
+                doc.insertString(doc.getLength(), "\nStored in repository as: " + elementId + "\nElement Details:\n", attrs);
 
                 String[] lines = parsedDetails.split("\n");
                 String relativeXPath = "";
