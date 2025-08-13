@@ -73,7 +73,7 @@ public class WebElementExtractor {
         protected boolean isDisabled = false;
         private int arc = 8;
         private int shadowOffset = 1;
-
+        
         public CustomButton(String text) {
             this(text, 12, 1, null, null);
         }
@@ -370,6 +370,7 @@ public class WebElementExtractor {
                         addButton.setForeground(Color.WHITE);
                         addButton.addActionListener(e -> {
                             appendToOutputArea("Element added to the repository\n");
+                            //CreateTestSuite.addWebElementToRepository(elementId,finalXPath);
                         });
                         Style buttonStyle = doc.addStyle("button" + System.currentTimeMillis(), null);
                         StyleConstants.setComponent(buttonStyle, copyButton);
@@ -777,5 +778,11 @@ public class WebElementExtractor {
                 }
             }
         });
+    }
+    
+    public static void main(String[] args) {
+        System.out.println("Starting application");
+        //SwingUtilities.invokeLater(WebElementInspectorGUI::new);
+        SwingUtilities.invokeLater(WebElementExtractor::new);
     }
 }
