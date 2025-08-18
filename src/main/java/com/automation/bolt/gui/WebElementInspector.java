@@ -195,40 +195,40 @@ public class WebElementInspector extends javax.swing.JFrame {
                         .addGap(12, 12, 12)
                         .addComponent(urlLabel)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(urlField, GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
+                        .addComponent(urlField, GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(loadButton)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(inspectButton)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(clearButton)))
-                .addGap(1, 1, 1))
+                .addContainerGap())
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(12, 12, 12)
-                            .addComponent(urlLabel))
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(urlField, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(loadButton)
-                                .addComponent(inspectButton)
-                                .addComponent(clearButton))))
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
-                    .addGap(1, 1, 1))
-            );
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(urlLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(urlField, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(loadButton)
+                            .addComponent(inspectButton)
+                            .addComponent(clearButton))))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
+                .addGap(1, 1, 1))
+        );
 
         getAccessibleContext().setAccessibleParent(this);
 
-        setSize(new Dimension(870, 336));
+        setSize(new Dimension(646, 485));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loadButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
+    private void loadButtonActionPerformed(ActionEvent evt) {                                           
         System.out.println("Load URL button clicked: " + urlField.getText());
         
         // Disable all buttons immediately on the EDT
