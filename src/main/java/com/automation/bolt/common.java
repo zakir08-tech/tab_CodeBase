@@ -722,6 +722,7 @@ public class common extends userDefineTest{
         int getGroupIndex =0;
         LinkedHashMap<Integer, Boolean> gStartMap = new LinkedHashMap<>();
         LinkedHashMap<Integer, Boolean> gCloseMap = new LinkedHashMap<>();
+        String[] testDataArry = null;
         
         for (int i = rowNum; i <=testFlowRows; i++) {
             testSteps = new ArrayList<String>();
@@ -804,6 +805,7 @@ public class common extends userDefineTest{
             	for(int gr=1; gr<=Integer.valueOf(getIteration);gr++) {
             		for(String gText : groupingTestSteps) {
             			testSteps =new ArrayList<String>();
+            			gText = replaceFirstAndLastBrackets(gText);
             			String[] gList = gText.split(",");
             			
             			testId = gList[0].trim().replaceAll("[\\[\\]\\s]", "");
@@ -813,10 +815,15 @@ public class common extends userDefineTest{
             				
                         testStep = gList[1].replaceAll("[\\[\\]\\s]", "");
                         testElement = gList[2].replaceAll("[\\[\\]\\s]", "");
-                        testData = gList[3].trim().replaceAll("[\\[\\]]", "");
+                        //testData = gList[3].trim().replaceAll("[\\[\\]]", "");
+                        testData = gList[3].trim();
                         
-                        String[] testDataArry = testData.split("[|]");
-                        
+                        if(!testStep.contentEquals("USER_DEFINE")) {
+                        	testDataArry = testData.split("[|]");
+                        }else {
+                        	testDataArry[0] = testData;
+                        }
+                       	
                         testDescription = gList[4].trim().replaceAll("[\\[\\]]", "");
                         if(testDescription.contentEquals("]")) {
                         	testDescription ="";
@@ -852,6 +859,21 @@ public class common extends userDefineTest{
         }
     }
 	
+    public static String replaceFirstAndLastBrackets(String str) {
+        // Find the index of the first '['
+        int firstBracketIndex = str.indexOf('[');
+        if (firstBracketIndex == -1) return str; // No '[' found, return original string
+
+        // Find the index of the last ']'
+        int lastBracketIndex = str.lastIndexOf(']');
+        if (lastBracketIndex == -1) return str; // No ']' found, return original string
+
+        // Replace first '[' and last ']' by concatenating substrings
+        return str.substring(0, firstBracketIndex) +
+               str.substring(firstBracketIndex + 1, lastBracketIndex) +
+               str.substring(lastBracketIndex + 1);
+    }
+    
     public static String checkForUserDefineSolution(String setText) {
     	String getUserDefineProperties = null; 
     	String getMethodName =null;
