@@ -454,12 +454,12 @@ public class WebElementInspector extends javax.swing.JFrame {
                     "try {" +
                     "  console.log('Initializing listeners...');" +
                     "  window.elementDetails = null;" +
-                    "  window.escapeText = function(text) {" +
+                    "  window.escapeXPathString = function(text) {" +
                     "    try {" +
                     "      if (!text) return '';" +
-                    "      return text.replace(/&/g, '&amp;').replace(/\"/g, '\\\\\"').replace(/'/g, \"\\\\'\").replace(/</g, '&lt;').replace(/>/g, '&gt;');" +
+                    "      return text.replace(/\"/g, '\\\\\"');" +
                     "    } catch (err) {" +
-                    "      console.error('escapeText error: ' + err.message);" +
+                    "      console.error('escapeXPathString error: ' + err.message);" +
                     "      return '';" +
                     "    }" +
                     "  };" +
@@ -500,6 +500,17 @@ public class WebElementInspector extends javax.swing.JFrame {
                     "      return truncated.substring(0, lastSpaceIndex).trim();" +
                     "    } catch (err) {" +
                     "      console.error('getValueUpToLastSpace error: ' + err.message);" +
+                    "      return '';" +
+                    "    }" +
+                    "  };" +
+                    "  window.getValueUpToFirstSpace = function(value) {" +
+                    "    try {" +
+                    "      if (!value) return '';" +
+                    "      var spaceIndex = value.indexOf(' ');" +
+                    "      if (spaceIndex === -1) return value.trim();" +
+                    "      return value.substring(0, spaceIndex).trim();" +
+                    "    } catch (err) {" +
+                    "      console.error('getValueUpToFirstSpace error: ' + err.message);" +
                     "      return '';" +
                     "    }" +
                     "  };" +
@@ -545,7 +556,7 @@ public class WebElementInspector extends javax.swing.JFrame {
                     "        }" +
                     "        var tag = current.tagName.toLowerCase();" +
                     "        var isSvg = current.namespaceURI === 'http://www.w3.org/2000/svg';" +
-                    "        var segment = isSvg ? '*[local-name()=\"' + tag + '\"]' : tag;" +
+                    "        var segment = isSvg ? '*[local-name()=\"' + tag + '\"]': tag;" +
                     "        segment = index > 0 ? segment + '[' + index + ']' : segment;" +
                     "        paths.unshift(segment);" +
                     "        current = current.parentNode;" +
@@ -556,6 +567,24 @@ public class WebElementInspector extends javax.swing.JFrame {
                     "      return '';" +
                     "    }" +
                     "  };" +
+                    "  window.findLastTextDescendant = function(element) {" +
+                    "    try {" +
+                    "      for (var i = element.children.length - 1; i >= 0; i--) {" +
+                    "        var childLast = window.findLastTextDescendant(element.children[i]);" +
+                    "        if (childLast) {" +
+                    "          return childLast;" +
+                    "        }" +
+                    "      }" +
+                    "      var directText = Array.from(element.childNodes).filter(n => n.nodeType === 3).map(n => n.nodeValue.trim()).join(' ').trim();" +
+                    "      if (directText.length > 0) {" +
+                    "        return {el: element, text: window.normalizeText(directText)};" +
+                    "      }" +
+                    "      return null;" +
+                    "    } catch (err) {" +
+                    "      console.error('findLastTextDescendant error: ' + err.message);" +
+                    "      return null;" +
+                    "    }" +
+                    "  };" +
                     "  window.getRelativeXPath = function(element) {" +
                     "    try {" +
                     "      if (!element || !element.tagName) return '';" +
@@ -564,121 +593,254 @@ public class WebElementInspector extends javax.swing.JFrame {
                     "      var predicates = [];" +
                     "      if (isSvg) {" +
                     "        predicates.push('local-name()=\"' + tag + '\"');" +
-                    "      }" +
-                    "      var attrsToCheck = ['id', 'name', 'value', 'data-icon', 'aria-label', 'role', 'class', 'd', 'transform', 'x', 'y', 'width', 'height', 'viewBox'];" +
-                    "      var longAttr = null;" +
-                    "      var longAttrName = null;" +
-                    "      for (var i = 0; i < attrsToCheck.length; i++) {" +
-                    "        var attr = attrsToCheck[i];" +
-                    "        var attrValue = element.getAttribute(attr);" +
-                    "        if (attrValue && attrValue.trim()) {" +
-                    "          var trimmedValue = attrValue.trim();" +
-                    "          var noSpacesLength = window.getAttributeLengthExcludingSpaces(trimmedValue);" +
-                    "          if (isSvg) {" +
-                    "            longAttr = noSpacesLength > 100 ? window.getValueUpToLastSpace(trimmedValue, 100) : trimmedValue;" +
-                    "            longAttrName = attr;" +
-                    "            break;" +
-                    "          } else if (noSpacesLength > 100) {" +
-                    "            longAttr = window.getValueUpToFirstSpace(trimmedValue);" +
-                    "            longAttrName = attr;" +
-                    "            break;" +
-                    "          }" +
-                    "        }" +
-                    "      }" +
-                    "      if (longAttrName && longAttr) {" +
-                    "        var escapedValue = window.escapeText(longAttr);" +
-                    "        if (isSvg) {" +
-                    "          predicates.push('contains(@*[local-name()=\"' + longAttrName + '\"], \"' + escapedValue + '\")');" +
-                    "        } else {" +
-                    "          predicates.push('contains(@' + longAttrName + ', \"' + escapedValue + '\")');" +
-                    "        }" +
-                    "      } else {" +
-                    "        if (element.id && element.id.trim()) {" +
-                    "          var idValue = window.escapeText(element.id.trim());" +
-                    "          predicates.push(isSvg ? 'contains(@*[local-name()=\"id\"], \"' + idValue + '\")' : 'contains(@id, \"' + idValue + '\")');" +
-                    "        } else if (element.getAttribute && element.getAttribute('name') && element.getAttribute('name').trim()) {" +
-                    "          var nameValue = window.escapeText(element.getAttribute('name').trim());" +
-                    "          predicates.push(isSvg ? 'contains(@*[local-name()=\"name\"], \"' + nameValue + '\")' : 'contains(@name, \"' + nameValue + '\")');" +
-                    "        } else if (element.getAttribute && element.getAttribute('value') && element.getAttribute('value').trim()) {" +
-                    "          var valueValue = window.escapeText(element.getAttribute('value').trim());" +
-                    "          predicates.push(isSvg ? 'contains(@*[local-name()=\"value\"], \"' + valueValue + '\")' : 'contains(@value, \"' + valueValue + '\")');" +
-                    "        } else if (element.getAttribute && element.getAttribute('data-icon') && element.getAttribute('data-icon').trim()) {" +
-                    "          var dataIconValue = window.escapeText(element.getAttribute('data-icon').trim());" +
-                    "          predicates.push(isSvg ? 'contains(@*[local-name()=\"data-icon\"], \"' + dataIconValue + '\")' : 'contains(@data-icon, \"' + dataIconValue + '\")');" +
-                    "        } else if (element.getAttribute && element.getAttribute('aria-label') && element.getAttribute('aria-label').trim()) {" +
-                    "          var ariaLabelValue = window.escapeText(element.getAttribute('aria-label').trim());" +
-                    "          predicates.push(isSvg ? 'contains(@*[local-name()=\"aria-label\"], \"' + ariaLabelValue + '\")' : 'contains(@aria-label, \"' + ariaLabelValue + '\")');" +
-                    "        } else if (element.getAttribute && element.getAttribute('role') && element.getAttribute('role').trim()) {" +
-                    "          var roleValue = window.escapeText(element.getAttribute('role').trim());" +
-                    "          predicates.push(isSvg ? 'contains(@*[local-name()=\"role\"], \"' + roleValue + '\")' : 'contains(@role, \"' + roleValue + '\")');" +
-                    "        } else if (element.className && element.className.trim()) {" +
-                    "          var classValue = window.escapeText(element.className.trim());" +
-                    "          predicates.push(isSvg ? 'contains(@*[local-name()=\"class\"], \"' + classValue + '\")' : 'contains(@class, \"' + classValue + '\")');" +
-                    "        }" +
-                    "      }" +
-                    "      if (element.getAttributeNS && element.getAttributeNS('http://www.w3.org/1999/xlink', 'href') && element.getAttributeNS('http://www.w3.org/1999/xlink', 'href').trim()) {" +
-                    "        var hrefValue = element.getAttributeNS('http://www.w3.org/1999/xlink', 'href').trim();" +
-                    "        var noSpacesLength = window.getAttributeLengthExcludingSpaces(hrefValue);" +
-                    "        var escapedHref = window.escapeText(isSvg && noSpacesLength > 100 ? window.getValueUpToLastSpace(hrefValue, 100) : hrefValue);" +
-                    "        predicates.push('contains(@*[local-name()=\"href\" and namespace-uri()=\"http://www.w3.org/1999/xlink\"], \"' + escapedHref + '\")');" +
-                    "      }" +
-                    "      var text = '';" +
-                    "      if (element.textContent && window.normalizeText(element.textContent).trim().length > 0) {" +
-                    "        text = window.normalizeText(element.textContent).trim();" +
-                    "      } else if (isSvg) {" +
-                    "        var textNodes = element.querySelectorAll('text');" +
-                    "        if (textNodes.length > 0) {" +
-                    "          text = window.normalizeText(textNodes[0].textContent).trim();" +
-                    "        }" +
-                    "      }" +
-                    "      if (text && text.length > 0) {" +
-                    "        var escapedText = window.escapeText(text);" +
-                    "        predicates.push('contains(normalize-space(text()), \"' + escapedText + '\")');" +
-                    "      }" +
-                    "      var xpath = '//' + (isSvg ? '*' : tag);" +
-                    "      if (isSvg) {" +
-                    "        var parentPredicates = [];" +
-                    "        var parent = element.parentNode;" +
-                    "        if (parent && parent.nodeType === 1) {" +
-                    "          var parentTag = parent.tagName.toLowerCase();" +
-                    "          var parentIsSvg = parent.namespaceURI === 'http://www.w3.org/2000/svg';" +
-                    "          if (parentIsSvg) {" +
-                    "            parentPredicates.push('local-name()=\"' + parentTag + '\"');" +
-                    "          }" +
-                    "          for (var i = 0; i < attrsToCheck.length; i++) {" +
-                    "            var attr = attrsToCheck[i];" +
-                    "            var attrValue = parent.getAttribute(attr);" +
-                    "            if (attrValue && attrValue.trim()) {" +
-                    "              var trimmedValue = attrValue.trim();" +
-                    "              var noSpacesLength = window.getAttributeLengthExcludingSpaces(trimmedValue);" +
-                    "              var escapedValue = window.escapeText(noSpacesLength > 100 ? window.getValueUpToFirstSpace(trimmedValue) : trimmedValue);" +
-                    "              if (parentIsSvg) {" +
-                    "                parentPredicates.push('contains(@*[local-name()=\"' + attr + '\"], \"' + escapedValue + '\")');" +
-                    "              } else {" +
-                    "                parentPredicates.push('contains(@' + attr + ', \"' + escapedValue + '\")');" +
-                    "              }" +
+                    "        var attrsToCheck = ['id', 'name', 'value', 'data-icon', 'aria-label', 'role', 'class', 'd', 'transform', 'x', 'y', 'width', 'height', 'viewBox'];" +
+                    "        var longAttr = null;" +
+                    "        var longAttrName = null;" +
+                    "        for (var i = 0; i < attrsToCheck.length; i++) {" +
+                    "          var attr = attrsToCheck[i];" +
+                    "          var attrValue = element.getAttribute(attr);" +
+                    "          if (attrValue && attrValue.trim()) {" +
+                    "            var trimmedValue = attrValue.trim();" +
+                    "            var noSpacesLength = window.getAttributeLengthExcludingSpaces(trimmedValue);" +
+                    "            if (noSpacesLength > 100) {" +
+                    "              longAttr = window.getValueUpToLastSpace(trimmedValue, 100);" +
+                    "              longAttrName = attr;" +
                     "              break;" +
                     "            }" +
                     "          }" +
-                    "          if (parent.getAttributeNS && parent.getAttributeNS('http://www.w3.org/1999/xlink', 'href') && parent.getAttributeNS('http://www.w3.org/1999/xlink', 'href').trim()) {" +
-                    "            var parentHrefValue = parent.getAttributeNS('http://www.w3.org/1999/xlink', 'href').trim();" +
-                    "            var noSpacesLength = window.getAttributeLengthExcludingSpaces(parentHrefValue);" +
-                    "            var escapedHref = window.escapeText(noSpacesLength > 100 ? window.getValueUpToFirstSpace(parentHrefValue) : parentHrefValue);" +
-                    "            parentPredicates.push('contains(@*[local-name()=\"href\" and namespace-uri()=\"http://www.w3.org/1999/xlink\"], \"' + escapedHref + '\")');" +
-                    "          }" +
-                    "          xpath = '//' + (parentIsSvg ? '*' : parentTag);" +
-                    "          if (parentPredicates.length > 0) {" +
-                    "            xpath += '[' + parentPredicates.join(' and ') + ']';" +
-                    "          } else if (parentIsSvg) {" +
-                    "            xpath += '[local-name()=\"' + parentTag + '\"]';" +
-                    "          }" +
-                    "          xpath += '//' + (isSvg ? '*' : tag);" +
                     "        }" +
-                    "      }" +
-                    "      if (predicates.length > 0) {" +
-                    "        xpath += '[' + predicates.join(' and ') + ']';" +
-                    "      } else if (isSvg) {" +
-                    "        xpath += '[local-name()=\"' + tag + '\"]';" +
+                    "        if (longAttrName && longAttr) {" +
+                    "          var escapedValue = window.escapeXPathString(longAttr);" +
+                    "          predicates.push('contains(@*[local-name()=\"' + longAttrName + '\"], \"' + escapedValue + '\")');" +
+                    "        } else {" +
+                    "          for (var i = 0; i < attrsToCheck.length; i++) {" +
+                    "            var attr = attrsToCheck[i];" +
+                    "            var attrValue = element.getAttribute(attr);" +
+                    "            if (attrValue && attrValue.trim()) {" +
+                    "              var trimmedValue = attrValue.trim();" +
+                    "              var escapedValue = window.escapeXPathString(trimmedValue);" +
+                    "              predicates.push('contains(@*[local-name()=\"' + attr + '\"], \"' + escapedValue + '\")');" +
+                    "              break;" +
+                    "            }" +
+                    "          }" +
+                    "        }" +
+                    "        if (element.getAttributeNS && element.getAttributeNS('http://www.w3.org/1999/xlink', 'href') && element.getAttributeNS('http://www.w3.org/1999/xlink', 'href').trim()) {" +
+                    "          var hrefValue = element.getAttributeNS('http://www.w3.org/1999/xlink', 'href').trim();" +
+                    "          var noSpacesLength = window.getAttributeLengthExcludingSpaces(hrefValue);" +
+                    "          var escapedHref = window.escapeXPathString(noSpacesLength > 100 ? window.getValueUpToLastSpace(hrefValue, 100) : hrefValue);" +
+                    "          predicates.push('contains(@*[local-name()=\"href\" and namespace-uri()=\"http://www.w3.org/1999/xlink\"], \"' + escapedHref + '\")');" +
+                    "        }" +
+                    "        var text = '';" +
+                    "        var textElement = null;" +
+                    "        var directText = '';" +
+                    "        for (var i = 0; i < element.childNodes.length; i++) {" +
+                    "          var child = element.childNodes[i];" +
+                    "          if (child.nodeType === 3) {" +
+                    "            directText += child.nodeValue;" +
+                    "          } else if (child.nodeType === 1) {" +
+                    "            var childText = window.normalizeText(child.textContent).trim();" +
+                    "            if (childText.length > 0) {" +
+                    "              if (child.tagName.toLowerCase() === 'span') {" +
+                    "                text = childText;" +
+                    "                textElement = child;" +
+                    "                break;" +
+                    "              } else if (!textElement) {" +
+                    "                text = childText;" +
+                    "                textElement = child;" +
+                    "              }" +
+                    "            }" +
+                    "          }" +
+                    "        }" +
+                    "        var normalizedDirectText = window.normalizeText(directText).trim();" +
+                    "        if (normalizedDirectText.length > 0 && !textElement) {" +
+                    "          text = normalizedDirectText;" +
+                    "        }" +
+                    "        var xpath = '//*';" +
+                    "        if (predicates.length > 0) {" +
+                    "          xpath += '[' + predicates.join(' and ') + ']';" +
+                    "        } else {" +
+                    "          xpath += '[local-name()=\"' + tag + '\"]';" +
+                    "        }" +
+                    "        if (text.length > 0 && textElement) {" +
+                    "          var childTag = textElement.tagName.toLowerCase();" +
+                    "          var isChildSvg = textElement.namespaceURI === 'http://www.w3.org/2000/svg';" +
+                    "          xpath += '//' + (isChildSvg ? '*' : childTag);" +
+                    "          var childPredicates = [];" +
+                    "          if (isChildSvg) {" +
+                    "            childPredicates.push('local-name()=\"' + childTag + '\"');" +
+                    "          }" +
+                    "          childPredicates.push('contains(normalize-space(text()), \"' + window.escapeXPathString(text) + '\")');" +
+                    "          if (childPredicates.length > 0) {" +
+                    "            xpath += '[' + childPredicates.join(' and ') + ']';" +
+                    "          }" +
+                    "        } else if (text.length > 0) {" +
+                    "          predicates.push('contains(normalize-space(text()), \"' + window.escapeXPathString(text) + '\")');" +
+                    "          xpath = '//*' + '[' + predicates.join(' and ') + ']';" +
+                    "        }" +
+                    "        if (isSvg) {" +
+                    "          var parentPredicates = [];" +
+                    "          var parent = element.parentNode;" +
+                    "          if (parent && parent.nodeType === 1) {" +
+                    "            var parentTag = parent.tagName.toLowerCase();" +
+                    "            var parentIsSvg = parent.namespaceURI === 'http://www.w3.org/2000/svg';" +
+                    "            if (parentIsSvg) {" +
+                    "              parentPredicates.push('local-name()=\"' + parentTag + '\"');" +
+                    "            }" +
+                    "            for (var i = 0; i < attrsToCheck.length; i++) {" +
+                    "              var attr = attrsToCheck[i];" +
+                    "              var attrValue = parent.getAttribute(attr);" +
+                    "              if (attrValue && attrValue.trim()) {" +
+                    "                var trimmedValue = attrValue.trim();" +
+                    "                var noSpacesLength = window.getAttributeLengthExcludingSpaces(trimmedValue);" +
+                    "                var escapedValue = window.escapeXPathString(noSpacesLength > 100 ? window.getValueUpToFirstSpace(trimmedValue) : trimmedValue);" +
+                    "                if (parentIsSvg) {" +
+                    "                  parentPredicates.push('contains(@*[local-name()=\"' + attr + '\"], \"' + escapedValue + '\")');" +
+                    "                } else {" +
+                    "                  parentPredicates.push('contains(@' + attr + ', \"' + escapedValue + '\")');" +
+                    "                }" +
+                    "                break;" +
+                    "              }" +
+                    "            }" +
+                    "            if (parent.getAttributeNS && parent.getAttributeNS('http://www.w3.org/1999/xlink', 'href') && parent.getAttributeNS('http://www.w3.org/1999/xlink', 'href').trim()) {" +
+                    "              var parentHrefValue = parent.getAttributeNS('http://www.w3.org/1999/xlink', 'href').trim();" +
+                    "              var noSpacesLength = window.getAttributeLengthExcludingSpaces(parentHrefValue);" +
+                    "              var escapedHref = window.escapeXPathString(noSpacesLength > 100 ? window.getValueUpToFirstSpace(parentHrefValue) : parentHrefValue);" +
+                    "              parentPredicates.push('contains(@*[local-name()=\"href\" and namespace-uri()=\"http://www.w3.org/1999/xlink\"], \"' + escapedHref + '\")');" +
+                    "            }" +
+                    "            var parentXPath = '//' + (parentIsSvg ? '*' : parentTag);" +
+                    "            if (parentPredicates.length > 0) {" +
+                    "              parentXPath += '[' + parentPredicates.join(' and ') + ']';" +
+                    "            } else if (parentIsSvg) {" +
+                    "              parentXPath += '[local-name()=\"' + parentTag + '\"]';" +
+                    "            }" +
+                    "            xpath = parentXPath + '//' + xpath;" +
+                    "          }" +
+                    "        }" +
+                    "      } else {" +
+                    "        var lastTextDescendant = window.findLastTextDescendant(element);" +
+                    "        var text = '';" +
+                    "        var textElement = null;" +
+                    "        if (lastTextDescendant) {" +
+                    "          text = lastTextDescendant.text;" +
+                    "          textElement = lastTextDescendant.el;" +
+                    "        }" +
+                    "        var usedText = text.length > 0;" +
+                    "        var xpath = '';" +
+                    "        var predicates = [];" +
+                    "        if (usedText && !window.hasSpacesOrNewlines(text)) {" +
+                    "          var childTag = textElement.tagName.toLowerCase();" +
+                    "          xpath = '//' + childTag;" +
+                    "          predicates.push('normalize-space(text())=\"' + window.escapeXPathString(text) + '\"');" +
+                    "          xpath += '[' + predicates.join(' and ') + ']';" +
+                    "        } else {" +
+                    "          var foundAttr = false;" +
+                    "          var attrValue = element.getAttribute('id');" +
+                    "          if (attrValue && attrValue.trim()) {" +
+                    "            var trimmedValue = attrValue.trim();" +
+                    "            var noSpacesLength = window.getAttributeLengthExcludingSpaces(trimmedValue);" +
+                    "            var valueToUse = noSpacesLength > 100 ? window.getValueUpToFirstSpace(trimmedValue) : trimmedValue;" +
+                    "            predicates.push('contains(@id, \"' + window.escapeXPathString(valueToUse) + '\")');" +
+                    "            foundAttr = true;" +
+                    "          }" +
+                    "          if (!foundAttr) {" +
+                    "            var priorAttrs = ['aria-label', 'name', 'value'];" +
+                    "            for (var i = 0; i < priorAttrs.length; i++) {" +
+                    "              var attr = priorAttrs[i];" +
+                    "              attrValue = element.getAttribute(attr);" +
+                    "              if (attrValue && attrValue.trim()) {" +
+                    "                trimmedValue = attrValue.trim();" +
+                    "                noSpacesLength = window.getAttributeLengthExcludingSpaces(trimmedValue);" +
+                    "                valueToUse = noSpacesLength > 100 ? window.getValueUpToFirstSpace(trimmedValue) : trimmedValue;" +
+                    "                predicates.push('contains(@' + attr + ', \"' + window.escapeXPathString(valueToUse) + '\")');" +
+                    "                foundAttr = true;" +
+                    "                break;" +
+                    "              }" +
+                    "            }" +
+                    "          }" +
+                    "          if (!foundAttr) {" +
+                    "            attrValue = element.getAttribute('class');" +
+                    "            if (attrValue && attrValue.trim()) {" +
+                    "              trimmedValue = attrValue.trim();" +
+                    "              noSpacesLength = window.getAttributeLengthExcludingSpaces(trimmedValue);" +
+                    "              valueToUse = noSpacesLength > 100 ? window.getValueUpToFirstSpace(trimmedValue) : trimmedValue;" +
+                    "              predicates.push('contains(@class, \"' + window.escapeXPathString(valueToUse) + '\")');" +
+                    "              foundAttr = true;" +
+                    "            }" +
+                    "          }" +
+                    "          if (!foundAttr) {" +
+                    "            var allAttrs = element.attributes;" +
+                    "            for (var i = 0; i < allAttrs.length; i++) {" +
+                    "              var attr = allAttrs[i].name;" +
+                    "              if (['id', 'aria-label', 'name', 'value', 'class'].includes(attr)) continue;" +
+                    "              var value = allAttrs[i].value.trim();" +
+                    "              if (value) {" +
+                    "                var query = '//' + tag + '[@' + attr + '=\"' + window.escapeXPathString(value) + '\"]';" +
+                    "                var result = document.evaluate(query, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);" +
+                    "                if (result.snapshotLength === 1) {" +
+                    "                  predicates.push('@' + attr + '=\"' + window.escapeXPathString(value) + '\"');" +
+                    "                  foundAttr = true;" +
+                    "                  break;" +
+                    "                }" +
+                    "              }" +
+                    "            }" +
+                    "          }" +
+                    "          if (element.getAttributeNS && element.getAttributeNS('http://www.w3.org/1999/xlink', 'href') && element.getAttributeNS('http://www.w3.org/1999/xlink', 'href').trim()) {" +
+                    "            var hrefValue = element.getAttributeNS('http://www.w3.org/1999/xlink', 'href').trim();" +
+                    "            var noSpacesLength = window.getAttributeLengthExcludingSpaces(hrefValue);" +
+                    "            var escapedHref = window.escapeXPathString(noSpacesLength > 100 ? window.getValueUpToFirstSpace(hrefValue) : hrefValue);" +
+                    "            predicates.push('contains(@*[local-name()=\"href\" and namespace-uri()=\"http://www.w3.org/1999/xlink\"], \"' + escapedHref + '\")');" +
+                    "            foundAttr = true;" +
+                    "          }" +
+                    "          xpath = '//' + tag;" +
+                    "          if (predicates.length > 0) {" +
+                    "            xpath += '[' + predicates.join(' and ') + ']';" +
+                    "          }" +
+                    "        }" +
+                    "        var result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);" +
+                    "        if (result.snapshotLength > 1) {" +
+                    "          var allAttrs = element.attributes;" +
+                    "          for (var i = 0; i < allAttrs.length; i++) {" +
+                    "            var attr = allAttrs[i].name;" +
+                    "            if (['id', 'aria-label', 'name', 'value', 'class'].includes(attr)) continue;" +
+                    "            var value = allAttrs[i].value.trim();" +
+                    "            if (value) {" +
+                    "              var testXPath = xpath + '[@' + attr + '=\"' + window.escapeXPathString(value) + '\"]';" +
+                    "              var testResult = document.evaluate(testXPath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);" +
+                    "              if (testResult.snapshotLength === 1) {" +
+                    "                xpath = testXPath;" +
+                    "                break;" +
+                    "              }" +
+                    "            }" +
+                    "          }" +
+                    "        }" +
+                    "        if (result.snapshotLength > 1) {" +
+                    "          var parent = element.parentNode;" +
+                    "          if (parent && parent.nodeType === 1) {" +
+                    "            var parentTag = parent.tagName.toLowerCase();" +
+                    "            var parentPredicates = [];" +
+                    "            var parentAttrs = parent.attributes;" +
+                    "            for (var i = 0; i < parentAttrs.length; i++) {" +
+                    "              var attr = parentAttrs[i].name;" +
+                    "              var value = parentAttrs[i].value.trim();" +
+                    "              if (value) {" +
+                    "                var noSpacesLength = window.getAttributeLengthExcludingSpaces(value);" +
+                    "                var valueToUse = noSpacesLength > 100 ? window.getValueUpToFirstSpace(value) : value;" +
+                    "                parentPredicates.push('contains(@' + attr + ', \"' + window.escapeXPathString(valueToUse) + '\")');" +
+                    "                var parentXPath = '//' + parentTag + '[' + parentPredicates.join(' and ') + ']';" +
+                    "                var combinedXPath = parentXPath + xpath;" +
+                    "                var combinedResult = document.evaluate(combinedXPath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);" +
+                    "                if (combinedResult.snapshotLength === 1) {" +
+                    "                  xpath = combinedXPath;" +
+                    "                  break;" +
+                    "                }" +
+                    "              }" +
+                    "            }" +
+                    "            if (parentPredicates.length === 0) {" +
+                    "              var parentXPath = '//' + parentTag;" +
+                    "              xpath = parentXPath + xpath;" +
+                    "            }" +
+                    "          }" +
+                    "        }" +
                     "      }" +
                     "      console.log('Generated relativeXPath: ' + xpath);" +
                     "      return xpath;" +
@@ -784,7 +946,6 @@ public class WebElementInspector extends javax.swing.JFrame {
                             "    return { details: JSON.stringify(result) };" +
                             "  }" +
                             "  return { details: null };" +
-                            "  console.log('Polling result: ' + JSON.stringify(result));" +
                             "} catch (err) {" +
                             "  console.error('Poll error: ' + err.message);" +
                             "  return { details: 'Error: ' + err.message };" +
