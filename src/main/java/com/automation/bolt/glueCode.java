@@ -688,7 +688,7 @@ public class glueCode {
 		
 			Object obj = loadedClass.getDeclaredConstructor().newInstance();
 			Method method = loadedClass.getMethod(getMethodName, String[].class);
-			String[] args =methodArgs.split(",");
+			String[] args =methodArgs.split("[|]");
 			method.invoke(obj, new Object[] {args});
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException exp) {
 			stepSuccess = false;
