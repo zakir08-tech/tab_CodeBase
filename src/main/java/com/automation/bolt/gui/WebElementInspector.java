@@ -590,8 +590,8 @@ public class WebElementInspector extends javax.swing.JFrame {
                     "      if (!element || !element.tagName) return '';" +
                     "      var tag = element.tagName.toLowerCase();" +
                     "      var isSvg = element.namespaceURI === 'http://www.w3.org/2000/svg';" +
-                    "      var predicates = [];" +
                     "      if (isSvg) {" +
+                    "        var predicates = [];" +
                     "        predicates.push('local-name()=\"' + tag + '\"');" +
                     "        var attrsToCheck = ['id', 'name', 'value', 'data-icon', 'aria-label', 'role', 'class', 'd', 'transform', 'x', 'y', 'width', 'height', 'viewBox'];" +
                     "        var longAttr = null;" +
@@ -664,59 +664,62 @@ public class WebElementInspector extends javax.swing.JFrame {
                     "        if (text.length > 0 && textElement) {" +
                     "          var childTag = textElement.tagName.toLowerCase();" +
                     "          var isChildSvg = textElement.namespaceURI === 'http://www.w3.org/2000/svg';" +
-                    "          xpath += '//' + (isChildSvg ? '*' : childTag);" +
+                    "          var childXPath = (isChildSvg ? '*' : childTag);" +
                     "          var childPredicates = [];" +
                     "          if (isChildSvg) {" +
                     "            childPredicates.push('local-name()=\"' + childTag + '\"');" +
                     "          }" +
                     "          childPredicates.push('contains(normalize-space(text()), \"' + window.escapeXPathString(text) + '\")');" +
                     "          if (childPredicates.length > 0) {" +
-                    "            xpath += '[' + childPredicates.join(' and ') + ']';" +
+                    "            xpath += '/' + childXPath + '[' + childPredicates.join(' and ') + ']';" +
+                    "          } else {" +
+                    "            xpath += '/' + childXPath;" +
                     "          }" +
                     "        } else if (text.length > 0) {" +
                     "          predicates.push('contains(normalize-space(text()), \"' + window.escapeXPathString(text) + '\")');" +
                     "          xpath = '//*' + '[' + predicates.join(' and ') + ']';" +
                     "        }" +
-                    "        if (isSvg) {" +
+                    "        var parent = element.parentNode;" +
+                    "        if (parent && parent.nodeType === 1) {" +
+                    "          var parentTag = parent.tagName.toLowerCase();" +
+                    "          var parentIsSvg = parent.namespaceURI === 'http://www.w3.org/2000/svg';" +
                     "          var parentPredicates = [];" +
-                    "          var parent = element.parentNode;" +
-                    "          if (parent && parent.nodeType === 1) {" +
-                    "            var parentTag = parent.tagName.toLowerCase();" +
-                    "            var parentIsSvg = parent.namespaceURI === 'http://www.w3.org/2000/svg';" +
-                    "            if (parentIsSvg) {" +
-                    "              parentPredicates.push('local-name()=\"' + parentTag + '\"');" +
-                    "            }" +
-                    "            for (var i = 0; i < attrsToCheck.length; i++) {" +
-                    "              var attr = attrsToCheck[i];" +
-                    "              var attrValue = parent.getAttribute(attr);" +
-                    "              if (attrValue && attrValue.trim()) {" +
-                    "                var trimmedValue = attrValue.trim();" +
-                    "                var noSpacesLength = window.getAttributeLengthExcludingSpaces(trimmedValue);" +
-                    "                var escapedValue = window.escapeXPathString(noSpacesLength > 100 ? window.getValueUpToFirstSpace(trimmedValue) : trimmedValue);" +
-                    "                if (parentIsSvg) {" +
-                    "                  parentPredicates.push('contains(@*[local-name()=\"' + attr + '\"], \"' + escapedValue + '\")');" +
-                    "                } else {" +
-                    "                  parentPredicates.push('contains(@' + attr + ', \"' + escapedValue + '\")');" +
-                    "                }" +
-                    "                break;" +
-                    "              }" +
-                    "            }" +
-                    "            if (parent.getAttributeNS && parent.getAttributeNS('http://www.w3.org/1999/xlink', 'href') && parent.getAttributeNS('http://www.w3.org/1999/xlink', 'href').trim()) {" +
-                    "              var parentHrefValue = parent.getAttributeNS('http://www.w3.org/1999/xlink', 'href').trim();" +
-                    "              var noSpacesLength = window.getAttributeLengthExcludingSpaces(parentHrefValue);" +
-                    "              var escapedHref = window.escapeXPathString(noSpacesLength > 100 ? window.getValueUpToFirstSpace(parentHrefValue) : parentHrefValue);" +
-                    "              parentPredicates.push('contains(@*[local-name()=\"href\" and namespace-uri()=\"http://www.w3.org/1999/xlink\"], \"' + escapedHref + '\")');" +
-                    "            }" +
-                    "            var parentXPath = '//' + (parentIsSvg ? '*' : parentTag);" +
-                    "            if (parentPredicates.length > 0) {" +
-                    "              parentXPath += '[' + parentPredicates.join(' and ') + ']';" +
-                    "            } else if (parentIsSvg) {" +
-                    "              parentXPath += '[local-name()=\"' + parentTag + '\"]';" +
-                    "            }" +
-                    "            xpath = parentXPath + '//' + xpath;" +
+                    "          if (parentIsSvg) {" +
+                    "            parentPredicates.push('local-name()=\"' + parentTag + '\"');" +
                     "          }" +
+                    "          for (var i = 0; i < attrsToCheck.length; i++) {" +
+                    "            var attr = attrsToCheck[i];" +
+                    "            var attrValue = parent.getAttribute(attr);" +
+                    "            if (attrValue && attrValue.trim()) {" +
+                    "              var trimmedValue = attrValue.trim();" +
+                    "              var noSpacesLength = window.getAttributeLengthExcludingSpaces(trimmedValue);" +
+                    "              var escapedValue = window.escapeXPathString(noSpacesLength > 100 ? window.getValueUpToFirstSpace(trimmedValue) : trimmedValue);" +
+                    "              if (parentIsSvg) {" +
+                    "                parentPredicates.push('contains(@*[local-name()=\"' + attr + '\"], \"' + escapedValue + '\")');" +
+                    "              } else {" +
+                    "                parentPredicates.push('contains(@' + attr + ', \"' + escapedValue + '\")');" +
+                    "              }" +
+                    "              break;" +
+                    "            }" +
+                    "          }" +
+                    "          if (parent.getAttributeNS && parent.getAttributeNS('http://www.w3.org/1999/xlink', 'href') && parent.getAttributeNS('http://www.w3.org/1999/xlink', 'href').trim()) {" +
+                    "            var parentHrefValue = parent.getAttributeNS('http://www.w3.org/1999/xlink', 'href').trim();" +
+                    "            var noSpacesLength = window.getAttributeLengthExcludingSpaces(parentHrefValue);" +
+                    "            var escapedHref = window.escapeXPathString(noSpacesLength > 100 ? window.getValueUpToFirstSpace(parentHrefValue) : parentHrefValue);" +
+                    "            parentPredicates.push('contains(@*[local-name()=\"href\" and namespace-uri()=\"http://www.w3.org/1999/xlink\"], \"' + escapedHref + '\")');" +
+                    "          }" +
+                    "          var parentXPath = '//' + (parentIsSvg ? '*' : parentTag);" +
+                    "          if (parentPredicates.length > 0) {" +
+                    "            parentXPath += '[' + parentPredicates.join(' and ') + ']';" +
+                    "          } else if (parentIsSvg) {" +
+                    "            parentXPath += '[local-name()=\"' + parentTag + '\"]';" +
+                    "          }" +
+                    "          xpath = parentXPath + '/' + xpath.replace(/^\\/\\//, '');" + // Remove leading // to avoid extra slash
                     "        }" +
+                    "        console.log('Generated relativeXPath for SVG: ' + xpath);" +
+                    "        return xpath;" +
                     "      } else {" +
+                    // ... (Non-SVG branch remains unchanged)
                     "        var lastTextDescendant = window.findLastTextDescendant(element);" +
                     "        var text = '';" +
                     "        var textElement = null;" +
