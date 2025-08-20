@@ -1,6 +1,8 @@
 
 /*
- * Updated WebElementInspector.java to fix JavaScript syntax error in elementCapture function and exempt @href and @style attributes for non-SVG element relative XPath generation.
+ * Updated WebElementInspector.java to fix JavaScript syntax error in elementCapture function, 
+ * exempt @href and @style attributes for non-SVG element relative XPath generation,
+ * and align output area equally from left and right sides of the frame.
  */
 package com.automation.bolt.gui;
 
@@ -200,13 +202,10 @@ public class WebElementInspector extends javax.swing.JFrame {
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                    .addGroup(GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(scrollPane))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
                         .addComponent(urlLabel)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(urlField, GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
@@ -215,7 +214,8 @@ public class WebElementInspector extends javax.swing.JFrame {
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(inspectButton)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(clearButton)))
+                        .addComponent(clearButton))
+                    .addComponent(scrollPane))
                 .addContainerGap())
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
