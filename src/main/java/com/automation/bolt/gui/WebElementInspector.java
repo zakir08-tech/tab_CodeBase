@@ -1,5 +1,6 @@
+
 /*
- * Updated WebElementInspector.java with enhanced font handling, error handling, performance optimizations, and cleanup.
+ * Updated WebElementInspector.java to fix JavaScript syntax error in elementCapture function and exempt @href and @style attributes for non-SVG element relative XPath generation.
  */
 package com.automation.bolt.gui;
 
@@ -666,7 +667,7 @@ public class WebElementInspector extends javax.swing.JFrame {
                "      if (isSvg) {" +
                "        var predicates = [];" +
                "        predicates.push('local-name()=\"' + tag + '\"');" +
-               "        var attrsToCheck = ['id', 'name', 'value', 'data-icon', 'aria-label', 'role', 'class', 'd', 'transform', 'x', 'y', 'width', 'height', 'viewBox'];" +
+               "        var attrsToCheck = ['id', 'name', 'value', 'data-icon', 'aria-label', 'role', 'class', 'd', 'transform', 'x', 'y', 'width', 'height', 'viewBox', 'href', 'style'];" +
                "        var longAttr = null;" +
                "        var longAttrName = null;" +
                "        for (var i = 0; i < attrsToCheck.length; i++) {" +
@@ -846,7 +847,8 @@ public class WebElementInspector extends javax.swing.JFrame {
                "            var allAttrs = element.attributes;" +
                "            for (var i = 0; i < allAttrs.length; i++) {" +
                "              var attr = allAttrs[i].name;" +
-               "              if (['id', 'aria-label', 'name', 'value', 'class'].includes(attr)) continue;" +
+               "              if (['id', 'aria-label', 'name', 'value', 'class', 'href', 'style'].includes(attr)) continue;" +
+               "              console.log('Checking attribute for non-SVG: ' + attr);" +
                "              var value = allAttrs[i].value.trim();" +
                "              if (value) {" +
                "                var query = '//' + tag + '[@' + attr + '=\"' + window.escapeXPathString(value) + '\"]';" +
@@ -854,17 +856,14 @@ public class WebElementInspector extends javax.swing.JFrame {
                "                if (result.snapshotLength === 1) {" +
                "                  predicates.push('@' + attr + '=\"' + window.escapeXPathString(value) + '\"');" +
                "                  foundAttr = true;" +
+               "                  console.log('Using attribute for non-SVG: ' + attr);" +
                "                  break;" +
                "                }" +
                "              }" +
                "            }" +
                "          }" +
                "          if (element.getAttributeNS && element.getAttributeNS('http://www.w3.org/1999/xlink', 'href') && element.getAttributeNS('http://www.w3.org/1999/xlink', 'href').trim()) {" +
-               "            var hrefValue = element.getAttributeNS('http://www.w3.org/1999/xlink', 'href').trim();" +
-               "            var noSpacesLength = window.getAttributeLengthExcludingSpaces(hrefValue);" +
-               "            var escapedHref = window.escapeXPathString(noSpacesLength > 100 ? window.getValueUpToFirstSpace(hrefValue) : hrefValue);" +
-               "            predicates.push('contains(@*[local-name()=\"href\" and namespace-uri()=\"http://www.w3.org/1999/xlink\"], \"' + escapedHref + '\")');" +
-               "            foundAttr = true;" +
+               "            console.log('Skipping xlink:href for non-SVG element');" +
                "          }" +
                "          xpath = '//' + tag;" +
                "          if (predicates.length > 0) {" +
@@ -876,13 +875,15 @@ public class WebElementInspector extends javax.swing.JFrame {
                "          var allAttrs = element.attributes;" +
                "          for (var i = 0; i < allAttrs.length; i++) {" +
                "            var attr = allAttrs[i].name;" +
-               "            if (['id', 'aria-label', 'name', 'value', 'class'].includes(attr)) continue;" +
+               "            if (['id', 'aria-label', 'name', 'value', 'class', 'href', 'style'].includes(attr)) continue;" +
+               "            console.log('Checking additional attribute for non-SVG: ' + attr);" +
                "            var value = allAttrs[i].value.trim();" +
                "            if (value) {" +
                "              var testXPath = xpath + '[@' + attr + '=\"' + window.escapeXPathString(value) + '\"]';" +
                "              var testResult = document.evaluate(testXPath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);" +
                "              if (testResult.snapshotLength === 1) {" +
                "                xpath = testXPath;" +
+               "                console.log('Using additional attribute for non-SVG: ' + attr);" +
                "                break;" +
                "              }" +
                "            }" +
@@ -896,6 +897,10 @@ public class WebElementInspector extends javax.swing.JFrame {
                "            var parentAttrs = parent.attributes;" +
                "            for (var i = 0; i < parentAttrs.length; i++) {" +
                "              var attr = parentAttrs[i].name;" +
+               "              if (!isSvg && ['href', 'style'].includes(attr)) {" +
+               "                console.log('Skipping parent attribute for non-SVG: ' + attr);" +
+               "                continue;" +
+               "              }" +
                "              var value = parentAttrs[i].value.trim();" +
                "              if (value) {" +
                "                var noSpacesLength = window.getAttributeLengthExcludingSpaces(value);" +
