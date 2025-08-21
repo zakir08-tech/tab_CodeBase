@@ -3,7 +3,12 @@
  * exempt @href and @style attributes for non-SVG element relative XPath generation,
  * align output area equally from left and right sides of the frame,
  * reduce the height of the URL text field with adjusted font size,
- * and adjust the size of Add and Copy buttons to improve appearance without changing their font size.
+ * adjust the size of Add and Copy buttons to improve appearance without changing their font size,
+ * display the text "relativeXPath:" in green inside the output text pane,
+ * fix the typo in add_SERVING_SUGGESTIONActionListener to addActionListener,
+ * change the color of labels tagName:, text:, id:, class:, cssSelector: to lemon yellow in the output text pane,
+ * fix JavaScript syntax error in getRelativeXPath function causing "Unexpected token 'else'",
+ * change the text color of "absoluteXPath:" to orange and "Element Details:" to sky blue in the output text pane.
  */
 package com.automation.bolt.gui;
 
@@ -666,8 +671,9 @@ public class WebElementInspector extends javax.swing.JFrame {
                "      if (!element || !element.tagName) return '';" +
                "      var tag = element.tagName.toLowerCase();" +
                "      var isSvg = element.namespaceURI === 'http://www.w3.org/2000/svg';" +
+               "      var xpath = '';" +
+               "      var predicates = [];" +
                "      if (isSvg) {" +
-               "        var predicates = [];" +
                "        predicates.push('local-name()=\"' + tag + '\"');" +
                "        var attrsToCheck = ['id', 'name', 'value', 'data-icon', 'aria-label', 'role', 'class', 'd', 'transform', 'x', 'y', 'width', 'height', 'viewBox', 'href', 'style'];" +
                "        var longAttr = null;" +
@@ -731,7 +737,7 @@ public class WebElementInspector extends javax.swing.JFrame {
                "        if (normalizedDirectText.length > 0 && !textElement) {" +
                "          text = normalizedDirectText;" +
                "        }" +
-               "        var xpath = '//*';" +
+               "        xpath = '//*';" +
                "        if (predicates.length > 0) {" +
                "          xpath += '[' + predicates.join(' and ') + ']';" +
                "        } else {" +
@@ -802,14 +808,12 @@ public class WebElementInspector extends javax.swing.JFrame {
                "          text = lastTextDescendant.text;" +
                "          textElement = lastTextDescendant.el;" +
                "        }" +
-               "        var usedText = text.length > 0;" +
-               "        var xpaath = '';" +
-               "        var predicates = [];" +
-               "        if (usedText && !window.hasSpacesOrNewlines(text)) {" +
-               "          var childTag = textElement.tagName.toLowerCase();" +
+               "        xpath = '//' + tag;" +
+               "        predicates = [];" +
+               "        if (text.length > 0 && !window.hasSpacesOrNewlines(text)) {" +
+               "          var childTag = textElement ? textElement.tagName.toLowerCase() : tag;" +
                "          xpath = '//' + childTag;" +
                "          predicates.push('normalize-space(text())=\"' + window.escapeXPathString(text) + '\"');" +
-               "          xpath += '[' + predicates.join(' and ') + ']';" +
                "        } else {" +
                "          var foundAttr = false;" +
                "          var attrValue = element.getAttribute('id');" +
@@ -826,9 +830,9 @@ public class WebElementInspector extends javax.swing.JFrame {
                "              var attr = priorAttrs[i];" +
                "              attrValue = element.getAttribute(attr);" +
                "              if (attrValue && attrValue.trim()) {" +
-               "                trimmedValue = attrValue.trim();" +
-               "                noSpacesLength = window.getAttributeLengthExcludingSpaces(trimmedValue);" +
-               "                valueToUse = noSpacesLength > 100 ? window.getValueUpToFirstSpace(trimmedValue) : trimmedValue;" +
+               "                var trimmedValue = attrValue.trim();" +
+               "                var noSpacesLength = window.getAttributeLengthExcludingSpaces(trimmedValue);" +
+               "                var valueToUse = noSpacesLength > 100 ? window.getValueUpToFirstSpace(trimmedValue) : trimmedValue;" +
                "                predicates.push('contains(@' + attr + ', \"' + window.escapeXPathString(valueToUse) + '\")');" +
                "                foundAttr = true;" +
                "                break;" +
@@ -838,9 +842,9 @@ public class WebElementInspector extends javax.swing.JFrame {
                "          if (!foundAttr) {" +
                "            attrValue = element.getAttribute('class');" +
                "            if (attrValue && attrValue.trim()) {" +
-               "              trimmedValue = attrValue.trim();" +
-               "              noSpacesLength = window.getAttributeLengthExcludingSpaces(trimmedValue);" +
-               "              valueToUse = noSpacesLength > 100 ? window.getValueUpToFirstSpace(trimmedValue) : trimmedValue;" +
+               "              var trimmedValue = attrValue.trim();" +
+               "              var noSpacesLength = window.getAttributeLengthExcludingSpaces(trimmedValue);" +
+               "              var valueToUse = noSpacesLength > 100 ? window.getValueUpToFirstSpace(trimmedValue) : trimmedValue;" +
                "              predicates.push('contains(@class, \"' + window.escapeXPathString(valueToUse) + '\")');" +
                "              foundAttr = true;" +
                "            }" +
@@ -867,10 +871,9 @@ public class WebElementInspector extends javax.swing.JFrame {
                "          if (element.getAttributeNS && element.getAttributeNS('http://www.w3.org/1999/xlink', 'href') && element.getAttributeNS('http://www.w3.org/1999/xlink', 'href').trim()) {" +
                "            console.log('Skipping xlink:href for non-SVG element');" +
                "          }" +
-               "          xpath = '//' + tag;" +
-               "          if (predicates.length > 0) {" +
-               "            xpath += '[' + predicates.join(' and ') + ']';" +
-               "          }" +
+               "        }" +
+               "        if (predicates.length > 0) {" +
+               "          xpath += '[' + predicates.join(' and ') + ']';" +
                "        }" +
                "        var result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);" +
                "        if (result.snapshotLength > 1) {" +
@@ -890,36 +893,37 @@ public class WebElementInspector extends javax.swing.JFrame {
                "              }" +
                "            }" +
                "          }" +
-               "        }" +
-               "        if (result.snapshotLength > 1) {" +
-               "          var parent = element.parentNode;" +
-               "          if (parent && parent.nodeType === 1) {" +
-               "            var parentTag = parent.tagName.toLowerCase();" +
-               "            var parentPredicates = [];" +
-               "            var parentAttrs = parent.attributes;" +
-               "            for (var i = 0; i < parentAttrs.length; i++) {" +
-               "              var attr = parentAttrs[i].name;" +
-               "              if (!isSvg && ['href', 'style'].includes(attr)) {" +
-               "                console.log('Skipping parent attribute for non-SVG: ' + attr);" +
-               "                continue;" +
-               "              }" +
-               "              var value = parentAttrs[i].value.trim();" +
-               "              if (value) {" +
-               "                var noSpacesLength = window.getAttributeLengthExcludingSpaces(value);" +
-               "                var valueToUse = noSpacesLength > 100 ? window.getValueUpToFirstSpace(value) : value;" +
-               "                parentPredicates.push('contains(@' + attr + ', \"' + window.escapeXPathString(valueToUse) + '\")');" +
-               "                var parentXPath = '//' + parentTag + '[' + parentPredicates.join(' and ') + ']';" +
-               "                var combinedXPath = parentXPath + xpath;" +
-               "                var combinedResult = document.evaluate(combinedXPath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);" +
-               "                if (combinedResult.snapshotLength === 1) {" +
-               "                  xpath = combinedXPath;" +
-               "                  break;" +
+               "          result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);" +
+               "          if (result.snapshotLength > 1) {" +
+               "            var parent = element.parentNode;" +
+               "            if (parent && parent.nodeType === 1) {" +
+               "              var parentTag = parent.tagName.toLowerCase();" +
+               "              var parentPredicates = [];" +
+               "              var parentAttrs = parent.attributes;" +
+               "              for (var i = 0; i < parentAttrs.length; i++) {" +
+               "                var attr = parentAttrs[i].name;" +
+               "                if (!isSvg && ['href', 'style'].includes(attr)) {" +
+               "                  console.log('Skipping parent attribute for non-SVG: ' + attr);" +
+               "                  continue;" +
+               "                }" +
+               "                var value = parentAttrs[i].value.trim();" +
+               "                if (value) {" +
+               "                  var noSpacesLength = window.getAttributeLengthExcludingSpaces(value);" +
+               "                  var valueToUse = noSpacesLength > 100 ? window.getValueUpToFirstSpace(value) : value;" +
+               "                  parentPredicates.push('contains(@' + attr + ', \"' + window.escapeXPathString(valueToUse) + '\")');" +
+               "                  var parentXPath = '//' + parentTag + '[' + parentPredicates.join(' and ') + ']';" +
+               "                  var combinedXPath = parentXPath + xpath;" +
+               "                  var combinedResult = document.evaluate(combinedXPath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);" +
+               "                  if (combinedResult.snapshotLength === 1) {" +
+               "                    xpath = combinedXPath;" +
+               "                    break;" +
+               "                  }" +
                "                }" +
                "              }" +
-               "            }" +
-               "            if (parentPredicates.length === 0) {" +
-               "              var parentXPath = '//' + parentTag;" +
-               "              xpath = parentXPath + xpath;" +
+               "              if (parentPredicates.length === 0) {" +
+               "                var parentXPath = '//' + parentTag;" +
+               "                xpath = parentXPath + xpath;" +
+               "              }" +
                "            }" +
                "          }" +
                "        }" +
@@ -1042,6 +1046,31 @@ public class WebElementInspector extends javax.swing.JFrame {
                 String fontFamily = getAvailableFont();
                 StyleConstants.setFontFamily(attrs, fontFamily);
                 StyleConstants.setFontSize(attrs, 14);
+                StyleConstants.setForeground(attrs, new Color(255, 255, 255)); // Default text color (white)
+
+                // Green attribute set for "relativeXPath:"
+                SimpleAttributeSet greenAttrs = new SimpleAttributeSet();
+                StyleConstants.setFontFamily(greenAttrs, fontFamily);
+                StyleConstants.setFontSize(greenAttrs, 14);
+                StyleConstants.setForeground(greenAttrs, new Color(0, 255, 0)); // Green color
+
+                // Lemon yellow attribute set for specific labels
+                SimpleAttributeSet yellowAttrs = new SimpleAttributeSet();
+                StyleConstants.setFontFamily(yellowAttrs, fontFamily);
+                StyleConstants.setFontSize(yellowAttrs, 14);
+                StyleConstants.setForeground(yellowAttrs, new Color(255, 255, 102)); // Lemon yellow color
+
+                // Orange attribute set for "absoluteXPath:"
+                SimpleAttributeSet orangeAttrs = new SimpleAttributeSet();
+                StyleConstants.setFontFamily(orangeAttrs, fontFamily);
+                StyleConstants.setFontSize(orangeAttrs, 14);
+                StyleConstants.setForeground(orangeAttrs, new Color(255, 165, 0)); // Orange color
+
+                // Sky blue attribute set for "Element Details:"
+                SimpleAttributeSet blueAttrs = new SimpleAttributeSet();
+                StyleConstants.setFontFamily(blueAttrs, fontFamily);
+                StyleConstants.setFontSize(blueAttrs, 14);
+                StyleConstants.setForeground(blueAttrs, new Color(135, 206, 235)); // Sky blue color
 
                 JSeparator separator = new JSeparator(JSeparator.HORIZONTAL);
                 separator.setForeground(new Color(255, 153, 153));
@@ -1051,7 +1080,9 @@ public class WebElementInspector extends javax.swing.JFrame {
                 StyleConstants.setComponent(separatorStyle, separator);
                 doc.insertString(doc.getLength(), "\n", attrs);
                 doc.insertString(doc.getLength(), " ", separatorStyle);
-                doc.insertString(doc.getLength(), "\nStored in repository as: " + elementId + "\nElement Details:\n", attrs);
+                doc.insertString(doc.getLength(), "\nStored in repository as: " + elementId + "\n", attrs);
+                doc.insertString(doc.getLength(), "Element Details:", blueAttrs); // Sky blue color for "Element Details:"
+                doc.insertString(doc.getLength(), "\n", attrs);
 
                 String relativeXPath = "";
                 String absoluteXPath = "";
@@ -1091,12 +1122,17 @@ public class WebElementInspector extends javax.swing.JFrame {
                         });
                         Style buttonStyle = doc.addStyle("button" + System.currentTimeMillis(), null);
                         StyleConstants.setComponent(buttonStyle, copyButton);
+                        doc.insertString(doc.getLength(), " ", attrs);
                         doc.insertString(doc.getLength(), " ", buttonStyle);
                         doc.insertString(doc.getLength(), " ", attrs);
                         Style addButtonStyle = doc.addStyle("addButton" + System.currentTimeMillis(), null);
                         StyleConstants.setComponent(addButtonStyle, addButton);
                         doc.insertString(doc.getLength(), " ", addButtonStyle);
-                        doc.insertString(doc.getLength(), " relativeXPath: " + relativeXPath + "\n", attrs);
+                        doc.insertString(doc.getLength(), " ", attrs);
+                        // Insert "relativeXPath:" in green
+                        doc.insertString(doc.getLength(), "relativeXPath:", greenAttrs);
+                        // Insert the actual XPath value in default color (white)
+                        doc.insertString(doc.getLength(), " " + relativeXPath + "\n", attrs);
                     } else if (line.startsWith("absoluteXPath:") && !absoluteXPath.isEmpty()) {
                         CustomButton copyButton = new CustomButton("Copy", 8, 1, new Color(250, 128, 114), new Color(250, 128, 114));
                         copyButton.setFont(new Font("Arial", Font.PLAIN, 10));
@@ -1121,12 +1157,30 @@ public class WebElementInspector extends javax.swing.JFrame {
                         });
                         Style buttonStyle = doc.addStyle("button" + System.currentTimeMillis(), null);
                         StyleConstants.setComponent(buttonStyle, copyButton);
+                        doc.insertString(doc.getLength(), " ", attrs);
                         doc.insertString(doc.getLength(), " ", buttonStyle);
                         doc.insertString(doc.getLength(), " ", attrs);
                         Style addButtonStyle = doc.addStyle("addButton" + System.currentTimeMillis(), null);
                         StyleConstants.setComponent(addButtonStyle, addButton);
                         doc.insertString(doc.getLength(), " ", addButtonStyle);
-                        doc.insertString(doc.getLength(), " absoluteXPath: " + absoluteXPath + "\n", attrs);
+                        doc.insertString(doc.getLength(), " ", attrs);
+                        // Insert "absoluteXPath:" in orange
+                        doc.insertString(doc.getLength(), "absoluteXPath:", orangeAttrs);
+                        // Insert the actual XPath value in default color (white)
+                        doc.insertString(doc.getLength(), " " + absoluteXPath + "\n", attrs);
+                    } else if (line.startsWith("tagName:") || line.startsWith("text:") || line.startsWith("id:") || line.startsWith("class:") || line.startsWith("cssSelector:")) {
+                        // Split the line into label and value
+                        int colonIndex = line.indexOf(':');
+                        if (colonIndex != -1) {
+                            String label = line.substring(0, colonIndex + 1);
+                            String value = line.substring(colonIndex + 1).trim();
+                            // Insert the label in lemon yellow
+                            doc.insertString(doc.getLength(), label, yellowAttrs);
+                            // Insert the value in default color (white)
+                            doc.insertString(doc.getLength(), " " + value + "\n", attrs);
+                        } else {
+                            doc.insertString(doc.getLength(), line + "\n", attrs);
+                        }
                     } else {
                         doc.insertString(doc.getLength(), line + "\n", attrs);
                     }
