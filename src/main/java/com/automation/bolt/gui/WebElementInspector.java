@@ -8,7 +8,11 @@
  * fix the typo in add_SERVING_SUGGESTIONActionListener to addActionListener,
  * change the color of labels tagName:, text:, id:, class:, cssSelector: to lemon yellow in the output text pane,
  * fix JavaScript syntax error in getRelativeXPath function causing "Unexpected token 'else'",
- * change the text color of "absoluteXPath:" to orange and "Element Details:" to sky blue in the output text pane.
+ * change the text color of "absoluteXPath:" to orange and "Element Details:" to sky blue in the output text pane,
+ * change the text color of "Copied to clipboard:" to light pink in the output text pane,
+ * change the text color of "Element added to the repository" to light pink in the output text pane,
+ * add a Download button to save all element details in the output area as a text file,
+ * modify Download button to save files directly to the user's default Downloads folder without prompting.
  */
 package com.automation.bolt.gui;
 
@@ -35,6 +39,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.font.TextAttribute;
 import java.awt.geom.RoundRectangle2D;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -80,7 +87,18 @@ public class WebElementInspector extends javax.swing.JFrame {
     public volatile boolean capturing = false;
     public final AtomicBoolean polling = new AtomicBoolean(true);
     private static final SimpleDateFormat LOG_TIMESTAMP_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final SimpleDateFormat FILE_TIMESTAMP_FORMAT = new SimpleDateFormat("yyyyMMddHHmm");
     private static final int POLLING_INTERVAL_MS = 100; // Optimized polling interval
+
+    // UI components
+    private JButton clearButton;
+    private JButton inspectButton;
+    private JButton loadButton;
+    private JButton downloadButton;
+    private JTextPane outputArea;
+    private JScrollPane scrollPane;
+    private JTextField urlField;
+    private JLabel urlLabel;
 
     /**
      * Creates new form WebElementInspector
@@ -108,6 +126,7 @@ public class WebElementInspector extends javax.swing.JFrame {
         loadButton = new JButton();
         inspectButton = new JButton();
         clearButton = new JButton();
+        downloadButton = new JButton();
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Web Element Inspector");
@@ -206,6 +225,25 @@ public class WebElementInspector extends javax.swing.JFrame {
             }
         });
 
+        downloadButton.setBackground(new Color(0, 0, 0));
+        downloadButton.setForeground(new Color(255, 255, 255));
+        downloadButton.setText("Download");
+        downloadButton.setFont(new Font("Segoe UI", 0, 12));
+        downloadButton.setBorderPainted(false);
+        downloadButton.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
+                downloadButtonMouseEntered(evt);
+            }
+            public void mouseExited(MouseEvent evt) {
+                downloadButtonMouseExited(evt);
+            }
+        });
+        downloadButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                downloadButtonActionPerformed(evt);
+            }
+        });
+
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -221,7 +259,9 @@ public class WebElementInspector extends javax.swing.JFrame {
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(inspectButton)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(clearButton))
+                        .addComponent(clearButton)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(downloadButton))
                     .addComponent(scrollPane))
                 .addContainerGap())
         );
@@ -237,7 +277,8 @@ public class WebElementInspector extends javax.swing.JFrame {
                             .addComponent(urlField, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
                             .addComponent(loadButton)
                             .addComponent(inspectButton)
-                            .addComponent(clearButton))))
+                            .addComponent(clearButton)
+                            .addComponent(downloadButton))))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
                 .addGap(1, 1, 1))
@@ -257,6 +298,7 @@ public class WebElementInspector extends javax.swing.JFrame {
             loadButton.setEnabled(false);
             inspectButton.setEnabled(false);
             clearButton.setEnabled(false);
+            downloadButton.setEnabled(false);
             appendToOutputArea("Initializing browser...\n");
         });
 
@@ -321,6 +363,38 @@ public class WebElementInspector extends javax.swing.JFrame {
         });
     }
 
+    private void downloadButtonActionPerformed(ActionEvent evt) {
+        log("Download button clicked");
+        SwingUtilities.invokeLater(() -> {
+            try {
+                // Get the user's Downloads folder
+                String downloadsPath = System.getProperty("user.home") + File.separator + "Downloads" + File.separator;
+                String timestamp = FILE_TIMESTAMP_FORMAT.format(new Date());
+                String fileName = "element_details_" + timestamp + ".txt";
+                File fileToSave = new File(downloadsPath + fileName);
+
+                // Ensure the Downloads directory exists
+                File downloadsDir = new File(downloadsPath);
+                if (!downloadsDir.exists()) {
+                    downloadsDir.mkdirs();
+                }
+
+                // Write the outputArea content to the file
+                try (FileWriter writer = new FileWriter(fileToSave)) {
+                    writer.write(outputArea.getText());
+                    log("Element details saved to: " + fileToSave.getAbsolutePath());
+                    appendToOutputArea("Element details saved to: " + fileToSave.getAbsolutePath() + "\n");
+                } catch (IOException ex) {
+                    log("Error saving element details: " + ex.getMessage());
+                    appendToOutputArea("Error saving element details: " + ex.getMessage() + "\n");
+                }
+            } catch (Exception e) {
+                log("Error during download: " + e.getMessage());
+                appendToOutputArea("Error during download: " + e.getMessage() + "\n");
+            }
+        });
+    }
+
     private void urlFieldActionPerformed(ActionEvent evt) {
         // Placeholder for potential future functionality
     }
@@ -353,6 +427,16 @@ public class WebElementInspector extends javax.swing.JFrame {
     private void clearButtonMouseExited(MouseEvent evt) {
         clearButton.setBackground(new Color(0, 0, 0));
         clearButton.setForeground(new Color(255, 255, 255));
+    }
+
+    private void downloadButtonMouseEntered(MouseEvent evt) {
+        downloadButton.setBackground(new Color(250, 128, 114));
+        downloadButton.setForeground(new Color(0, 0, 0));
+    }
+
+    private void downloadButtonMouseExited(MouseEvent evt) {
+        downloadButton.setBackground(new Color(0, 0, 0));
+        downloadButton.setForeground(new Color(255, 255, 255));
     }
 
     private void formWindowOpened(WindowEvent evt) {
@@ -412,10 +496,15 @@ public class WebElementInspector extends javax.swing.JFrame {
             loadButton.setEnabled(true);
             inspectButton.setEnabled(true);
             clearButton.setEnabled(true);
+            downloadButton.setEnabled(true);
         });
     }
 
     private void appendToOutputArea(String text) {
+        appendToOutputArea(text, null);
+    }
+
+    private void appendToOutputArea(String text, SimpleAttributeSet customAttrs) {
         SwingUtilities.invokeLater(() -> {
             try {
                 StyledDocument doc = outputArea.getStyledDocument();
@@ -423,8 +512,13 @@ public class WebElementInspector extends javax.swing.JFrame {
                 String fontFamily = getAvailableFont();
                 StyleConstants.setFontFamily(attrs, fontFamily);
                 StyleConstants.setFontSize(attrs, 14);
+                StyleConstants.setForeground(attrs, new Color(255, 255, 255)); // Default text color (white)
+                
+                // Use custom attributes if provided, otherwise use default
+                SimpleAttributeSet effectiveAttrs = (customAttrs != null) ? customAttrs : attrs;
+                
                 log("Appending text: " + text);
-                doc.insertString(doc.getLength(), text, attrs);
+                doc.insertString(doc.getLength(), text, effectiveAttrs);
                 outputArea.setCaretPosition(doc.getLength());
                 outputArea.setBackground(new Color(0, 0, 0));
                 outputArea.setForeground(new Color(255, 255, 255));
@@ -908,93 +1002,93 @@ public class WebElementInspector extends javax.swing.JFrame {
                "                }" +
                "                var value = parentAttrs[i].value.trim();" +
                "                if (value) {" +
-               "                  var noSpacesLength = window.getAttributeLengthExcludingSpaces(value);" +
-               "                  var valueToUse = noSpacesLength > 100 ? window.getValueUpToFirstSpace(value) : value;" +
-               "                  parentPredicates.push('contains(@' + attr + ', \"' + window.escapeXPathString(valueToUse) + '\")');" +
-               "                  var parentXPath = '//' + parentTag + '[' + parentPredicates.join(' and ') + ']';" +
-               "                  var combinedXPath = parentXPath + xpath;" +
-               "                  var combinedResult = document.evaluate(combinedXPath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);" +
-               "                  if (combinedResult.snapshotLength === 1) {" +
-               "                    xpath = combinedXPath;" +
-               "                    break;" +
-               "                  }" +
-               "                }" +
-               "              }" +
-               "              if (parentPredicates.length === 0) {" +
-               "                var parentXPath = '//' + parentTag;" +
-               "                xpath = parentXPath + xpath;" +
-               "              }" +
-               "            }" +
-               "          }" +
-               "        }" +
-               "      }" +
-               "      console.log('Generated relativeXPath: ' + xpath);" +
-               "      return xpath;" +
-               "    } catch (err) {" +
-               "      console.error('getRelativeXPath error: ' + err.message);" +
-               "      return '';" +
-               "    }" +
-               "  };" +
-               "  window.elementCapture = function(e) {" +
-               "    try {" +
-               "      e.preventDefault();" +
-               "      e.stopPropagation();" +
-               "      var el = e.target;" +
-               "      var normalizedText = el.textContent ? window.normalizeText(el.textContent.substring(0, 50)) : '';" +
-               "      var details = {" +
-               "        tagName: el.tagName ? el.tagName.toLowerCase() : ''," +
-               "        text: normalizedText," +
-               "        id: el.id || ''," +
-               "        class: el.className || ''," +
-               "        cssSelector: window.getCssSelector(el)," +
-               "        absoluteXPath: window.getAbsoluteXPath(el)," +
-               "        relativeXPath: window.getRelativeXPath(el)" +
-               "      };" +
-               "      console.log('elementCapture details: ' + JSON.stringify(details));" +
-               "      window.elementDetails = details;" +
-               "      return JSON.stringify(details);" +
-               "    } catch (err) {" +
-               "      console.error('elementCapture error: ' + err.message);" +
-               "      return 'Error: ' + err.message;" +
-               "    }" +
-               "  };" +
-               "  window.elementHover = function(e) {" +
-               "    try {" +
-               "      e.target.style.outline = '2px solid red';" +
-               "    } catch (err) {" +
-               "      console.error('elementHover error: ' + err.message);" +
-               "    }" +
-               "  };" +
-               "  window.elementHoverOut = function(e) {" +
-               "    try {" +
-               "      e.target.style.outline = '';" +
-               "    } catch (err) {" +
-               "      console.error('elementHoverOut error: ' + err.message);" +
-               "    }" +
-               "  };" +
-               "  window.checkListeners = function() {" +
-               "    try {" +
-               "      return !!window.elementCapture;" +
-               "    } catch (err) {" +
-               "      console.error('checkListeners error: ' + err.message);" +
-               "      return false;" +
-               "    }" +
-               "  };" +
-               "  document.removeEventListener('click', window.elementCapture);" +
-               "  document.removeEventListener('mouseover', window.elementHover);" +
-               "  document.removeEventListener('mouseout', window.elementHoverOut);" +
-               "  document.addEventListener('click', window.elementCapture, { capture: true, passive: false });" +
-               "  document.addEventListener('mouseover', window.elementHover, { capture: true, passive: true });" +
-               "  document.addEventListener('mouseout', window.elementHoverOut, { capture: true, passive: true });" +
-               "  setTimeout(function() {" +
-               "    window.checkListeners();" +
-               "  }, 500);" +
-               "  console.log('Listeners setup complete');" +
-               "  return { status: 'Listeners setup initiated' };" +
-               "} catch (err) {" +
-               "  console.error('Initialization error: ' + err.message);" +
-               "  return { status: 'Error: ' + err.message };" +
-               "}";
+                   "                  var noSpacesLength = window.getAttributeLengthExcludingSpaces(value);" +
+                   "                  var valueToUse = noSpacesLength > 100 ? window.getValueUpToFirstSpace(value) : value;" +
+                   "                  parentPredicates.push('contains(@' + attr + ', \"' + window.escapeXPathString(valueToUse) + '\")');" +
+                   "                  var parentXPath = '//' + parentTag + '[' + parentPredicates.join(' and ') + ']';" +
+                   "                  var combinedXPath = parentXPath + xpath;" +
+                   "                  var combinedResult = document.evaluate(combinedXPath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);" +
+                   "                  if (combinedResult.snapshotLength === 1) {" +
+                   "                    xpath = combinedXPath;" +
+                   "                    break;" +
+                   "                  }" +
+                   "                }" +
+                   "              }" +
+                   "              if (parentPredicates.length === 0) {" +
+                   "                var parentXPath = '//' + parentTag;" +
+                   "                xpath = parentXPath + xpath;" +
+                   "              }" +
+                   "            }" +
+                   "          }" +
+                   "        }" +
+                   "      }" +
+                   "      console.log('Generated relativeXPath: ' + xpath);" +
+                   "      return xpath;" +
+                   "    } catch (err) {" +
+                   "      console.error('getRelativeXPath error: ' + err.message);" +
+                   "      return '';" +
+                   "    }" +
+                   "  };" +
+                   "  window.elementCapture = function(e) {" +
+                   "    try {" +
+                   "      e.preventDefault();" +
+                   "      e.stopPropagation();" +
+                   "      var el = e.target;" +
+                   "      var normalizedText = el.textContent ? window.normalizeText(el.textContent.substring(0, 50)) : '';" +
+                   "      var details = {" +
+                   "        tagName: el.tagName ? el.tagName.toLowerCase() : ''," +
+                   "        text: normalizedText," +
+                   "        id: el.id || ''," +
+                   "        class: el.className || ''," +
+                   "        cssSelector: window.getCssSelector(el)," +
+                   "        absoluteXPath: window.getAbsoluteXPath(el)," +
+                   "        relativeXPath: window.getRelativeXPath(el)" +
+                   "      };" +
+                   "      console.log('elementCapture details: ' + JSON.stringify(details));" +
+                   "      window.elementDetails = details;" +
+                   "      return JSON.stringify(details);" +
+                   "    } catch (err) {" +
+                   "      console.error('elementCapture error: ' + err.message);" +
+                   "      return 'Error: ' + err.message;" +
+                   "    }" +
+                   "  };" +
+                   "  window.elementHover = function(e) {" +
+                   "    try {" +
+                   "      e.target.style.outline = '2px solid red';" +
+                   "    } catch (err) {" +
+                   "      console.error('elementHover error: ' + err.message);" +
+                   "    }" +
+                   "  };" +
+                   "  window.elementHoverOut = function(e) {" +
+                   "    try {" +
+                   "      e.target.style.outline = '';" +
+                   "    } catch (err) {" +
+                   "      console.error('elementHoverOut error: ' + err.message);" +
+                   "    }" +
+                   "  };" +
+                   "  window.checkListeners = function() {" +
+                   "    try {" +
+                   "      return !!window.elementCapture;" +
+                   "    } catch (err) {" +
+                   "      console.error('checkListeners error: ' + err.message);" +
+                   "      return false;" +
+                   "    }" +
+                   "  };" +
+                   "  document.removeEventListener('click', window.elementCapture);" +
+                   "  document.removeEventListener('mouseover', window.elementHover);" +
+                   "  document.removeEventListener('mouseout', window.elementHoverOut);" +
+                   "  document.addEventListener('click', window.elementCapture, { capture: true, passive: false });" +
+                   "  document.addEventListener('mouseover', window.elementHover, { capture: true, passive: true });" +
+                   "  document.addEventListener('mouseout', window.elementHoverOut, { capture: true, passive: true });" +
+                   "  setTimeout(function() {" +
+                   "    window.checkListeners();" +
+                   "  }, 500);" +
+                   "  console.log('Listeners setup complete');" +
+                   "  return { status: 'Listeners setup initiated' };" +
+                   "} catch (err) {" +
+                   "  console.error('Initialization error: ' + err.message);" +
+                   "  return { status: 'Error: ' + err.message };" +
+                   "}";
     }
 
     private void cleanupJavaScriptListeners() {
@@ -1072,6 +1166,12 @@ public class WebElementInspector extends javax.swing.JFrame {
                 StyleConstants.setFontSize(blueAttrs, 14);
                 StyleConstants.setForeground(blueAttrs, new Color(135, 206, 235)); // Sky blue color
 
+                // Light pink attribute set for "Copied to clipboard:" and "Element added to the repository"
+                SimpleAttributeSet pinkAttrs = new SimpleAttributeSet();
+                StyleConstants.setFontFamily(pinkAttrs, fontFamily);
+                StyleConstants.setFontSize(pinkAttrs, 14);
+                StyleConstants.setForeground(pinkAttrs, new Color(255, 182, 193)); // Light pink color
+
                 JSeparator separator = new JSeparator(JSeparator.HORIZONTAL);
                 separator.setForeground(new Color(255, 153, 153));
                 separator.setBackground(new Color(0, 0, 0));
@@ -1109,7 +1209,12 @@ public class WebElementInspector extends javax.swing.JFrame {
                             StringSelection selection = new StringSelection(finalXPath);
                             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                             clipboard.setContents(selection, null);
-                            appendToOutputArea("Copied to clipboard: " + finalXPath + "\n");
+                            try {
+                                doc.insertString(doc.getLength(), "Copied to clipboard:", pinkAttrs); // Light pink for "Copied to clipboard:"
+                                doc.insertString(doc.getLength(), " " + finalXPath + "\n", attrs); // Default white for XPath
+                            } catch (BadLocationException ex) {
+                                log("Error appending to outputArea: " + ex.getMessage());
+                            }
                         });
                         CustomButton addButton = new CustomButton("Add", 8, 1, new Color(250, 128, 114), new Color(250, 128, 114));
                         addButton.setFont(new Font("Arial", Font.PLAIN, 10));
@@ -1117,7 +1222,7 @@ public class WebElementInspector extends javax.swing.JFrame {
                         addButton.setPreferredSize(new Dimension(50, 20));
                         addButton.setForeground(Color.WHITE);
                         addButton.addActionListener(e -> {
-                            appendToOutputArea("Element added to the repository\n");
+                            appendToOutputArea("Element added to the repository\n", pinkAttrs); // Light pink for "Element added to the repository"
                             CreateTestSuite.addWebElementToRepository(elementId, finalXPath);
                         });
                         Style buttonStyle = doc.addStyle("button" + System.currentTimeMillis(), null);
@@ -1144,7 +1249,12 @@ public class WebElementInspector extends javax.swing.JFrame {
                             StringSelection selection = new StringSelection(finalXPath);
                             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                             clipboard.setContents(selection, null);
-                            appendToOutputArea("Copied to clipboard: " + finalXPath + "\n");
+                            try {
+                                doc.insertString(doc.getLength(), "Copied to clipboard:", pinkAttrs); // Light pink for "Copied to clipboard:"
+                                doc.insertString(doc.getLength(), " " + finalXPath + "\n", attrs); // Default white for XPath
+                            } catch (BadLocationException ex) {
+                                log("Error appending to outputArea: " + ex.getMessage());
+                            }
                         });
                         CustomButton addButton = new CustomButton("Add", 8, 1, new Color(250, 128, 114), new Color(250, 128, 114));
                         addButton.setFont(new Font("Arial", Font.PLAIN, 10));
@@ -1152,7 +1262,7 @@ public class WebElementInspector extends javax.swing.JFrame {
                         addButton.setPreferredSize(new Dimension(50, 20));
                         addButton.setForeground(Color.WHITE);
                         addButton.addActionListener(e -> {
-                            appendToOutputArea("Element added to the repository\n");
+                            appendToOutputArea("Element added to the repository\n", pinkAttrs); // Light pink for "Element added to the repository"
                             CreateTestSuite.addWebElementToRepository(elementId, finalXPath);
                         });
                         Style buttonStyle = doc.addStyle("button" + System.currentTimeMillis(), null);
@@ -1299,7 +1409,6 @@ public class WebElementInspector extends javax.swing.JFrame {
                         log("Browser window closed, closing JFrame");
                         SwingUtilities.invokeLater(() -> {
                             appendToOutputArea("Browser window closed, shutting down application\n");
-                            cleanup();
                             dispose();
                         });
                         break;
@@ -1356,14 +1465,4 @@ public class WebElementInspector extends javax.swing.JFrame {
             new WebElementInspector().setVisible(true);
         });
     }
-
-    // Variables declaration
-    public JButton clearButton;
-    public JButton inspectButton;
-    public JButton loadButton;
-    public JTextPane outputArea;
-    public JScrollPane scrollPane;
-    public JTextField urlField;
-    public JLabel urlLabel;
-    // End of variables declaration
 }

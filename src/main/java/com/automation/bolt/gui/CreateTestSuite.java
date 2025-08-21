@@ -1478,14 +1478,16 @@ public class CreateTestSuite extends javax.swing.JFrame {
     }
     
     public static void addWebElementToRepository(String elementId,String finalXPath) {
-    	createORTabModel.addRow(new Object[] {elementId,null,finalXPath});
-        tableAddOR.setColumnSelectionInterval(0, 0);
-        tableAddOR.setRowSelectionInterval(tableAddOR.getRowCount()-1,tableAddOR.getRowCount()-1);
-        tableAddOR.scrollRectToVisible(tableAddOR.getCellRect(tableAddOR.getRowCount()-1,-1, true));
-        tableAddOR.editCellAt(tableAddOR.getRowCount()-1, 0);
-        tableAddOR.requestFocus();
-        elmNameTxt.requestFocusInWindow();
-        //retrieveTestElmList();
+    	try {
+    		createORTabModel.addRow(new Object[] {elementId,null,finalXPath});
+            tableAddOR.setColumnSelectionInterval(0, 0);
+            tableAddOR.setRowSelectionInterval(tableAddOR.getRowCount()-1,tableAddOR.getRowCount()-1);
+            tableAddOR.scrollRectToVisible(tableAddOR.getCellRect(tableAddOR.getRowCount()-1,-1, true));
+            tableAddOR.editCellAt(tableAddOR.getRowCount()-1, 0);
+            tableAddOR.requestFocus();
+            elmNameTxt.requestFocusInWindow();
+            //retrieveTestElmList();
+    	}catch(NullPointerException exp) {}
     }
     
     public static void setTableColWidthForCreateRegSuiteTable(){
