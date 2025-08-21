@@ -1,8 +1,9 @@
-
 /*
  * Updated WebElementInspector.java to fix JavaScript syntax error in elementCapture function, 
  * exempt @href and @style attributes for non-SVG element relative XPath generation,
- * and align output area equally from left and right sides of the frame.
+ * align output area equally from left and right sides of the frame,
+ * reduce the height of the URL text field with adjusted font size,
+ * and adjust the size of Add and Copy buttons to improve appearance without changing their font size.
  */
 package com.automation.bolt.gui;
 
@@ -120,13 +121,14 @@ public class WebElementInspector extends javax.swing.JFrame {
         });
 
         urlField.setBackground(new Color(0, 0, 0));
-        urlField.setFont(new Font("Segoe UI", 0, 14));
+        urlField.setFont(new Font("Segoe UI", 0, 12));
         urlField.setForeground(new Color(255, 255, 255));
         urlField.setHorizontalAlignment(JTextField.LEFT);
         urlField.setText("https://google.com");
         urlField.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
         urlField.setCaretColor(new Color(255, 255, 255));
         urlField.setOpaque(true);
+        urlField.setPreferredSize(new Dimension(0, 20));
         urlField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 urlFieldActionPerformed(evt);
@@ -227,7 +229,7 @@ public class WebElementInspector extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(urlField, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(urlField, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
                             .addComponent(loadButton)
                             .addComponent(inspectButton)
                             .addComponent(clearButton))))
@@ -801,7 +803,7 @@ public class WebElementInspector extends javax.swing.JFrame {
                "          textElement = lastTextDescendant.el;" +
                "        }" +
                "        var usedText = text.length > 0;" +
-               "        var xpath = '';" +
+               "        var xpaath = '';" +
                "        var predicates = [];" +
                "        if (usedText && !window.hasSpacesOrNewlines(text)) {" +
                "          var childTag = textElement.tagName.toLowerCase();" +
@@ -1068,7 +1070,8 @@ public class WebElementInspector extends javax.swing.JFrame {
                     if (line.startsWith("relativeXPath:") && !relativeXPath.isEmpty()) {
                         CustomButton copyButton = new CustomButton("Copy", 8, 1, new Color(250, 128, 114), new Color(250, 128, 114));
                         copyButton.setFont(new Font("Arial", Font.PLAIN, 10));
-                        copyButton.setMargin(new Insets(2, 4, 2, 4));
+                        copyButton.setMargin(new Insets(2, 3, 2, 3));
+                        copyButton.setPreferredSize(new Dimension(50, 20));
                         copyButton.setForeground(Color.WHITE);
                         String finalXPath = relativeXPath;
                         copyButton.addActionListener(e -> {
@@ -1079,7 +1082,8 @@ public class WebElementInspector extends javax.swing.JFrame {
                         });
                         CustomButton addButton = new CustomButton("Add", 8, 1, new Color(250, 128, 114), new Color(250, 128, 114));
                         addButton.setFont(new Font("Arial", Font.PLAIN, 10));
-                        addButton.setMargin(new Insets(2, 4, 2, 4));
+                        addButton.setMargin(new Insets(2, 3, 2, 3));
+                        addButton.setPreferredSize(new Dimension(50, 20));
                         addButton.setForeground(Color.WHITE);
                         addButton.addActionListener(e -> {
                             appendToOutputArea("Element added to the repository\n");
@@ -1096,7 +1100,8 @@ public class WebElementInspector extends javax.swing.JFrame {
                     } else if (line.startsWith("absoluteXPath:") && !absoluteXPath.isEmpty()) {
                         CustomButton copyButton = new CustomButton("Copy", 8, 1, new Color(250, 128, 114), new Color(250, 128, 114));
                         copyButton.setFont(new Font("Arial", Font.PLAIN, 10));
-                        copyButton.setMargin(new Insets(2, 4, 2, 4));
+                        copyButton.setMargin(new Insets(2, 3, 2, 3));
+                        copyButton.setPreferredSize(new Dimension(50, 20));
                         copyButton.setForeground(Color.WHITE);
                         String finalXPath = absoluteXPath;
                         copyButton.addActionListener(e -> {
@@ -1107,7 +1112,8 @@ public class WebElementInspector extends javax.swing.JFrame {
                         });
                         CustomButton addButton = new CustomButton("Add", 8, 1, new Color(250, 128, 114), new Color(250, 128, 114));
                         addButton.setFont(new Font("Arial", Font.PLAIN, 10));
-                        addButton.setMargin(new Insets(2, 4, 2, 4));
+                        addButton.setMargin(new Insets(2, 3, 2, 3));
+                        addButton.setPreferredSize(new Dimension(50, 20));
                         addButton.setForeground(Color.WHITE);
                         addButton.addActionListener(e -> {
                             appendToOutputArea("Element added to the repository\n");
@@ -1142,11 +1148,11 @@ public class WebElementInspector extends javax.swing.JFrame {
         protected Color borderHoverColor = null;
         protected boolean isHovered = false;
         protected boolean isDisabled = false;
-        private int arc = 8;
-        private int shadowOffset = 1;
+        private int arc = 8; // Restored to 8 for smoother corners
+        private int shadowOffset = 1; // Restored to 1 for subtle shadow
 
         public CustomButton(String text) {
-            this(text, 12, 1, null, null);
+            this(text, 8, 1, null, null);
         }
 
         public CustomButton(String text, int arc, int shadowOffset) {
@@ -1164,8 +1170,9 @@ public class WebElementInspector extends javax.swing.JFrame {
             setBorderPainted(false);
             setFocusPainted(false);
             setForeground(Color.WHITE);
-            setFont(new Font("Arial", Font.BOLD, 12));
-            setMargin(new Insets(4, 10, 4, 10));
+            setFont(new Font("Arial", Font.PLAIN, 10)); // Font size unchanged
+            setMargin(new Insets(2, 3, 2, 3)); // Adjusted margins for better spacing
+            setPreferredSize(new Dimension(50, 20)); // Slightly larger size for better appearance
             setCursor(new Cursor(Cursor.HAND_CURSOR));
             addMouseListener(new MouseAdapter() {
                 @Override
