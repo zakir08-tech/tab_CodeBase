@@ -16,6 +16,44 @@ public class userDefineTest extends glueCode{
 	static common con = new common();
 	static WebDriver xDriver;
 	
+	public static void checkAndClickMinimumTenderThreshold(String[] args) {
+		System.out.println("checkAndClickMinimumTenderThreshold");
+	}
+	
+	public static void checkClickTime(String[] args) {
+	    System.out.println(args[0]);
+	    System.out.println(args[1]);
+	}
+
+	public static void checkIfRegisterAlreadyOpen(String[] args) {
+		xDriver = glueCode.boltDriver;
+		try {
+			
+			List<WebElement> getDivs = xDriver.findElements(By.tagName("div"));
+			for(WebElement elm: getDivs) {
+				try {
+					if(elm.getAttribute("aria-label").contentEquals("Register open.")) {
+						System.out.println("Register is already open.");
+						throw new RuntimeException("Register is already open.");
+					}else {
+						System.out.println("Opening register...");
+					}	
+				}catch(NullPointerException exp) {}	
+			}
+			
+			//List<WebElement> registerDivs = xDriver.findElements(By.xpath("//div[@aria-label='Register open.']"));
+			//if (!registerDivs.isEmpty()) {
+				//System.out.println("Register is already open.");
+				//throw new RuntimeException("Register is already open.");
+			//} else {
+				//System.out.println("Opening register...");
+			//}
+		} catch (Exception e) {
+			System.out.println("Exception while checking Register status: " + e.getMessage());
+			throw new RuntimeException("Step failed due to exception: " + e.getMessage(),e);
+		}
+	}
+	
 	@SuppressWarnings("static-access")
 	public static void selectSalaryRange(String[] args) {
 		
@@ -98,19 +136,18 @@ public class userDefineTest extends glueCode{
 			 * bRunner.trTestSteps.put(bRunner.stepTestNumber, trPassed);
 			 */
 			
-//			String trPassed = htmlReport.trTemplateEditStepPassed(htmlReport.trTemplateUserDefine, 
-//					"", 
-//					"", 
-//					"set user name");
-//			
-//			bRunner.trTestSteps.put(100, trPassed);
-//			
-//			trPassed = htmlReport.trTemplateEditStepPassed(htmlReport.trTemplateUserDefine, 
-//					"", 
-//					"", 
-//					"set user password");
-//			
-//			bRunner.trTestSteps.put(200, trPassed);
+			String trPassed = htmlReport.trTemplateEditStepPassed(htmlReport.trTemplateUserDefine, 
+					"", 
+					"", 
+					"set user name");
+			
+			bRunner.trTestSteps.put(100, trPassed);
+			
+			trPassed = htmlReport.trTemplateEditStepPassed(htmlReport.trTemplateUserDefine, 
+					"", 
+					"", 
+					"set user password");
+						bRunner.trTestSteps.put(200, trPassed);
 			
 		}
 	}

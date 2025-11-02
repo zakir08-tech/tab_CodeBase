@@ -74,8 +74,8 @@ public class externalTabRun extends constants{
         String getRunStartEndTime =common.getTestrunTime(boltExecutor.startRunDateTime, boltExecutor.endRunDateTime);
         String htmlReport ="";
         
-        htmlReport =htmlReportCommon.trTemplateEditTestRunInfo(htmlReportCommon.htmlTestReport, 
-            boltExecutor.testRunStartDateAndTime, boltExecutor.totalRunTime, getRunStartEndTime.split(":")[0], getRunStartEndTime.split(":")[1], getRunStartEndTime.split(":")[2]);
+        //htmlReport =htmlReportCommon.trTemplateEditTestRunInfo(htmlReportCommon.htmlTestReport, 
+            //boltExecutor.testRunStartDateAndTime, boltExecutor.totalRunTime, getRunStartEndTime.split(":")[0], getRunStartEndTime.split(":")[1], getRunStartEndTime.split(":")[2]);
         
         String testHtmlReport =htmlReport.replace("$testCaseSteps", trCardsContainer);
         if(getStatus ==true)

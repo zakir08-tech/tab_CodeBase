@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 
@@ -124,9 +125,12 @@ public class glueCode {
             boltDriver =new EdgeDriver(edgeOptions);
         }
      
-        boltDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Integer.valueOf(implicitWaitTime)));
-        boltDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(Integer.valueOf(pageLoadTimeOut)));
-        wait = new WebDriverWait(boltDriver, Duration.ofSeconds(Integer.valueOf(implicitWaitTime)));
+        //boltDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Integer.valueOf(implicitWaitTime)));
+        boltDriver.manage().timeouts().implicitlyWait(Integer.valueOf(implicitWaitTime), TimeUnit.SECONDS);
+        //boltDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(Integer.valueOf(pageLoadTimeOut)));
+        boltDriver.manage().timeouts().pageLoadTimeout(Integer.valueOf(implicitWaitTime), TimeUnit.SECONDS);
+        wait = new WebDriverWait(boltDriver,Integer.valueOf(implicitWaitTime));
+        //wait = new WebDriverWait(boltDriver, Duration.ofSeconds(Integer.valueOf(implicitWaitTime)));
     }
 	
     public static void keyURL(String url) {
